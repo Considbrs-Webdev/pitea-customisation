@@ -48,7 +48,13 @@ class FontAwesome
     public function modifyIconData(array $data): array
     {
         $data['componentElement'] = 'i';
-        $data['classList'][] = $data['icon'];
+        
+        $icon = explode(' ', $data['icon']);
+        $data['classList'] += $icon;
+
+        if (isset($data['icon']) && is_string($data['icon']) && strpos($data['icon'], 'fa-') === 0) {
+            $data['icon'] = str_replace(' ', '-', $data['icon']);
+        }
 
         return $data;
     }
