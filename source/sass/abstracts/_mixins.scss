@@ -1,0 +1,66 @@
+/**
+ * Mixins
+ *
+ * Define your SCSS mixins here.
+ */
+
+// Media query breakpoints
+@mixin breakpoint-up($breakpoint) {
+    @media (min-width: $breakpoint) {
+        @content;
+    }
+}
+
+@mixin breakpoint-down($breakpoint) {
+    @media (max-width: ($breakpoint - 1px)) {
+        @content;
+    }
+}
+
+// Flexbox helpers
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+// Transitions
+@mixin transition($properties: all, $duration: $transition-normal) {
+    transition: $properties $duration;
+}
+
+// Screen reader only
+@mixin sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+// Clearfix
+@mixin clearfix {
+    &::after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+}
+
+// Truncate text
+@mixin truncate($max-width: 100%) {
+    max-width: $max-width;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

@@ -1,0 +1,16 @@
+{
+    "name": "pitea-customisation",
+    "version": "1.0.0",
+    "description": "Custom functionality and modifications for the Pitea WordPress installation",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "watch": "vite build --watch"
+    },
+    "devDependencies": {
+        "vite": "^5.0.0",
+        "sass": "^1.69.0"
+    }
+}

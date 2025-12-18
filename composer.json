@@ -1,0 +1,17 @@
+{
+    "name": "pitea/pitea-customisation",
+    "description": "Custom functionality and modifications for the Pitea WordPress installation",
+    "type": "wordpress-plugin",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "PiteaCustomisation\\": "source/php/"
+        }
+    },
+    "require": {
+        "php": ">=8.0"
+    },
+    "config": {
+        "optimize-autoloader": true
+    }
+}

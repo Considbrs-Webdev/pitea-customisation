@@ -1,0 +1,29 @@
+/**
+ * Pitea Customisation - Frontend Styles
+ *
+ * Main stylesheet for frontend customisations.
+ * Import your partials and components here.
+ */
+
+// Variables
+@import 'abstracts/variables';
+
+// Mixins
+@import 'abstracts/mixins';
+
+// Base styles
+// @import 'base/reset';
+// @import 'base/typography';
+
+// Components
+// @import 'components/buttons';
+// @import 'components/cards';
+
+// Layouts
+// @import 'layouts/header';
+// @import 'layouts/footer';
+
+// Custom styles
+.pitea-customisation {
+    // Add your custom styles here
+}
