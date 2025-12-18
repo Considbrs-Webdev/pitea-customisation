@@ -9,106 +9,98 @@ class FontAwesome
      */
     public function __construct()
     {
-        add_action('wp_head', function () {
-            ?>
-            <script src="https://kit.fontawesome.com/be6ad42a19.js" crossorigin="anonymous"></script>
-            <?php
-        });
-
-        add_filter('acf/prepare_field/type=icon', [$this, 'convertToSelectField']);
-
-        add_filter('ComponentLibrary/Component/Icon/Data', function ($data) {
-            $data['componentElement'] = 'i';
-
-            $data['classList'][] = $data['icon'];
-
-            return $data;
-        }, 500, 1);
-
-        add_filter('ComponentLibrary/Component/Icon/Class', function ($classes) {
-            $hasFaClass = false;
-            foreach ($classes as $class) {
-                if (strpos($class, 'fa-') === 0) {
-                    $hasFaClass = true;
-                    break;
-                }
-            }
-
-            if (!$hasFaClass) {
-                return $classes;
-            }
-
-            $classes = array_values(array_filter(
-                $classes,
-                function ($class) {
-                    return strpos($class, 'material-symbols') !== 0;
-                }
-            ));
-
-            return $classes;
-        }, 600, 1);
+        add_action('wp_head', [$this, 'enqueueFontAwesomeKit']);
+        add_action('acf/include_field_types', [$this, 'registerAcfFieldType']);
+        add_filter('acf/prepare_field/type=icon', [$this, 'convertToFontAwesomeField']);
+        add_filter('ComponentLibrary/Component/Icon/Data', [$this, 'modifyIconData'], 500, 1);
+        add_filter('ComponentLibrary/Component/Icon/Class', [$this, 'filterIconClasses'], 600, 1);
     }
 
     /**
-     * Convert icon field to select field
+     * Register the custom ACF field type
+     *
+     * @return void
+     */
+    public function registerAcfFieldType(): void
+    {
+        require_once dirname(__DIR__) . '/AcfFields/FontAwesomeIconField.php';
+        acf_register_field_type('PiteaCustomisation\AcfFields\FontAwesomeIconField');
+    }
+
+    /**
+     * Enqueue FontAwesome kit script
+     *
+     * @return void
+     */
+    public function enqueueFontAwesomeKit(): void
+    {
+        ?>
+        <script src="https://kit.fontawesome.com/be6ad42a19.js" crossorigin="anonymous"></script>
+        <?php
+    }
+
+    /**
+     * Modify icon component data for FontAwesome
+     *
+     * @param array $data The icon component data
+     * @return array Modified data
+     */
+    public function modifyIconData(array $data): array
+    {
+        $data['componentElement'] = 'i';
+        $data['classList'][] = $data['icon'];
+
+        return $data;
+    }
+
+    /**
+     * Filter icon classes to remove Material Symbols when using FontAwesome
+     *
+     * @param array $classes The icon classes
+     * @return array Filtered classes
+     */
+    public function filterIconClasses(array $classes): array
+    {
+        $hasFaClass = false;
+        foreach ($classes as $class) {
+            if (strpos($class, 'fa-') === 0) {
+                $hasFaClass = true;
+                break;
+            }
+        }
+
+        if (!$hasFaClass) {
+            return $classes;
+        }
+
+        $classes = array_values(array_filter(
+            $classes,
+            function ($class) {
+                return strpos($class, 'material-symbols') !== 0;
+            }
+        ));
+
+        return $classes;
+    }
+
+    /**
+     * Convert icon field to FontAwesome field type
      *
      * @param array $field The ACF field array
      * @return array Modified field array
      */
-    public function convertToSelectField(array $field): array
+    public function convertToFontAwesomeField(array $field): array
     {
-        $icons = $this->getIconChoices();
+        $jsonPath = dirname(__DIR__, 3) . '/data/fontawesome-icons.json';
 
-        // If no icons found, don't modify the field
-        if (empty($icons)) {
+        // If no icons file found, don't modify the field
+        if (!file_exists($jsonPath)) {
             return $field;
         }
 
-        $field['type']       = 'select';
-        $field['choices']    = $this->buildChoices($icons);
+        $field['type']       = 'fontawesome_icon';
         $field['allow_null'] = 1;
-        $field['ui']         = 1;
-        $field['ajax']       = 0;
 
         return $field;
-    }
-
-    /**
-     * Build choices array from icons
-     *
-     * @param array $icons List of icon names
-     * @return array Associative array of choices
-     */
-    protected function buildChoices(array $icons): array
-    {
-        $choices = ['' => __('— Select Icon —', 'pitea-customisation')];
-
-        foreach ($icons as $key => $value) {
-            $choices[$key] = $value;
-        }
-
-        return $choices;
-    }
-
-    /**
-     * Get available icon choices
-     *
-     * @return array List of icon names
-     */
-    protected function getIconChoices(): array
-    {
-        static $icons = null;
-        
-        if ($icons === null) {
-            $jsonPath = dirname(__DIR__, 3) . '/data/fontawesome-icons.json';
-            
-            if (file_exists($jsonPath)) {
-                $icons = json_decode(file_get_contents($jsonPath), true) ?: [];
-            } else {
-                $icons = [];
-            }
-        }
-
-        return apply_filters('pitea_customisation/icons', $icons);
     }
 }
