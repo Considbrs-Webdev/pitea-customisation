@@ -2,7 +2,7 @@
 
 namespace PiteaCustomisation\Customisations;
 
-class IconReplacer
+class FontAwesome
 {
     /**
      * Initialize the field replacer
@@ -59,6 +59,11 @@ class IconReplacer
     {
         $icons = $this->getIconChoices();
 
+        // If no icons found, don't modify the field
+        if (empty($icons)) {
+            return $field;
+        }
+
         $field['type']       = 'select';
         $field['choices']    = $this->buildChoices($icons);
         $field['allow_null'] = 1;
@@ -92,11 +97,17 @@ class IconReplacer
      */
     protected function getIconChoices(): array
     {
-        $icons = [
-            'wifi' => 'WiFi',
-            'fa-solid fa-brush' => 'Brush',
-            'fa-solid fa-code' => 'Code',
-        ];
+        static $icons = null;
+        
+        if ($icons === null) {
+            $jsonPath = dirname(__DIR__, 3) . '/data/fontawesome-icons.json';
+            
+            if (file_exists($jsonPath)) {
+                $icons = json_decode(file_get_contents($jsonPath), true) ?: [];
+            } else {
+                $icons = [];
+            }
+        }
 
         return apply_filters('pitea_customisation/icons', $icons);
     }

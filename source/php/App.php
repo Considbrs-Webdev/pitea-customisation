@@ -30,7 +30,7 @@ class App
     private function registerInstances(): void
     {
         $classes = [
-            Customisations\IconReplacer::class,
+            Customisations\FontAwesome::class,
             // Add more customisation classes here
             // Customisations\YourCustomClass::class,
         ];
