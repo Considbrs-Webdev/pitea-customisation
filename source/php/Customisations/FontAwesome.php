@@ -12,8 +12,8 @@ class FontAwesome
         add_action('wp_head', [$this, 'enqueueFontAwesomeKit']);
         add_action('acf/include_field_types', [$this, 'registerAcfFieldType']);
         add_filter('acf/prepare_field/type=icon', [$this, 'convertToFontAwesomeField']);
-        add_filter('ComponentLibrary/Component/Icon/Data', [$this, 'modifyIconData'], 500, 1);
-        add_filter('ComponentLibrary/Component/Icon/Class', [$this, 'filterIconClasses'], 600, 1);
+        add_filter('ComponentLibrary/Component/Icon/Data', [$this, 'modifyIconData'], 10, 1);
+        add_filter('ComponentLibrary/Component/Icon/Class', [$this, 'filterIconClasses'], 10, 1);
     }
 
     /**
@@ -47,13 +47,20 @@ class FontAwesome
      */
     public function modifyIconData(array $data): array
     {
+        if (!isset($data['icon']) || !is_string($data['icon']) || strpos($data['icon'], 'fa-') !== 0) {
+            return $data;
+        }
+
         $data['componentElement'] = 'i';
         
         $icon = explode(' ', $data['icon']);
         $data['classList'] += $icon;
+        
+        $data['icon'] = str_replace(' ', '-', $data['icon']);
 
-        if (isset($data['icon']) && is_string($data['icon']) && strpos($data['icon'], 'fa-') === 0) {
-            $data['icon'] = str_replace(' ', '-', $data['icon']);
+        // Remove data-material-symbol attribute for FontAwesome icons
+        if (isset($data['attribute']['data-material-symbol'])) {
+            unset($data['attribute']['data-material-symbol']);
         }
 
         return $data;
@@ -82,9 +89,25 @@ class FontAwesome
         $classes = array_values(array_filter(
             $classes,
             function ($class) {
-                return strpos($class, 'material-symbols') !== 0;
+                // Remove material-symbols classes
+                if (strpos($class, 'material-symbols') === 0) {
+                    return false;
+                }
+                // Remove c-icon--material classes
+                if (strpos($class, 'c-icon--material') === 0) {
+                    return false;
+                }
+                return true;
             }
         ));
+
+        // Replace c-icon--size-* with fa-*
+        $classes = array_map(function ($class) {
+            if (preg_match('/^c-icon--size-(.+)$/', $class, $matches)) {
+                return 'fa-icon-size-' . $matches[1];
+            }
+            return $class;
+        }, $classes);
 
         return $classes;
     }
