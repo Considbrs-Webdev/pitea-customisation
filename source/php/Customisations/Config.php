@@ -14,6 +14,9 @@ class Config
 
         // Specifiy Font Awesome archive link icon for service information
         add_filter('Modularity/ServiceInformation/Module/ArchiveLink/Icon', [$this, 'setServiceInfoArchiveLinkIcon']);
+
+        // Remove image from news item when used in posts module
+        add_filter('ComponentLibrary/Component/NewsItem/Data', [$this, 'removeImageFromNewsItem']);
     }
 
     /**
@@ -30,5 +33,22 @@ class Config
     public function setServiceInfoArchiveLinkIcon(): string
     {
         return 'fa-solid fa-arrow-right';
+    }
+
+    /**
+     * Remove image from news item when used in posts module
+     *
+     * @param array $data
+     * @return array
+     */
+    public function removeImageFromNewsItem(array $data): array
+    {
+        if (!in_array('module.posts.news-item', $data['context'])) {
+            return $data;
+        }
+
+        $data['image'] = null;
+
+        return $data;
     }
 }
