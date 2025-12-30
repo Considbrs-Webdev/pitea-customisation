@@ -31,7 +31,9 @@ class App
     {
         $classes = [
             Customisations\Config::class,
+            Customisations\Decorators::class,
             Customisations\FontAwesome::class,
+            Customisations\News::class,
             // Add more customisation classes here
             // Customisations\YourCustomClass::class,
         ];
