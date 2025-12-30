@@ -27,6 +27,4 @@ if (file_exists(PITEA_CUSTOMISATION_PATH . 'vendor/autoload.php')) {
 }
 
 // Initialize the plugin
-add_action('plugins_loaded', function () {
-    new App();
-});
+new App();

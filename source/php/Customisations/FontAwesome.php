@@ -52,9 +52,9 @@ class FontAwesome
         }
 
         $data['componentElement'] = 'i';
-        
+
         $icon = explode(' ', $data['icon']);
-        $data['classList'] += $icon;
+        $data['classList'] = array_merge($data['classList'], $icon);
         
         $data['icon'] = str_replace(' ', '-', $data['icon']);
 
