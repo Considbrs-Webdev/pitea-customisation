@@ -10,7 +10,7 @@ use Municipio\PostObject\Decorators\AbstractPostObjectDecorator;
  *
  * Decorator to modify news post objects to return date as archive date format.
  *
- * @package AlingsasCustomisation\Decorators
+ * @package PiteaCustomisation\Decorators
  */
 class NewsDateDecorator extends AbstractPostObjectDecorator implements PostObjectInterface {
     public function __construct(PostObjectInterface $postObject) {
