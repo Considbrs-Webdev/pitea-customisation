@@ -1,0 +1,198 @@
+/* TinyMCE FontAwesome Icon Picker Styles */
+
+.tinymce-fa-icon-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 10px;
+    max-height: 280px;
+    overflow-y: auto;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.tinymce-fa-icon-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    padding: 1rem !important;
+}
+
+.tinymce-fa-icon-option:hover {
+    background: #0073aa;
+    border-color: #0073aa;
+    color: #fff;
+}
+
+.tinymce-fa-icon-option:hover i {
+    color: #fff;
+}
+
+.tinymce-fa-icon-option i {
+    font-size: 50px;
+    color: #333;
+    transition: color 0.15s ease;
+}
+
+.tinymce-fa-icon-loading,
+.tinymce-fa-icon-no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+/* Fix for TinyMCE modal container */
+.mce-container .tinymce-fa-icon-grid {
+    margin-top: 10px;
+}
+
+.mce-container .tinymce-fa-icon-option i.fa-solid {
+    font-weight: 900;
+}
+
+.mce-container .tinymce-fa-icon-option i.fa-regular {
+    font-weight: 400;
+}
+
+/* Quicktags Modal Styles */
+.quicktag-fa-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 100100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quicktag-fa-modal {
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+    width: 600px;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.quicktag-fa-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.quicktag-fa-modal-header h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.quicktag-fa-modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    line-height: 1;
+}
+
+.quicktag-fa-modal-close:hover {
+    color: #000;
+}
+
+.quicktag-fa-modal-body {
+    padding: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.quicktag-fa-search {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+.quicktag-fa-search:focus {
+    outline: none;
+    border-color: #0073aa;
+    box-shadow: 0 0 0 1px #0073aa;
+}
+
+.quicktag-fa-icon-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    padding: 10px;
+    max-height: 350px;
+    overflow-y: auto;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.quicktag-fa-icon-grid .tinymce-fa-icon-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    aspect-ratio: 1;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    padding: 8px !important;
+}
+
+.quicktag-fa-icon-grid .tinymce-fa-icon-option:hover {
+    background: #0073aa;
+    border-color: #0073aa;
+    color: #fff;
+}
+
+.quicktag-fa-icon-grid .tinymce-fa-icon-option:hover i {
+    color: #fff;
+}
+
+.quicktag-fa-icon-grid .tinymce-fa-icon-option i {
+    font-size: 50px;
+    color: #333;
+    transition: color 0.15s ease;
+}
+
+.quicktag-fa-icon-grid .tinymce-fa-icon-loading,
+.quicktag-fa-icon-grid .tinymce-fa-icon-no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+.quicktag-fa-icon-grid .tinymce-fa-icon-option i.fa-solid {
+    font-weight: 900;
+}
+
+.quicktag-fa-icon-grid .tinymce-fa-icon-option i.fa-regular {
+    font-weight: 400;
+}

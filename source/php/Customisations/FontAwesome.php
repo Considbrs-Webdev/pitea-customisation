@@ -10,10 +10,34 @@ class FontAwesome
     public function __construct()
     {
         add_action('wp_head', [$this, 'enqueueFontAwesomeKit']);
+        add_action('admin_head', [$this, 'enqueueFontAwesomeKit']);
         add_action('acf/include_field_types', [$this, 'registerAcfFieldType']);
         add_filter('acf/prepare_field/type=icon', [$this, 'convertToFontAwesomeField']);
         add_filter('ComponentLibrary/Component/Icon/Data', [$this, 'modifyIconData'], 10, 1);
         add_filter('ComponentLibrary/Component/Icon/Class', [$this, 'filterIconClasses'], 10, 1);
+
+        // TinyMCE FontAwesome icon picker
+        add_filter('mce_external_plugins', [$this, 'registerTinyMcePlugin'], 50);
+        add_filter('mce_buttons', [$this, 'addTinyMceButton'], 50);
+        add_action('admin_enqueue_scripts', [$this, 'enqueueTinyMceStyles'], 50);
+
+        // Gutenberg FontAwesome icon picker
+        add_action('enqueue_block_editor_assets', [$this, 'enqueueGutenbergAssets']);
+
+        add_filter('tiny_mce_before_init', function ($settings) {
+            $settings['setup'] = <<<JS
+            function (editor) {
+                editor.on('init', function () {
+                    var script = editor.getDoc().createElement('script');
+                    script.src = 'https://kit.fontawesome.com/be6ad42a19.js';
+                    script.crossOrigin = 'anonymous';
+                    editor.getDoc().head.appendChild(script);
+                });
+            }
+            JS;
+
+            return $settings;
+        });
     }
 
     /**
@@ -131,5 +155,93 @@ class FontAwesome
         $field['allow_null'] = 1;
 
         return $field;
+    }
+
+    /**
+     * Register the TinyMCE FontAwesome plugin
+     *
+     * @param array $plugins Array of TinyMCE plugins
+     * @return array Modified plugins array
+     */
+    public function registerTinyMcePlugin($plugins): array
+    {
+        $plugins['fontawesome_icons'] = plugin_dir_url(dirname(__DIR__, 2)) . 'assets/js/tinymce-fontawesome-plugin.js';
+        return $plugins;
+    }
+
+    /**
+     * Add the FontAwesome button to TinyMCE toolbar
+     *
+     * @param array $buttons Array of TinyMCE buttons
+     * @return array Modified buttons array
+     */
+    public function addTinyMceButton(array $buttons): array
+    {
+        $buttons[] = 'fontawesome_icons';
+        return $buttons;
+    }
+
+    /**
+     * Enqueue TinyMCE FontAwesome styles in admin
+     *
+     * @return void
+     */
+    public function enqueueTinyMceStyles(): void
+    {
+        wp_enqueue_style(
+            'tinymce-fontawesome-plugin',
+            plugin_dir_url(dirname(__DIR__, 2)) . 'assets/css/tinymce-fontawesome-plugin.css',
+            [],
+            '1.0.0'
+        );
+
+        // Enqueue the script for Quicktags (Text mode) as well
+        wp_enqueue_script(
+            'quicktags-fontawesome-plugin',
+            plugin_dir_url(dirname(__DIR__, 2)) . 'assets/js/tinymce-fontawesome-plugin.js',
+            ['quicktags'],
+            '1.0.0',
+            true
+        );
+
+        // Make sure FontAwesome is loaded in admin for the icon picker
+        wp_enqueue_script(
+            'fontawesome-kit-admin',
+            'https://kit.fontawesome.com/be6ad42a19.js',
+            [],
+            null,
+            true
+        );
+    }
+
+    /**
+     * Enqueue Gutenberg block editor assets
+     *
+     * @return void
+     */
+    public function enqueueGutenbergAssets(): void
+    {
+        $assetFile = dirname(__DIR__, 3) . '/dist/gutenberg/index.asset.php';
+
+        if (!file_exists($assetFile)) {
+            return;
+        }
+
+        $asset = include $assetFile;
+
+        wp_enqueue_script(
+            'pitea-gutenberg-fontawesome',
+            plugin_dir_url(dirname(__DIR__, 2)) . 'dist/gutenberg/index.js',
+            $asset['dependencies'],
+            $asset['version'],
+            true
+        );
+
+        wp_enqueue_style(
+            'pitea-gutenberg-fontawesome-editor',
+            plugin_dir_url(dirname(__DIR__, 2)) . 'dist/gutenberg/style-index.css',
+            ['wp-components'],
+            $asset['version']
+        );
     }
 }

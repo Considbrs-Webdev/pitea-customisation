@@ -1,0 +1,123 @@
+/**
+ * Gutenberg Editor Styles for Font Awesome Icon Picker
+ */
+
+// Icon Picker Modal
+.pitea-fa-icon-modal {
+  .components-modal__content {
+    padding: 0;
+    margin-top: 50px; // Space for fixed header
+    overflow: hidden;
+  }
+
+  .components-modal__header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 12px 16px;
+    height: 50px !important;
+    border-bottom: 1px solid #ddd;
+    background: #fff;
+  }
+}
+
+.pitea-fa-icon-picker {
+  width: 400px;
+  max-width: 90vw;
+
+  &__search {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+
+    .components-search-control {
+      margin-bottom: 0;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    padding: 12px;
+    max-height: 280px;
+    overflow-y: auto;
+    background: #f9f9f9;
+  }
+
+  &__option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    aspect-ratio: 1;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    padding: 8px;
+
+    &:hover {
+      background: #0073aa;
+      border-color: #0073aa;
+
+      i {
+        color: #fff;
+      }
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px #0073aa;
+    }
+
+    i {
+      font-size: 24px;
+      color: #333;
+      transition: color 0.15s ease;
+    }
+  }
+
+  &__loading,
+  &__no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 24px;
+    color: #666;
+  }
+
+  &__loading-more {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 12px;
+  }
+}
+
+// Inline icon styles in the editor
+// Make icons inherit the text size and align properly
+.block-editor-rich-text__editable {
+  i[class*="fa-"] {
+    font-size: 1em;
+    line-height: inherit;
+    vertical-align: baseline;
+    display: inline;
+
+    // Ensure proper font weights for icon styles
+    &.fa-solid {
+      font-weight: 900;
+    }
+
+    &.fa-regular {
+      font-weight: 400;
+    }
+
+    &.fa-brands {
+      font-weight: 400;
+    }
+
+    // Add spacing around icons
+    margin-inline: 0.1em;
+  }
+}
