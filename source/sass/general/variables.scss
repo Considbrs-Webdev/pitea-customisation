@@ -1,4 +1,6 @@
 :root {
+  --border-radius-small: 8px;
+
   --color-darjnalen-dark-1: #2b6933;
   --color-darjnalen-dark-2: #2b512b;
   --color-darjnalen-dark-3: #233b1f;
@@ -11,6 +13,11 @@
   --color-paren-light-1: #ba8a48;
   --color-paren-light-3: #e7d6bf;
   --color-paren-light-4: #f6efe5;
+
+  --color-stain-dark-3: #000000;
+
+  --font-size-small: 16px;
+  --font-size-heading-4: 18px;
 
   --transition-duration-fast: 0.2s;
   --transition-duration-medium: 0.3s;

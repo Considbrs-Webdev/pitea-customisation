@@ -35,6 +35,7 @@ class App
             Customisations\FontAwesome::class,
             Customisations\News::class,
             Customisations\Modules\InlayList::class,
+            Customisations\Modules\Posts::class,
             // Add more customisation classes here
             // Customisations\YourCustomClass::class,
         ];
