@@ -13,8 +13,8 @@
     },
     "devDependencies": {
         "@babel/runtime": "^7.28.4",
-        "@wordpress/scripts": "^28.0.0",
-        "sass": "^1.69.0",
-        "vite": "^5.0.0"
+        "@wordpress/scripts": "^31.2.0",
+        "sass": "^1.97.2",
+        "vite": "^7.3.0"
     }
 }

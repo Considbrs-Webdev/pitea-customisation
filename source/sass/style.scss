@@ -1,1 +1,4 @@
-@import "modules/posts-news";
+@use "general/variables";
+
+@use "modules/inlay-list";
+@use "modules/posts-news";
