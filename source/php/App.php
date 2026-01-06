@@ -34,6 +34,7 @@ class App
             Customisations\Decorators::class,
             Customisations\FontAwesome::class,
             Customisations\News::class,
+            Customisations\TextModule::class,
             // Add more customisation classes here
             // Customisations\YourCustomClass::class,
         ];
