@@ -1,8 +1,8 @@
 <?php
 
-namespace PiteaCustomisation\Customisations;
+namespace PiteaCustomisation\Customisations\Modules;
 
-class TextModule
+class Text
 {
     private const TEXT_MODULE_FIELD_GROUP = 'group_5891b49127038';
 

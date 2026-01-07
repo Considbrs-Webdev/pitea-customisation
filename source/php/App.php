@@ -36,7 +36,7 @@ class App
             Customisations\News::class,
             Customisations\Modules\InlayList::class,
             Customisations\Modules\Posts::class,
-            Customisations\TextModule::class,
+            Customisations\Modules\Text::class,
             // Add more customisation classes here
             // Customisations\YourCustomClass::class,
         ];
