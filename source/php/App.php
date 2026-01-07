@@ -30,6 +30,7 @@ class App
     private function registerInstances(): void
     {
         $classes = [
+            Customisations\Accessibility::class,
             Customisations\Config::class,
             Customisations\Decorators::class,
             Customisations\FontAwesome::class,

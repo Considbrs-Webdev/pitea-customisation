@@ -9,11 +9,28 @@ class Config
      */
     public function __construct()
     {
+        // Load plugin textdomain for translations
+        add_action('init', [$this, 'loadTextdomain']);
+
         // Turn off ACF Extended Enhanced UI
         add_action('acfe/init', [$this, 'configureAcfExtended']);
 
         // Specifiy Font Awesome archive link icon for service information
         add_filter('Modularity/ServiceInformation/Module/ArchiveLink/Icon', [$this, 'setServiceInfoArchiveLinkIcon']);
+    }
+
+    /**
+     * Load plugin textdomain for translations
+     *
+     * @return void
+     */
+    public function loadTextdomain(): void
+    {
+        load_plugin_textdomain(
+            'pitea-customisation',
+            false,
+            dirname(dirname(dirname(__DIR__))) . '/languages'
+        );
     }
 
     /**
