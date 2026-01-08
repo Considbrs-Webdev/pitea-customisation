@@ -1,0 +1,22 @@
+.c-slider--stepper-visible {
+
+    .c-slider__container {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+  .c-slider__steppers {
+
+    justify-content: flex-start;
+    transform: translateY(0) !important;
+    .c-slider__dot {
+      display: inline-block;
+      width: 50px;
+    }
+
+    li {
+      display: inline-block;
+    }
+  }
+}
+
