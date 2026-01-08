@@ -6,12 +6,12 @@
   .c-newsitem {
     --c-newsitem-heading-color: black;
     border-top: item-border();
-    padding-top: calc(var(--base, 8px) * 2);
+    padding-top: calc(var(--base, 8px) * 3);
     row-gap: calc(var(--base, 8px));
 
     &:last-child {
       border-bottom: item-border();
-      padding-bottom: calc(var(--base, 8px) * 2);
+      padding-bottom: calc(var(--base, 8px) * 3);
     }
 
     .c-newsitem__header {

@@ -1,19 +1,37 @@
+:root {
+  --pagination-button-background: var(--color-background-card);
+  --pagination-button-text: var(--color-base);
+  --pagination-button-disabled-background: var(--color-background-card);
+  --pagination-button-disabled-text: color-mix(
+    in srgb,
+    var(--color-background-card) 80%,
+    var(--color-base) 20%
+  );
+  --pagination-button-prevnext-background: color-mix(
+    in srgb,
+    var(--color-background-card) 80%,
+    var(--color-base) 20%
+  );
+  --pagination-button-prevnext-text: var(--color-base);
+  --pagination-button-active-background: var(--color-base);
+  --pagination-button-active-text: var(--color-background-card);
+}
+
 .c-pagination {
   --c-icon-size: calc(var(--font-size-small) * 1.5);
-  --color-button-disabled-text: var(--color-darjnalen-light-2);
   --pagination-item-padding: 16px 22px;
 
   .c-button {
-    background: var(--color-darjnalen-light-4);
-    color: var(--color-darjnalen-dark-3);
+    background: var(--pagination-button-background);
+    color: var(--pagination-button-text);
     border-radius: var(--border-radius-xsmall);
     font-size: var(--font-size-small);
     min-height: calc(var(--font-size-small) * 3.25);
     min-width: calc(var(--font-size-small) * 3.25) !important;
 
     &:is(:disabled) {
-      background: var(--color-darjnalen-light-4);
-      color: var(--color-darjnalen-light-3);
+      background: var(--pagination-button-disabled-background);
+      color: var(--pagination-button-disabled-text);
     }
 
     &__label {
@@ -25,15 +43,46 @@
   .c-pagination__item--previous,
   .c-pagination__item--next {
     .c-button:not(:disabled) {
-      background: var(--color-darjnalen-light-2);
-      color: var(--color-darjnalen-dark-3);
+      background: var(--pagination-button-prevnext-background);
+      color: var(--pagination-button-prevnext-text);
     }
   }
 
   .c-pagination__item--is-active {
     &.c-button {
-      background: var(--color-darjnalen-dark-3);
-      color: var(--color-darjnalen-light-4);
+      background: var(--pagination-button-active-background);
+      color: var(--pagination-button-active-text);
     }
   }
+
+  .c-button__filled--default .c-button__label-text,
+  .c-button__filled--default .c-button__label-icon,
+  .c-button__filled--deafult .c-button__label-text,
+  .c-button__filled--deafult .c-button__label-icon,
+  .c-button:disabled:not(.c-button--no-disabled-color) * {
+    color: inherit;
+  }
+}
+
+.post-type-archive-news,
+.post-type-archive-nyheter {
+  --pagination-button-background: var(--color-darjnalen-light-4);
+  --pagination-button-text: var(--color-darjnalen-dark-3);
+  --pagination-button-disabled-background: var(--color-darjnalen-light-4);
+  --pagination-button-disabled-text: var(--color-darjnalen-light-3);
+  --pagination-button-prevnext-background: var(--color-darjnalen-light-2);
+  --pagination-button-prevnext-text: var(--color-darjnalen-dark-3);
+  --pagination-button-active-background: var(--color-darjnalen-dark-3);
+  --pagination-button-active-text: var(--color-darjnalen-light-4);
+}
+
+.s-municipal_event-archive {
+  --pagination-button-background: var(--color-paren-light-4);
+  --pagination-button-text: var(--color-paren-dark-3);
+  --pagination-button-disabled-background: var(--color-paren-light-4);
+  --pagination-button-disabled-text: var(--color-paren-light-3);
+  --pagination-button-prevnext-background: var(--color-paren-light-3);
+  --pagination-button-prevnext-text: var(--color-paren-dark-3);
+  --pagination-button-active-background: var(--color-paren-dark-3);
+  --pagination-button-active-text: var(--color-paren-light-4);
 }
