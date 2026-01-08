@@ -13,11 +13,15 @@ class Accessibility
 
     public function __construct()
     {
-        add_filter('Municipio/Template/single/viewData', [$this, 'addAccessibilityMenuToViewData']);
+        add_filter('Municipio/Template/viewData', [$this, 'addAccessibilityMenuToViewData']);
     }
 
     public function addAccessibilityMenuToViewData(array $data): array
     {
+        if (!is_singular()) {
+            return $data;
+        }
+        
         $accessibilityMenuItem = $this->getReadSpeakerMenuItem();
         
         $data['accessibilityMenu']['items']['readspeaker'] = $accessibilityMenuItem;
@@ -64,8 +68,7 @@ class Accessibility
         return [
             'icon' => 'fa-solid fa-headphones',
             'href' => $readspeakerUrl,
-            'text' => __('Listen', 'pitea-customisation'),
-            'label' => __('Listen to this page', 'pitea-customisation'),
+            'text' => __('Listen to this page', 'pitea-customisation'),
             'style' => self::DEFAULT_BUTTON_STYLE,
             'color' => self::DEFAULT_BUTTON_COLOR,
         ];
