@@ -1,4 +1,6 @@
+// Custom
 :root {
+  --border-radius-xsmall: 5px;
   --border-radius-small: 8px;
 
   --color-darjnalen-dark-1: #2b6933;
@@ -17,10 +19,16 @@
   --color-stain-dark-3: #000000;
 
   --font-size-small: 16px;
+  --font-size-label: 16px;
   --font-size-link: 18px;
   --font-size-heading-4: 18px;
 
   --transition-duration-fast: 0.2s;
   --transition-duration-medium: 0.3s;
   --transition-duration-slow: 0.5s;
+}
+
+// Municipio overrides
+:root {
+  --page-title-color: var(--color-stain-dark-3);
 }

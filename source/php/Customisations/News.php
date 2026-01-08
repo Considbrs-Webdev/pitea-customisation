@@ -18,12 +18,17 @@ class News
      * @return array
      */
     public function removeImageFromNewsItem(array $data): array
-    {
-        if (!in_array('module.posts.news-item', $data['context'])) {
-            return $data;
-        }
+    {  
+        $contexts = [
+            'archive.list.news-item',
+            'module.posts.news-item',
+        ];
 
-        $data['image'] = null;
+        $dataContexts = (array) ($data['context'] ?? []);
+        if (!empty(array_intersect($contexts, $dataContexts))) {
+            $data['image'] = null;
+            $data['hasPlaceholderImage'] = false;
+        }
 
         return $data;
     }
