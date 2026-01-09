@@ -31,6 +31,7 @@ class App
     {
         $classes = [
             Customisations\Accessibility::class,
+            Customisations\Breadcrumbs::class,
             Customisations\Config::class,
             Customisations\Decorators::class,
             Customisations\FontAwesome::class,

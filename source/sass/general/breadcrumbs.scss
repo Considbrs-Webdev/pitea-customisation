@@ -1,0 +1,14 @@
+.c-breadcrumb {
+  .c-icon {
+    transform: rotate(-65deg) scale(1.35);
+  }
+
+  li {
+    gap: 0.15em;
+    padding-right: 0.15em;
+
+    a {
+      text-decoration: underline;
+    }
+  }
+}
