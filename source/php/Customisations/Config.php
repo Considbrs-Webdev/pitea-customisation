@@ -17,6 +17,9 @@ class Config
 
         // Specifiy Font Awesome archive link icon for service information
         add_filter('Modularity/ServiceInformation/Module/ArchiveLink/Icon', [$this, 'setServiceInfoArchiveLinkIcon']);
+
+        // Contact banner CTA icon customization
+        add_filter('Modularity/Module/ContactBanner/CtaIcon', [$this, 'setContactBannerCtaIcon']);
     }
 
     /**
@@ -45,6 +48,16 @@ class Config
     }
 
     public function setServiceInfoArchiveLinkIcon(): string
+    {
+        return 'fa-solid fa-arrow-right';
+    }
+
+    /**
+     * Return the icon class for Contact Banner CTA
+     *
+     * @return string
+     */
+    public function setContactBannerCtaIcon(): string
     {
         return 'fa-solid fa-arrow-right';
     }
