@@ -1,8 +1,29 @@
-// Custom
+// Custom variables
 :root {
   --border-radius-xsmall: 5px;
   --border-radius-small: 8px;
 
+  --font-family-font-awesome: var(--fa-family-classic);
+  --font-size-body: 18px;
+  --font-size-small: 16px;
+  --font-size-lead: 22px;
+  --font-size-label: 16px;
+  --font-size-table-heading: 16px;
+  --font-size-table: 14px;
+  --font-size-link: 18px;
+  --font-size-button: 16px;
+  --font-size-heading-1: 50px;
+  --font-size-heading-2: 32px;
+  --font-size-heading-3: 22px;
+  --font-size-heading-4: 18px;
+
+  --transition-duration-fast: 0.2s;
+  --transition-duration-medium: 0.3s;
+  --transition-duration-slow: 0.5s;
+}
+
+// Custom colors
+:root {
   /* Blabara */
   --color-blabara-light-4: #ecf1f6;
 
@@ -65,23 +86,6 @@
   --color-viola-light-2: #ca9ac6;
   --color-viola-light-3: #e3cee5;
   --color-viola-light-4: #f4ebf6;
-
-  --font-size-body: 18px;
-  --font-size-small: 16px;
-  --font-size-lead: 22px;
-  --font-size-label: 16px;
-  --font-size-table-heading: 16px;
-  --font-size-table: 14px;
-  --font-size-link: 18px;
-  --font-size-button: 16px;
-  --font-size-heading-1: 50px;
-  --font-size-heading-2: 32px;
-  --font-size-heading-3: 22px;
-  --font-size-heading-4: 18px;
-
-  --transition-duration-fast: 0.2s;
-  --transition-duration-medium: 0.3s;
-  --transition-duration-slow: 0.5s;
 }
 
 // Municipio overrides
