@@ -2,6 +2,10 @@
 
 namespace PiteaCustomisation\Customisations;
 
+use PiteaCustomisation\Helpers\Utils;
+
+use ComponentLibrary\Component\BaseController as ComponentController;
+
 class FontAwesome
 {
     /**
@@ -13,8 +17,9 @@ class FontAwesome
         add_action('admin_head', [$this, 'enqueueFontAwesomeKit']);
         add_action('acf/include_field_types', [$this, 'registerAcfFieldType']);
         add_filter('acf/prepare_field/type=icon', [$this, 'convertToFontAwesomeField']);
-        add_filter('ComponentLibrary/Component/Icon/Data', [$this, 'modifyIconData'], 10, 1);
+        add_filter('ComponentLibrary/Component/Icon/Attribute', [$this, 'modifyIconAttributes'], 10, 1);
         add_filter('ComponentLibrary/Component/Icon/Class', [$this, 'filterIconClasses'], 10, 1);
+        add_filter('ComponentLibrary/Component/Icon/Data', [$this, 'modifyIconData'], 10, 1);
 
         // TinyMCE FontAwesome icon picker
         add_filter('mce_external_plugins', [$this, 'registerTinyMcePlugin'], 50);
@@ -61,6 +66,34 @@ class FontAwesome
         ?>
         <script src="https://kit.fontawesome.com/be6ad42a19.js" crossorigin="anonymous"></script>
         <?php
+    }
+
+    /**
+     * Modify icon attributes for FontAwesome
+     *
+     * @param string|array $attributes The icon attributes
+     * @return string|array Modified attributes
+     */
+    public function modifyIconAttributes(string|array $attributes): string|array
+    {
+        $wasString = is_string($attributes);
+
+        if ($wasString) {
+            $attributes = Utils::parseAttributes($attributes);
+        }
+
+        if (!Utils::containsInAttributes($attributes, 'fa-')) {
+            return $wasString ? ComponentController::buildAttributes($attributes) : $attributes;
+        }
+        
+        $attributes['aria-hidden'] = 'true';
+
+        unset($attributes['data-material-symbol']);
+        unset($attributes['role']);
+        unset($attributes['aria-label']);
+        unset($attributes['data-nosnippet']);
+
+        return $wasString ? ComponentController::buildAttributes($attributes) : $attributes;
     }
 
     /**
