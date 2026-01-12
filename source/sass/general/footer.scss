@@ -1,0 +1,9 @@
+.c-footer {
+   .footer-icons {
+        .o-container {
+            display: flex;
+            flex-direction: row;
+            gap: var(--base, 10px);
+        }
+    }
+}   

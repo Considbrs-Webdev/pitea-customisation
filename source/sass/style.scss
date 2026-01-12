@@ -1,7 +1,9 @@
 @use "general/variables";
 @use "general/breadcrumbs";
+@use "general/footer";
 
 @use "modules/contact-banner";
+@use "modules/container";
 @use "modules/inlay-list";
 @use "modules/posts-news";
 @use "modules/service-info";
