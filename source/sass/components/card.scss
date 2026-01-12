@@ -1,3 +1,4 @@
+.modularity-mod-manualinput {
 .c-card {
     --c-card-border-radius: var(--border-radius-small);
     overflow: hidden;
@@ -12,7 +13,7 @@
         
     }
 
-    &.c-card--has-custom-background {
+        &.c-card--has-custom-background {
         .c-card__body {
             padding: 30px 36px;
         }
@@ -96,4 +97,5 @@
             }
         }
     }
+}
 }

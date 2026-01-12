@@ -1,4 +1,5 @@
 // Container block customisations
-.t-block-container {
-  // Add container-specific styles here
+.t-block-container.t-block-align-full {
+ padding-left: 0 !important;
+ padding-right: 0 !important;
 }
