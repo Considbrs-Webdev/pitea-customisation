@@ -173,8 +173,17 @@ class Text
             return $settings;
         }
 
-        $modules = \Modularity\Editor::getPostModules($postId);
         $allModules = [];
+        $modules = \Modularity\Editor::getPostModules($postId);
+
+        // Singular or archive modules
+        if (is_singular() || is_archive()) {
+            $templateSlug = is_singular()
+                ? \Modularity\Helper\Wp::getSingleSlug()
+                : \Modularity\Helper\Wp::getArchiveSlug();
+            $templateModules = \Modularity\Editor::getPostModules($templateSlug);
+            $modules = array_merge($modules, $templateModules);
+        }
 
         if (is_array($modules)) {
             foreach ($modules as $item) {

@@ -13,9 +13,10 @@
     padding: 0;
   }
 
-  .mod-contact-banner {
-    .c-group {
-      border: 1px solid var(--contact-banner-border-color);
+  .mod-contact-banner,
+  .c-contact-banner {
+    & > .c-card {
+      border: 1px solid var(--contact-banner-border-color) !important;
     }
 
     .c-card__header {

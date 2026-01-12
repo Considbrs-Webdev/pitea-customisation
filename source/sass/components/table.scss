@@ -1,0 +1,40 @@
+:root {
+  --c-table-background-color-odd: #ddd;
+}
+
+.c-table {
+  &__head {
+    .c-table__heading {
+      font-size: var(--font-size-table-heading);
+    }
+  }
+
+  &__body {
+    .c-table__line {
+      .c-table__column {
+        border-right: 0;
+      }
+    }
+
+    .c-table__column-content {
+      font-size: var(--font-size-table);
+    }
+  }
+
+  table {
+    --color-complementary: var(--color-darjnalen-light-2);
+
+    thead {
+      th {
+        color: var(
+          --table-head-color,
+          var(--color-primary-contrasting, var(--color-white, #ffffff))
+        );
+        background-color: var(
+          --table-head-background,
+          var(--color-primary, #ae0b05)
+        );
+      }
+    }
+  }
+}

@@ -51,6 +51,18 @@
     }
   }
 
+  .s-lediga-jobb-archive {
+    --archive-filter-background: var(--color-darjnalen-light-3);
+    --c-button-primary-color: var(--color-darjnalen-dark-3);
+    --c-button-primary-color-contrasting: var(--color-darjnalen-light-4);
+    --c-table-background-color-odd: color-mix(
+      in srgb,
+      var(--color-darjnalen-light-4) 40%,
+      white 60%
+    );
+    --c-table-background-color-even: var(--color-darjnalen-light-3);
+  }
+
   .s-municipal_event-archive {
     --archive-filter-background: var(--color-paren-light-3);
     --c-button-primary-color: var(--color-paren-dark-3);
