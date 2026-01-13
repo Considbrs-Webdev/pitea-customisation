@@ -53,8 +53,16 @@
                 this.updateModalPreview(value, name);
             }
             
-            // Update modal clear button visibility
-            this.updateModalClearButton();
+            // Initialize all groups as collapsed
+            this.$('.acf-pitea-color-picker-group').each(function() {
+                var $group = $(this);
+                var $header = $group.find('.acf-pitea-color-picker-group-header');
+                var isExpanded = $header.attr('aria-expanded') === 'true';
+                
+                if (!isExpanded) {
+                    $group.addClass('is-collapsed');
+                }
+            });
         },
 
         onOpenModal: function(e) {
@@ -66,8 +74,6 @@
                 var name = $nameEl.length ? $nameEl.text() : null;
                 this.updateModalPreview(value, name);
             }
-            // Update modal clear button visibility
-            this.updateModalClearButton();
             this.$modal().fadeIn(200);
             $('body').addClass('acf-pitea-color-picker-modal-open');
         },
@@ -102,9 +108,6 @@
             this.updatePreview(color, name);
             this.updateModalPreview(color, name);
             
-            // Update modal clear button visibility
-            this.updateModalClearButton();
-            
             // Hide custom input if open
             this.$customInput().slideUp();
             
@@ -136,9 +139,6 @@
             this.updatePreview(hex, 'Custom');
             this.updateModalPreview(hex, 'Custom');
             
-            // Update modal clear button visibility
-            this.updateModalClearButton();
-            
             // Remove selection from palette options
             this.$('.acf-pitea-color-picker-option').removeClass('is-selected');
             
@@ -150,9 +150,7 @@
 
         onClear: function(e) {
             e.preventDefault();
-            // Prevent event from bubbling to modal overlay which would close the modal
             e.stopPropagation();
-            
             this.$input().val('').trigger('change');
             this.updatePreview('');
             this.updateModalPreview('');
@@ -165,9 +163,6 @@
                     $(this).remove();
                 });
             }
-            
-            // Update modal clear button visibility
-            this.updateModalClearButton();
         },
 
         onHexKeypress: function(e) {
@@ -182,11 +177,24 @@
             e.preventDefault();
             var $header = $(e.currentTarget);
             var $group = $header.closest('.acf-pitea-color-picker-group');
+            var $content = $group.find('.acf-pitea-color-picker-group-content');
             var isExpanded = $header.attr('aria-expanded') === 'true';
             
-            // Toggle the collapsed class - CSS handles the animation via transitions
+            // Toggle the collapsed class instead of using slideToggle
+            // This ensures CSS controls the display properly
             $group.toggleClass('is-collapsed', isExpanded);
             $header.attr('aria-expanded', !isExpanded);
+            
+            // Use slideToggle for smooth animation, but let CSS handle the final state
+            if (isExpanded) {
+                $content.slideUp(200, function() {
+                    // Ensure it stays hidden via CSS class
+                    $group.addClass('is-collapsed');
+                });
+            } else {
+                $group.removeClass('is-collapsed');
+                $content.slideDown(200);
+            }
         },
 
         updatePreview: function(color, name) {
@@ -194,7 +202,11 @@
             var $trigger = this.$trigger();
             
             if (!color) {
-                $preview.html(this.renderEmptyPreview());
+                $preview.html(
+                    '<span class="acf-pitea-color-picker-no-selection">' + 
+                    acf.__('Select Color') + 
+                    '</span>'
+                );
                 // Update trigger title
                 $trigger.attr('title', acf.__('Select Color'));
                 // Remove clear button if exists
@@ -204,13 +216,24 @@
                 return;
             }
             
-            // Get color name if not provided
-            if (!name) {
-                name = this.getColorNameByHex(color);
+            // Use provided name or try to find it from localized flat colors
+            if (!name && typeof piteaColorPicker !== 'undefined' && piteaColorPicker.flatColors) {
+                for (var colorName in piteaColorPicker.flatColors) {
+                    if (piteaColorPicker.flatColors[colorName].toLowerCase() === color.toLowerCase()) {
+                        name = colorName;
+                        break;
+                    }
+                }
             }
+            
             name = name || color;
             
-            $preview.html(this.renderTriggerPreview(color, name));
+            $preview.html(
+                '<div class="acf-pitea-color-picker-preview">' +
+                    '<span class="acf-pitea-color-picker-swatch" style="background-color: ' + acf.escAttr(color) + ';"></span>' +
+                    '<span class="acf-pitea-color-picker-name">' + acf.escHtml(name) + '</span>' +
+                '</div>'
+            );
             
             // Update trigger title with full info for tooltip
             $trigger.attr('title', name + ' (' + color + ')');
@@ -234,17 +257,35 @@
             }
             
             if (!color) {
-                $modalPreview.html(this.renderEmptyModalPreview());
+                $modalPreview.html(
+                    '<div class="acf-pitea-color-picker-modal-preview-empty">' +
+                        acf.__('No color selected') +
+                    '</div>'
+                );
                 return;
             }
             
-            // Get color name if not provided
-            if (!name) {
-                name = this.getColorNameByHex(color);
+            // Use provided name or try to find it from localized flat colors
+            if (!name && typeof piteaColorPicker !== 'undefined' && piteaColorPicker.flatColors) {
+                for (var colorName in piteaColorPicker.flatColors) {
+                    if (piteaColorPicker.flatColors[colorName].toLowerCase() === color.toLowerCase()) {
+                        name = colorName;
+                        break;
+                    }
+                }
             }
+            
             name = name || color;
             
-            $modalPreview.html(this.renderModalPreview(color, name));
+            $modalPreview.html(
+                '<div class="acf-pitea-color-picker-modal-preview-content">' +
+                    '<span class="acf-pitea-color-picker-modal-preview-swatch" style="background-color: ' + acf.escAttr(color) + ';"></span>' +
+                    '<div class="acf-pitea-color-picker-modal-preview-info">' +
+                        '<span class="acf-pitea-color-picker-modal-preview-name">' + acf.escHtml(name) + '</span>' +
+                        '<span class="acf-pitea-color-picker-modal-preview-hex">' + acf.escHtml(color) + '</span>' +
+                    '</div>' +
+                '</div>'
+            );
         },
 
         isValidHex: function(hex) {
@@ -258,96 +299,6 @@
             hex = hex.toUpperCase();
             // Add # prefix
             return '#' + hex;
-        },
-
-        /**
-         * Get color name by hex value from localized flat colors
-         *
-         * @param {string} color Hex color value
-         * @return {string|null} Color name or null if not found
-         */
-        getColorNameByHex: function(color) {
-            if (typeof piteaColorPicker === 'undefined' || !piteaColorPicker.flatColors) {
-                return null;
-            }
-            
-            for (var colorName in piteaColorPicker.flatColors) {
-                if (piteaColorPicker.flatColors[colorName].toLowerCase() === color.toLowerCase()) {
-                    return colorName;
-                }
-            }
-            
-            return null;
-        },
-
-        /**
-         * Render empty preview HTML for trigger button
-         *
-         * @return {string} HTML string
-         */
-        renderEmptyPreview: function() {
-            return '<span class="acf-pitea-color-picker-no-selection">' + 
-                acf.__('Select Color') + 
-                '</span>';
-        },
-
-        /**
-         * Render preview HTML for trigger button
-         *
-         * @param {string} color Hex color value
-         * @param {string} name Color name
-         * @return {string} HTML string
-         */
-        renderTriggerPreview: function(color, name) {
-            return '<div class="acf-pitea-color-picker-preview">' +
-                '<span class="acf-pitea-color-picker-swatch" style="background-color: ' + acf.escAttr(color) + ';"></span>' +
-                '<span class="acf-pitea-color-picker-name">' + acf.escHtml(name) + '</span>' +
-                '</div>';
-        },
-
-        /**
-         * Render empty preview HTML for modal
-         *
-         * @return {string} HTML string
-         */
-        renderEmptyModalPreview: function() {
-            return '<div class="acf-pitea-color-picker-modal-preview-empty">' +
-                acf.__('No color selected') +
-                '</div>';
-        },
-
-        /**
-         * Render preview HTML for modal
-         *
-         * @param {string} color Hex color value
-         * @param {string} name Color name
-         * @return {string} HTML string
-         */
-        renderModalPreview: function(color, name) {
-            return '<div class="acf-pitea-color-picker-modal-preview-content">' +
-                '<span class="acf-pitea-color-picker-modal-preview-swatch" style="background-color: ' + acf.escAttr(color) + ';"></span>' +
-                '<div class="acf-pitea-color-picker-modal-preview-info">' +
-                    '<span class="acf-pitea-color-picker-modal-preview-name">' + acf.escHtml(name) + '</span>' +
-                    '<span class="acf-pitea-color-picker-modal-preview-hex">' + acf.escHtml(color) + '</span>' +
-                '</div>' +
-                '</div>';
-        },
-
-        /**
-         * Update modal clear button visibility based on current value
-         */
-        updateModalClearButton: function() {
-            var $clearBtn = this.$('.acf-pitea-color-picker-clear');
-            if (!$clearBtn.length) {
-                return;
-            }
-            
-            var hasValue = !!this.$input().val();
-            if (hasValue) {
-                $clearBtn.removeClass('is-hidden');
-            } else {
-                $clearBtn.addClass('is-hidden');
-            }
         }
     });
 

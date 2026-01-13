@@ -239,10 +239,8 @@ class ColorPickerField extends \acf_field
                     </div>
 
                     <div class="acf-pitea-color-picker-modal-footer">
-                        <?php if ($field['allow_null']): ?>
-                            <button 
-                                type="button" 
-                                class="acf-pitea-color-picker-clear button <?php echo $currentValue ? '' : 'is-hidden'; ?>">
+                        <?php if ($field['allow_null'] && $currentValue): ?>
+                            <button type="button" class="acf-pitea-color-picker-clear button">
                                 <?php _e('Clear', 'pitea-customisation'); ?>
                             </button>
                         <?php endif; ?>
@@ -300,7 +298,8 @@ class ColorPickerField extends \acf_field
                         $varName = trim($matches[1]);
                         $hex = strtoupper(trim($matches[2]));
 
-                        // Format variable name to readable color name (e.g., "branbara-base" -> "Branbara Base")
+                        // Extract group name from variable (e.g., "branbara-base" -> "Branbara Base")
+                        $nameParts = explode('-', $varName);
                         $colorName = $this->formatVariableName($varName);
 
                         $colorGroups[$currentGroup][] = [
