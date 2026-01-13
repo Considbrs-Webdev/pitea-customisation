@@ -36,6 +36,7 @@ class App
             Customisations\Decorators::class,
             Customisations\FontAwesome::class,
             Customisations\News::class,
+            Customisations\Pagination::class,
             Customisations\Modules\InlayList::class,
             Customisations\Modules\Container::class,
             Customisations\Modules\Posts::class,

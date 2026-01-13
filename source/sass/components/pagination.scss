@@ -91,8 +91,6 @@
 // Mobile pagination: Show only first, active, last pages with ellipses
 @media (max-width: 767px) {
   .c-pagination {
-    // Show first and last page numbers (override u-display--none@xs)
-    // Target direct children that are page links, not prev/next arrows or wrapper
     .c-pagination__list > .c-pagination__item.u-display--none\@xs:not(.c-pagination__item--previous):not(.c-pagination__item--next):not(.c-pagination__page-wrapper) {
       display: flex !important;
     }
@@ -108,7 +106,21 @@
 
       // Show only the active page
       &:has(.c-pagination__item--is-active) {
-        display: flex;
+        display: flex !important;
+      }
+    }
+
+    // Show page 1 when current page is 2 (using data attribute from PHP)
+    &[data-show-page-1="true"] {
+      .c-pagination__pages .c-pagination__item[data-js-pagination-index="1"] {
+        display: flex !important;
+      }
+    }
+
+    // Show last page when current page is second-to-last (using data attribute from PHP)
+    &[data-show-last-page="true"] {
+      .c-pagination__pages .c-pagination__item:last-child {
+        display: flex !important;
       }
     }
   }
