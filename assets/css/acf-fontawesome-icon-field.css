@@ -64,10 +64,6 @@
     z-index: 1000;
 }
 
-.acf-fontawesome-icon-dropdown.is-open {
-    display: block;
-}
-
 .acf-fontawesome-icon-option {
     display: flex;
     align-items: center;

@@ -35,6 +35,7 @@ class App
             Customisations\Config::class,
             Customisations\Decorators::class,
             Customisations\FontAwesome::class,
+            Customisations\ColorPicker::class,
             Customisations\News::class,
             Customisations\Pagination::class,
             Customisations\Modules\InlayList::class,
