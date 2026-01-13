@@ -87,3 +87,29 @@
   --pagination-button-active-background: var(--color-paren-dark-3);
   --pagination-button-active-text: var(--color-paren-light-4);
 }
+
+// Mobile pagination: Show only first, active, last pages with ellipses
+@media (max-width: 767px) {
+  .c-pagination {
+    // Show first and last page numbers (override u-display--none@xs)
+    // Target direct children that are page links, not prev/next arrows or wrapper
+    .c-pagination__list > .c-pagination__item.u-display--none\@xs:not(.c-pagination__item--previous):not(.c-pagination__item--next):not(.c-pagination__page-wrapper) {
+      display: flex !important;
+    }
+
+    // Always show ellipses (override u-display--none@xs)
+    .c-pagination__list > .c-pagination__item:has(.c-icon--more-horiz) {
+      display: flex !important;
+    }
+
+    // Hide all non-active pages inside the page wrapper
+    .c-pagination__pages .c-pagination__item {
+      display: none;
+
+      // Show only the active page
+      &:has(.c-pagination__item--is-active) {
+        display: flex;
+      }
+    }
+  }
+}
