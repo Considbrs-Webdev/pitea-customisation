@@ -13,7 +13,21 @@ class Accessibility
 
     public function __construct()
     {
-        add_filter('Municipio/Template/viewData', [$this, 'addAccessibilityMenuToViewData']);
+        add_filter('Municipio/Template/viewData', [$this, 'maybeAddPrintMenuToViewData'], 10, 1);
+        add_filter('Municipio/Template/viewData', [$this, 'addAccessibilityMenuToViewData'], 20, 1);
+    }
+
+    public function maybeAddPrintMenuToViewData(array $data): array
+    {
+        if (!is_singular()) {
+            return $data;
+        }
+        
+        if (!isset($data['accessibilityMenu']['print'])) {
+            $data['accessibilityMenu']['items']['print'] = $this->getPrintMenuItem();
+        }
+        
+        return $data;
     }
 
     public function addAccessibilityMenuToViewData(array $data): array
@@ -21,9 +35,9 @@ class Accessibility
         if (!is_singular()) {
             return $data;
         }
-        
+
         $accessibilityMenuItem = $this->getReadSpeakerMenuItem();
-        
+
         $data['accessibilityMenu']['items']['readspeaker'] = $accessibilityMenuItem;
         $data['accessibilityMenu']['items'] = $this->sortMenuItems($data['accessibilityMenu']['items']);
         $data['accessibilityMenu']['items'] = $this->changeDefaultStyles($data['accessibilityMenu']['items']);
@@ -64,13 +78,24 @@ class Accessibility
     {
         $currentUrl = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         $readspeakerUrl = sprintf(self::READSPEAKER_BASE_URL, self::READSPEAKER_CUSTOMER_ID, self::READSPEAKER_READ_ID) . urlencode($currentUrl);
-        
+
         return [
             'icon' => 'fa-solid fa-headphones',
             'href' => $readspeakerUrl,
             'text' => __('Listen to this page', 'pitea-customisation'),
             'style' => self::DEFAULT_BUTTON_STYLE,
             'color' => self::DEFAULT_BUTTON_COLOR,
+        ];
+    }
+
+    private function getPrintMenuItem(): array
+    {
+        return [
+            'icon' => 'print',
+            'href' => '#',
+            'script' => 'window.print();return false;',
+            'text' => __('Print', 'municipio'),
+            'label' => __('Print this page', 'municipio'),
         ];
     }
 }

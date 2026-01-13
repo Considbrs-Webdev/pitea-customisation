@@ -1,4 +1,21 @@
+.modularity-mod-breadcrumbs {
+  .nav-helper {
+    border-top: 1px solid var(--color-stain-light-3);
+    background: var(--color-darjnalen-light-3);
+    display: flex;
+    justify-content: center;
+    margin: 0;
+  }
+}
+
 .c-breadcrumb {
+  --color-breadcrumb: var(--color-stain-dark-3);
+  --color-breadcrumb-active: var(--color-stain-dark-3);
+
+  flex: 1;
+  max-width: var(--container-width, calc(var(--base, 8px) * 156));
+  padding: 16px calc(var(--base, 8px) * 3);
+
   .c-icon {
     transform: rotate(-65deg) scale(1.35);
   }
