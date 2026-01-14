@@ -19,7 +19,7 @@ class Breadcrumbs
      */
     public function maybeHideBreadcrumbs($sidebars): array
     {
-        if (!is_front_page()) {
+        if (!is_front_page() && apply_filters('Pitea/Breadcrumbs/Hide', false) === false) {
             return $sidebars;
         }
 
