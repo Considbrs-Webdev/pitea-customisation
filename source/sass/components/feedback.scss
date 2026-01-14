@@ -1,0 +1,113 @@
+// Customer Feedback Component Styles
+:root {
+  --c-paper-background: var(--color-darjnalen-dark-3);
+  --c-paper-color: var(--color-darjnalen-light-4);
+  --c-paper-padding: var(--base, 20px);
+  --c-paper-border-radius: var(--border-radius-small);
+  --c-paper-border: var(--color-darjnalen-light-4);
+  --c-paper-shadow: var(--shadow-base);
+  --c-paper-shadow-hover: var(--shadow-hover);
+  --c-paper-font-size-body: var(--font-size-body, 18px);
+  --c-paper-line-height-body: var(--line-height-body, 27px);
+  --c-paper-color-button: var(--color-darjnalen-dark-3);
+  --c-paper-breakpoint: var(--breakpoint-sm);
+}
+
+.c-paper--feedback {
+  container-type: inline-size; // Enable container queries
+  
+  color: var(--c-paper-color);
+  background-color: var(--c-paper-background);
+  padding: var(--c-paper-padding);
+  max-width: var(--container-width-content);
+  font-size: var(--c-paper-font-size-body);
+
+  #customer-feedback-form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--base, 30px);
+    flex-wrap: wrap;
+
+    // When container is narrow (items wrap), center the content
+    @container (max-width: 450px) {
+      justify-content: center;
+
+      h2 {
+        text-align: center;
+      }
+    }
+
+    // Hide section icons
+    .customer-feedback-section-icon {
+      display: none;
+    }
+
+    // Heading section - allow text to wrap first, but keep whole words intact
+    .customer-feedback-section-heading {
+      flex: 1;
+      min-width: min-content;
+      max-width: 100%;
+      display: flex;
+      align-items: center; // Vertically center the heading content
+
+      .customer-feedback-section-content {
+        padding: 0 !important;
+        width: 100%;
+        display: flex;
+        align-items: center; // Vertically center the h2
+
+        h2 {
+          font-size: var(--c-paper-font-size-body);
+          word-break: normal;
+          overflow-wrap: break-word;
+          word-wrap: break-word;
+          white-space: normal;
+          margin: 0;
+          width: 100%;
+          max-width: 100%;
+          box-sizing: border-box;
+        }
+      }
+    }
+
+    .customer-feedback-section-buttons {
+      flex-shrink: 0;
+      flex-grow: 0;
+      min-width: fit-content;
+
+    }
+
+    .customer-feedback-section-topics,
+    .customer-feedback-section-comment,
+    .customer-feedback-section-gdpr {
+      flex-basis: 100%;
+      width: 100%;
+    }
+
+    .customer-feedback-section-content {
+      padding: 0 !important;
+    }
+
+    // Feedback button styles
+    .customer-feedback-response-yes,
+    .customer-feedback-response-no {
+      font-size: var(--c-paper-font-size-body);
+      font-style: normal;
+      font-weight: 400;
+      line-height: var(--c-paper-line-height-body);
+
+      .c-button__label-text {
+        color: var(--c-paper-color-button);
+        font-size: var(--c-paper-font-size-body);
+        font-weight: 400;
+        line-height: var(--c-paper-line-height-body);
+      }
+    }
+
+    .customer-feedback-already-submitted {
+      color: var(--c-paper-color-button);
+      background-color: var(--c-paper-color);
+    }
+  }
+}
