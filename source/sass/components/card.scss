@@ -26,9 +26,10 @@
       --c-card-border-radius: 0;
     }
   }
-
+}
   // Disable all hover effects for cards inside column blocks
-  .o-grid-column-block .c-card {
+  .o-grid-column-block .modularity-mod-manualinput .c-card {
+
     transition: none !important;
     transform: none !important;
     filter: none !important;
@@ -101,4 +102,4 @@
       }
     }
   }
-}
+
