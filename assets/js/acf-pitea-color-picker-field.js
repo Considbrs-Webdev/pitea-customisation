@@ -4,18 +4,12 @@
     var PiteaColorPickerField = acf.Field.extend({
         type: 'pitea_color_picker',
         
+        // Store reference to the modal when moved to body
+        _$modal: null,
+        
         events: {
             'click .acf-pitea-color-picker-trigger': 'onOpenModal',
             'click .acf-pitea-color-picker-clear-trigger': 'onClear',
-            'click .acf-pitea-color-picker-modal-close': 'onCloseModal',
-            'click .acf-pitea-color-picker-modal-overlay': 'onCloseModal',
-            'click .acf-pitea-color-picker-option': 'onSelectColor',
-            'click .acf-pitea-color-picker-custom-toggle': 'onToggleCustom',
-            'click .acf-pitea-color-picker-custom-apply': 'onApplyCustom',
-            'click .acf-pitea-color-picker-clear': 'onClear',
-            'click .acf-pitea-color-picker-group-header': 'onToggleGroup',
-            'keypress .acf-pitea-color-picker-hex-input': 'onHexKeypress',
-            'keydown': 'onKeydown',
         },
 
         $input: function() {
@@ -27,15 +21,16 @@
         },
 
         $customInput: function() {
-            return this.$('.acf-pitea-color-picker-custom-input');
+            return this._$modal ? this._$modal.find('.acf-pitea-color-picker-custom-input') : $();
         },
 
         $hexInput: function() {
-            return this.$('.acf-pitea-color-picker-hex-input');
+            return this._$modal ? this._$modal.find('.acf-pitea-color-picker-hex-input') : $();
         },
 
         $modal: function() {
-            return this.$('.acf-pitea-color-picker-modal');
+            // Return the modal reference (which may be in body)
+            return this._$modal || this.$('.acf-pitea-color-picker-modal');
         },
 
         $trigger: function() {
@@ -43,6 +38,8 @@
         },
 
         initialize: function() {
+            var self = this;
+            
             // Update preview on load if value exists
             var value = this.$input().val();
             if (value) {
@@ -50,17 +47,87 @@
                 var $nameEl = this.$('.acf-pitea-color-picker-name');
                 var name = $nameEl.length ? $nameEl.text() : null;
                 this.updatePreview(value, name);
-                this.updateModalPreview(value, name);
             }
             
-            // Initialize all groups as collapsed
-            this.$('.acf-pitea-color-picker-group').each(function() {
-                var $group = $(this);
-                var $header = $group.find('.acf-pitea-color-picker-group-header');
-                var isExpanded = $header.attr('aria-expanded') === 'true';
+            // Get the modal element and move it to body for proper positioning
+            var $modal = this.$('.acf-pitea-color-picker-modal');
+            if ($modal.length) {
+                // Store field reference on modal for event handling
+                $modal.data('acf-field', this);
                 
-                if (!isExpanded) {
-                    $group.addClass('is-collapsed');
+                // Move modal to body to escape any container constraints
+                $modal.appendTo('body');
+                this._$modal = $modal;
+                
+                // Initialize all groups as collapsed
+                $modal.find('.acf-pitea-color-picker-group').each(function() {
+                    var $group = $(this);
+                    var $header = $group.find('.acf-pitea-color-picker-group-header');
+                    var isExpanded = $header.attr('aria-expanded') === 'true';
+                    
+                    if (!isExpanded) {
+                        $group.addClass('is-collapsed');
+                    }
+                });
+                
+                // Bind modal events since it's now outside the field element
+                this.bindModalEvents($modal);
+                
+                // Update modal preview with current value
+                if (value) {
+                    var $nameEl = this.$('.acf-pitea-color-picker-name');
+                    var name = $nameEl.length ? $nameEl.text() : null;
+                    this.updateModalPreview(value, name);
+                }
+            }
+        },
+        
+        bindModalEvents: function($modal) {
+            var self = this;
+            
+            // Close modal events
+            $modal.on('click', '.acf-pitea-color-picker-modal-close', function(e) {
+                self.onCloseModal(e);
+            });
+            
+            $modal.on('click', '.acf-pitea-color-picker-modal-overlay', function(e) {
+                self.onCloseModal(e);
+            });
+            
+            // Select color
+            $modal.on('click', '.acf-pitea-color-picker-option', function(e) {
+                self.onSelectColor(e);
+            });
+            
+            // Custom color toggle
+            $modal.on('click', '.acf-pitea-color-picker-custom-toggle', function(e) {
+                self.onToggleCustom(e);
+            });
+            
+            // Apply custom color
+            $modal.on('click', '.acf-pitea-color-picker-custom-apply', function(e) {
+                self.onApplyCustom(e);
+            });
+            
+            // Clear button in modal
+            $modal.on('click', '.acf-pitea-color-picker-clear', function(e) {
+                self.onClear(e);
+            });
+            
+            // Group toggle
+            $modal.on('click', '.acf-pitea-color-picker-group-header', function(e) {
+                self.onToggleGroup(e);
+            });
+            
+            // Hex input keypress
+            $modal.on('keypress', '.acf-pitea-color-picker-hex-input', function(e) {
+                self.onHexKeypress(e);
+            });
+            
+            // Escape key to close
+            $(document).on('keydown.acf-pitea-color-picker-' + this.cid, function(e) {
+                if (e.keyCode === 27 && self.$modal().is(':visible')) {
+                    self.onCloseModal(e);
                 }
             });
         },
@@ -84,21 +151,14 @@
             $('body').removeClass('acf-pitea-color-picker-modal-open');
         },
 
-        onKeydown: function(e) {
-            // Close modal on Escape key
-            if (e.keyCode === 27 && this.$modal().is(':visible')) {
-                this.onCloseModal(e);
-            }
-        },
-
         onSelectColor: function(e) {
             e.preventDefault();
             var $option = $(e.currentTarget);
             var color = $option.data('color');
             var name = $option.data('name');
             
-            // Update selection state
-            this.$('.acf-pitea-color-picker-option').removeClass('is-selected');
+            // Update selection state in modal (which is in body)
+            this.$modal().find('.acf-pitea-color-picker-option').removeClass('is-selected');
             $option.addClass('is-selected');
             
             // Update value
@@ -139,8 +199,8 @@
             this.updatePreview(hex, 'Custom');
             this.updateModalPreview(hex, 'Custom');
             
-            // Remove selection from palette options
-            this.$('.acf-pitea-color-picker-option').removeClass('is-selected');
+            // Remove selection from palette options (in modal which is in body)
+            this.$modal().find('.acf-pitea-color-picker-option').removeClass('is-selected');
             
             // Hide custom input
             this.$customInput().slideUp();
@@ -154,7 +214,9 @@
             this.$input().val('').trigger('change');
             this.updatePreview('');
             this.updateModalPreview('');
-            this.$('.acf-pitea-color-picker-option').removeClass('is-selected');
+            
+            // Clear selection state in modal (which is in body)
+            this.$modal().find('.acf-pitea-color-picker-option').removeClass('is-selected');
             
             // Update clear button visibility
             var $clearBtn = this.$('.acf-pitea-color-picker-clear-trigger');
@@ -250,7 +312,7 @@
         },
 
         updateModalPreview: function(color, name) {
-            var $modalPreview = this.$('.acf-pitea-color-picker-modal-preview');
+            var $modalPreview = this.$modal().find('.acf-pitea-color-picker-modal-preview');
             
             if (!$modalPreview.length) {
                 return;
