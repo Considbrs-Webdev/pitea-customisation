@@ -127,8 +127,8 @@ class ColorPickerField extends \acf_field
                 class="acf-pitea-color-picker-value" />
 
             <!-- Trigger Button -->
-            <button 
-                type="button" 
+            <button
+                type="button"
                 class="acf-pitea-color-picker-trigger button button-secondary"
                 title="<?php echo $currentValue ? esc_attr(($currentColorName ?: $currentValue) . ' (' . $currentValue . ')') : esc_attr__('Select Color', 'pitea-customisation'); ?>">
                 <div class="acf-pitea-color-picker-selected">
@@ -148,9 +148,9 @@ class ColorPickerField extends \acf_field
                     <?php endif; ?>
                 </div>
             </button>
-            
-            <?php if ($field['allow_null'] && $currentValue): ?>
-                <button type="button" class="acf-pitea-color-picker-clear-trigger button button-link" style="margin-top: 8px;">
+
+            <?php if ($field['allow_null']): ?>
+                <button type="button" class="acf-pitea-color-picker-clear-trigger button button-link" <?php echo !$currentValue ? ' style="display: none;"' : ''; ?>>
                     <?php _e('Clear', 'pitea-customisation'); ?>
                 </button>
             <?php endif; ?>
@@ -163,7 +163,7 @@ class ColorPickerField extends \acf_field
                         <h3><?php _e('Select Color', 'pitea-customisation'); ?></h3>
                         <button type="button" class="acf-pitea-color-picker-modal-close" aria-label="<?php _e('Close', 'pitea-customisation'); ?>">×</button>
                     </div>
-                    
+
                     <div class="acf-pitea-color-picker-modal-body">
                         <!-- Preview Section -->
                         <div class="acf-pitea-color-picker-modal-preview">
@@ -187,7 +187,7 @@ class ColorPickerField extends \acf_field
                                 </div>
                             <?php endif; ?>
                         </div>
-                        
+
                         <div class="acf-pitea-color-picker-palette">
                             <?php foreach ($colorGroups as $groupName => $colors): ?>
                                 <div class="acf-pitea-color-picker-group is-collapsed" data-group="<?php echo esc_attr($groupName); ?>">

@@ -217,14 +217,6 @@
             
             // Clear selection state in modal (which is in body)
             this.$modal().find('.acf-pitea-color-picker-option').removeClass('is-selected');
-            
-            // Update clear button visibility
-            var $clearBtn = this.$('.acf-pitea-color-picker-clear-trigger');
-            if ($clearBtn.length) {
-                $clearBtn.fadeOut(200, function() {
-                    $(this).remove();
-                });
-            }
         },
 
         onHexKeypress: function(e) {
@@ -262,6 +254,7 @@
         updatePreview: function(color, name) {
             var $preview = this.$preview();
             var $trigger = this.$trigger();
+            var $clearBtn = this.$('.acf-pitea-color-picker-clear-trigger');
             
             if (!color) {
                 $preview.html(
@@ -271,10 +264,8 @@
                 );
                 // Update trigger title
                 $trigger.attr('title', acf.__('Select Color'));
-                // Remove clear button if exists
-                this.$('.acf-pitea-color-picker-clear-trigger').fadeOut(200, function() {
-                    $(this).remove();
-                });
+                // Hide clear button
+                $clearBtn.hide();
                 return;
             }
             
@@ -300,15 +291,8 @@
             // Update trigger title with full info for tooltip
             $trigger.attr('title', name + ' (' + color + ')');
             
-            // Show clear button if allow_null and doesn't exist
-            if (this.$el.data('allow_null')) {
-                if (!this.$('.acf-pitea-color-picker-clear-trigger').length) {
-                    var $clearBtn = $('<button type="button" class="acf-pitea-color-picker-clear-trigger button button-link" style="margin-top: 8px;">' + 
-                        acf.__('Clear') + '</button>');
-                    $trigger.after($clearBtn);
-                    $clearBtn.hide().fadeIn(200);
-                }
-            }
+            // Show clear button if it exists (rendered by PHP when allow_null is true)
+            $clearBtn.show();
         },
 
         updateModalPreview: function(color, name) {
