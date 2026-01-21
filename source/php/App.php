@@ -41,6 +41,7 @@ class App
             Customisations\Modules\Container::class,
             Customisations\Modules\Posts::class,
             Customisations\Modules\Text::class,
+            Customisations\Articlelink::class,
             // Add more customisation classes here
             // Customisations\YourCustomClass::class,
         ];

@@ -1,0 +1,96 @@
+.share-buttons {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    position: relative;
+}
+
+.share-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #666;
+    text-decoration: underline;
+    font-size: 1rem;
+    transition: color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    -webkit-appearance: none;
+    appearance: none;
+
+    // Remove default button focus outline
+    &:focus {
+        outline: none;
+    }
+
+    &:hover {
+        color: #333;
+        text-decoration: underline;
+    }
+
+    // Custom focus indicator - subtle underline that meets WCAG
+    &:focus-visible {
+        outline: none;
+        box-shadow: 0 2px 0 0 var(--color-primary, #0066cc);
+        text-decoration: underline;
+        text-decoration-color: var(--color-primary, #0066cc);
+        text-decoration-thickness: 2px;
+        text-underline-offset: 2px;
+    }
+
+    &__text {
+        display: inline-block;
+        text-decoration: inherit;
+    }
+
+    &__icon {
+        display: inline-block;
+        font-size: 0.875rem;
+        line-height: 1;
+        text-decoration: inherit;
+    }
+
+}
+
+.share-popup {
+    position: absolute;
+    background-color: #333;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    pointer-events: none;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+    // Arrow pointing down
+    &::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 6px solid transparent;
+        border-top-color: #333;
+    }
+
+    &--visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// Screen reader announcer - uses u-sr__only utility class from Municipio
