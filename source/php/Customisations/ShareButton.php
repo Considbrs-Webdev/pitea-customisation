@@ -2,26 +2,65 @@
 
 namespace PiteaCustomisation\Customisations;
 
-class Articlelink
+class ShareButton
 {
     public function __construct()
     {
+        new \PiteaCustomisation\AcfFields\ShareButtonFields();
         add_filter('the_content', [$this, 'addShareButton'], 10, 1);
     }
 
     public function addShareButton($content): string
     {
-        if (is_single() && is_main_query() && !is_admin()) {
+        if (!is_singular() || !is_main_query() || is_admin()) {
+            return $content;
+        }
+        $placement = $this->getShareButtonPlacement();
+        if ($placement === 'bottom') {
             return $content . $this->getShareButton();
         }
+
         return $content;
+    }
+
+    /**
+     * Get the share button placement setting for the current page. If post type is not page, return 'bottom'.
+     *
+     * @return string The placement value: 'bottom' or 'none'
+     */
+    private function getShareButtonPlacement(): string
+    {
+        $postId = get_the_ID();
+        if (!$postId) {
+            return 'none';
+        }
+
+        $postType = get_post_type($postId);
+
+        $placement = get_field('share_button_placement', $postId);
+
+        if ($postType !== 'page') {
+            return 'bottom';
+        }
+
+        if ($postType === 'page') {
+            if (empty($placement)) {
+                return 'none';
+            }
+            if ($placement === 'bottom') {
+                return 'bottom';
+            }
+            return 'none';
+        }
+
+        return 'none';
     }
 
     private function getShareButton(): string
     {
         $url = esc_url(get_permalink());
         $title = esc_attr(get_the_title());
-        
+
         return sprintf(
             '<div class="share-buttons">
                 <button 
