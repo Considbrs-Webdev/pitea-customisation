@@ -63,6 +63,20 @@
     --c-table-background-color-even: var(--color-darjnalen-light-3);
   }
 
+  .s-noticeboard_notice-archive {
+    --archive-filter-background: var(--color-paren-light-3);
+    --c-button-primary-color: var(--color-paren-dark-3);
+    --c-button-primary-color-contrasting: var(--color-paren-light-4);
+
+    @include news-item.base();
+
+    .c-newsitem {
+      border: 1px solid var(--color-stain-light-3);
+      border-radius: var(--border-radius-small);
+      padding: 28px;
+    }
+  }
+
   .s-municipal_event-archive {
     --archive-filter-background: var(--color-paren-light-3);
     --c-button-primary-color: var(--color-paren-dark-3);

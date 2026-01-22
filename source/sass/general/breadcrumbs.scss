@@ -1,4 +1,6 @@
 .modularity-mod-breadcrumbs {
+  margin-bottom: calc(var(--base, 8px) * 5);
+
   .nav-helper {
     border-top: 1px solid var(--color-stain-light-3);
     background: var(--color-darjnalen-light-3);

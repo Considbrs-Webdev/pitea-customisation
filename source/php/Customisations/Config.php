@@ -20,6 +20,9 @@ class Config
 
         // Contact banner CTA icon customization
         add_filter('Modularity/Module/ContactBanner/CtaIcon', [$this, 'setContactBannerCtaIcon']);
+
+        // Noticeboard archive icon customization
+        add_filter('Modularity/Module/Noticeboard/ArchiveIcon', [$this, 'setNoticeboardArchiveIcon']);
     }
 
     /**
@@ -58,6 +61,16 @@ class Config
      * @return string
      */
     public function setContactBannerCtaIcon(): string
+    {
+        return 'fa-solid fa-arrow-right';
+    }
+
+    /**
+     * Return the icon class for Noticeboard archive
+     *
+     * @return string
+     */
+    public function setNoticeboardArchiveIcon(): string
     {
         return 'fa-solid fa-arrow-right';
     }
