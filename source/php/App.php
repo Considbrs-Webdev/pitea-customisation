@@ -42,6 +42,9 @@ class App
             Customisations\Modules\Posts::class,
             Customisations\Modules\Text::class,
             Customisations\ShareButton::class,
+            // Modularity extensions for taxonomy term modules
+            Modularity\TaxonomyTermEditorSupport::class,
+            Modularity\TaxonomyTermModules::class,
             // Add more customisation classes here
             // Customisations\YourCustomClass::class,
         ];

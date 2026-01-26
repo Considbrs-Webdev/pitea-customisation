@@ -9,6 +9,7 @@ class Breadcrumbs
         add_filter('sidebars_widgets', [$this, 'maybeHideBreadcrumbs'], 10, 1);
         add_filter('Municipio/Breadcrumbs/Items', [$this, 'replaceBreadcrumbIcon'], 100);
         add_filter('Municipio/Breadcrumbs/Items', [$this, 'changeHomeName'], 100);
+        add_filter('Municipio/Breadcrumbs/Items', [$this, 'fixSimpleviewEventTaxonomyBreadcrumbs'], 90);
     }
 
     /**
@@ -79,6 +80,56 @@ class Breadcrumbs
         if (!empty($keys)) {
             $firstKey = $keys[0];
             $items[$firstKey]['label'] = __('Start', 'pitea-customisation');
+        }
+
+        return $items;
+    }
+
+    /**
+     * Fix breadcrumbs for sv_event_category taxonomy archives
+     * 
+     * Replaces "Namnlös sida" (Untitled page) with the actual term name
+     * and optionally adds parent terms for hierarchical structure
+     * 
+     * @param array|null $items
+     * @param mixed $queriedObject
+     * @param mixed $context
+     * @return array|null
+     */
+    public function fixSimpleviewEventTaxonomyBreadcrumbs($items, $queriedObject = null, $context = null): array|null
+    {
+        if (!is_array($items)) {
+            return $items;
+        }
+
+        // Get queried object ourselves since it's not being passed as a parameter
+        $queriedObject = get_queried_object();
+
+        // Check if we're on a taxonomy archive and the queried object is a term
+        if (!is_object($queriedObject) || !($queriedObject instanceof \WP_Term)) {
+            return $items;
+        }
+
+        // Only process sv_event_category taxonomy
+        if ($queriedObject->taxonomy !== 'sv_event_category') {
+            return $items;
+        }
+
+        // Find and replace the "Untitled page" / "Namnlös sida" item
+        foreach ($items as $key => &$item) {
+            $label = $item['label'] ?? '';
+
+            // Check for both Swedish and English versions of "Untitled page"
+            if (
+                $label === __('Untitled page', 'municipio') ||
+                $label === 'Namnlös sida' ||
+                $label === 'Untitled page'
+            ) {
+                // Replace with the term name
+                $item['label'] = $queriedObject->name;
+                $item['href'] = get_term_link($queriedObject);
+                break;
+            }
         }
 
         return $items;
