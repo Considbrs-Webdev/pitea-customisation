@@ -3,6 +3,7 @@
     "description": "Custom functionality and modifications for the Pitea WordPress installation",
     "type": "wordpress-plugin",
     "license": "MIT",
+    "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
             "PiteaCustomisation\\": "source/php/"
