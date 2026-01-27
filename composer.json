@@ -1,5 +1,5 @@
 {
-    "name": "pitea/pitea-customisation",
+    "name": "considbrs-webdev/pitea-customisation",
     "description": "Custom functionality and modifications for the Pitea WordPress installation",
     "type": "wordpress-plugin",
     "license": "MIT",
