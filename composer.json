@@ -3,7 +3,14 @@
     "description": "Custom functionality and modifications for the Pitea WordPress installation",
     "type": "wordpress-plugin",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Consid Borås AB",
+            "email": "webdev.boras@consid.se"
+        }
+    ],
     "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "PiteaCustomisation\\": "source/php/"
