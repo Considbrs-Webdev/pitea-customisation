@@ -82,4 +82,16 @@
     --c-button-primary-color: var(--color-paren-dark-3);
     --c-button-primary-color-contrasting: var(--color-paren-light-4);
   }
+
+  &.archive-simpleview {
+    --archive-filter-background: var(--color-darjnalen-light-3);
+    --archive-simpleview-card-background: var(--color-darjnalen-light-4);
+    --c-button-primary-color: var(--color-paren-dark-3);
+    --c-button-primary-color-contrasting: var(--color-paren-light-4);
+
+    // Card list background: change --archive-simpleview-card-background above to tune
+    .c-simpleview-event-card {
+      background-color: var(--archive-simpleview-card-background);
+    }
+  }
 }
