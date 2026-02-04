@@ -36,44 +36,8 @@
     }
   }
 
-// Disable all hover effects for cards inside column blocks
-.o-grid-column-block .modularity-mod-manualinput .c-card {
-  transition: none !important;
-  transform: none !important;
-  filter: none !important;
-  opacity: 1 !important;
-  box-shadow: none !important;
-  scale: 1 !important;
-
-  &,
-  &::before,
-  &::after,
-  * {
-    transition: none !important;
-    transform: none !important;
-    filter: none !important;
-  }
-
-  &:hover {
-    background-color: inherit !important;
-    transform: none !important;
-    filter: none !important;
-    transition: none !important;
-    opacity: 1 !important;
-    box-shadow: none !important;
-    scale: 1 !important;
-
-    &,
-    &::before,
-    &::after,
-    * {
-      transition: none !important;
-      transform: none !important;
-      filter: none !important;
-    }
-  }
-
-  &.c-card--has-custom-background {
+  // Disable all hover effects for cards inside column blocks
+  .o-grid-column-block .modularity-mod-manualinput .c-card {
     transition: none !important;
     transform: none !important;
     filter: none !important;
@@ -91,7 +55,7 @@
     }
 
     &:hover {
-      background-color: var(--c-card-color-background) !important;
+      background-color: inherit !important;
       transform: none !important;
       filter: none !important;
       transition: none !important;
@@ -106,6 +70,43 @@
         transition: none !important;
         transform: none !important;
         filter: none !important;
+      }
+    }
+
+    &.c-card--has-custom-background {
+      transition: none !important;
+      transform: none !important;
+      filter: none !important;
+      opacity: 1 !important;
+      box-shadow: none !important;
+      scale: 1 !important;
+
+      &,
+      &::before,
+      &::after,
+      * {
+        transition: none !important;
+        transform: none !important;
+        filter: none !important;
+      }
+
+      &:hover {
+        background-color: var(--c-card-color-background) !important;
+        transform: none !important;
+        filter: none !important;
+        transition: none !important;
+        opacity: 1 !important;
+        box-shadow: none !important;
+        scale: 1 !important;
+
+        &,
+        &::before,
+        &::after,
+        * {
+          transition: none !important;
+          transform: none !important;
+          filter: none !important;
+        }
       }
     }
   }
