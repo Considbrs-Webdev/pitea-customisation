@@ -4,13 +4,6 @@
     overflow: hidden;
     --color-background-card: transparent;
 
-    @container (min-width: 500px) {
-      .c-card__paint-container {
-        flex-direction: column;
-        flex-wrap: nowrap;
-      }
-    }
-
     &:hover {
       background-color: transparent !important;
     }
@@ -32,8 +25,17 @@
     &:has(.c-accordion) {
       --c-card-border-radius: 0;
     }
+
+    &:not([data-observe-resizes]) {
+      @container (min-width: 500px) {
+        .c-card__paint-container {
+          flex-direction: column;
+          flex-wrap: nowrap;
+        }
+      }
+    }
   }
-}
+
 // Disable all hover effects for cards inside column blocks
 .o-grid-column-block .modularity-mod-manualinput .c-card {
   transition: none !important;
