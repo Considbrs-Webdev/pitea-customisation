@@ -10,6 +10,10 @@
   }
 }
 
+.site-wrapper:has(.modularity-mod-hero) .modularity-mod-breadcrumbs {
+  margin-bottom: 0;
+}
+
 .c-breadcrumb {
   --color-breadcrumb: var(--color-stain-dark-3);
   --color-breadcrumb-active: var(--color-stain-dark-3);
