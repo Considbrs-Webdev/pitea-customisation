@@ -13,6 +13,7 @@ class Accessibility
 
     public function __construct()
     {
+        new \PiteaCustomisation\AcfFields\AccessibilityFields();
         add_filter('Municipio/Template/viewData', [$this, 'maybeAddPrintMenuToViewData'], 10, 1);
         add_filter('Municipio/Template/viewData', [$this, 'addAccessibilityMenuToViewData'], 20, 1);
     }
@@ -22,17 +23,25 @@ class Accessibility
         if (!is_singular()) {
             return $data;
         }
-        
+
+        if (!$this->shouldShowAccessibilityMenu()) {
+            return $data;
+        }
+
         if (!isset($data['accessibilityMenu']['print'])) {
             $data['accessibilityMenu']['items']['print'] = $this->getPrintMenuItem();
         }
-        
+
         return $data;
     }
 
     public function addAccessibilityMenuToViewData(array $data): array
     {
         if (!is_singular()) {
+            return $data;
+        }
+
+        if (!$this->shouldShowAccessibilityMenu()) {
             return $data;
         }
 
@@ -43,6 +52,35 @@ class Accessibility
         $data['accessibilityMenu']['items'] = $this->changeDefaultStyles($data['accessibilityMenu']['items']);
 
         return $data;
+    }
+
+    /**
+     * Determine if accessibility menu should be shown
+     * 
+     * @return bool True if menu should be shown, false otherwise
+     */
+    private function shouldShowAccessibilityMenu(): bool
+    {
+        if (!is_singular()) {
+            return false;
+        }
+
+        $postId = get_the_ID();
+        if (!$postId) {
+            return false;
+        }
+
+        $postType = get_post_type($postId);
+
+        if ($postType === 'page') {
+            $showButtons = get_field('show_accessibility_buttons', $postId);
+            if ($showButtons === null || $showButtons === false) {
+                return false;
+            }
+            return (bool) $showButtons;
+        }
+
+        return true;
     }
 
     private function changeDefaultStyles(array $items): array
