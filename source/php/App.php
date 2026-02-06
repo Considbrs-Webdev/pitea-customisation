@@ -43,6 +43,7 @@ class App
             Customisations\Modules\Container::class,
             Customisations\Modules\Posts::class,
             Customisations\Modules\Text::class,
+            Customisations\Modules\Slider::class,
             // Add more customisation classes here
             // Customisations\YourCustomClass::class,
         ];
