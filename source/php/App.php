@@ -1,7 +1,6 @@
 <?php
 
 namespace PiteaCustomisation;
-
 class App
 {
     /**
@@ -35,13 +34,14 @@ class App
             Customisations\Config::class,
             Customisations\Decorators::class,
             Customisations\FontAwesome::class,
+            Customisations\Headers::class,
             Customisations\News::class,
             Customisations\Pagination::class,
+            Customisations\ShareButton::class,
             Customisations\Modules\InlayList::class,
             Customisations\Modules\Container::class,
             Customisations\Modules\Posts::class,
             Customisations\Modules\Text::class,
-            Customisations\ShareButton::class,
             // Add more customisation classes here
             // Customisations\YourCustomClass::class,
         ];
@@ -71,17 +71,12 @@ class App
      */
     public function enqueueAssets(): void
     {
-        $manifest = $this->getManifest();
-
-        if (!$manifest) {
-            return;
-        }
-
         // Enqueue main JS
-        if (isset($manifest['source/js/main.js'])) {
+        $file = Helpers\CacheBust::getFile('source/js/main.js');
+        if ($file) {
             wp_enqueue_script(
                 'pitea-customisation-main',
-                PITEA_CUSTOMISATION_URL . 'dist/' . $manifest['source/js/main.js']['file'],
+                $file,
                 [],
                 PITEA_CUSTOMISATION_VERSION,
                 true
@@ -89,10 +84,11 @@ class App
         }
 
         // Enqueue main CSS
-        if (isset($manifest['source/sass/style.scss'])) {
+        $file = Helpers\CacheBust::getFile('source/sass/style.scss');
+        if ($file) {
             wp_enqueue_style(
                 'pitea-customisation-style',
-                PITEA_CUSTOMISATION_URL . 'dist/' . $manifest['source/sass/style.scss']['file'],
+                $file,
                 [],
                 PITEA_CUSTOMISATION_VERSION
             );
@@ -106,17 +102,12 @@ class App
      */
     public function enqueueAdminAssets(): void
     {
-        $manifest = $this->getManifest();
-
-        if (!$manifest) {
-            return;
-        }
-
         // Enqueue admin JS
-        if (isset($manifest['source/js/admin.js'])) {
+        $file = Helpers\CacheBust::getFile('source/js/admin.js');
+        if ($file) {
             wp_enqueue_script(
                 'pitea-customisation-admin',
-                PITEA_CUSTOMISATION_URL . 'dist/' . $manifest['source/js/admin.js']['file'],
+                $file,
                 [],
                 PITEA_CUSTOMISATION_VERSION,
                 true
@@ -124,32 +115,15 @@ class App
         }
 
         // Enqueue admin CSS
-        if (isset($manifest['source/sass/admin.scss'])) {
+        $file = Helpers\CacheBust::getFile('source/sass/admin.scss');
+        if ($file) {
             wp_enqueue_style(
                 'pitea-customisation-admin-style',
-                PITEA_CUSTOMISATION_URL . 'dist/' . $manifest['source/sass/admin.scss']['file'],
+                $file,
                 [],
                 PITEA_CUSTOMISATION_VERSION
             );
         }
-    }
-
-    /**
-     * Get the Vite manifest
-     *
-     * @return array|null
-     */
-    private function getManifest(): ?array
-    {
-        $manifestPath = PITEA_CUSTOMISATION_PATH . 'dist/.vite/manifest.json';
-
-        if (!file_exists($manifestPath)) {
-            return null;
-        }
-
-        $manifest = file_get_contents($manifestPath);
-
-        return json_decode($manifest, true);
     }
 
     /**

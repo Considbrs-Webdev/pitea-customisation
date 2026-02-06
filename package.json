@@ -17,5 +17,8 @@
         "@wordpress/scripts": "^31.2.0",
         "sass": "^1.97.2",
         "vite": "^7.3.0"
+    },
+    "dependencies": {
+        "@awesome.me/kit-ae5fa37ad3": "^1.0.3"
     }
 }

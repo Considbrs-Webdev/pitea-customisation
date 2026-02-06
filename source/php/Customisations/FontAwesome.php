@@ -13,8 +13,6 @@ class FontAwesome
      */
     public function __construct()
     {
-        add_action('wp_head', [$this, 'enqueueFontAwesomeKit']);
-        add_action('admin_head', [$this, 'enqueueFontAwesomeKit']);
         add_action('acf/include_field_types', [$this, 'registerAcfFieldType']);
         add_filter('acf/prepare_field/type=icon', [$this, 'convertToFontAwesomeField']);
         add_filter('ComponentLibrary/Component/Icon/Attribute', [$this, 'modifyIconAttributes'], 10, 1);
@@ -29,7 +27,7 @@ class FontAwesome
         // Gutenberg FontAwesome icon picker
         add_action('enqueue_block_editor_assets', [$this, 'enqueueGutenbergAssets']);
 
-        add_filter('tiny_mce_before_init', function ($settings) {
+        /* add_filter('tiny_mce_before_init', function ($settings) {
             $settings['setup'] = <<<JS
             function (editor) {
                 editor.on('init', function () {
@@ -42,7 +40,7 @@ class FontAwesome
             JS;
 
             return $settings;
-        });
+        }); */
     }
 
     /**
@@ -54,18 +52,6 @@ class FontAwesome
     {
         require_once dirname(__DIR__) . '/AcfFields/FontAwesomeIconField.php';
         acf_register_field_type('PiteaCustomisation\AcfFields\FontAwesomeIconField');
-    }
-
-    /**
-     * Enqueue FontAwesome kit script
-     *
-     * @return void
-     */
-    public function enqueueFontAwesomeKit(): void
-    {
-        ?>
-        <script src="https://kit.fontawesome.com/be6ad42a19.js" crossorigin="anonymous"></script>
-        <?php
     }
 
     /**
@@ -228,6 +214,13 @@ class FontAwesome
             '1.0.0'
         );
 
+        /* wp_enqueue_style(
+            'fontawesome-css',
+            plugin_dir_url(dirname(__DIR__, 2)) . 'assets/dist/css/fontawesome.css',
+            [],
+            '1.0.0'
+        ); */
+
         // Enqueue the script for Quicktags (Text mode) as well
         wp_enqueue_script(
             'quicktags-fontawesome-plugin',
@@ -238,13 +231,13 @@ class FontAwesome
         );
 
         // Make sure FontAwesome is loaded in admin for the icon picker
-        wp_enqueue_script(
+        /* wp_enqueue_script(
             'fontawesome-kit-admin',
             'https://kit.fontawesome.com/be6ad42a19.js',
             [],
             null,
             true
-        );
+        ); */
     }
 
     /**

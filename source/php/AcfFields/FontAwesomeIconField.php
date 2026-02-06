@@ -2,6 +2,8 @@
 
 namespace PiteaCustomisation\AcfFields;
 
+use PiteaCustomisation\Helpers\CacheBust;
+
 class FontAwesomeIconField extends \acf_field
 {
     /**
@@ -70,28 +72,37 @@ class FontAwesomeIconField extends \acf_field
     {
         $version = '1.0.0';
 
-        wp_enqueue_script(
-            'fontawesome-kit',
-            'https://kit.fontawesome.com/be6ad42a19.js',
-            [],
-            null,
-            true
-        );
+        // Enqueue font awesome icons stylesheet
+        $file = CacheBust::getFile('source/sass/font-awesome.scss');
+        if ($file) {
+            wp_enqueue_style(
+                'font-awesome-icons-style',
+                $file,
+                [],
+                $version,
+            );
+        }
 
-        wp_enqueue_script(
-            'acf-fontawesome-icon-field',
-            plugin_dir_url(dirname(__DIR__, 2)) . 'assets/js/acf-fontawesome-icon-field.js',
-            ['acf-input', 'jquery'],
-            $version,
-            true
-        );
+        $file = CacheBust::getFile('source/js/acf/acf-fontawesome-icon-field.js');
+        if ($file) {
+            wp_enqueue_script(
+                'acf-fontawesome-icon-field',
+                $file,
+                ['acf-input', 'jquery'],
+                $version,
+                true
+            );
+        }
 
-        wp_enqueue_style(
-            'acf-fontawesome-icon-field',
-            plugin_dir_url(dirname(__DIR__, 2)) . 'assets/css/acf-fontawesome-icon-field.css',
-            ['acf-input'],
-            $version
-        );
+        $file = CacheBust::getFile('source/sass/acf/acf-fontawesome-icon-field.scss');
+        if ($file) {
+            wp_enqueue_style(
+                'acf-fontawesome-icon-field',
+                $file,
+                ['acf-input'],
+                $version
+            );
+        }
     }
 
     /**
@@ -157,21 +168,43 @@ class FontAwesomeIconField extends \acf_field
 
         // Filter by search term
         if (!empty($search)) {
-            $icons = array_filter($icons, function ($label, $value) use ($search) {
-                return stripos($label, $search) !== false || stripos($value, $search) !== false;
-            }, ARRAY_FILTER_USE_BOTH);
+            $icons = array_filter($icons, function ($icon) use ($search) {
+                // Search in label
+                if (stripos($icon['label'], $search) !== false) {
+                    return true;
+                }
+
+                // Search in id (icon key name)
+                if (stripos($icon['id'], $search) !== false) {
+                    return true;
+                }
+
+                // Search in classname
+                if (stripos($icon['classname'], $search) !== false) {
+                    return true;
+                }
+
+                // Search in search terms
+                foreach ($icon['searchTerms'] as $term) {
+                    if (stripos($term, $search) !== false) {
+                        return true;
+                    }
+                }
+
+                return false;
+            });
         }
 
         // Paginate
         $total = count($icons);
-        $icons = array_slice($icons, ($paged - 1) * $perPage, $perPage, true);
+        $icons = array_slice($icons, ($paged - 1) * $perPage, $perPage);
 
         // Format results
         $results = [];
-        foreach ($icons as $value => $label) {
+        foreach ($icons as $icon) {
             $results[] = [
-                'id'    => $value,
-                'label' => $label,
+                'id'    => $icon['classname'],
+                'label' => $icon['label'],
             ];
         }
 
@@ -191,12 +224,45 @@ class FontAwesomeIconField extends \acf_field
         static $icons = null;
 
         if ($icons === null) {
+            $icons = [];
             $jsonPath = dirname(__DIR__, 3) . '/data/fontawesome-icons.json';
 
-            if (file_exists($jsonPath)) {
-                $icons = json_decode(file_get_contents($jsonPath), true) ?: [];
-            } else {
-                $icons = [];
+            if (!file_exists($jsonPath)) {
+                return $icons;
+            }
+
+            $raw = json_decode(file_get_contents($jsonPath), true) ?: [];
+
+            foreach ($raw as $name => $meta) {
+                if (!is_array($meta)) {
+                    continue;
+                }
+
+                // Get label
+                $label = !empty($meta['label']) ? $meta['label'] : ucwords(str_replace('-', ' ', $name));
+
+                // Get classname (use first one if array)
+                $classname = '';
+                if (!empty($meta['classname'])) {
+                    $classname = is_array($meta['classname']) ? $meta['classname'][0] : $meta['classname'];
+                }
+
+                if (empty($classname)) {
+                    continue; // Skip icons without a classname
+                }
+
+                // Get search terms
+                $searchTerms = [];
+                if (!empty($meta['search']) && is_array($meta['search'])) {
+                    $searchTerms = $meta['search'];
+                }
+
+                $icons[] = [
+                    'id'          => $name,
+                    'label'       => $label,
+                    'classname'   => $classname,
+                    'searchTerms' => $searchTerms,
+                ];
             }
         }
 
