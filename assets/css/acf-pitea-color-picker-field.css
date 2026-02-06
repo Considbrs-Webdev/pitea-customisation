@@ -1,0 +1,477 @@
+.acf-pitea-color-picker-field {
+    position: relative;
+}
+
+/* Trigger Button */
+.acf-pitea-color-picker-trigger {
+    width: 100%;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border: 1px solid #8c8f94;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+    min-width: 0;
+}
+
+.acf-pitea-color-picker-trigger:hover {
+    border-color: #2271b1;
+}
+
+/* Clear Button Below Trigger - ACF Standard Style */
+.acf-pitea-color-picker-clear-trigger {
+    display: block;
+    width: auto;
+    padding: 0;
+    margin-top: 8px;
+    font-size: 13px;
+    text-align: left;
+}
+
+.acf-pitea-color-picker-selected {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.acf-pitea-color-picker-trigger .acf-pitea-color-picker-selected {
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+.acf-pitea-color-picker-preview {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+}
+
+.acf-pitea-color-picker-swatch {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    flex-shrink: 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.acf-pitea-color-picker-trigger .acf-pitea-color-picker-swatch {
+    width: 24px;
+    height: 24px;
+}
+
+.acf-pitea-color-picker-name {
+    font-size: 14px;
+    color: #1d2327;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+}
+
+.acf-pitea-color-picker-no-selection {
+    font-size: 13px;
+    color: #8c8f94;
+    font-style: italic;
+}
+
+.acf-pitea-color-picker-palette {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    max-height: none;
+    overflow: visible;
+}
+
+/* In modal, add padding and background */
+.acf-pitea-color-picker-modal-body .acf-pitea-color-picker-palette {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #f9f9f9;
+    max-height: 60vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Custom scrollbar styling */
+.acf-pitea-color-picker-modal-body .acf-pitea-color-picker-palette::-webkit-scrollbar,
+.acf-pitea-color-picker-modal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.acf-pitea-color-picker-modal-body .acf-pitea-color-picker-palette::-webkit-scrollbar-track,
+.acf-pitea-color-picker-modal-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.acf-pitea-color-picker-modal-body .acf-pitea-color-picker-palette::-webkit-scrollbar-thumb,
+.acf-pitea-color-picker-modal-body::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+.acf-pitea-color-picker-modal-body .acf-pitea-color-picker-palette::-webkit-scrollbar-thumb:hover,
+.acf-pitea-color-picker-modal-body::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+.acf-pitea-color-picker-group {
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.acf-pitea-color-picker-group-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background: #f5f5f5;
+    border: none;
+    border-bottom: 1px solid #e0e0e0;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.acf-pitea-color-picker-group-header:hover {
+    background: #eeeeee;
+}
+
+.acf-pitea-color-picker-group-name {
+    flex: 1;
+}
+
+.acf-pitea-color-picker-group-toggle {
+    width: 16px;
+    height: 16px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.acf-pitea-color-picker-group-toggle::before,
+.acf-pitea-color-picker-group-toggle::after {
+    content: '';
+    position: absolute;
+    background: #50575e;
+    transition: transform 0.2s ease;
+}
+
+.acf-pitea-color-picker-group-toggle::before {
+    width: 10px;
+    height: 2px;
+    top: 7px;
+    left: 3px;
+}
+
+.acf-pitea-color-picker-group-toggle::after {
+    width: 2px;
+    height: 10px;
+    top: 3px;
+    left: 7px;
+}
+
+.acf-pitea-color-picker-group.is-collapsed .acf-pitea-color-picker-group-toggle::after {
+    transform: rotate(90deg);
+    opacity: 0;
+}
+
+.acf-pitea-color-picker-group-content {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    padding: 12px;
+}
+
+.acf-pitea-color-picker-group.is-collapsed .acf-pitea-color-picker-group-content {
+    display: none !important;
+}
+
+.acf-pitea-color-picker-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 10px;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-align: left;
+    font-size: 13px;
+    min-width: 0;
+}
+
+.acf-pitea-color-picker-option:hover {
+    border-color: #2271b1;
+    background: #f0f6fc;
+}
+
+.acf-pitea-color-picker-option.is-selected {
+    border-color: #2271b1;
+    background: #e7f3ff;
+    box-shadow: 0 0 0 1px #2271b1;
+}
+
+.acf-pitea-color-picker-option .acf-pitea-color-picker-swatch {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.acf-pitea-color-picker-option .acf-pitea-color-picker-label {
+    flex: 1;
+    color: #1d2327;
+    font-weight: 400;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    min-width: 0;
+}
+
+.acf-pitea-color-picker-option.is-selected .acf-pitea-color-picker-label {
+    font-weight: 500;
+    color: #2271b1;
+}
+
+.acf-pitea-color-picker-custom {
+    margin-top: 8px;
+}
+
+.acf-pitea-color-picker-custom-input {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.acf-pitea-color-picker-hex-input {
+    flex: 1;
+    padding: 6px 10px;
+    border: 1px solid #8c8f94;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: monospace;
+    max-width: 120px;
+}
+
+.acf-pitea-color-picker-hex-input:focus {
+    border-color: #2271b1;
+    box-shadow: 0 0 0 1px #2271b1;
+    outline: none;
+}
+
+.acf-pitea-color-picker-hex-input:invalid {
+    border-color: #d63638;
+}
+
+.acf-pitea-color-picker-custom-apply {
+    flex-shrink: 0;
+}
+
+.acf-pitea-color-picker-clear {
+    align-self: flex-start;
+}
+
+/* Modal Styles */
+.acf-pitea-color-picker-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.acf-pitea-color-picker-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(2px);
+}
+
+.acf-pitea-color-picker-modal-content {
+    position: relative;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    animation: acf-pitea-color-picker-modal-fade-in 0.2s ease;
+}
+
+@keyframes acf-pitea-color-picker-modal-fade-in {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.acf-pitea-color-picker-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid #ddd;
+}
+
+.acf-pitea-color-picker-modal-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.acf-pitea-color-picker-modal-close {
+    background: none;
+    border: none;
+    font-size: 28px;
+    line-height: 1;
+    color: #8c8f94;
+    cursor: pointer;
+    padding: 0;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: all 0.15s ease;
+}
+
+.acf-pitea-color-picker-modal-close:hover {
+    background: #f0f0f1;
+    color: #1d2327;
+}
+
+.acf-pitea-color-picker-modal-body {
+    padding: 24px;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+    max-height: calc(90vh - 200px);
+}
+
+/* Modal Preview Section */
+.acf-pitea-color-picker-modal-preview {
+    padding: 16px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #f9f9f9;
+}
+
+.acf-pitea-color-picker-modal-preview-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.acf-pitea-color-picker-modal-preview-swatch {
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.acf-pitea-color-picker-modal-preview-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.acf-pitea-color-picker-modal-preview-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.acf-pitea-color-picker-modal-preview-hex {
+    font-size: 14px;
+    font-family: monospace;
+    color: #8c8f94;
+}
+
+.acf-pitea-color-picker-modal-preview-empty {
+    text-align: center;
+    color: #8c8f94;
+    font-style: italic;
+    padding: 8px 0;
+}
+
+.acf-pitea-color-picker-modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 16px 24px;
+    border-top: 1px solid #ddd;
+    background: #f9f9f9;
+    flex-shrink: 0;
+    min-height: 0;
+    overflow: visible;
+}
+
+.acf-pitea-color-picker-modal-footer .button {
+    flex-shrink: 0;
+    min-width: auto;
+    white-space: nowrap;
+}
+
+/* Prevent body scroll when modal is open */
+body.acf-pitea-color-picker-modal-open {
+    overflow: hidden;
+}
+
+/* Responsive adjustments */
+@media (max-width: 782px) {
+    .acf-pitea-color-picker-group-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .acf-pitea-color-picker-group-content {
+        grid-template-columns: 1fr;
+    }
+}
