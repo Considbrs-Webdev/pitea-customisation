@@ -30,3 +30,20 @@
     }
   }
 }
+
+.wp-singular.archive-simpleview {
+  .c-simpleview-event-single__hero {
+    max-width: var(--container-width-content, calc(var(--base, 8px) * 76));
+    border-radius: 0;
+    .c-card {
+      &__image-container {
+        flex-basis: 100%;
+        border-radius: 0;
+      }
+      &__body {
+        flex-basis: 0;
+        padding: 0;
+      }
+    }
+  }
+}
