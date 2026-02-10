@@ -7,27 +7,40 @@ class ShareButton
     public function __construct()
     {
         new \PiteaCustomisation\AcfFields\ShareButtonFields();
-        add_filter('the_content', [$this, 'addShareButton'], 10, 1);
-    }
-
-    public function addShareButton($content): string
-    {
-        if (!is_singular() || !is_main_query() || is_admin()) {
-            return $content;
-        }
-        $placement = $this->getShareButtonPlacement();
-        if ($placement === 'bottom') {
-            return $content . $this->getShareButton();
-        }
-
-        return $content;
+        add_action('signature_before', [$this, 'renderSignatureBefore']);
+        add_action('signature_after', [$this, 'renderSignatureAfter']);
     }
 
     /**
-     * Get the share button placement setting for the current page. If post type is not page, return 'bottom'.
-     *
-     * @return string The placement value: 'bottom' or 'none'
+     * Output wrapper opening before the signature (core hook).
      */
+    public function renderSignatureBefore(): void
+    {
+        if ($this->shouldShowShareButton()) {
+            echo '<div class="c-signature-row">';
+        }
+    }
+
+    /**
+     * Output share button and wrapper closing after the signature (core hook).
+     */
+    public function renderSignatureAfter(): void
+    {
+        if ($this->shouldShowShareButton()) {
+            echo $this->getShareButtonHtml();
+            echo '</div>';
+        }
+    }
+
+    private function shouldShowShareButton(): bool
+    {
+        if (!is_singular() || is_admin()) {
+            return false;
+        }
+
+        return $this->getShareButtonPlacement() === 'bottom';
+    }
+
     private function getShareButtonPlacement(): string
     {
         $postId = get_the_ID();
@@ -37,35 +50,24 @@ class ShareButton
 
         $postType = get_post_type($postId);
 
-        $placement = get_field('share_button_placement', $postId);
-
         if ($postType !== 'page') {
             return 'bottom';
         }
 
-        if ($postType === 'page') {
-            if (empty($placement)) {
-                return 'none';
-            }
-            if ($placement === 'bottom') {
-                return 'bottom';
-            }
-            return 'none';
-        }
+        $placement = get_field('share_button_placement', $postId);
 
-        return 'none';
+        return ($placement === 'bottom') ? 'bottom' : 'none';
     }
 
-    private function getShareButton(): string
+    private function getShareButtonHtml(): string
     {
         $url = esc_url(get_permalink());
-        $title = esc_attr(get_the_title());
 
         return sprintf(
             '<div class="share-buttons">
-                <button 
+                <button
                     type="button"
-                    class="share-link" 
+                    class="share-link"
                     data-js-share-button
                     data-share-url="%s"
                     aria-label="%s"
