@@ -70,6 +70,17 @@ foreach ($buildCommands as $buildCommand) {
     }
 }
 
+// Copy variables.scss to data/ before cleanup (ColorPickerField reads it at runtime)
+$variablesScss = 'source/sass/general/variables.scss';
+if (file_exists($variablesScss)) {
+    $dataDir = 'data';
+    if (!is_dir($dataDir)) {
+        mkdir($dataDir, 0755, true);
+    }
+    copy($variablesScss, $dataDir . '/variables.scss');
+    print "Copied $variablesScss to $dataDir/variables.scss for runtime use.\n";
+}
+
 // Remove files and directories if '--cleanup' argument is supplied to save local developers from disasters.
 if (is_array($argv) && in_array('--cleanup', $argv)) {
     foreach ($removables as $removable) {

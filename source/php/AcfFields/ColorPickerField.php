@@ -265,7 +265,14 @@ class ColorPickerField extends \acf_field
 
         if ($colorGroups === null) {
             $colorGroups = [];
-            $scssPath = dirname(__DIR__, 2) . '/sass/general/variables.scss';
+
+            // Prefer data/variables.scss (copied during build); fallback to source for dev
+            $pluginDir = dirname(__DIR__, 3);
+            $scssPath = $pluginDir . '/data/variables.scss';
+            error_log($scssPath);
+            if (!file_exists($scssPath)) {
+                $scssPath = $pluginDir . '/source/sass/general/variables.scss';
+            }
 
             if (file_exists($scssPath)) {
                 $content = file_get_contents($scssPath);
