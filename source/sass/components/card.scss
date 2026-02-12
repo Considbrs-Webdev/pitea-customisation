@@ -1,3 +1,16 @@
+.c-card {
+  --c-card-eyebrow-border-radius: var(--border-radius-small);
+  --c-card-eyebrow-background-color: var(--color-primary);
+  --c-card-eyebrow-color: var(--color-white);
+  .c-card__eyebrow {
+    background-color: var(--c-card-eyebrow-background-color);
+    border-radius: var(--c-card-eyebrow-border-radius);
+    color: var(--c-card-eyebrow-color);
+    width: fit-content;
+    padding: 5px 8px;
+  }
+}
+
 .modularity-mod-manualinput {
   .c-card {
     --c-card-border-radius: var(--border-radius-small);
