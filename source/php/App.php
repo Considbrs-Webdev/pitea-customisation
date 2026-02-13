@@ -1,6 +1,7 @@
 <?php
 
 namespace PiteaCustomisation;
+
 class App
 {
     /**
@@ -36,6 +37,7 @@ class App
             Customisations\Decorators::class,
             Customisations\FontAwesome::class,
             Customisations\Headers::class,
+            Customisations\Navigation::class,
             Customisations\News::class,
             Customisations\Pagination::class,
             Customisations\ShareButton::class,
