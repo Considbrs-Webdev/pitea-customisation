@@ -1,5 +1,6 @@
 @use "../elements/news-item";
 
+// Default archive page styles
 .post-type-archive {
   --archive-filter-background: var(--color-background-card);
   --archive-filter-padding: 36px 30px;
@@ -30,6 +31,24 @@
     justify-content: flex-start !important;
   }
 
+  .c-card {
+    border: none;
+    box-shadow: none;
+    filter: none;
+    &:hover {
+      filter: none;
+      background-color: inherit;
+      color: inherit;
+      transform: none;
+      transition: none;
+    }
+
+    &__body {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
   .s-news-archive,
   .s-nyheter-archive {
     --archive-filter-background: var(--color-darjnalen-light-3);
@@ -50,7 +69,13 @@
       margin-top: calc(var(--base, 8px) * 2);
     }
   }
-
+  .s-forskola-archive {
+    --archive-filter-background: var(--color-darjnalen-light-3);
+    --c-button-primary-color: var(--color-darjnalen-dark-3);
+    --c-button-primary-color-contrasting: var(--color-darjnalen-light-4);
+    --c-button-primary-color: var(--color-darjnalen-dark-3);
+    --c-button-primary-color-contrasting: var(--color-white);
+  }
   .s-lediga-jobb-archive {
     --archive-filter-background: var(--color-darjnalen-light-3);
     --c-button-primary-color: var(--color-darjnalen-dark-3);
