@@ -14,11 +14,11 @@ class Pagination
     public function __construct()
     {
         // Hook into Pagination component data filters
-        add_filter('ComponentLibrary/Component/Pagination/Data', [$this, 'storeOriginalData'], 5);
-        add_filter('ComponentLibrary/Component/Pagination/List', [$this, 'modifyList'], 10);
-        add_filter('ComponentLibrary/Component/Pagination/FirstItem', [$this, 'modifyFirstItem'], 10);
-        add_filter('ComponentLibrary/Component/Pagination/LastItem', [$this, 'modifyLastItem'], 10);
-        add_filter('ComponentLibrary/Component/Pagination/Attribute', [$this, 'addDataAttributes'], 10);
+        // add_filter('ComponentLibrary/Component/Pagination/Data', [$this, 'storeOriginalData'], 5);
+        // add_filter('ComponentLibrary/Component/Pagination/List', [$this, 'modifyList'], 10);
+        // add_filter('ComponentLibrary/Component/Pagination/FirstItem', [$this, 'modifyFirstItem'], 10);
+        // add_filter('ComponentLibrary/Component/Pagination/LastItem', [$this, 'modifyLastItem'], 10);
+        // add_filter('ComponentLibrary/Component/Pagination/Attribute', [$this, 'addDataAttributes'], 10);
     }
 
     /**
@@ -85,6 +85,11 @@ class Pagination
             return $firstItem;
         }
 
+        // When 5 or fewer pages, core handles it; don't add separate first item (avoids duplicate on desktop)
+        if ($this->totalPages <= 5) {
+            return $firstItem;
+        }
+
         // If current page is 1 or 2, don't show first page separately (no ellipsis needed)
         if ($this->currentPage <= 2) {
             return false;
@@ -109,6 +114,11 @@ class Pagination
     public function modifyLastItem($lastItem)
     {
         if (empty($this->originalList)) {
+            return $lastItem;
+        }
+
+        // When 5 or fewer pages, core handles it; don't add separate last item (avoids duplicate on desktop)
+        if ($this->totalPages <= 5) {
             return $lastItem;
         }
 

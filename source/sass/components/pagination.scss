@@ -91,7 +91,10 @@
 // Mobile pagination: Show only first, active, last pages with ellipses
 @media (max-width: 767px) {
   .c-pagination {
-    .c-pagination__list > .c-pagination__item.u-display--none\@xs:not(.c-pagination__item--previous):not(.c-pagination__item--next):not(.c-pagination__page-wrapper) {
+    .c-pagination__list
+      > .c-pagination__item.u-display--none\@xs:not(
+        .c-pagination__item--previous
+      ):not(.c-pagination__item--next):not(.c-pagination__page-wrapper) {
       display: flex !important;
     }
 
