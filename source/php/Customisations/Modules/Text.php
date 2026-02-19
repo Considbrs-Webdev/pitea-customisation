@@ -318,26 +318,28 @@ class Text
         $css = '<style id="text-module-settings" type="text/css">';
 
         foreach ($settings as $moduleId => $moduleSettings) {
-            $selector = ".modularity-mod-text-{$moduleId}";
+            $moduleSelector = ".modularity-mod-text-{$moduleId}";
+            $paintContainerSelector = ".modularity-mod-text-{$moduleId} .c-card__paint-container";
 
             // Add border-style if border properties are set
             $hasBorder = isset($moduleSettings['text_module_border_color'])
                 || isset($moduleSettings['text_module_border_thickness']);
             if ($hasBorder) {
-                $css .= "{$selector} { border-style: solid; }";
+                $css .= "{$moduleSelector} { border-style: solid; }";
             }
 
             // Add text color if background is set
             if (isset($moduleSettings['text_module_background'])) {
                 $backgroundColor = $moduleSettings['text_module_background']['value'];
                 $textColor = $this->getContrastTextColor($backgroundColor);
-                $css .= $this->generateCssRule($selector, 'color', $textColor);
+                $css .= $this->generateCssRule($moduleSelector, 'color', $textColor);
             }
 
             foreach ($moduleSettings as $setting) {
                 if ($setting['property'] === null) {
                     continue;
                 }
+                $selector = $setting['property'] === 'background-color' ? $paintContainerSelector : $moduleSelector;
                 $css .= $this->generateCssRule($selector, $setting['property'], $setting['value'], $setting['unit']);
             }
         }
