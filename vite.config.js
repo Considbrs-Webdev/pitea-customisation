@@ -1,11 +1,13 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
+import fs from 'fs';
+import path from 'path';
 
 export default defineConfig({
     base: './',
     build: {
         outDir: 'dist',
-        emptyOutDir: true,
+        emptyOutDir: false,
         manifest: true,
         rollupOptions: {
             input: {
@@ -53,4 +55,25 @@ export default defineConfig({
     css: {
         devSourcemap: true,
     },
+    plugins: [
+        {
+            name: 'clean-dist-except-gutenberg',
+            buildStart() {
+                // Configure folders to preserve in dist directory
+                const preserveFolders = ['gutenberg'];
+                
+                const distPath = resolve(__dirname, 'dist');
+                
+                if (fs.existsSync(distPath)) {
+                    const items = fs.readdirSync(distPath);
+                    items.forEach(item => {
+                        if (!preserveFolders.includes(item)) {
+                            const itemPath = path.join(distPath, item);
+                            fs.rmSync(itemPath, { recursive: true, force: true });
+                        }
+                    });
+                }
+            }
+        }
+    ],
 });

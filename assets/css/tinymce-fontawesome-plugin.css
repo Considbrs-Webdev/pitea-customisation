@@ -36,6 +36,7 @@
 }
 
 .tinymce-fa-icon-option i {
+    font-family: var(--_fa-family) !important;
     font-size: 50px;
     color: #333;
     transition: color 0.15s ease;
@@ -54,12 +55,8 @@
     margin-top: 10px;
 }
 
-.mce-container .tinymce-fa-icon-option i.fa-solid {
-    font-weight: 900;
-}
-
-.mce-container .tinymce-fa-icon-option i.fa-regular {
-    font-weight: 400;
+.mce-i-font-awesome {
+    font-family: var(--_fa-family) !important;
 }
 
 /* Quicktags Modal Styles */

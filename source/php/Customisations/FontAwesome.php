@@ -23,24 +23,11 @@ class FontAwesome
         add_filter('mce_external_plugins', [$this, 'registerTinyMcePlugin'], 50);
         add_filter('mce_buttons', [$this, 'addTinyMceButton'], 50);
         add_action('admin_enqueue_scripts', [$this, 'enqueueTinyMceStyles'], 50);
+        add_action('admin_enqueue_scripts', [$this, 'enqueueQuicktagsScript'], 50);
+        add_filter('mce_css', [$this, 'addFontAwesomeToTinyMce']);
 
         // Gutenberg FontAwesome icon picker
         add_action('enqueue_block_editor_assets', [$this, 'enqueueGutenbergAssets']);
-
-        /* add_filter('tiny_mce_before_init', function ($settings) {
-            $settings['setup'] = <<<JS
-            function (editor) {
-                editor.on('init', function () {
-                    var script = editor.getDoc().createElement('script');
-                    script.src = 'https://kit.fontawesome.com/be6ad42a19.js';
-                    script.crossOrigin = 'anonymous';
-                    editor.getDoc().head.appendChild(script);
-                });
-            }
-            JS;
-
-            return $settings;
-        }); */
     }
 
     /**
@@ -207,37 +194,52 @@ class FontAwesome
      */
     public function enqueueTinyMceStyles(): void
     {
+        // TinyMCE plugin styles
         wp_enqueue_style(
             'tinymce-fontawesome-plugin',
             plugin_dir_url(dirname(__DIR__, 2)) . 'assets/css/tinymce-fontawesome-plugin.css',
             [],
             '1.0.0'
         );
+    }
 
-        /* wp_enqueue_style(
-            'fontawesome-css',
-            plugin_dir_url(dirname(__DIR__, 2)) . 'assets/dist/css/fontawesome.css',
-            [],
-            '1.0.0'
-        ); */
+    /**
+     * Add FontAwesome styles to TinyMCE editor iframe
+     *
+     * @param string $mce_css Comma-separated list of stylesheets
+     * @return string Modified stylesheet list
+     */
+    public function addFontAwesomeToTinyMce(string $mce_css): string
+    {
+        $fontAwesomeUrl = \PiteaCustomisation\Helpers\CacheBust::getFile('source/sass/font-awesome.scss');
+        
+        if (!$fontAwesomeUrl) {
+            return $mce_css;
+        }
 
-        // Enqueue the script for Quicktags (Text mode) as well
+        if (!empty($mce_css)) {
+            $mce_css .= ',';
+        }
+
+        $mce_css .= $fontAwesomeUrl;
+
+        return $mce_css;
+    }
+
+    /**
+     * Enqueue Quicktags FontAwesome script in admin
+     *
+     * @return void
+     */
+    public function enqueueQuicktagsScript(): void
+    {
         wp_enqueue_script(
             'quicktags-fontawesome-plugin',
-            plugin_dir_url(dirname(__DIR__, 2)) . 'assets/js/tinymce-fontawesome-plugin.js',
+            plugin_dir_url(dirname(__DIR__, 2)) . 'assets/js/quicktags-fontawesome-plugin.js',
             ['quicktags'],
             '1.0.0',
             true
         );
-
-        // Make sure FontAwesome is loaded in admin for the icon picker
-        /* wp_enqueue_script(
-            'fontawesome-kit-admin',
-            'https://kit.fontawesome.com/be6ad42a19.js',
-            [],
-            null,
-            true
-        ); */
     }
 
     /**
