@@ -54,7 +54,9 @@
   }
 }
 // Disable all hover effects for cards inside column blocks
-.o-grid-column-block .modularity-mod-manualinput .c-card {
+.o-grid-column-block
+  .modularity-mod-manualinput:not(:has(.c-accordion))
+  .c-card {
   transition: none !important;
   transform: none !important;
   filter: none !important;
