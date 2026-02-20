@@ -1,3 +1,79 @@
+// =============================================================================
+// Card overrides - remove styleguide float-up, add image zoom
+// Applies to: .c-card (manual input, etc) and .c-event-card (latest-events)
+// =============================================================================
+
+// Remove float-up animation on hover - only for cards that are links
+.c-card.c-card--action:hover,
+.c-event-card:hover {
+  transform: none !important;
+}
+
+// Remove styleguide overlay on card image hover (a.c-card:hover .c-card__image:before)
+.c-card.c-card--action:hover .c-card__image::before {
+  opacity: 0 !important;
+}
+
+// Manual input cards WITHOUT link - no hover effects at all (display only)
+.modularity-mod-manualinput .c-card:not(.c-card--action) {
+  &:hover {
+    transform: none !important;
+    filter: none !important;
+
+    .c-card__heading {
+      text-decoration: none !important;
+    }
+
+    .c-card__image::before {
+      opacity: 0 !important;
+    }
+  }
+}
+
+// Image zoom on hover - only for cards WITH link
+.modularity-mod-manualinput .c-card.c-card--has-image.c-card--action {
+  .c-card__image-container {
+    overflow: hidden;
+  }
+
+  .c-card__image {
+    overflow: hidden;
+  }
+
+  // Scale only the wrapper - it contains both background-image and imgs, so both zoom together
+  // Scaling img directly causes srcset images to shift (positioning/transform-origin conflict)
+  .c-card__image .c-image__image-wrapper {
+    transition: transform var(--transition-duration-medium, 0.3s) ease;
+    transform-origin: center center;
+  }
+
+  &:hover .c-card__image .c-image__image-wrapper {
+    transform: scale(1.05) !important;
+  }
+}
+
+.c-event-card {
+  .c-event-card__image-wrapper {
+    overflow: hidden;
+  }
+
+  .c-event-card__image {
+    transition: transform var(--transition-duration-medium, 0.3s) ease;
+  }
+
+  &:hover .c-event-card__image {
+    transform: scale(1.05);
+  }
+}
+
+// Title underline - styleguide already does .c-card:hover .c-card__heading
+// Ensure event card title matches
+.c-event-card:hover .c-event-card__title {
+  text-decoration: underline;
+}
+
+// =============================================================================
+
 .c-card {
   --c-card-eyebrow-border-radius: var(--border-radius-small);
   --c-card-eyebrow-background-color: var(--color-primary);
