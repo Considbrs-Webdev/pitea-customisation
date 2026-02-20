@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-07T14:47:08+00:00\n"
-"PO-Revision-Date: 2026-01-07 15:53+0100\n"
+"POT-Creation-Date: 2026-02-20T07:29:37+00:00\n"
+"PO-Revision-Date: 2026-02-20 08:36+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -13,26 +13,107 @@ msgstr ""
 "X-Generator: Poedit 3.8\n"
 "X-Domain: pitea-customisation\n"
 
-#: AcfFields/FontAwesomeIconField.php:124
-msgid "No icon selected"
-msgstr "Ingen ikon vald"
+#: AcfFields/AccessibilityFields.php:19
+msgid "Accessibility Buttons Settings"
+msgstr "Inställningar för tillgänglighetsknappar"
 
-#: AcfFields/FontAwesomeIconField.php:132
-msgid "Search icons..."
-msgstr "Sök ikon..."
+#: AcfFields/AccessibilityFields.php:23
+msgid "Show accessibility buttons"
+msgstr "Visa tillgänglighetsikoner"
 
-#: AcfFields/FontAwesomeIconField.php:139
+#: AcfFields/AccessibilityFields.php:26
+msgid "Display accessibility buttons (ReadSpeaker and Print) on this page."
+msgstr "Visa tillgänglighetsikoner på denna sida."
+
+#: AcfFields/ColorPickerField.php:56
+msgid "Allow Custom Colors?"
+msgstr "Tillåt skräddarsydda färger?"
+
+#: AcfFields/ColorPickerField.php:57
+msgid "Allow users to enter custom hex colors"
+msgstr "Tillåt redaktören att mata in egna färgvärden"
+
+#: AcfFields/ColorPickerField.php:133 AcfFields/ColorPickerField.php:146
+#: AcfFields/ColorPickerField.php:163
+msgid "Select Color"
+msgstr "Välj färg"
+
+#: AcfFields/ColorPickerField.php:154 AcfFields/ColorPickerField.php:244
+#: AcfFields/FontAwesomeIconField.php:150
 msgid "Clear"
 msgstr "Rensa"
 
-#: Customisations/Accessibility.php:67
-msgid "Listen"
-msgstr "Lyssna"
+#: AcfFields/ColorPickerField.php:164
+msgid "Close"
+msgstr "Stäng"
 
-#: Customisations/Accessibility.php:68
+#: AcfFields/ColorPickerField.php:186
+msgid "No color selected"
+msgstr "Ingen färg vald"
+
+#: AcfFields/ColorPickerField.php:224
+msgid "Use Custom Color"
+msgstr "Använd skräddarsydd färg"
+
+#: AcfFields/ColorPickerField.php:234
+msgid "Apply"
+msgstr "Verkställ"
+
+#: AcfFields/ColorPickerField.php:248
+msgid "Done"
+msgstr "Klar"
+
+#: AcfFields/FontAwesomeIconField.php:135
+msgid "No icon selected"
+msgstr "Ingen ikon vald"
+
+#: AcfFields/FontAwesomeIconField.php:143
+msgid "Search icons..."
+msgstr "Sök ikon..."
+
+#: AcfFields/ShareButtonFields.php:19
+msgid "Share Button Settings"
+msgstr "Inställningar för dela-knapp"
+
+#: AcfFields/ShareButtonFields.php:23
+msgid "Share Button Placement"
+msgstr "Placering för dela-knapp"
+
+#: AcfFields/ShareButtonFields.php:26
+msgid "Choose where the share button should appear on this page."
+msgstr "Välj var på sidan dela-knappen ska synas."
+
+#: AcfFields/ShareButtonFields.php:35
+msgid "None"
+msgstr "Ingen"
+
+#: AcfFields/ShareButtonFields.php:36
+msgid "Bottom of content"
+msgstr "Botten av innehållet"
+
+#: Customisations/Accessibility.php:123
 msgid "Listen to this page"
 msgstr "Lyssna på sidan"
 
-#: Customisations/TextModule.php:99
+#: Customisations/Breadcrumbs.php:81
+msgid "Start"
+msgstr "Starta"
+
+#: Customisations/Modules/Slider.php:63 Customisations/Modules/Text.php:99
 msgid "Enable"
 msgstr "Aktivera"
+
+#: Customisations/ShareButton.php:81
+msgid "Copy page link to clipboard"
+msgstr "Kopiera sidadress"
+
+#: Customisations/ShareButton.php:82
+msgid "Share page"
+msgstr "Dela sidan"
+
+#: ExternalContent/TrafficDisruptionsImporter.php:146
+msgid "Map showing traffic disruption"
+msgstr "Karta över trafikstörning"
+
+#~ msgid "Listen"
+#~ msgstr "Lyssna"

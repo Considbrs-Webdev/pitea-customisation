@@ -79,7 +79,7 @@ class ShareButton
             </div>',
             $url,
             esc_attr__('Copy page link to clipboard', 'pitea-customisation'),
-            esc_html__('Dela sidan', 'pitea-customisation')
+            esc_html__('Share page', 'pitea-customisation')
         );
     }
 }

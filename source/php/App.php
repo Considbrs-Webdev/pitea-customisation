@@ -35,6 +35,7 @@ class App
             Customisations\ColorPicker::class,
             Customisations\Config::class,
             Customisations\Decorators::class,
+            Customisations\ExternalContent::class,
             Customisations\FontAwesome::class,
             Customisations\Headers::class,
             Customisations\Navigation::class,
