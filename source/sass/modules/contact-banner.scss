@@ -33,11 +33,20 @@
     .c-card__footer {
       padding: 32px !important;
 
+      .c-icon {
+        transition: transform var(--transition-duration-medium, 0.3s) ease;
+      }
+
+      &:hover .c-icon {
+        transform: translateX(4px);
+      }
+
       .c-button {
         font-size: var(--font-size-link);
         height: auto;
 
         &__label {
+          align-items: center;
           gap: calc(var(--base, 8px) / 4);
           &-text {
             text-decoration: underline;
@@ -54,6 +63,11 @@
     .c-icon {
       color: var(--contact-banner-icon-color);
       font-size: var(--contact-banner-icon-size);
+
+      &.c-icon--size-md::after {
+        height: unset;
+        width: unset;
+      }
     }
 
     .c-typography__variant--h3 {
