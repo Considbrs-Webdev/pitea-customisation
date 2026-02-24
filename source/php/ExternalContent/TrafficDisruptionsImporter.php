@@ -145,12 +145,13 @@ class TrafficDisruptionsImporter implements ImporterInterface
         if (class_exists(\ModularityArcgisMap\Helper\MapRenderer::class)) {
             $content .= '<h2 class="c-typography c-typography__variant--h3">' . __('Map showing traffic disruption', 'pitea-customisation') . '</h2>';
             $content .= \ModularityArcgisMap\Helper\MapRenderer::render([
-                'lat'         => (string) $centroid['lat'],
-                'lng'         => (string) $centroid['lng'],
-                'zoom'        => 15,
-                'showMarker'  => false,
-                'height'      => '400px',
-                'geoJsonData' => $geoJsonData,
+                'lat'          => (string) $centroid['lat'],
+                'lng'          => (string) $centroid['lng'],
+                'zoom'         => 15,
+                'showMarker'   => false,
+                'height'       => '400px',
+                'geoJsonData'  => $geoJsonData,
+                'geoJsonTitle' => __('Traffic disruption location', 'pitea-customisation'),
             ]);
         }
 

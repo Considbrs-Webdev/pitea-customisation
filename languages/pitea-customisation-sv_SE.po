@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-20T07:29:37+00:00\n"
-"PO-Revision-Date: 2026-02-20 08:36+0100\n"
+"POT-Creation-Date: 2026-02-24T20:10:17+00:00\n"
+"PO-Revision-Date: 2026-02-24 21:10+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -114,6 +114,10 @@ msgstr "Dela sidan"
 #: ExternalContent/TrafficDisruptionsImporter.php:146
 msgid "Map showing traffic disruption"
 msgstr "Karta över trafikstörning"
+
+#: ExternalContent/TrafficDisruptionsImporter.php:154
+msgid "Traffic disruption location"
+msgstr "Plats för trafikstörning"
 
 #~ msgid "Listen"
 #~ msgstr "Lyssna"
