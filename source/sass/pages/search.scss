@@ -1,0 +1,36 @@
+// Search results page – hit card styling
+.search {
+  .ts-search-results {
+    --search-hit-gap: calc(var(--base, 8px) * 3);
+    gap: var(--search-hit-gap);
+
+    // Simpleview event cards
+    .c-simpleview-event-card {
+      background-color: var(--search-hit-simpleview-background);
+      border-radius: var(--border-radius-small);
+    }
+
+    // Municipal event cards
+    .c-municipal-event-card {
+      --municipal-card-background: var(--search-hit-municipal-background);
+      background-color: var(--search-hit-municipal-background);
+      border-radius: var(--border-radius-small);
+    }
+
+    // Service info cards
+    .mod-service-info {
+      --item-background-color: var(--search-hit-service-info-background);
+      --item-background-color-hover: color-mix(
+        in srgb,
+        var(--search-hit-service-info-background),
+        10% black
+      );
+    }
+
+    // Default / image / noimage cards (fallback templates)
+    .c-card:not(.c-simpleview-event-card):not(.c-municipal-event-card) {
+      background-color: var(--search-hit-default-background);
+      border-radius: var(--border-radius-small);
+    }
+  }
+}

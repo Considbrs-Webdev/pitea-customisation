@@ -92,3 +92,11 @@
 :root {
   --page-title-color: var(--color-stain-dark-3);
 }
+
+// Search hit card backgrounds (used on search results page)
+:root {
+  --search-hit-simpleview-background: var(--color-darjnalen-light-4);
+  --search-hit-municipal-background: var(--color-paren-light-4);
+  --search-hit-service-info-background: var(--color-darjnalen-light-4);
+  --search-hit-default-background: var(--color-background-card, var(--color-stain-light-4));
+}
