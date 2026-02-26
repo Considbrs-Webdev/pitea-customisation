@@ -1,0 +1,27 @@
+// =============================================================================
+// Piteå header customisation – Gap between items in .c-header__upper-right
+// =============================================================================
+// .c-header__upper-right is a flex container. Its direct children are:
+//   - Search (collapsible-search-form)
+//   - Drawer trigger (mobile menu)
+//   - Primary nav (tabs)
+//   - Language menu
+// =============================================================================
+
+:root {
+  --c-header-main-upper-area-padding: calc(var(--base, 8px) * 3);
+  --c-header-upper-right-gap: calc(var(--base, 8px) * 4);
+}
+.c-header.c-header--flexible {
+  .c-header__main-upper-area {
+    padding-bottom: var(--c-header-main-upper-area-padding);
+    padding-top: var(--c-header-main-upper-area-padding);
+  }
+  .c-header__upper-right {
+    gap: var(--c-header-upper-right-gap);
+
+    #tabs {
+      gap: var(--c-header-upper-right-gap);
+    }
+  }
+}

@@ -97,7 +97,7 @@ msgstr "Lyssna på sidan"
 
 #: Customisations/Breadcrumbs.php:81
 msgid "Start"
-msgstr "Starta"
+msgstr "Start"
 
 #: Customisations/Modules/Slider.php:63 Customisations/Modules/Text.php:99
 msgid "Enable"
