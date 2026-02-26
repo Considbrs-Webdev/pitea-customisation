@@ -44,6 +44,7 @@ class App
             Customisations\PostTypes::class,
             Customisations\ShareButton::class,
             Customisations\Taxonomies::class,
+            Customisations\Typesense::class,
             Customisations\Modules\InlayList::class,
             Customisations\Modules\Container::class,
             Customisations\Modules\Posts::class,
