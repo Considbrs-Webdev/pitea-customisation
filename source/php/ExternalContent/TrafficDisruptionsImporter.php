@@ -104,12 +104,14 @@ class TrafficDisruptionsImporter implements ImporterInterface
             return null;
         }
 
-        $startDate = $this->convertTimestamp($props['PUBLICERA_START'] ?? null);
-        $endDate   = $this->convertTimestamp($props['PUBLICERA_SLUT'] ?? null);
+        $publishDate   = $this->convertTimestamp($props['PUBLICERA_START'] ?? null);
+        $unpublishDate = $this->convertTimestamp($props['PUBLICERA_SLUT'] ?? null);
 
-        if ($startDate === null) {
+        if ($publishDate === null) {
             return null;
         }
+
+        [$startDate, $endDate] = $this->parseTidField($props['TID'] ?? '');
 
         // Build the content: info text + embedded map with this feature's geometry
         $content = $this->buildContent($info, $feature);
@@ -118,9 +120,12 @@ class TrafficDisruptionsImporter implements ImporterInterface
             sourceId: (string) $objectId,
             title: $title,
             content: $content,
-            startDate: $startDate,
+            startDate: $startDate ?? $publishDate,
             endDate: $endDate,
             categories: ['Trafikstörningar'],
+            unpublishDate: $unpublishDate,
+            onUnpublish: 'trash',
+            publishDate: $publishDate,
         );
     }
 
@@ -159,7 +164,7 @@ class TrafficDisruptionsImporter implements ImporterInterface
     }
 
     /**
-     * Convert a millisecond Unix timestamp to a DateTimeImmutable.
+     * Convert a millisecond Unix timestamp (GMT) to a DateTimeImmutable in the WP local timezone.
      */
     private function convertTimestamp(int|string|null $timestampMs): ?\DateTimeImmutable
     {
@@ -169,7 +174,36 @@ class TrafficDisruptionsImporter implements ImporterInterface
 
         $seconds = (int) ($timestampMs / 1000);
 
-        return (new \DateTimeImmutable())->setTimestamp($seconds);
+        return (new \DateTimeImmutable('@' . $seconds))->setTimezone(wp_timezone());
+    }
+
+    /**
+     * Parse the TID string (format: "YYYY-MM-DD - YYYY-MM-DD") into a start and end DateTimeImmutable.
+     *
+     * @return array{0: \DateTimeImmutable|null, 1: \DateTimeImmutable|null}
+     */
+    private function parseTidField(string $tid): array
+    {
+        $tz        = wp_timezone();
+        $parts     = explode(' - ', $tid, 2);
+        $startDate = null;
+        $endDate   = null;
+
+        if (!empty($parts[0])) {
+            $dt = \DateTimeImmutable::createFromFormat('Y-m-d', trim($parts[0]), $tz);
+            if ($dt !== false) {
+                $startDate = $dt->setTime(0, 0, 0);
+            }
+        }
+
+        if (!empty($parts[1])) {
+            $dt = \DateTimeImmutable::createFromFormat('Y-m-d', trim($parts[1]), $tz);
+            if ($dt !== false) {
+                $endDate = $dt->setTime(23, 59, 59);
+            }
+        }
+
+        return [$startDate, $endDate];
     }
 
     /**
