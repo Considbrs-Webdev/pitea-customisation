@@ -1,128 +1,124 @@
+// Drawer navigation – Pitea overrides (Figma spec)
 :root {
-    --c-drawer-background-color: var(--color-paren-light-4), var(--drawer-background-color);
-    --c-drawer-text-color: var(--color-white);
-    --c-drawer-bottom-background-color: var(--c-background-color);
-    --c-drawer-bottom-text-color: var(--c-text-color);
+  --c-drawer-background-color: var(--color-paren-light-4),
+    var(--drawer-background-color);
+  --c-drawer-text-color: var(--color-white);
+  --c-drawer-bottom-background-color: var(--color-darjnalen-light-4);
+  --c-drawer-bottom-text-color: var(--c-text-color);
 
-    // Drawer navigation background colors
-    --c-drawer-nav-primary-background-color: var(--color-darjnalen-dark-3);
-    --c-drawer-nav-secondary-background-color: var(--c-background-color);
-    --c-drawer-nav-primary-open-background-color: var(--color-darjnalen-light-2);
-    
-    // Progressive depth background colors (getting lighter for each level)
-    --c-drawer-nav-depth-1-background: var(--color-darjnalen-light-3);
-    --c-drawer-nav-depth-2-background: var(--color-darjnalen-light-4);
-    --c-drawer-nav-depth-3-background: var(--color-white);
-   
+  // Primary nav: dark green header, light green top-level, white sub-items
+  --c-drawer-nav-primary-background-color: var(--color-darjnalen-dark-3);
+  --c-drawer-nav-secondary-background-color: var(--color-darjnalen-light-4);
+  --c-drawer-nav-top-level-background: var(--color-darjnalen-light-4);
+  --c-drawer-nav-subitem-background: var(--color-white);
 }
 
 .c-drawer {
-    --drawer-duotone-background: white !important;
-   font-family: var(--font-family-base);
-   
+  --drawer-duotone-background: var(--color-darjnalen-light-4) !important;
+  font-family: var(--font-family-base);
 
-     
+  background-image: url("../../assets/images/Träd-hav-hus.svg");
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: auto 200px;
+
+  .c-nav__item-wrapper {
+    transition: background-color 0.3s ease-in-out;
+  }
+
+  .s-nav-drawer-primary {
+    background-color: var(--c-drawer-nav-primary-background-color);
+    margin-bottom: 20px;
+
+    .c-nav__toggle {
+      border-radius: 0;
+    }
+
     .c-nav__item-wrapper {
-        transition: background-color 0.3s ease-in-out;
     }
 
-    
-
-
-
-    // Navigation drawer backgrounds'
-    .s-nav-drawer-primary {
-        background-color: var(--c-drawer-nav-primary-background-color);
-        margin-bottom: 20px;
-
-        .c-nav__toggle {
-            border-left: 1px solid var(--color-darjnalen-light-3);
-            border-radius: 0;
-        }
-
-        // Item wrapper borders
-        .c-nav__item-wrapper {
-            border-bottom: 1px solid var(--color-darjnalen-light-3);
-          
-        }
-
-         // Base color for depth 1 (root level)
-         --depth-base: var(--c-drawer-nav-depth-1-background);
-         // CSS-only depth calculation based on DOM nesting structure
-         // Each nested level progressively lightens using color-mix
-         // This approach works regardless of Municipio's depth classes/attributes
-         
-         // Depth 1 (root level) - direct children of .c-nav--drawer
-         > .c-nav__item > .c-nav__item-wrapper {
-             background-color: var(--depth-base);
-             font-size: 1.1rem;
-
-            //  .c-nav__toggle {
-            //     border-left: 1px solid var(--color-darjnalen-light-2);
-            //  }
-            
-         }
- 
-         // Depth 2 - items inside depth 1's child container
-         // Calculate: 75% base color + 25% white
-         .c-nav__child-container > .c-nav > .c-nav__item > .c-nav__item-wrapper {
-             background-color: var(--c-drawer-nav-depth-2-background);
-         }
- 
-         // Depth 3 - items inside depth 2's child container
-         // Calculate: 50% base color + 50% white (equivalent to 75% of depth 2)
-         .c-nav__child-container > .c-nav .c-nav__child-container > .c-nav > .c-nav__item > .c-nav__item-wrapper {
-             background-color: var(--c-drawer-nav-depth-3-background);
-         }
- 
-         // Depth 4 - items inside depth 3's child container
-         // Calculate: 30% base color + 70% white
-         .c-nav__child-container > .c-nav .c-nav__child-container > .c-nav .c-nav__child-container > .c-nav > .c-nav__item > .c-nav__item-wrapper {
-             background-color: var(--c-drawer-nav-depth-4-background);
-         }
- 
-         // Depth 5 - items inside depth 4's child container
-         // Calculate: 15% base color + 85% white
-         .c-nav__child-container > .c-nav .c-nav__child-container > .c-nav .c-nav__child-container > .c-nav .c-nav__child-container > .c-nav > .c-nav__item > .c-nav__item-wrapper {
-             background-color: var(--c-drawer-nav-depth-4-background);
-         }
- 
-        
-         // Active/Current page state - bold text only
-         .c-nav__item.is-current > .c-nav__item-wrapper {
-             .c-nav__text {
-                 font-weight: bold;
-                 font-family: var(--font-family-base);
-             }
-         }
+    // Depth 1 (top-level items)
+    > .c-nav__item > .c-nav__item-wrapper {
+      background-color: var(--c-drawer-nav-top-level-background);
+      font-size: 1.1rem;
+      font-weight: 700;
     }
 
-    .s-nav-drawer-secondary {
-        background-color: var(--c-drawer-nav-secondary-background-color);
-        
-        .c-nav__link {
-         margin: 0 20px;
-         color: var(--c-drawer-text-color);
-        }
-
+    // Depth 2+ (sub-items)
+    .c-nav__child-container > .c-nav > .c-nav__item > .c-nav__item-wrapper,
+    .c-nav__child-container
+      > .c-nav
+      .c-nav__child-container
+      > .c-nav
+      > .c-nav__item
+      > .c-nav__item-wrapper,
+    .c-nav__child-container
+      > .c-nav
+      .c-nav__child-container
+      > .c-nav
+      .c-nav__child-container
+      > .c-nav
+      > .c-nav__item
+      > .c-nav__item-wrapper,
+    .c-nav__child-container
+      > .c-nav
+      .c-nav__child-container
+      > .c-nav
+      .c-nav__child-container
+      > .c-nav
+      .c-nav__child-container
+      > .c-nav
+      > .c-nav__item
+      > .c-nav__item-wrapper {
+      background-color: var(--c-drawer-nav-subitem-background);
     }
 
-    // Duotone variant
-    &.c-drawer--duotone {
-        .c-drawer__header {
-            * {
-                color: white !important;
-            }
-        }
-
-        .site-nav-mobile__secondary > .c-nav__item {
-            --drawer-duotone-background: white !important;
-        }
+    .c-nav__item.is-current > .c-nav__item-wrapper .c-nav__text {
+      font-weight: bold;
+      font-family: var(--font-family-base);
     }
+  }
+
+  .s-nav-drawer-secondary {
+    background-color: var(--c-drawer-nav-secondary-background-color);
+    padding-top: 20px;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 1px;
+      background-color: var(--color-stain-dark-3);
+    }
+
+    .c-nav__link {
+      margin: 0 20px;
+      color: var(--c-drawer-text-color);
+    }
+    .service-info-badge {
+      left: 20px !important;
+    }
+  }
+
+  &.c-drawer--duotone {
+    .c-drawer__header * {
+      color: white !important;
+    }
+
+    .site-nav-mobile__secondary > .c-nav__item {
+      --drawer-duotone-background: transparent !important;
+    }
+  }
 }
 
-// Body and primary navigation duotone overrides
 body .c-drawer.c-drawer--duotone .c-drawer__header,
-.body-primary .c-drawer.c-drawer--duotone .site-nav-mobile__primary > .c-nav__item {
-    --drawer-background: var(--c-drawer-nav-primary-background-color);
+.body-primary
+  .c-drawer.c-drawer--duotone
+  .site-nav-mobile__primary
+  > .c-nav__item {
+  --drawer-background: var(--c-drawer-nav-primary-background-color);
 }
