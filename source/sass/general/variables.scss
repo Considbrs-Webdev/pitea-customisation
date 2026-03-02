@@ -101,5 +101,17 @@
   --search-hit-simpleview-background: var(--color-darjnalen-light-4);
   --search-hit-municipal-background: var(--color-paren-light-4);
   --search-hit-service-info-background: var(--color-darjnalen-light-4);
-  --search-hit-default-background: var(--color-background-card, var(--color-stain-light-4));
+  --search-hit-default-background: var(
+    --color-background-card,
+    var(--color-stain-light-4)
+  );
+}
+
+// Quick search
+:root {
+  --ts-qs-border: rgba(0, 0, 0, 0.12);
+  --ts-qs-item-hover-bg: var(--color-darjnalen-light-3);
+  --ts-qs-radius: var(--border-radius-small);
+  --ts-qs-type-bg: var(--color-darjnalen-dark-2);
+  --ts-qs-type-color: var(--color-darjnalen-light-4);
 }
