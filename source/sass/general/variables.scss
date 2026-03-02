@@ -107,11 +107,28 @@
   );
 }
 
+// Search
+body.search {
+  [data-js-search-page-container] {
+    --ts-main-filter-background: var(--color-darjnalen-light-4);
+    --ts-sidebar-background: var(--color-darjnalen-light-4);
+    --ts-overlay-z-index: 100000;
+    --ts-panel-z-index: 100001;
+    --ts-panel-width: 95vw;
+    --ts-sidebar-width: 30%;
+    --ts-sidebar-sticky-top: calc(var(--base, 8px) * 4);
+  }
+}
+
 // Quick search
 :root {
-  --ts-qs-border: rgba(0, 0, 0, 0.12);
+  --ts-qs-border: var(--color-darjnalen-dark-3);
   --ts-qs-item-hover-bg: var(--color-darjnalen-light-3);
   --ts-qs-radius: var(--border-radius-small);
   --ts-qs-type-bg: var(--color-darjnalen-dark-2);
   --ts-qs-type-color: var(--color-darjnalen-light-4);
+  --ts-qs-footer-color: white;
+  --ts-qs-footer-bg: var(--color-darjnalen-dark-2);
+  --ts-qs-footer-hover-color: white;
+  --ts-qs-footer-hover-bg: var(--color-darjnalen-dark-1);
 }
