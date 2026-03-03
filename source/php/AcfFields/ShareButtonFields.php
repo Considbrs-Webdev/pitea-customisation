@@ -52,13 +52,6 @@ class ShareButtonFields
                         'value' => 'page',
                     ],
                 ],
-                [
-                    [
-                        'param' => 'post_type',
-                        'operator' => '==',
-                        'value' => 'post',
-                    ],
-                ],
             ],
             'menu_order' => 0,
             'position' => 'side',

@@ -9,6 +9,15 @@ class ShareButton
         new \PiteaCustomisation\AcfFields\ShareButtonFields();
         add_action('signature_before', [$this, 'renderSignatureBefore']);
         add_action('signature_after', [$this, 'renderSignatureAfter']);
+        add_filter('Municipio/Template/single/viewData', [$this, 'changeSignatureLocation']);
+    }
+
+    public function changeSignatureLocation(array $viewData): array
+    {
+        $viewData['isBlogStyle'] = false;
+        $viewData['postTypeDetails']->hierarchical = true;
+
+        return $viewData;
     }
 
     /**

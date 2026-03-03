@@ -14,13 +14,14 @@
 }
 
 .c-drawer {
+  max-width: calc(var(--base, 8px) * 50);
   --drawer-duotone-background: var(--color-darjnalen-light-4) !important;
   font-family: var(--font-family-base);
 
-  background-image: url("../../assets/images/Träd-hav-hus.svg");
+  background-image: url("../../assets/images/Trad-hav-hus.svg");
   background-repeat: no-repeat;
   background-position: left bottom;
-  background-size: auto 200px;
+  background-size: 100% auto;
 
   .c-nav__item-wrapper {
     transition: background-color 0.3s ease-in-out;
