@@ -6,21 +6,23 @@ namespace PiteaCustomisation\ExternalContent;
 
 use ModularityServiceInfo\Import\ImporterInterface;
 use ModularityServiceInfo\Import\ServiceInfoItem;
+use ModularityServiceInfo\PostType\ServiceInformation;
 
 /**
  * Imports disruption data from Pireva's REST API
  * and converts it to service information items.
+ *
+ * Items that disappear from the API response are automatically
+ * marked for unpublishing (trashed) since Pireva doesn't provide
+ * explicit end dates.
  *
  * @package PiteaCustomisation\ExternalContent
  */
 class PirevaDisruptionsImporter implements ImporterInterface
 {
     private const SOURCE_URL = 'https://www.pireva.se/wp-json/driftinformation/v1/items';
+    private const META_SOURCE_KEY = '_service_info_import_source';
 
-    // public function __construct()
-    // {
-    //     $this->import();
-    // }
     /**
      * @return string
      */
@@ -44,11 +46,8 @@ class PirevaDisruptionsImporter implements ImporterInterface
     {
         $data = $this->fetchData();
 
-        if (empty($data)) {
-            return [];
-        }
-
-        $items = [];
+        $activeSourceIds = $this->extractSourceIds($data);
+        $items           = [];
 
         foreach ($data as $disruption) {
             $item = $this->pirevaDisruptionToItem($disruption);
@@ -58,7 +57,107 @@ class PirevaDisruptionsImporter implements ImporterInterface
             }
         }
 
+        $items = [];
+        $expiredItems = $this->getItemsToUnpublish($activeSourceIds);
+        $items        = array_merge($items, $expiredItems);
+
         return $items;
+    }
+
+    /**
+     * Extract all source IDs from the API response.
+     *
+     * @param array $data
+     * @return string[]
+     */
+    private function extractSourceIds(array $data): array
+    {
+        $ids = [];
+
+        foreach ($data as $disruption) {
+            $id = $disruption['id'] ?? null;
+            if ($id !== null) {
+                $ids[] = (string) $id;
+            }
+        }
+
+        return $ids;
+    }
+
+    /**
+     * Find existing posts that are no longer in the API response and create
+     * ServiceInfoItems to trigger their unpublishing.
+     *
+     * @param string[] $activeSourceIds
+     * @return ServiceInfoItem[]
+     */
+    private function getItemsToUnpublish(array $activeSourceIds): array
+    {
+        $existingPosts = $this->getExistingPirevaPostsMap();
+
+        if (empty($existingPosts)) {
+            return [];
+        }
+
+        $items = [];
+        $now   = new \DateTimeImmutable('now', wp_timezone());
+
+        foreach ($existingPosts as $sourceId => $post) {
+            if (in_array($sourceId, $activeSourceIds, true)) {
+                continue;
+            }
+
+            $startDate = get_field('start_date', $post->ID);
+            $startDt   = $startDate
+                ? \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $startDate, wp_timezone())
+                : $now;
+
+            $items[] = new ServiceInfoItem(
+                sourceId: (string) $sourceId,
+                title: $post->post_title,
+                content: $post->post_content,
+                startDate: $startDt ?: $now,
+                endDate: $now,
+                categories: ['Pireva'],
+                unpublishDate: $now,
+                onUnpublish: 'trash',
+                publishDate: null,
+            );
+        }
+
+        return $items;
+    }
+
+    /**
+     * Query existing Pireva posts and return a map of sourceId => WP_Post.
+     *
+     * @return array<string, \WP_Post>
+     */
+    private function getExistingPirevaPostsMap(): array
+    {
+        $query = new \WP_Query([
+            'post_type'      => ServiceInformation::POST_TYPE_NAME,
+            'post_status'    => ['publish', 'draft', 'pending', 'private', 'future'],
+            'posts_per_page' => -1,
+            'meta_query'     => [
+                [
+                    'key'     => self::META_SOURCE_KEY,
+                    'value'   => $this->getKey() . ':',
+                    'compare' => 'LIKE',
+                ],
+            ],
+            'no_found_rows'  => true,
+        ]);
+
+        $map = [];
+
+        foreach ($query->posts as $post) {
+            $metaValue = get_post_meta($post->ID, self::META_SOURCE_KEY, true);
+            $sourceId  = str_replace($this->getKey() . ':', '', $metaValue);
+            $map[$sourceId] = $post;
+        }
+
+        return $map;
     }
 
     /**
