@@ -70,6 +70,7 @@ class App
     {
         add_action('wp_enqueue_scripts', [$this, 'enqueueAssets']);
         add_action('admin_enqueue_scripts', [$this, 'enqueueAdminAssets']);
+        add_action('init', [$this, 'addEditorStyles']);
     }
 
     /**
@@ -131,6 +132,19 @@ class App
                 [],
                 PITEA_CUSTOMISATION_VERSION
             );
+        }
+    }
+
+    /**
+     * Add styles to TinyMCE editor (classic editor iframe)
+     *
+     * @return void
+     */
+    public function addEditorStyles(): void
+    {
+        $file = Helpers\CacheBust::getFile('source/sass/admin.scss');
+        if ($file) {
+            add_editor_style($file);
         }
     }
 

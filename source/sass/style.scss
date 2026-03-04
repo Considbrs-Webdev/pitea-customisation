@@ -6,6 +6,7 @@
 @use "general/footer";
 @use "general/header";
 @use "general/drawer";
+@use "general/quote";
 
 @use "modules/contact-banner";
 @use "modules/container";
@@ -14,6 +15,7 @@
 @use "modules/service-info";
 @use "modules/slider";
 @use "modules/table-of-contents";
+@use "modules/quick-links";
 
 @use "components/accordion";
 @use "components/card-municipal-calendar";

@@ -104,6 +104,9 @@
         padding: calc(var(--base, 8px) * 4);
       }
     }
+    .c-card__footer {
+      border-top: none;
+    }
 
     &.c-card--has-custom-background {
       .c-card__body {

@@ -1,0 +1,20 @@
+.modularity-quick-links .modularity-quick-links__card {
+  --quick-links-hover-amount: 0.2; // Slightly stronger for visibility on light backgrounds
+  --quick-links-hover-color: color-mix(
+    in srgb,
+    var(--color-darjnalen-light-2) calc(var(--quick-links-hover-amount) * 100%),
+    transparent
+  );
+
+  &::before {
+    z-index: 0;
+  }
+
+  // Keep content above overlay for readable text
+  .modularity-quick-links__icon,
+  .modularity-quick-links__title,
+  .modularity-quick-links__description {
+    position: relative;
+    z-index: 1;
+  }
+}
