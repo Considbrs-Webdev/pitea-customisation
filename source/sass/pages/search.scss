@@ -4,6 +4,10 @@
     font-weight: 700;
   }
 
+  .c-badge.c-badge--primary {
+    --ts-badge-radius: 2px;
+  }
+
   .ts-search-results {
     --search-hit-gap: 0;
     gap: var(--search-hit-gap);

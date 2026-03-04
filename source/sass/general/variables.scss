@@ -110,8 +110,16 @@
 // Search
 body.search {
   [data-js-search-page-container] {
-    --ts-main-filter-background: var(--color-darjnalen-light-4);
-    --ts-sidebar-background: var(--color-darjnalen-light-4);
+    // Search input box — warm beige per Figma design
+    --ts-main-filter-background: var(--color-paren-light-4);
+    // Input + button border/fill colour — warm brown per Figma design
+    --ts-search-input-border: var(--color-paren-dark-2);
+    --ts-search-btn-bg: var(--color-paren-dark-2);
+    --ts-search-btn-color: var(--color-stain-light-4);
+    // Filter sidebar — sage green per Figma design
+    --ts-sidebar-background: var(--color-darjnalen-light-3);
+    --ts-sidebar-radio-color: var(--color-darjnalen-dark-3);
+    // Layout & z-index overrides
     --ts-overlay-z-index: 100000;
     --ts-panel-z-index: 100001;
     --ts-panel-width: 95vw;
