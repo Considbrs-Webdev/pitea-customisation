@@ -3,6 +3,7 @@
 namespace PiteaCustomisation\Customisations;
 
 use PiteaCustomisation\ExternalContent\TrafficDisruptionsImporter;
+use PiteaCustomisation\ExternalContent\PirevaDisruptionsImporter;
 
 class ExternalContent
 {
@@ -20,6 +21,7 @@ class ExternalContent
     {
         add_action('modularity_service_info_register_importers', function ($registry) {
             $registry->register(new TrafficDisruptionsImporter());
+            $registry->register(new PirevaDisruptionsImporter());
         });
     }
 }
