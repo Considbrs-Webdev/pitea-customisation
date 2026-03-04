@@ -35,15 +35,22 @@ export default defineConfig({
                     return 'js/[name].[hash].js';
                 },
                 assetFileNames: (assetInfo) => {
-                    if (assetInfo.name.endsWith('.woff2')) {
+                    const rawName = assetInfo && (assetInfo.name ?? assetInfo.names ?? '');
+                    const name = Array.isArray(rawName) ? rawName.join('/') : (rawName || '');
+
+                    if (name.endsWith('.woff') || name.endsWith('.woff2')) {
                         return 'fonts/[name].[hash][extname]'
                     }
 
-                    if (assetInfo && assetInfo.name && assetInfo.name.includes('acf-')) {
+                    if (name.endsWith('.svg')) {
+                        return 'img/[name].[hash][extname]';
+                    }
+
+                    if (name && name.includes('acf-')) {
                         return 'css/acf/[name].[hash][extname]';
                     }
 
-                    if (assetInfo.name && assetInfo.name.endsWith('.css')) {
+                    if (name.endsWith('.css')) {
                         return 'css/[name].[hash][extname]';
                     }
 

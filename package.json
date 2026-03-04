@@ -19,6 +19,7 @@
         "vite": "^7.3.0"
     },
     "dependencies": {
-        "@awesome.me/kit-ae5fa37ad3": "^1.0.3"
+        "@awesome.me/kit-ae5fa37ad3": "^1.0.3",
+        "@fontsource/work-sans": "^5.2.8"
     }
 }

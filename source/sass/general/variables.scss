@@ -124,14 +124,16 @@ body.search {
     --ts-panel-z-index: 100001;
     --ts-panel-width: 95vw;
     --ts-sidebar-width: 30%;
-    --ts-sidebar-sticky-top: calc(var(--base, 8px) * 4);
+    --ts-sidebar-sticky-top: 120px;
+    --ts-mark-background: var(--color-paren-light-2);
   }
 }
 
 // Quick search
 :root {
   --ts-qs-border: var(--color-darjnalen-dark-3);
-  --ts-qs-item-hover-bg: var(--color-darjnalen-light-4);
+  --ts-qs-item-hover-bg: white;
+  --ts-qs-item-hover-text-decoration: underline;
   --ts-qs-radius: var(--border-radius-small);
   --ts-qs-type-bg: var(--color-darjnalen-dark-2);
   --ts-qs-type-color: var(--color-darjnalen-light-4);
@@ -141,4 +143,9 @@ body.search {
   --ts-qs-footer-hover-bg: var(--color-darjnalen-dark-1);
   --ts-qs-track-bg: var(--color-darjnalen-light-3);
   --ts-qs-track-thumb-bg: var(--color-darjnalen-dark-2);
+  --ts-qs-highlight-bg: var(--color-paren-light-2);
+  --ts-qs-highlight-color: black;
+  --ts-qs-highlight-weight: 600;
+  --ts-qs-type-radius: 0;
+  --ts-qs-footer-hover-text-decoration: underline;
 }

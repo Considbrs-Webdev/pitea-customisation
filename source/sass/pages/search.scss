@@ -1,5 +1,5 @@
 // Search results page – hit card styling
-.search {
+body.search {
   .c-card__sub-heading {
     font-weight: 700;
   }
@@ -30,6 +30,13 @@
       border-radius: 0;
     }
   }
+
+  p,
+  span {
+    mark {
+      font-weight: 600;
+    }
+  }
 }
 
 // Search modal
@@ -38,7 +45,22 @@ dialog.t-search-modal {
     padding: 0;
   }
 
+  .c-modal__content {
+    position: relative;
+    top: -25%;
+    width: clamp(320px, 80%, 800px);
+  }
+
   .ts-quick-search {
     padding: 0;
+  }
+
+  &::backdrop {
+    --c-modal-backdrop-color: color-mix(
+      in srgb,
+      var(--color-darjnalen-dark-3),
+      transparent 50%
+    );
+    backdrop-filter: blur(10px);
   }
 }

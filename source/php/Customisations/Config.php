@@ -12,9 +12,6 @@ class Config
         // Load plugin textdomain for translations
         add_action('init', [$this, 'loadTextdomain']);
 
-        // Turn off ACF Extended Enhanced UI
-        add_action('acfe/init', [$this, 'configureAcfExtended']);
-
         // Specifiy Font Awesome archive link icon for service information
         add_filter('Modularity/ServiceInformation/Module/ArchiveLink/Icon', [$this, 'setServiceInfoArchiveLinkIcon']);
 
@@ -23,6 +20,9 @@ class Config
 
         // Noticeboard archive icon customization
         add_filter('Modularity/Module/Noticeboard/ArchiveIcon', [$this, 'setNoticeboardArchiveIcon']);
+
+        // Remove font-face declarations from Kirki inline styles on the frontend
+        add_filter('kirki_inline_styles', [$this, 'maybeRemoveFontFaces']);
     }
 
     /**
@@ -37,17 +37,6 @@ class Config
             false,
             dirname(dirname(dirname(__DIR__))) . '/languages'
         );
-    }
-
-    /**
-     * Configure ACF Extended settings
-     *
-     * @return void
-     */
-    public function configureAcfExtended(): void
-    {
-        // Disable Enhanced UI
-        acfe_update_setting('modules/ui', false);
     }
 
     public function setServiceInfoArchiveLinkIcon(): string
@@ -73,5 +62,16 @@ class Config
     public function setNoticeboardArchiveIcon(): string
     {
         return 'fa-solid fa-arrow-right';
+    }
+
+    public function maybeRemoveFontFaces($styles) {
+        if (is_admin()) {
+            return $styles;
+        }
+
+        // Remove font-face declarations from the styles
+        $styles = preg_replace('/@font-face\s*{[^}]*}/', '', $styles);
+
+        return $styles;
     }
 }
