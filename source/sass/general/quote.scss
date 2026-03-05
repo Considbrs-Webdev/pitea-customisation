@@ -1,7 +1,7 @@
 blockquote {
   background-color: var(--color-darjnalen-light-4);
   color: black;
-
+  font-size: 1.5rem;
   &::before {
     content: "\f10d";
     font-family: var(--font-family-font-awesome);
