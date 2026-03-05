@@ -9,14 +9,14 @@
     "import_date": "",
     "labels": {
         "name": "Nyheter",
-        "singular_name": "nyhet",
+        "singular_name": "Nyhet",
         "menu_name": "Nyheter",
         "all_items": "Alla Nyheter",
         "edit_item": "Redigera nyhet",
         "view_item": "Visa nyhet",
         "view_items": "Visa Nyheter",
-        "add_new_item": "Lägg till ny\/nytt nyhet",
-        "add_new": "Lägg till ny\/nytt nyhet",
+        "add_new_item": "Lägg till ny nyhet",
+        "add_new": "Lägg till ny nyhet",
         "new_item": "Ny nyhet",
         "parent_item_colon": "Överordnad nyhet:",
         "search_items": "Sök efter Nyheter",
@@ -40,7 +40,7 @@
         "item_scheduled": "nyhet schemalagd.",
         "item_updated": "nyhet har uppdaterats.",
         "item_link": "nyhet-länk",
-        "item_link_description": "En länk till en\/ett nyhet."
+        "item_link_description": "En länk till en nyhet."
     },
     "description": "",
     "public": true,
@@ -70,7 +70,9 @@
         "thumbnail",
         "custom-fields"
     ],
-    "taxonomies": "",
+    "taxonomies": [
+        "nyhetskategori"
+    ],
     "has_archive": false,
     "has_archive_slug": "",
     "rewrite": {
@@ -85,5 +87,5 @@
     "delete_with_user": false,
     "register_meta_box_cb": "",
     "enter_title_here": "",
-    "modified": 1772124467
+    "modified": 1772726803
 }
