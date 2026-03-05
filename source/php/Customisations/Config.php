@@ -24,10 +24,9 @@ class Config
         // Remove font-face declarations from Kirki inline styles on the frontend
         add_filter('kirki_inline_styles', [$this, 'maybeRemoveFontFaces']);
 
-        add_filter('theme_page_templates', function ($templates) {
-            unset($templates['page-centered.blade.php']);
-            return $templates;
-        }, 100, 1);
+        add_filter('theme_page_templates', [$this, 'removePageCenteredTemplate'], 100, 1);
+
+        add_action('admin_init', [$this, 'removeEditorBlockDirectoryAssets']);
     }
 
     /**
@@ -79,5 +78,16 @@ class Config
         $styles = preg_replace('/@font-face\s*{[^}]*}/', '', $styles);
 
         return $styles;
+    }
+
+    public function removeEditorBlockDirectoryAssets()
+    {
+        remove_action('enqueue_block_editor_assets', 'wp_enqueue_editor_block_directory_assets');
+    }
+
+    public function removePageCenteredTemplate(array $templates): array
+    {
+        unset($templates['page-centered.blade.php']);
+        return $templates;
     }
 }
