@@ -5,23 +5,15 @@ body {
 
 a,
 .link {
-  font-weight: bold;
   color: var(--color-black);
-  text-decoration: underline;
   &:hover {
-    font-weight: bold;
     color: var(--color-black);
-    text-decoration: underline;
   }
   &:visited {
-    font-weight: bold;
     color: var(--color-black);
-    text-decoration: underline;
 
     &:hover {
-      font-weight: bold;
       color: var(--color-black);
-      text-decoration: underline;
     }
   }
 }
