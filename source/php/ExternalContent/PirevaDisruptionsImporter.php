@@ -57,7 +57,7 @@ class PirevaDisruptionsImporter implements ImporterInterface
             }
         }
 
-        $items = [];
+
         $expiredItems = $this->getItemsToUnpublish($activeSourceIds);
         $items        = array_merge($items, $expiredItems);
 
