@@ -24,8 +24,10 @@ class Config
         // Remove font-face declarations from Kirki inline styles on the frontend
         add_filter('kirki_inline_styles', [$this, 'maybeRemoveFontFaces']);
 
+        // Remove the "page-centered.blade.php" template from the available page templates in the editor
         add_filter('theme_page_templates', [$this, 'removePageCenteredTemplate'], 100, 1);
 
+        // Remove block directory assets from the editor
         add_action('admin_init', [$this, 'removeEditorBlockDirectoryAssets']);
     }
 
@@ -78,6 +80,36 @@ class Config
         $styles = preg_replace('/@font-face\s*{[^}]*}/', '', $styles);
 
         return $styles;
+    }
+
+    /**
+     * Short-circuit the server-side HTTP request Kirki makes to download Google
+     * Fonts CSS on the frontend. Returning a mock 200 response means the
+     * Downloader gets an empty body and outputs nothing, while the fonts array
+     * that Municipio relies on for CSS variable generation is left untouched.
+     *
+     * @param false|array|\WP_Error $preempt
+     * @param array                 $args
+     * @param string                $url
+     * @return false|array
+     */
+    public function blockKirkiFontDownloads(mixed $preempt, array $args, string $url): mixed
+    {
+        if (is_admin()) {
+            return $preempt;
+        }
+
+        if (str_contains($url, 'fonts.googleapis.com')) {
+            return [
+                'headers'       => [],
+                'body'          => '',
+                'response'      => ['code' => 200, 'message' => 'OK'],
+                'cookies'       => [],
+                'http_response' => null,
+            ];
+        }
+
+        return $preempt;
     }
 
     public function removeEditorBlockDirectoryAssets()
