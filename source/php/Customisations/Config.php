@@ -23,6 +23,11 @@ class Config
 
         // Remove font-face declarations from Kirki inline styles on the frontend
         add_filter('kirki_inline_styles', [$this, 'maybeRemoveFontFaces']);
+
+        add_filter('theme_page_templates', function ($templates) {
+            unset($templates['page-centered.blade.php']);
+            return $templates;
+        }, 100, 1);
     }
 
     /**
@@ -64,7 +69,8 @@ class Config
         return 'fa-solid fa-arrow-right';
     }
 
-    public function maybeRemoveFontFaces($styles) {
+    public function maybeRemoveFontFaces($styles)
+    {
         if (is_admin()) {
             return $styles;
         }
