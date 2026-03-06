@@ -47,6 +47,7 @@ class App
             Customisations\Search::class,
             Customisations\ShareButton::class,
             Customisations\Taxonomies::class,
+            Customisations\Templates::class,
             Customisations\Typesense::class,
             Customisations\Modules\InlayList::class,
             Customisations\Modules\Container::class,
@@ -72,23 +73,6 @@ class App
     private function initHooks(): void
     {
         add_action('wp_enqueue_scripts', [$this, 'enqueueAssets']);
-        add_action('template_redirect', [$this, 'registerViewPaths'], 10);
-    }
-
-    /**
-     * Register the plugin's views directory so Blade can resolve templates.
-     *
-     * @return void
-     */
-    public function registerViewPaths(): void
-    {
-        if (!is_search()) {
-            return;
-        }
-
-        add_filter('Municipio/viewPaths', function (array $paths): array {
-            return array_merge([PITEA_CUSTOMISATION_PATH . 'views'], $paths);
-        });
     }
 
     /**

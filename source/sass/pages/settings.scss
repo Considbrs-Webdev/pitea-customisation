@@ -3,17 +3,32 @@
 // Inspired by the ACF settings UI: sticky header, vertical tab sidebar, cards.
 // =============================================================================
 
-$settings-sidebar-width: 200px;
-$settings-header-height: 64px;
-$settings-color-border: #dcdcde;
-$settings-color-bg: #f6f7f7;
-$settings-color-card: #fff;
-$settings-color-text: #1d2327;
-$settings-color-muted: #646970;
-$settings-color-accent: #2271b1; // WP blue
-$settings-color-accent-hover: #135e96;
-$settings-color-success: #00a32a;
-$settings-color-error: #d63638;
+$settings-sidebar-width: 240px;
+$settings-header-height: 85px;
+$settings-color-border: var(--color-stain-light-2); // #d0d0d0
+$settings-color-bg: var(
+  --color-paren-light-4
+); // #f6efe5 — warm beige content area
+$settings-color-card: var(--color-stain-light-4); // #ffffff
+$settings-color-text: var(--color-stain-dark-2); // #3d3d3c
+$settings-color-muted: var(--color-stain-base); // #777675
+$settings-color-accent: var(--color-darjnalen-dark-1); // #2b6933
+$settings-color-accent-hover: var(--color-darjnalen-dark-2); // #2b512b
+$settings-color-success: var(--color-darjnalen-base); // #288138
+$settings-color-error: var(--color-snattren-base); // #cc4917
+// Header & nav chrome
+$settings-color-header-bg: var(
+  --color-darjnalen-dark-2
+); // #2b512b — dark forest green
+$settings-color-nav-bg: var(
+  --color-darjnalen-dark-3
+); // #233b1f — deepest green
+$settings-color-on-dark: var(
+  --color-stain-light-4
+); // #ffffff — text on dark bg
+$settings-color-on-dark-muted: var(
+  --color-darjnalen-light-3
+); // #d1dbc8 — muted text on dark bg
 $settings-radius: 4px;
 $settings-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
 
@@ -28,10 +43,9 @@ $settings-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
   // Layout wrapper
   // --------------------------------------------------------------------------
   display: flex;
+  flex: 1;
   flex-direction: column;
-  min-height: calc(
-    100vh - 32px - #{$settings-header-height}
-  ); // below WP admin bar + our header
+  min-height: calc(100vh - 32px); // full viewport minus WP admin bar
 
   // --------------------------------------------------------------------------
   // Sticky page header
@@ -46,11 +60,9 @@ $settings-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
     gap: 16px;
     padding: 0 24px;
     height: $settings-header-height;
-    background: #fff;
-    border-bottom: 1px solid $settings-color-border;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-    margin-left: -20px; // counteract WP's #wpcontent padding
-    margin-right: -10px;
+    background: $settings-color-header-bg;
+    border-bottom: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
   }
 
   &__header-title {
@@ -59,7 +71,7 @@ $settings-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
       padding: 0;
       font-size: 18px;
       font-weight: 600;
-      color: $settings-color-text;
+      color: $settings-color-on-dark;
       line-height: 1;
     }
   }
@@ -72,7 +84,7 @@ $settings-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
 
   &__save-status {
     font-size: 13px;
-    color: $settings-color-muted;
+    color: $settings-color-on-dark-muted;
     transition:
       opacity 0.2s ease,
       color 0.2s ease;
@@ -82,12 +94,12 @@ $settings-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
 
     &.is-saving {
       opacity: 1;
-      color: $settings-color-muted;
+      color: $settings-color-on-dark-muted;
     }
 
     &.is-saved {
       opacity: 1;
-      color: $settings-color-success;
+      color: $settings-color-on-dark;
 
       &::before {
         content: "✓ ";
@@ -96,7 +108,7 @@ $settings-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
 
     &.is-error {
       opacity: 1;
-      color: $settings-color-error;
+      color: var(--color-snattren-light-2);
 
       &::before {
         content: "✗ ";
@@ -113,12 +125,29 @@ $settings-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
   }
 
   // --------------------------------------------------------------------------
+  // Logo
+  // --------------------------------------------------------------------------
+  &__logo {
+    display: block;
+    height: 50px;
+    width: auto;
+    flex-shrink: 0;
+
+    path {
+      fill: $settings-color-on-dark;
+    }
+  }
+
+  // --------------------------------------------------------------------------
   // Body: sidebar + content
   // --------------------------------------------------------------------------
   &__body {
     display: flex;
     flex: 1;
-    align-items: flex-start;
+    align-items: stretch;
+    min-height: calc(100vh - 32px - #{$settings-header-height});
+    margin-bottom: -20px; // bleed to WP #wpcontent bottom edge
+    position: relative;
   }
 
   // --------------------------------------------------------------------------
@@ -127,44 +156,56 @@ $settings-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
   &__nav {
     flex-shrink: 0;
     width: $settings-sidebar-width;
-    padding: 24px 0;
-    border-right: 1px solid $settings-color-border;
+    background: $settings-color-nav-bg;
+    border-right: none;
+    position: relative; // background fills full column height
+    z-index: 1;
+
+    // Inner scroll container — sticky so items stay visible while page scrolls
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: $settings-color-nav-bg;
+      z-index: -1;
+    }
+  }
+
+  // Sticky wrapper inside the nav column
+  &__nav-inner {
     position: sticky;
-    top: calc(
-      32px + #{$settings-header-height}
-    ); // below admin bar + our header
-    align-self: flex-start;
+    top: calc(32px + #{$settings-header-height});
+    padding: 20px 18px;
     max-height: calc(100vh - 32px - #{$settings-header-height});
     overflow-y: auto;
   }
 
   &__nav-item {
     display: block;
-    padding: 10px 20px 10px 16px;
-    margin: 2px 0;
+    padding: 9px 14px;
+    margin: 3px 0;
     font-size: 13px;
     font-weight: 500;
-    color: $settings-color-text;
+    color: $settings-color-on-dark-muted;
     text-decoration: none;
-    border-left: 3px solid transparent;
-    border-radius: 0;
+    border: none;
+    border-radius: 6px;
     transition:
       background 0.15s ease,
-      border-color 0.15s ease,
-      color 0.15s ease;
+      color 0.15s ease,
+      box-shadow 0.15s ease;
     line-height: 1.4;
 
     &:hover {
-      background: $settings-color-bg;
-      color: $settings-color-accent;
-      border-left-color: #72aee6;
+      background: rgba(255, 255, 255, 0.08);
+      color: $settings-color-on-dark;
     }
 
     &.is-active {
-      background: #f0f6fc;
-      color: $settings-color-accent;
-      border-left-color: $settings-color-accent;
+      background: $settings-color-on-dark;
+      color: $settings-color-nav-bg;
       font-weight: 600;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
     }
   }
 
@@ -177,6 +218,7 @@ $settings-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
     padding: 28px 28px 60px;
     background: $settings-color-bg;
     min-height: calc(100vh - 32px - #{$settings-header-height});
+    align-self: stretch;
   }
 
   &__tab {
@@ -222,7 +264,7 @@ $settings-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
   }
 
   &__card-body {
-    padding: 20px 20px 4px;
+    padding: 20px;
 
     // Re-style the WP settings API .form-table inside our cards
     .form-table {
@@ -285,7 +327,7 @@ $settings-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
     font-size: 13px;
     line-height: 1.5;
     color: $settings-color-text;
-    background: #fff;
+    background: var(--color-stain-light-4);
     border: 1px solid $settings-color-border;
     border-radius: $settings-radius;
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07);
@@ -297,7 +339,7 @@ $settings-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
     &:focus {
       border-color: $settings-color-accent;
       box-shadow:
-        0 0 0 2px rgba(34, 113, 177, 0.15),
+        0 0 0 2px rgba(43, 105, 51, 0.15),
         inset 0 1px 2px rgba(0, 0, 0, 0.07);
     }
   }
@@ -307,6 +349,70 @@ $settings-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
     font-size: 12px;
     color: $settings-color-muted;
     line-height: 1.5;
+  }
+
+  // Inline field (e.g. checkbox + label on one line)
+  &__field--inline {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+
+  // --------------------------------------------------------------------------
+  // Toggle (styled checkbox label)
+  // --------------------------------------------------------------------------
+  &__toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: $settings-color-text;
+    cursor: pointer;
+    user-select: none;
+
+    input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: $settings-color-accent;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Select
+  // --------------------------------------------------------------------------
+  &__select {
+    padding: 8px 32px 8px 12px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: $settings-color-text;
+    background: var(--color-stain-light-4);
+    border: 1px solid $settings-color-border;
+    border-radius: $settings-radius;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07);
+    outline: none;
+    appearance: auto;
+    cursor: pointer;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+
+    &:focus {
+      border-color: $settings-color-accent;
+      box-shadow:
+        0 0 0 2px rgba(43, 105, 51, 0.15),
+        inset 0 1px 2px rgba(0, 0, 0, 0.07);
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Textarea modifier
+  // --------------------------------------------------------------------------
+  &__input--textarea {
+    resize: vertical;
+    min-height: 80px;
+    font-family: inherit;
   }
 
   // --------------------------------------------------------------------------
@@ -319,7 +425,7 @@ $settings-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
     z-index: 9999;
     padding: 12px 18px;
     background: $settings-color-text;
-    color: #fff;
+    color: var(--color-stain-light-4);
     font-size: 13px;
     font-weight: 500;
     border-radius: $settings-radius;
@@ -343,5 +449,39 @@ $settings-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
     &.is-error {
       background: $settings-color-error;
     }
+  }
+}
+
+body.settings_page_pitea-customisation {
+  #wpwrap {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+  }
+
+  #wpcontent {
+    display: flex;
+    flex: 1;
+    align-self: stretch;
+    height: auto;
+    margin: 0;
+    padding: 0;
+  }
+
+  #wpbody {
+    display: flex;
+    flex: 1;
+    align-items: stretch;
+
+    &-content {
+      flex: 1;
+      align-self: stretch;
+      display: flex;
+      padding: 0;
+    }
+  }
+
+  #wpfooter {
+    display: none;
   }
 }
