@@ -23,6 +23,7 @@ class Search
         add_filter('get_search_form', [$this, 'filter_search_form'], 10, 1);
         add_action('init', [$this, 'add_rewrite_rules']);
         add_action('template_redirect', [$this, 'maybe_redirect_search_url']);
+        add_filter('Modularity/PiteaHero/SearchUrl', [$this, 'filter_search_url'], 10, 1);
     }
 
     /**
@@ -89,5 +90,10 @@ class Search
 
         wp_redirect($target, 301);
         exit;
+    }
+
+    public function filter_search_url($url)
+    {
+        return home_url('/sok/');
     }
 }
