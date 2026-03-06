@@ -1,208 +1,227 @@
+# Copyright (C) 2026 Consid Borås AB
+# This file is distributed under the same license as the Piteå Customisation plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: \n"
+"Project-Id-Version: Piteå Customisation 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pitea-customisation\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-06T10:55:34+00:00\n"
+"POT-Creation-Date: 2026-03-06T11:43:12+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: pitea-customisation\n"
 
-#: AcfFields/AccessibilityFields.php:19
-msgid "Accessibility Buttons Settings"
-msgstr ""
-
-#: AcfFields/AccessibilityFields.php:23
-msgid "Show accessibility buttons"
-msgstr ""
-
-#: AcfFields/AccessibilityFields.php:26
-msgid "Display accessibility buttons (ReadSpeaker and Print) on this page."
-msgstr ""
-
-#: AcfFields/ColorPickerField.php:56
-msgid "Allow Custom Colors?"
-msgstr ""
-
-#: AcfFields/ColorPickerField.php:57
-msgid "Allow users to enter custom hex colors"
-msgstr ""
-
-#: AcfFields/ColorPickerField.php:133
-#: AcfFields/ColorPickerField.php:146
-#: AcfFields/ColorPickerField.php:163
-msgid "Select Color"
-msgstr ""
-
-#: AcfFields/ColorPickerField.php:154
-#: AcfFields/ColorPickerField.php:244
-#: AcfFields/FontAwesomeIconField.php:150
-msgid "Clear"
-msgstr ""
-
-#: AcfFields/ColorPickerField.php:164
-msgid "Close"
-msgstr ""
-
-#: AcfFields/ColorPickerField.php:186
-msgid "No color selected"
-msgstr ""
-
-#: AcfFields/ColorPickerField.php:224
-msgid "Use Custom Color"
-msgstr ""
-
-#: AcfFields/ColorPickerField.php:234
-msgid "Apply"
-msgstr ""
-
-#: AcfFields/ColorPickerField.php:248
-msgid "Done"
-msgstr ""
-
-#: AcfFields/FontAwesomeIconField.php:135
-msgid "No icon selected"
-msgstr ""
-
-#: AcfFields/FontAwesomeIconField.php:143
-msgid "Search icons..."
-msgstr ""
-
-#: AcfFields/ShareButtonFields.php:19
-msgid "Share Button Settings"
-msgstr ""
-
-#: AcfFields/ShareButtonFields.php:23
-msgid "Share Button Placement"
-msgstr ""
-
-#: AcfFields/ShareButtonFields.php:26
-msgid "Choose where the share button should appear on this page."
-msgstr ""
-
-#: AcfFields/ShareButtonFields.php:35
-msgid "None"
-msgstr ""
-
-#: AcfFields/ShareButtonFields.php:36
-msgid "Bottom of content"
-msgstr ""
-
-#: Admin/Settings.php:48
-#: Admin/Settings.php:49
+#. Plugin Name of the plugin
+#: pitea-customisation.php
+#: source/php/Admin/Settings.php:48
+#: source/php/Admin/Settings.php:49
 msgid "Piteå Customisation"
 msgstr ""
 
-#: Admin/Settings.php:82
+#. Description of the plugin
+#: pitea-customisation.php
+msgid "Custom functionality and modifications for the Piteå WordPress installation"
+msgstr ""
+
+#. Author of the plugin
+#: pitea-customisation.php
+msgid "Consid Borås AB"
+msgstr ""
+
+#: source/php/AcfFields/AccessibilityFields.php:19
+msgid "Accessibility Buttons Settings"
+msgstr ""
+
+#: source/php/AcfFields/AccessibilityFields.php:23
+msgid "Show accessibility buttons"
+msgstr ""
+
+#: source/php/AcfFields/AccessibilityFields.php:26
+msgid "Display accessibility buttons (ReadSpeaker and Print) on this page."
+msgstr ""
+
+#: source/php/AcfFields/ColorPickerField.php:56
+msgid "Allow Custom Colors?"
+msgstr ""
+
+#: source/php/AcfFields/ColorPickerField.php:57
+msgid "Allow users to enter custom hex colors"
+msgstr ""
+
+#: source/php/AcfFields/ColorPickerField.php:133
+#: source/php/AcfFields/ColorPickerField.php:146
+#: source/php/AcfFields/ColorPickerField.php:163
+msgid "Select Color"
+msgstr ""
+
+#: source/php/AcfFields/ColorPickerField.php:154
+#: source/php/AcfFields/ColorPickerField.php:244
+#: source/php/AcfFields/FontAwesomeIconField.php:150
+msgid "Clear"
+msgstr ""
+
+#: source/php/AcfFields/ColorPickerField.php:164
+msgid "Close"
+msgstr ""
+
+#: source/php/AcfFields/ColorPickerField.php:186
+msgid "No color selected"
+msgstr ""
+
+#: source/php/AcfFields/ColorPickerField.php:224
+msgid "Use Custom Color"
+msgstr ""
+
+#: source/php/AcfFields/ColorPickerField.php:234
+msgid "Apply"
+msgstr ""
+
+#: source/php/AcfFields/ColorPickerField.php:248
+msgid "Done"
+msgstr ""
+
+#: source/php/AcfFields/FontAwesomeIconField.php:135
+msgid "No icon selected"
+msgstr ""
+
+#: source/php/AcfFields/FontAwesomeIconField.php:143
+msgid "Search icons..."
+msgstr ""
+
+#: source/php/AcfFields/ShareButtonFields.php:19
+msgid "Share Button Settings"
+msgstr ""
+
+#: source/php/AcfFields/ShareButtonFields.php:23
+msgid "Share Button Placement"
+msgstr ""
+
+#: source/php/AcfFields/ShareButtonFields.php:26
+msgid "Choose where the share button should appear on this page."
+msgstr ""
+
+#: source/php/AcfFields/ShareButtonFields.php:35
+msgid "None"
+msgstr ""
+
+#: source/php/AcfFields/ShareButtonFields.php:36
+msgid "Bottom of content"
+msgstr ""
+
+#: source/php/Admin/Settings.php:82
 msgid "Saving…"
 msgstr ""
 
-#: Admin/Settings.php:83
+#: source/php/Admin/Settings.php:83
 msgid "Changes saved"
 msgstr ""
 
-#: Admin/Settings.php:84
+#: source/php/Admin/Settings.php:84
 msgid "Could not save settings"
 msgstr ""
 
-#: Admin/Settings.php:97
+#: source/php/Admin/Settings.php:97
 msgid "Insufficient permissions."
 msgstr ""
 
-#: Admin/Settings.php:103
+#: source/php/Admin/Settings.php:103
 msgid "Security check failed."
 msgstr ""
 
-#: Admin/Settings.php:117
+#: source/php/Admin/Settings.php:117
 msgid "Unknown tab."
 msgstr ""
 
-#: Admin/Settings.php:126
+#: source/php/Admin/Settings.php:126
 msgid "Settings saved."
 msgstr ""
 
-#: Admin/Settings.php:160
+#: source/php/Admin/Settings.php:160
 msgid "Save Changes"
 msgstr ""
 
-#: Admin/Settings.php:169
+#: source/php/Admin/Settings.php:169
 msgid "Settings sections"
 msgstr ""
 
-#: Admin/Tabs/ExternalContentTab.php:46
+#: source/php/Admin/Tabs/ExternalContentTab.php:46
 msgid "External Content"
 msgstr ""
 
-#: Admin/Tabs/ExternalContentTab.php:79
+#: source/php/Admin/Tabs/ExternalContentTab.php:79
 msgid "Traffic Disruptions"
 msgstr ""
 
-#: Admin/Tabs/ExternalContentTab.php:81
+#: source/php/Admin/Tabs/ExternalContentTab.php:81
 msgid "Automatically import traffic disruption data from an ArcGIS FeatureServer and publish it as service information posts. Leave the URL empty to disable importing."
 msgstr ""
 
-#: Admin/Tabs/ExternalContentTab.php:91
-#: Admin/Tabs/ExternalContentTab.php:129
+#: source/php/Admin/Tabs/ExternalContentTab.php:91
+#: source/php/Admin/Tabs/ExternalContentTab.php:129
 msgid "Source URL"
 msgstr ""
 
-#: Admin/Tabs/ExternalContentTab.php:117
+#: source/php/Admin/Tabs/ExternalContentTab.php:117
 msgid "E-Services"
 msgstr ""
 
-#: Admin/Tabs/ExternalContentTab.php:119
+#: source/php/Admin/Tabs/ExternalContentTab.php:119
 msgid "Automatically index Piteå's public e-services from the eNämnd API into the Typesense search engine. Leave the URL empty to disable indexing."
 msgstr ""
 
-#: Admin/Tabs/ExternalContentTab.php:174
+#: source/php/Admin/Tabs/ExternalContentTab.php:174
 msgid "The eNämnd public-services API URL. Leave empty to disable e-service indexing."
 msgstr ""
 
-#: Admin/Tabs/ExternalContentTab.php:197
+#: source/php/Admin/Tabs/ExternalContentTab.php:197
 msgid "The GeoJSON endpoint URL for the traffic disruption layer. Leave empty to disable importing."
 msgstr ""
 
-#: Admin/Tabs/ExternalContentTab.php:213
+#: source/php/Admin/Tabs/ExternalContentTab.php:213
 msgid "Service Information"
 msgstr ""
 
-#: Admin/Tabs/ExternalContentTab.php:218
+#: source/php/Admin/Tabs/ExternalContentTab.php:218
 msgid "Search"
 msgstr ""
 
-#: Customisations/Accessibility.php:123
+#: source/php/Customisations/Accessibility.php:123
 msgid "Listen to this page"
 msgstr ""
 
-#: Customisations/Breadcrumbs.php:81
+#: source/php/Customisations/Breadcrumbs.php:81
 msgid "Start"
 msgstr ""
 
-#: Customisations/Modules/Slider.php:63
-#: Customisations/Modules/Text.php:99
+#: source/php/Customisations/Modules/Slider.php:63
+#: source/php/Customisations/Modules/Text.php:99
 msgid "Enable"
 msgstr ""
 
-#: Customisations/ShareButton.php:90
+#: source/php/Customisations/ShareButton.php:90
 msgid "Copy page link to clipboard"
 msgstr ""
 
-#: Customisations/ShareButton.php:91
+#: source/php/Customisations/ShareButton.php:91
 msgid "Share page"
 msgstr ""
 
-#: ExternalContent/Search/EServices/EServicesImporter.php:261
+#: source/php/ExternalContent/Search/EServices/EServicesImporter.php:261
 msgid "E-services"
 msgstr ""
 
-#: ExternalContent/ServiceInfo/TrafficDisruptionsImporter.php:162
+#: source/php/ExternalContent/ServiceInfo/TrafficDisruptionsImporter.php:162
 msgid "Map showing traffic disruption"
 msgstr ""
 
-#: ExternalContent/ServiceInfo/TrafficDisruptionsImporter.php:170
+#: source/php/ExternalContent/ServiceInfo/TrafficDisruptionsImporter.php:170
 msgid "Traffic disruption location"
+msgstr ""
+
+#: views/search/hits/hit-eservice.blade.php:23
+msgctxt "E-services"
+msgid "Section"
 msgstr ""

@@ -10,7 +10,7 @@
         "watch": "vite build --watch",
         "build:gutenberg": "wp-scripts build source/js/gutenberg/index.js --output-path=dist/gutenberg",
         "watch:gutenberg": "wp-scripts start source/js/gutenberg/index.js --output-path=dist/gutenberg",
-        "make-pot": "wp i18n make-pot source/php/ languages/pitea-customisation.pot --domain=pitea-customisation"
+        "make-pot": "wp i18n make-pot . languages/pitea-customisation.pot --include=\"source/php,views\" --domain=pitea-customisation"
     },
     "devDependencies": {
         "@babel/runtime": "^7.28.4",
