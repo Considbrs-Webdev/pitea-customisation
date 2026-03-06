@@ -255,7 +255,7 @@ class EServicesImporter extends AbstractExternalIndexingStrategy
             'id'             => $this->getExternalId($item),
             'title'          => $name,
             'content'        => '',
-            'excerpt'        => $category,
+            'excerpt'        => '',
             'url'            => $url,
             'type'           => self::TYPE_IDENTIFIER,
             'type_name'      => __('E-services', 'pitea-customisation'),
