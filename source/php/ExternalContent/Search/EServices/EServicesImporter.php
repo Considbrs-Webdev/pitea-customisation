@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PiteaCustomisation\ExternalContent\Search\EServices;
 
+use TypesenseSearch\Helper\ExcerptHelper;
 use TypesenseSearch\Indexing\IndexableDocument;
 use TypesenseSearch\Indexing\Strategies\AbstractExternalIndexingStrategy;
 
@@ -224,11 +225,14 @@ class EServicesImporter extends AbstractExternalIndexingStrategy
      * Returns false when required fields are missing so the item is skipped.
      *
      * Field mapping:
-     *   Name     → title
-     *   FamilyID → id suffix (namespaced as 'pitea-eservice-{FamilyID}')
-     *   Category → tags (single-item array for faceting)
-     *   Hostname → url
-     *   Type     → eservice_type ('internal' | 'external')
+     *   Name             → title
+     *   FamilyID         → id suffix (namespaced as 'pitea-eservice-{FamilyID}')
+     *   Category         → tags (single-item array for faceting)
+     *   Hostname         → url
+     *   Type             → eservice_type ('internal' | 'external')
+     *   ShortDescription → excerpt (HTML stripped, entities decoded)
+     *   LongDescription  → content (HTML stripped, entities decoded;
+     *                       omitted when identical to ShortDescription)
      *
      * {@inheritdoc}
      */
@@ -245,11 +249,20 @@ class EServicesImporter extends AbstractExternalIndexingStrategy
         $url      = isset($item['Hostname']) ? trim((string) $item['Hostname']) : '';
         $type     = isset($item['Type'])     ? trim((string) $item['Type'])     : '';
 
+        $rawShort = isset($item['ShortDescription']) ? (string) $item['ShortDescription'] : '';
+        $rawLong  = isset($item['LongDescription'])  ? (string) $item['LongDescription']  : '';
+
+        $shortText = $this->cleanHtml($rawShort);
+        $longText  = $this->cleanHtml($rawLong);
+
+        $excerpt = ExcerptHelper::build($shortText);
+        $content = ($longText !== '' && $longText !== $shortText) ? $longText : '';
+
         return new IndexableDocument([
             'id'             => $this->getExternalId($item),
             'title'          => $name,
-            'content'        => '',
-            'excerpt'        => '',
+            'content'        => $content,
+            'excerpt'        => $excerpt,
             'url'            => $url,
             'type'           => self::TYPE_IDENTIFIER,
             'type_name'      => __('E-services', 'pitea-customisation'),
@@ -257,6 +270,18 @@ class EServicesImporter extends AbstractExternalIndexingStrategy
             'tags'           => $category !== '' ? [$category] : [],
             'date'           => 0,
         ]);
+    }
+
+    /**
+     * Strip all HTML tags, decode HTML entities, and normalise whitespace.
+     */
+    private function cleanHtml(string $html): string
+    {
+        $text = strip_tags($html);
+        $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $text = preg_replace('/\s+/', ' ', $text) ?? $text;
+
+        return trim($text);
     }
 
     /**

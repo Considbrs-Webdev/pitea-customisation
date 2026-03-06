@@ -6,7 +6,6 @@ namespace PiteaCustomisation\Admin;
 
 use PiteaCustomisation\Admin\Tabs\ExternalContentTab;
 use PiteaCustomisation\Admin\Tabs\GeneralTab;
-use PiteaCustomisation\Helpers\CacheBust;
 
 /**
  * Class Settings
@@ -36,7 +35,7 @@ class Settings
 
         add_action('admin_menu', [$this, 'addMenuPage']);
         add_action('admin_init', [$this, 'registerSettings']);
-        add_action('admin_enqueue_scripts', [$this, 'enqueueAssets']);
+        add_action('admin_enqueue_scripts', [$this, 'enqueueAssets'], 15); // Enqueue assets after default admin scripts
         add_action('wp_ajax_' . self::AJAX_ACTION, [$this, 'handleAjaxSave']);
     }
 
