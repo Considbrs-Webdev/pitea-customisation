@@ -89,13 +89,7 @@ class EServicesImporter extends AbstractExternalIndexingStrategy
      */
     public function registerHooks(): void
     {
-        add_action('init', function (): void {
-            if (!wp_next_scheduled(self::CRON_HOOK)) {
-                wp_schedule_event(time(), 'daily', self::CRON_HOOK);
-            }
-        });
-
-        add_action(self::CRON_HOOK, [$this, 'syncAll']);
+        
     }
 
     // ── syncAll override ──────────────────────────────────────────────────
