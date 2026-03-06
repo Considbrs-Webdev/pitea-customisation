@@ -29,6 +29,9 @@ class Config
 
         // Remove block directory assets from the editor
         add_action('admin_init', [$this, 'removeEditorBlockDirectoryAssets']);
+
+        // Remove the color and background color from the paragraph block
+        add_filter('register_block_type_args', [$this, 'removeParagraphColorAndBackground'], 10, 2);
     }
 
     /**
@@ -121,5 +124,26 @@ class Config
     {
         unset($templates['page-centered.blade.php']);
         return $templates;
+    }
+
+    public function removeParagraphColorAndBackground($args, $block_name): array
+    {
+        if ($block_name === 'core/paragraph') {
+
+            if (!isset($args['supports']['color']) || !is_array($args['supports']['color'])) {
+                $args['supports']['color'] = [];
+            }
+
+            $args['supports']['color']['text']       = false;
+            $args['supports']['color']['background'] = false;
+            $args['supports']['color']['gradients']  = false;
+            $args['supports']['color']['link']       = false;
+
+            if (isset($args['supports']['__experimentalBorder'])) {
+                $args['supports']['__experimentalBorder']['color'] = false;
+            }
+        }
+
+        return $args;
     }
 }
