@@ -42,6 +42,7 @@ class App
             Customisations\News::class,
             Customisations\Pagination::class,
             Customisations\PostTypes::class,
+            Customisations\Search::class,
             Customisations\ShareButton::class,
             Customisations\Taxonomies::class,
             Customisations\Typesense::class,
