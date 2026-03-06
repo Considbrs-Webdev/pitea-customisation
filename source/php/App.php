@@ -16,8 +16,8 @@ class App
      */
     public function __construct()
     {
-        $this->registerInstances();
         $this->initHooks();
+        $this->registerInstances();
     }
 
     /**
@@ -30,6 +30,7 @@ class App
     private function registerInstances(): void
     {
         $classes = [
+            Admin\Settings::class,
             Customisations\Accessibility::class,
             Customisations\Admin::class,
             Customisations\Breadcrumbs::class,

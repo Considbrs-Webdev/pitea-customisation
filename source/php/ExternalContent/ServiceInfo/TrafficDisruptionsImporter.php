@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PiteaCustomisation\ExternalContent;
+namespace PiteaCustomisation\ExternalContent\ServiceInfo;
 
 use ModularityServiceInfo\Import\ImporterInterface;
 use ModularityServiceInfo\Import\ServiceInfoItem;
@@ -17,7 +17,11 @@ use ModularityServiceInfo\Import\ServiceInfoItem;
  */
 class TrafficDisruptionsImporter implements ImporterInterface
 {
-    private const SOURCE_URL = 'https://gisportal.pitea.se/arcgis/rest/services/PK/PK_Trafikstorningar_Publik/FeatureServer/3/query?where=1=1&outFields=*&f=geojson';
+    /**
+     * WordPress option name that stores the source URL for this importer.
+     * Registered and managed via the plugin settings page.
+     */
+    public const OPTION_SOURCE_URL = 'pitea_customisation_traffic_disruptions_source_url';
 
     public function getKey(): string
     {
@@ -34,7 +38,13 @@ class TrafficDisruptionsImporter implements ImporterInterface
      */
     public function import(): array
     {
-        $geoJson = $this->fetchGeoJson();
+        $sourceUrl = (string) get_option(self::OPTION_SOURCE_URL, '');
+
+        if (empty($sourceUrl)) {
+            return [];
+        }
+
+        $geoJson = $this->fetchGeoJson($sourceUrl);
 
         if (empty($geoJson['features'])) {
             return [];
@@ -56,12 +66,13 @@ class TrafficDisruptionsImporter implements ImporterInterface
     /**
      * Fetch the GeoJSON data from the ArcGIS endpoint.
      *
-     * @return array Decoded GeoJSON FeatureCollection
+     * @param  string $sourceUrl The GeoJSON endpoint URL.
+     * @return array             Decoded GeoJSON FeatureCollection
      * @throws \RuntimeException On HTTP or parse errors
      */
-    private function fetchGeoJson(): array
+    private function fetchGeoJson(string $sourceUrl): array
     {
-        $response = wp_remote_get(self::SOURCE_URL, [
+        $response = wp_remote_get($sourceUrl, [
             'timeout' => 30,
         ]);
 

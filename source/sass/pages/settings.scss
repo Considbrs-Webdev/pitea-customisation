@@ -1,0 +1,347 @@
+// =============================================================================
+// Piteå Customisation — Settings Page
+// Inspired by the ACF settings UI: sticky header, vertical tab sidebar, cards.
+// =============================================================================
+
+$settings-sidebar-width: 200px;
+$settings-header-height: 64px;
+$settings-color-border: #dcdcde;
+$settings-color-bg: #f6f7f7;
+$settings-color-card: #fff;
+$settings-color-text: #1d2327;
+$settings-color-muted: #646970;
+$settings-color-accent: #2271b1; // WP blue
+$settings-color-accent-hover: #135e96;
+$settings-color-success: #00a32a;
+$settings-color-error: #d63638;
+$settings-radius: 4px;
+$settings-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+
+// Isolate from other admin styles
+#wpbody-content .pitea-settings {
+  // --------------------------------------------------------------------------
+  // Reset WP's .wrap / h1 top margin
+  // --------------------------------------------------------------------------
+  margin-top: 0;
+
+  // --------------------------------------------------------------------------
+  // Layout wrapper
+  // --------------------------------------------------------------------------
+  display: flex;
+  flex-direction: column;
+  min-height: calc(
+    100vh - 32px - #{$settings-header-height}
+  ); // below WP admin bar + our header
+
+  // --------------------------------------------------------------------------
+  // Sticky page header
+  // --------------------------------------------------------------------------
+  &__header {
+    position: sticky;
+    top: 32px; // below the WP admin bar
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 0 24px;
+    height: $settings-header-height;
+    background: #fff;
+    border-bottom: 1px solid $settings-color-border;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    margin-left: -20px; // counteract WP's #wpcontent padding
+    margin-right: -10px;
+  }
+
+  &__header-title {
+    h1 {
+      margin: 0;
+      padding: 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: $settings-color-text;
+      line-height: 1;
+    }
+  }
+
+  &__header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__save-status {
+    font-size: 13px;
+    color: $settings-color-muted;
+    transition:
+      opacity 0.2s ease,
+      color 0.2s ease;
+    opacity: 0;
+    min-width: 120px;
+    text-align: right;
+
+    &.is-saving {
+      opacity: 1;
+      color: $settings-color-muted;
+    }
+
+    &.is-saved {
+      opacity: 1;
+      color: $settings-color-success;
+
+      &::before {
+        content: "✓ ";
+      }
+    }
+
+    &.is-error {
+      opacity: 1;
+      color: $settings-color-error;
+
+      &::before {
+        content: "✗ ";
+      }
+    }
+  }
+
+  &__save-btn {
+    &.is-loading {
+      opacity: 0.6;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Body: sidebar + content
+  // --------------------------------------------------------------------------
+  &__body {
+    display: flex;
+    flex: 1;
+    align-items: flex-start;
+  }
+
+  // --------------------------------------------------------------------------
+  // Vertical tab navigation (sidebar)
+  // --------------------------------------------------------------------------
+  &__nav {
+    flex-shrink: 0;
+    width: $settings-sidebar-width;
+    padding: 24px 0;
+    border-right: 1px solid $settings-color-border;
+    position: sticky;
+    top: calc(
+      32px + #{$settings-header-height}
+    ); // below admin bar + our header
+    align-self: flex-start;
+    max-height: calc(100vh - 32px - #{$settings-header-height});
+    overflow-y: auto;
+  }
+
+  &__nav-item {
+    display: block;
+    padding: 10px 20px 10px 16px;
+    margin: 2px 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: $settings-color-text;
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    border-radius: 0;
+    transition:
+      background 0.15s ease,
+      border-color 0.15s ease,
+      color 0.15s ease;
+    line-height: 1.4;
+
+    &:hover {
+      background: $settings-color-bg;
+      color: $settings-color-accent;
+      border-left-color: #72aee6;
+    }
+
+    &.is-active {
+      background: #f0f6fc;
+      color: $settings-color-accent;
+      border-left-color: $settings-color-accent;
+      font-weight: 600;
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Content area
+  // --------------------------------------------------------------------------
+  &__content {
+    flex: 1;
+    min-width: 0;
+    padding: 28px 28px 60px;
+    background: $settings-color-bg;
+    min-height: calc(100vh - 32px - #{$settings-header-height});
+  }
+
+  &__tab {
+    display: none;
+
+    &.is-active {
+      display: block;
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Cards (settings groups)
+  // --------------------------------------------------------------------------
+  &__card {
+    background: $settings-color-card;
+    border: 1px solid $settings-color-border;
+    border-radius: $settings-radius;
+    box-shadow: $settings-shadow;
+    margin-bottom: 24px;
+
+    & + & {
+      margin-top: 0; // stackable without double margin
+    }
+  }
+
+  &__card-header {
+    display: flex;
+    align-items: center;
+    padding: 14px 20px;
+    border-bottom: 1px solid $settings-color-border;
+    background: $settings-color-card;
+    border-radius: $settings-radius $settings-radius 0 0;
+  }
+
+  &__card-title {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: $settings-color-text;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  &__card-body {
+    padding: 20px 20px 4px;
+
+    // Re-style the WP settings API .form-table inside our cards
+    .form-table {
+      margin: 0;
+      border-collapse: collapse;
+
+      th {
+        width: 200px;
+        padding: 16px 20px 16px 0;
+        font-size: 13px;
+        font-weight: 600;
+        color: $settings-color-text;
+        vertical-align: top;
+        line-height: 1.5;
+      }
+
+      td {
+        padding: 12px 0 16px;
+        vertical-align: top;
+      }
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // Section description (rendered by add_settings_section callback)
+  // --------------------------------------------------------------------------
+  &__section-desc {
+    margin: 0 0 4px;
+    padding: 12px 0 0;
+    font-size: 13px;
+    color: $settings-color-muted;
+    line-height: 1.6;
+
+    // Target the <td> colspan wrapper WP puts around section descriptions
+    // when there's no .form-table preceding it
+    & + .form-table {
+      margin-top: 8px;
+    }
+  }
+
+  // WP wraps section descriptions in a <td colspan="2"> inside a <table>
+  // but when rendered inside a card, we reset that table so text flows nicely
+  .wp-settings-section-description {
+    padding: 0;
+  }
+
+  // --------------------------------------------------------------------------
+  // Individual field wrapper
+  // --------------------------------------------------------------------------
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__input {
+    width: 100%;
+    max-width: 480px;
+    padding: 8px 12px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: $settings-color-text;
+    background: #fff;
+    border: 1px solid $settings-color-border;
+    border-radius: $settings-radius;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07);
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+    outline: none;
+
+    &:focus {
+      border-color: $settings-color-accent;
+      box-shadow:
+        0 0 0 2px rgba(34, 113, 177, 0.15),
+        inset 0 1px 2px rgba(0, 0, 0, 0.07);
+    }
+  }
+
+  &__field-desc {
+    margin: 0;
+    font-size: 12px;
+    color: $settings-color-muted;
+    line-height: 1.5;
+  }
+
+  // --------------------------------------------------------------------------
+  // Toast notification  (absolute positioned at top-right of header)
+  // --------------------------------------------------------------------------
+  &__toast {
+    position: fixed;
+    top: 80px;
+    right: 24px;
+    z-index: 9999;
+    padding: 12px 18px;
+    background: $settings-color-text;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: $settings-radius;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+    opacity: 0;
+    transform: translateY(-8px);
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease;
+    pointer-events: none;
+
+    &.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    &.is-success {
+      background: $settings-color-success;
+    }
+
+    &.is-error {
+      background: $settings-color-error;
+    }
+  }
+}

@@ -12,11 +12,6 @@ class Typesense
     public function __construct()
     {
         add_filter('Municipio/TypesenseSearch/postTypeToTemplate', [$this, 'addJobPostingTemplate']);
-
-        add_filter('Municipio/TypesenseSearch/placeholderMappings', function ($mappings) {
-            $mappings['SEARCH_HIT_VALID_THROUGH'] = 'last_application_date';
-            return $mappings;
-        });
     }
 
     public function addJobPostingTemplate($mapping)

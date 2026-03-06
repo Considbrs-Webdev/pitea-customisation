@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-24T20:10:17+00:00\n"
-"PO-Revision-Date: 2026-02-24 21:10+0100\n"
+"POT-Creation-Date: 2026-03-06T10:55:34+00:00\n"
+"PO-Revision-Date: 2026-03-06 11:55+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -91,6 +91,97 @@ msgstr "Ingen"
 msgid "Bottom of content"
 msgstr "Botten av innehållet"
 
+#: Admin/Settings.php:48 Admin/Settings.php:49
+msgid "Piteå Customisation"
+msgstr ""
+
+#: Admin/Settings.php:82
+msgid "Saving…"
+msgstr ""
+
+#: Admin/Settings.php:83
+msgid "Changes saved"
+msgstr ""
+
+#: Admin/Settings.php:84
+msgid "Could not save settings"
+msgstr ""
+
+#: Admin/Settings.php:97
+msgid "Insufficient permissions."
+msgstr ""
+
+#: Admin/Settings.php:103
+msgid "Security check failed."
+msgstr ""
+
+#: Admin/Settings.php:117
+msgid "Unknown tab."
+msgstr ""
+
+#: Admin/Settings.php:126
+msgid "Settings saved."
+msgstr ""
+
+#: Admin/Settings.php:160
+msgid "Save Changes"
+msgstr ""
+
+#: Admin/Settings.php:169
+msgid "Settings sections"
+msgstr ""
+
+#: Admin/Tabs/ExternalContentTab.php:46
+msgid "External Content"
+msgstr ""
+
+#: Admin/Tabs/ExternalContentTab.php:79
+#, fuzzy
+#| msgid "Traffic disruption location"
+msgid "Traffic Disruptions"
+msgstr "Plats för trafikstörning"
+
+#: Admin/Tabs/ExternalContentTab.php:81
+msgid ""
+"Automatically import traffic disruption data from an ArcGIS FeatureServer "
+"and publish it as service information posts. Leave the URL empty to disable "
+"importing."
+msgstr ""
+
+#: Admin/Tabs/ExternalContentTab.php:91 Admin/Tabs/ExternalContentTab.php:129
+msgid "Source URL"
+msgstr ""
+
+#: Admin/Tabs/ExternalContentTab.php:117
+msgid "E-Services"
+msgstr ""
+
+#: Admin/Tabs/ExternalContentTab.php:119
+msgid ""
+"Automatically index Piteå's public e-services from the eNämnd API into the "
+"Typesense search engine. Leave the URL empty to disable indexing."
+msgstr ""
+
+#: Admin/Tabs/ExternalContentTab.php:174
+msgid ""
+"The eNämnd public-services API URL. Leave empty to disable e-service "
+"indexing."
+msgstr ""
+
+#: Admin/Tabs/ExternalContentTab.php:197
+msgid ""
+"The GeoJSON endpoint URL for the traffic disruption layer. Leave empty to "
+"disable importing."
+msgstr ""
+
+#: Admin/Tabs/ExternalContentTab.php:213
+msgid "Service Information"
+msgstr ""
+
+#: Admin/Tabs/ExternalContentTab.php:218
+msgid "Search"
+msgstr ""
+
 #: Customisations/Accessibility.php:123
 msgid "Listen to this page"
 msgstr "Lyssna på sidan"
@@ -103,19 +194,23 @@ msgstr "Start"
 msgid "Enable"
 msgstr "Aktivera"
 
-#: Customisations/ShareButton.php:81
+#: Customisations/ShareButton.php:90
 msgid "Copy page link to clipboard"
 msgstr "Kopiera sidadress"
 
-#: Customisations/ShareButton.php:82
+#: Customisations/ShareButton.php:91
 msgid "Share page"
 msgstr "Dela sidan"
 
-#: ExternalContent/TrafficDisruptionsImporter.php:146
+#: ExternalContent/Search/EServices/EServicesImporter.php:261
+msgid "E-services"
+msgstr "E-tjänster"
+
+#: ExternalContent/ServiceInfo/TrafficDisruptionsImporter.php:162
 msgid "Map showing traffic disruption"
 msgstr "Karta över trafikstörning"
 
-#: ExternalContent/TrafficDisruptionsImporter.php:154
+#: ExternalContent/ServiceInfo/TrafficDisruptionsImporter.php:170
 msgid "Traffic disruption location"
 msgstr "Plats för trafikstörning"
 
