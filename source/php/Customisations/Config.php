@@ -12,7 +12,7 @@ class Config
         // Load plugin textdomain for translations
         add_action('init', [$this, 'loadTextdomain']);
 
-        // Specifiy Font Awesome archive link icon for service information
+        // Specify Font Awesome archive link icon for service information
         add_filter('Modularity/ServiceInformation/Module/ArchiveLink/Icon', [$this, 'setServiceInfoArchiveLinkIcon']);
 
         // Contact banner CTA icon customization
@@ -23,15 +23,6 @@ class Config
 
         // Remove font-face declarations from Kirki inline styles on the frontend
         add_filter('kirki_inline_styles', [$this, 'maybeRemoveFontFaces']);
-
-        // Remove the "page-centered.blade.php" template from the available page templates in the editor
-        add_filter('theme_page_templates', [$this, 'removePageCenteredTemplate'], 100, 1);
-
-        // Remove block directory assets from the editor
-        add_action('admin_init', [$this, 'removeEditorBlockDirectoryAssets']);
-
-        // Remove the color and background color from the paragraph block
-        add_filter('register_block_type_args', [$this, 'removeParagraphColorAndBackground'], 10, 2);
     }
 
     /**
@@ -113,37 +104,5 @@ class Config
         }
 
         return $preempt;
-    }
-
-    public function removeEditorBlockDirectoryAssets()
-    {
-        remove_action('enqueue_block_editor_assets', 'wp_enqueue_editor_block_directory_assets');
-    }
-
-    public function removePageCenteredTemplate(array $templates): array
-    {
-        unset($templates['page-centered.blade.php']);
-        return $templates;
-    }
-
-    public function removeParagraphColorAndBackground($args, $block_name): array
-    {
-        if ($block_name === 'core/paragraph') {
-
-            if (!isset($args['supports']['color']) || !is_array($args['supports']['color'])) {
-                $args['supports']['color'] = [];
-            }
-
-            $args['supports']['color']['text']       = false;
-            $args['supports']['color']['background'] = false;
-            $args['supports']['color']['gradients']  = false;
-            $args['supports']['color']['link']       = false;
-
-            if (isset($args['supports']['__experimentalBorder'])) {
-                $args['supports']['__experimentalBorder']['color'] = false;
-            }
-        }
-
-        return $args;
     }
 }

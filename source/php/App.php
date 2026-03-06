@@ -31,6 +31,7 @@ class App
     {
         $classes = [
             Customisations\Accessibility::class,
+            Customisations\Admin::class,
             Customisations\Breadcrumbs::class,
             Customisations\ColorPicker::class,
             Customisations\Config::class,
@@ -70,8 +71,6 @@ class App
     private function initHooks(): void
     {
         add_action('wp_enqueue_scripts', [$this, 'enqueueAssets']);
-        add_action('admin_enqueue_scripts', [$this, 'enqueueAdminAssets']);
-        add_action('init', [$this, 'addEditorStyles']);
     }
 
     /**
@@ -102,50 +101,6 @@ class App
                 [],
                 PITEA_CUSTOMISATION_VERSION
             );
-        }
-    }
-
-    /**
-     * Enqueue admin assets
-     *
-     * @return void
-     */
-    public function enqueueAdminAssets(): void
-    {
-        // Enqueue admin JS
-        $file = Helpers\CacheBust::getFile('source/js/admin.js');
-        if ($file) {
-            wp_enqueue_script(
-                'pitea-customisation-admin',
-                $file,
-                [],
-                PITEA_CUSTOMISATION_VERSION,
-                true
-            );
-        }
-
-        // Enqueue admin CSS
-        $file = Helpers\CacheBust::getFile('source/sass/admin.scss');
-        if ($file) {
-            wp_enqueue_style(
-                'pitea-customisation-admin-style',
-                $file,
-                [],
-                PITEA_CUSTOMISATION_VERSION
-            );
-        }
-    }
-
-    /**
-     * Add styles to TinyMCE editor (classic editor iframe)
-     *
-     * @return void
-     */
-    public function addEditorStyles(): void
-    {
-        $file = Helpers\CacheBust::getFile('source/sass/admin.scss');
-        if ($file) {
-            add_editor_style($file);
         }
     }
 
