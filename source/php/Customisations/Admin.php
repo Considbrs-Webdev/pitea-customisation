@@ -41,7 +41,7 @@ class Admin
             );
         }
 
-        // Enqueue admin CSS
+        // Enqueue admin CSS on all admin pages (sidebar, edit screen frame, settings, etc.)
         $file = CacheBust::getFile('source/sass/admin.scss');
         if ($file) {
             wp_enqueue_style(
@@ -54,10 +54,7 @@ class Admin
     }
 
     /**
-     * Add admin.scss to the block editor and classic editor via add_editor_style().
-     * Municipio already calls add_theme_support('editor-styles') so this takes effect.
-     * The stylesheet brings pitea CSS variables (--font-size-*, etc.) into the editor.
-     *
+     * Add admin.scss to the block editor and classic editor content area via add_editor_style().
      * @return void
      */
     public function addEditorStyles(): void
@@ -67,7 +64,6 @@ class Admin
             add_editor_style($file);
         }
     }
-
     /**
      * Register block editor font size presets to match the pitea design system.
      * WordPress default "small" is 13px; pitea uses 16px (--font-size-small).
