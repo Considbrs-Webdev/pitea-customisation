@@ -43,6 +43,7 @@ class App
             Customisations\Navigation::class,
             Customisations\News::class,
             Customisations\Pagination::class,
+            Customisations\Policies::class,
             Customisations\PostTypes::class,
             Customisations\Search::class,
             Customisations\ShareButton::class,
