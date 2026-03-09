@@ -52,6 +52,15 @@
   color: var(--color-breadcrumb, var(--color-stain-dark-3));
   text-decoration: underline;
   line-height: 1;
+  // Enlarge hit area without shifting the element visually
+  position: relative;
+  z-index: 1;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -0.5em -0.75em;
+  }
 
   &:hover {
     color: var(--color-breadcrumb-active, var(--color-stain-dark-3));
@@ -59,7 +68,7 @@
 
   &:focus-visible {
     outline: 2px solid currentColor;
-    outline-offset: 2px;
+    outline-offset: 0.5em;
   }
 }
 
@@ -68,6 +77,9 @@
   align-items: center;
   gap: 0.15em;
   padding: 0 calc(var(--base, 8px) * 1) 0 0;
+  // Ensure the expand button sits above neighbouring rotated icons
+  position: relative;
+  z-index: 1;
 
   // display: flex above overrides the UA stylesheet's [hidden] display: none,
   // so we need to explicitly re-apply it.
