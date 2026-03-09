@@ -17,3 +17,13 @@ a,
     }
   }
 }
+
+.c-article p,
+.c-article ul,
+.c-article ol,
+.c-article blockquote,
+.c-article img,
+.c-article table,
+.c-article > div {
+  margin-top: calc(var(--base, 8px) * 3);
+}

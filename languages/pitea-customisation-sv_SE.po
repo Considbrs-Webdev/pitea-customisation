@@ -1,29 +1,26 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pitea-"
-"customisation\n"
-"POT-Creation-Date: 2026-03-06T11:43:12+00:00\n"
-"PO-Revision-Date: 2026-03-06 12:45+0100\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pitea-customisation\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: sv_SE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-03-06T11:43:12+00:00\n"
+"PO-Revision-Date: 2026-03-06 12:45+0100\n"
+"Language: sv_SE\n"
 "X-Generator: Poedit 3.8\n"
 "X-Domain: pitea-customisation\n"
 
 #. Plugin Name of the plugin
-#: pitea-customisation.php source/php/Admin/Settings.php:48
-#: source/php/Admin/Settings.php:49
+#: pitea-customisation.php
 msgid "Piteå Customisation"
 msgstr ""
 
 #. Description of the plugin
 #: pitea-customisation.php
-msgid ""
-"Custom functionality and modifications for the Piteå WordPress installation"
+msgid "Custom functionality and modifications for the Piteå WordPress installation"
 msgstr ""
 
 #. Author of the plugin
@@ -88,6 +85,7 @@ msgid "No icon selected"
 msgstr "Ingen ikon vald"
 
 #: source/php/AcfFields/FontAwesomeIconField.php:143
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:113
 msgid "Search icons..."
 msgstr "Sök ikon..."
 
@@ -111,39 +109,39 @@ msgstr "Ingen"
 msgid "Bottom of content"
 msgstr "Botten av innehållet"
 
-#: source/php/Admin/Settings.php:82
+#: source/php/Admin/Settings.php:83
 msgid "Saving…"
 msgstr "Sparar…"
 
-#: source/php/Admin/Settings.php:83
+#: source/php/Admin/Settings.php:84
 msgid "Changes saved"
 msgstr "Ändringar sparade"
 
-#: source/php/Admin/Settings.php:84
+#: source/php/Admin/Settings.php:85
 msgid "Could not save settings"
 msgstr "Kunde inte spara ändringar"
 
-#: source/php/Admin/Settings.php:97
+#: source/php/Admin/Settings.php:98
 msgid "Insufficient permissions."
 msgstr "Otillräckliga rättigheter."
 
-#: source/php/Admin/Settings.php:103
+#: source/php/Admin/Settings.php:104
 msgid "Security check failed."
 msgstr "Säkerhetskontroll misslyckades."
 
-#: source/php/Admin/Settings.php:117
+#: source/php/Admin/Settings.php:118
 msgid "Unknown tab."
 msgstr "Okänd flik."
 
-#: source/php/Admin/Settings.php:126
+#: source/php/Admin/Settings.php:127
 msgid "Settings saved."
 msgstr "Inställningarna sparades."
 
-#: source/php/Admin/Settings.php:160
+#: source/php/Admin/Settings.php:184
 msgid "Save Changes"
 msgstr "Spara"
 
-#: source/php/Admin/Settings.php:169
+#: source/php/Admin/Settings.php:193
 msgid "Settings sections"
 msgstr ""
 
@@ -156,10 +154,7 @@ msgid "Traffic Disruptions"
 msgstr "Trafikstörningar"
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:81
-msgid ""
-"Automatically import traffic disruption data from an ArcGIS FeatureServer "
-"and publish it as service information posts. Leave the URL empty to disable "
-"importing."
+msgid "Automatically import traffic disruption data from an ArcGIS FeatureServer and publish it as service information posts. Leave the URL empty to disable importing."
 msgstr ""
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:91
@@ -172,21 +167,15 @@ msgid "E-Services"
 msgstr "E-tjänster"
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:119
-msgid ""
-"Automatically index Piteå's public e-services from the eNämnd API into the "
-"Typesense search engine. Leave the URL empty to disable indexing."
+msgid "Automatically index Piteå's public e-services from the eNämnd API into the Typesense search engine. Leave the URL empty to disable indexing."
 msgstr ""
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:174
-msgid ""
-"The eNämnd public-services API URL. Leave empty to disable e-service "
-"indexing."
+msgid "The eNämnd public-services API URL. Leave empty to disable e-service indexing."
 msgstr ""
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:197
-msgid ""
-"The GeoJSON endpoint URL for the traffic disruption layer. Leave empty to "
-"disable importing."
+msgid "The GeoJSON endpoint URL for the traffic disruption layer. Leave empty to disable importing."
 msgstr ""
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:213
@@ -218,7 +207,7 @@ msgstr "Kopiera sidadress"
 msgid "Share page"
 msgstr "Dela sidan"
 
-#: source/php/ExternalContent/Search/EServices/EServicesImporter.php:261
+#: source/php/ExternalContent/Search/EServices/EServicesImporter.php:268
 msgid "E-services"
 msgstr "E-tjänster"
 
@@ -235,5 +224,66 @@ msgctxt "E-services"
 msgid "Section"
 msgstr "Avdelning"
 
-#~ msgid "Listen"
-#~ msgstr "Lyssna"
+#: source/php/Admin/Settings.php:49
+#: source/php/Admin/Settings.php:50
+msgid "Piteå kommun"
+msgstr ""
+
+#: source/php/Admin/Tabs/GeneralTab.php:31
+#: source/php/Admin/Tabs/GeneralTab.php:80
+msgid "General settings"
+msgstr ""
+
+#: source/php/Admin/Tabs/GeneralTab.php:52
+msgid "Overview"
+msgstr ""
+
+#: source/php/Admin/Tabs/GeneralTab.php:54
+msgid "Here you will find settings for Piteå kommun's homepage."
+msgstr ""
+
+#: source/php/Customisations/Admin.php:82
+msgctxt "Editor font size preset"
+msgid "Small"
+msgstr "Liten"
+
+#: source/php/Customisations/Admin.php:87
+msgctxt "Editor font size preset"
+msgid "Medium"
+msgstr "Normal"
+
+#: source/php/Customisations/Admin.php:92
+msgctxt "Editor font size preset"
+msgid "Large"
+msgstr "Stor"
+
+#: source/php/Customisations/Admin.php:97
+msgctxt "Editor font size preset"
+msgid "Extra large"
+msgstr "Extra stor"
+
+#: source/php/Customisations/Admin.php:102
+msgctxt "Editor font size preset"
+msgid "Larger"
+msgstr "Större"
+
+#: source/php/Customisations/Admin.php:121
+msgctxt "Paragraph block style"
+msgid "Preamble"
+msgstr "Ingress"
+
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:104
+msgid "Select Icon"
+msgstr ""
+
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:127
+msgid "No icons found"
+msgstr ""
+
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:194
+msgid "Insert Icon"
+msgstr ""
+
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:213
+msgid "Font Awesome Icon"
+msgstr ""

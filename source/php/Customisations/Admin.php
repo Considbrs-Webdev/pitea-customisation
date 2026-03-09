@@ -13,7 +13,8 @@ class Admin
     {
         add_action('admin_enqueue_scripts', [$this, 'enqueueAdminAssets']);
         add_action('init', [$this, 'addEditorStyles']);
-        add_action('enqueue_block_editor_assets', [$this, 'enqueueBlockEditorFontOverride']);
+        add_action('after_setup_theme', [$this, 'registerEditorFontSizes'], 20);
+        add_action('init', [$this, 'registerParagraphBlockStyles'], 20);
 
         // Editor behaviour
         add_action('admin_init', [$this, 'removeEditorBlockDirectoryAssets']);
@@ -53,7 +54,9 @@ class Admin
     }
 
     /**
-     * Add styles to TinyMCE editor (classic editor iframe)
+     * Add admin.scss to the block editor and classic editor via add_editor_style().
+     * Municipio already calls add_theme_support('editor-styles') so this takes effect.
+     * The stylesheet brings pitea CSS variables (--font-size-*, etc.) into the editor.
      *
      * @return void
      */
@@ -66,23 +69,58 @@ class Admin
     }
 
     /**
-     * Override WordPress block editor reset font in Gutenberg.
-     * Core uses html :where(.editor-styles-wrapper) { font-family: serif; } which can
-     * load after the theme styleguide in production. This rule uses higher specificity
-     * (html .editor-styles-wrapper) so the theme font wins in all environments.
+     * Register block editor font size presets to match the pitea design system.
+     * WordPress default "small" is 13px; pitea uses 16px (--font-size-small).
+     * Running at priority 20 ensures this runs after the theme's after_setup_theme.
      *
      * @return void
      */
-    public function enqueueBlockEditorFontOverride(): void
+    public function registerEditorFontSizes(): void
     {
-        wp_register_style(
-            'pitea-block-editor-font-override',
-            false,
-            ['block-editor-municipio']
-        );
-        wp_enqueue_style('pitea-block-editor-font-override');
-        $css = 'html .editor-styles-wrapper { font-family: var(--font-family-base, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif); }';
-        wp_add_inline_style('pitea-block-editor-font-override', $css);
+        add_theme_support('editor-font-sizes', [
+            [
+                'name' => _x('Small', 'Editor font size preset', 'pitea-customisation'),
+                'slug' => 'small',
+                'size' => '16px',
+            ],
+            [
+                'name' => _x('Medium', 'Editor font size preset', 'pitea-customisation'),
+                'slug' => 'medium',
+                'size' => '18px',
+            ],
+            [
+                'name' => _x('Large', 'Editor font size preset', 'pitea-customisation'),
+                'slug' => 'large',
+                'size' => '22px',
+            ],
+            [
+                'name' => _x('Extra large', 'Editor font size preset', 'pitea-customisation'),
+                'slug' => 'x-large',
+                'size' => '32px',
+            ],
+            [
+                'name' => _x('Larger', 'Editor font size preset', 'pitea-customisation'),
+                'slug' => 'larger',
+                'size' => '42px',
+            ],
+        ]);
+    }
+
+    /**
+     * Register custom paragraph block style variants.
+     * Frontend CSS is in general/blocks.scss (loaded via main stylesheet). We keep
+     * inline_style here so the editor gets the style; core does not reliably
+     * enqueue block-style CSS on the frontend in all themes/setups.
+     *
+     * @return void
+     */
+    public function registerParagraphBlockStyles(): void
+    {
+        register_block_style('core/paragraph', [
+            'name'         => 'preamble',
+            'label'        => _x('Preamble', 'Paragraph block style', 'pitea-customisation'),
+            'inline_style' => 'p.is-style-preamble { font-size: var(--font-size-lead, 22px); font-weight: 600; letter-spacing: 0.03em; }',
+        ]);
     }
 
     /**
@@ -111,11 +149,12 @@ class Admin
      * Remove color and background color support from the paragraph block
      *
      * @param array<string, mixed> $args
+     * @param string $block_name
      * @return array<string, mixed>
      */
     public function removeParagraphColorAndBackground(array $args, string $block_name): array
     {
-        if ($block_name === 'core/paragraph') {
+        if ($block_name === 'core/paragraph' || $block_name === 'core/heading') {
             if (!isset($args['supports']['color']) || !is_array($args['supports']['color'])) {
                 $args['supports']['color'] = [];
             }

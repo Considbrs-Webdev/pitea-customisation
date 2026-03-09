@@ -9,15 +9,13 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-06T11:43:12+00:00\n"
+"POT-Creation-Date: 2026-03-09T11:18:13+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: pitea-customisation\n"
 
 #. Plugin Name of the plugin
 #: pitea-customisation.php
-#: source/php/Admin/Settings.php:48
-#: source/php/Admin/Settings.php:49
 msgid "Piteå Customisation"
 msgstr ""
 
@@ -88,6 +86,7 @@ msgid "No icon selected"
 msgstr ""
 
 #: source/php/AcfFields/FontAwesomeIconField.php:143
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:113
 msgid "Search icons..."
 msgstr ""
 
@@ -111,39 +110,44 @@ msgstr ""
 msgid "Bottom of content"
 msgstr ""
 
-#: source/php/Admin/Settings.php:82
-msgid "Saving…"
+#: source/php/Admin/Settings.php:49
+#: source/php/Admin/Settings.php:50
+msgid "Piteå kommun"
 msgstr ""
 
 #: source/php/Admin/Settings.php:83
-msgid "Changes saved"
+msgid "Saving…"
 msgstr ""
 
 #: source/php/Admin/Settings.php:84
+msgid "Changes saved"
+msgstr ""
+
+#: source/php/Admin/Settings.php:85
 msgid "Could not save settings"
 msgstr ""
 
-#: source/php/Admin/Settings.php:97
+#: source/php/Admin/Settings.php:98
 msgid "Insufficient permissions."
 msgstr ""
 
-#: source/php/Admin/Settings.php:103
+#: source/php/Admin/Settings.php:104
 msgid "Security check failed."
 msgstr ""
 
-#: source/php/Admin/Settings.php:117
+#: source/php/Admin/Settings.php:118
 msgid "Unknown tab."
 msgstr ""
 
-#: source/php/Admin/Settings.php:126
+#: source/php/Admin/Settings.php:127
 msgid "Settings saved."
 msgstr ""
 
-#: source/php/Admin/Settings.php:160
+#: source/php/Admin/Settings.php:184
 msgid "Save Changes"
 msgstr ""
 
-#: source/php/Admin/Settings.php:169
+#: source/php/Admin/Settings.php:193
 msgid "Settings sections"
 msgstr ""
 
@@ -188,8 +192,51 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
+#: source/php/Admin/Tabs/GeneralTab.php:31
+#: source/php/Admin/Tabs/GeneralTab.php:80
+msgid "General settings"
+msgstr ""
+
+#: source/php/Admin/Tabs/GeneralTab.php:52
+msgid "Overview"
+msgstr ""
+
+#: source/php/Admin/Tabs/GeneralTab.php:54
+msgid "Here you will find settings for Piteå kommun's homepage."
+msgstr ""
+
 #: source/php/Customisations/Accessibility.php:123
 msgid "Listen to this page"
+msgstr ""
+
+#: source/php/Customisations/Admin.php:82
+msgctxt "Editor font size preset"
+msgid "Small"
+msgstr ""
+
+#: source/php/Customisations/Admin.php:87
+msgctxt "Editor font size preset"
+msgid "Medium"
+msgstr ""
+
+#: source/php/Customisations/Admin.php:92
+msgctxt "Editor font size preset"
+msgid "Large"
+msgstr ""
+
+#: source/php/Customisations/Admin.php:97
+msgctxt "Editor font size preset"
+msgid "Extra large"
+msgstr ""
+
+#: source/php/Customisations/Admin.php:102
+msgctxt "Editor font size preset"
+msgid "Larger"
+msgstr ""
+
+#: source/php/Customisations/Admin.php:121
+msgctxt "Paragraph block style"
+msgid "Preamble"
 msgstr ""
 
 #: source/php/Customisations/Breadcrumbs.php:81
@@ -209,7 +256,7 @@ msgstr ""
 msgid "Share page"
 msgstr ""
 
-#: source/php/ExternalContent/Search/EServices/EServicesImporter.php:261
+#: source/php/ExternalContent/Search/EServices/EServicesImporter.php:268
 msgid "E-services"
 msgstr ""
 
@@ -224,4 +271,20 @@ msgstr ""
 #: views/search/hits/hit-eservice.blade.php:23
 msgctxt "E-services"
 msgid "Section"
+msgstr ""
+
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:104
+msgid "Select Icon"
+msgstr ""
+
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:127
+msgid "No icons found"
+msgstr ""
+
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:194
+msgid "Insert Icon"
+msgstr ""
+
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:213
+msgid "Font Awesome Icon"
 msgstr ""
