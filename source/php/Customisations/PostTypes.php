@@ -20,9 +20,11 @@ class PostTypes {
             return $path;
         });
         
-        // Saves post types to the same directory
-        add_filter('acf/settings/save_json/type=acf-post-type', function ($path) {
-            return PITEA_CUSTOMISATION_PATH . 'post-types';
-        });
+        // Saves post types to the same directory in dev environment
+        if (wp_get_environment_type() === 'development') {
+            add_filter('acf/settings/save_json/type=acf-post-type', function ($path) {
+                return PITEA_CUSTOMISATION_PATH . 'post-types';
+            });
+        }
     }
 }

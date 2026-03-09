@@ -20,9 +20,11 @@ class Taxonomies {
             return $path;
         });
         
-        // Saves taxonomies to the same directory
-        add_filter('acf/settings/save_json/type=acf-taxonomy', function ($path) {
-            return PITEA_CUSTOMISATION_PATH . 'taxonomies';
-        });
+        // Saves taxonomies to the same directory in dev environment
+        if (wp_get_environment_type() === 'development') {
+            add_filter('acf/settings/save_json/type=acf-taxonomy', function ($path) {
+                return PITEA_CUSTOMISATION_PATH . 'taxonomies';
+            });
+        }
     }
 }
