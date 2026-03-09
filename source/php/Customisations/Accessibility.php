@@ -2,6 +2,20 @@
 
 namespace PiteaCustomisation\Customisations;
 
+/**
+ * Handles accessibility features for the site, including:
+ *
+ * - ReadSpeaker integration: Adds a "Listen to this page" button to singular
+ *   pages and wraps the page content modules in <article id="article"> so that
+ *   ReadSpeaker knows which portion of the page to read aloud.
+ *
+ * - Print button: Optionally adds a print button to the accessibility menu on
+ *   singular pages.
+ *
+ * Whether the accessibility menu (and the article wrapper) is shown on a given
+ * page can be controlled per-post via the ACF field "show_accessibility_buttons".
+ * For non-page post types the menu is always shown.
+ */
 class Accessibility
 {
     const READSPEAKER_CUSTOMER_ID = '9687';
@@ -16,6 +30,43 @@ class Accessibility
         new \PiteaCustomisation\AcfFields\AccessibilityFields();
         add_filter('Municipio/Template/viewData', [$this, 'maybeAddPrintMenuToViewData'], 10, 1);
         add_filter('Municipio/Template/viewData', [$this, 'addAccessibilityMenuToViewData'], 20, 1);
+        add_action('template_redirect', [$this, 'maybeWrapContentInArticle']);
+    }
+
+    /**
+     * Conditionally registers the article wrapper filters.
+     *
+     * Called on template_redirect. If the current request is a singular page
+     * (but not the front page) and the accessibility menu should be shown, hooks
+     * openArticleWrapper() and closeArticleWrapper() so that the page modules
+     * are wrapped in <article id="article">. ReadSpeaker uses this id to locate
+     * the content it should read aloud.
+     */
+    public function maybeWrapContentInArticle(): void
+    {
+        if (!is_front_page() && is_singular() && $this->shouldShowAccessibilityMenu()) {
+            add_filter('Municipio/Hook/innerLoopStart', [$this, 'openArticleWrapper']);
+            add_filter('Municipio/Hook/innerLoopEnd', [$this, 'closeArticleWrapper']);
+        }
+    }
+
+    /**
+     * Returns the opening <article> tag that wraps the page content modules.
+     *
+     * The id "article" matches READSPEAKER_READ_ID and tells ReadSpeaker where
+     * the readable content begins.
+     */
+    public function openArticleWrapper(string $content): string
+    {
+        return '<article id="article">';
+    }
+
+    /**
+     * Returns the closing </article> tag that ends the ReadSpeaker content region.
+     */
+    public function closeArticleWrapper(string $content): string
+    {
+        return '</article>';
     }
 
     public function maybeAddPrintMenuToViewData(array $data): array
