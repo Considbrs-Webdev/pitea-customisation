@@ -6,6 +6,7 @@ namespace PiteaCustomisation\Admin;
 
 use PiteaCustomisation\Admin\Tabs\ExternalContentTab;
 use PiteaCustomisation\Admin\Tabs\GeneralTab;
+use PiteaCustomisation\Admin\Tabs\LatestEventsTab;
 
 /**
  * Class Settings
@@ -31,6 +32,7 @@ class Settings
         $this->tabs = [
             new GeneralTab(),
             new ExternalContentTab(),
+            new LatestEventsTab(),
         ];
 
         add_action('admin_menu', [$this, 'addMenuPage']);
