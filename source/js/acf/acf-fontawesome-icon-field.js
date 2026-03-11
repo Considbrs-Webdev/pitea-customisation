@@ -95,6 +95,15 @@
                     this.$el.append('<button type="button" class="acf-fontawesome-icon-clear button">Clear</button>');
                 }
             }
+            // Notify other fields that the icon changed.
+            // Trigger on the element so the event bubbles up the DOM
+            // (row-scoped listeners can catch it), and on document for
+            // any global listeners.
+            try {
+                this.$el.trigger('acf:fontawesome_icon:change', [value]);
+            } catch (e) {
+                // ignore
+            }
         },
 
         onClear: function(e) {
@@ -102,6 +111,12 @@
             this.$input().val('').trigger('change');
             this.$preview().html('<span class="acf-fontawesome-icon-no-selection">No icon selected</span>');
             $(e.currentTarget).remove();
+            try {
+                this.$el.trigger('acf:fontawesome_icon:change', ['']);
+                $(document).trigger('acf:fontawesome_icon:change', ['', this.$el]);
+            } catch (e) {
+                // ignore
+            }
         },
 
         onScroll: function() {
