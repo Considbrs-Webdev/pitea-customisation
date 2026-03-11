@@ -90,7 +90,13 @@ class EServicesImporter extends AbstractExternalIndexingStrategy
      */
     public function registerHooks(): void
     {
-        
+        add_action('init', function (): void {
+            if (!wp_next_scheduled(self::CRON_HOOK)) {
+                wp_schedule_event(time(), 'daily', self::CRON_HOOK);
+            }
+        });
+
+        add_action(self::CRON_HOOK, [$this, 'syncAll']);
     }
 
     // ── syncAll override ──────────────────────────────────────────────────
@@ -139,7 +145,7 @@ class EServicesImporter extends AbstractExternalIndexingStrategy
             $document = $this->buildDocument($item);
 
             if ($document === false) {
-                error_log(sprintf(
+                $this->logger->warning(sprintf(
                     '[PiteaCustomisation][%s] buildDocument() returned false, skipping item.',
                     $this->getIdentifier()
                 ));
@@ -150,7 +156,7 @@ class EServicesImporter extends AbstractExternalIndexingStrategy
                 $client->collections[$collectionName]->documents->upsert($document->toArray());
                 $indexed++;
             } catch (\Exception $e) {
-                error_log(sprintf(
+                $this->logger->error(sprintf(
                     '[PiteaCustomisation][%s] Failed to index document "%s": %s',
                     $this->getIdentifier(),
                     $document->get('id'),
@@ -186,7 +192,7 @@ class EServicesImporter extends AbstractExternalIndexingStrategy
         $response = wp_remote_get($sourceUrl, ['timeout' => 30]);
 
         if (is_wp_error($response)) {
-            error_log(sprintf(
+            $this->logger->error(sprintf(
                 '[PiteaCustomisation][%s] API request failed: %s',
                 $this->getIdentifier(),
                 $response->get_error_message()
@@ -197,7 +203,7 @@ class EServicesImporter extends AbstractExternalIndexingStrategy
         $statusCode = wp_remote_retrieve_response_code($response);
 
         if ($statusCode !== 200) {
-            error_log(sprintf(
+            $this->logger->error(sprintf(
                 '[PiteaCustomisation][%s] API returned HTTP %d.',
                 $this->getIdentifier(),
                 $statusCode
@@ -209,7 +215,7 @@ class EServicesImporter extends AbstractExternalIndexingStrategy
         $data = json_decode($body, true);
 
         if (!is_array($data) || !isset($data['Services']) || !is_array($data['Services'])) {
-            error_log(sprintf(
+            $this->logger->warning(sprintf(
                 '[PiteaCustomisation][%s] API returned unexpected JSON structure.',
                 $this->getIdentifier()
             ));
@@ -326,7 +332,7 @@ class EServicesImporter extends AbstractExternalIndexingStrategy
                     'include_fields' => 'id',
                 ]);
             } catch (\Exception $e) {
-                error_log(sprintf(
+                $this->logger->error(sprintf(
                     '[PiteaCustomisation][%s] Stale-cleanup query failed (page %d): %s',
                     $this->getIdentifier(),
                     $page,
@@ -349,7 +355,7 @@ class EServicesImporter extends AbstractExternalIndexingStrategy
 
                 if (!isset($expectedIds[$docId])) {
                     $this->deindex($docId);
-                    error_log(sprintf(
+                    $this->logger->debug(sprintf(
                         '[PiteaCustomisation][%s] Removed stale document "%s".',
                         $this->getIdentifier(),
                         $docId

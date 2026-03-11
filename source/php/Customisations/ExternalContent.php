@@ -38,15 +38,17 @@ class ExternalContent
     {
         add_action(
             'Municipio/TypesenseSearch/RegisterStrategies',
-            function ($registry): void {
+            function ($registry, $clientService, $settings, $logger): void {
                 if (!class_exists(EServicesImporter::class)) {
                     return;
                 }
 
-                $strategy = new EServicesImporter();
-                $registry->registerExternal($strategy);
-                $strategy->registerHooks();
-            }
+                $registry->registerExternal(new EServicesImporter($clientService, $settings, $logger));
+                // registerHooks() is called automatically by IndexingHooks via
+                // IndexingRegistry::registerAllHooks() — no manual call needed.
+            },
+            10,
+            4
         );
     }
 }
