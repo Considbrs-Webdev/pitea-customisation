@@ -305,9 +305,24 @@ class ColorPickerField extends \acf_field
                         $varName = trim($matches[1]);
                         $hex = strtoupper(trim($matches[2]));
 
-                        // Extract group name from variable (e.g., "branbara-base" -> "Branbara Base")
+                        // Prefer using the current group name as prefix when the variable
+                        // starts with the group's slug (e.g., group "Pären" -> var "paren-dark-3")
                         $nameParts = explode('-', $varName);
-                        $colorName = $this->formatVariableName($varName);
+                        if ($currentGroup !== null) {
+                            $groupSlug = $this->slugifyGroupName($currentGroup);
+                            if (!empty($groupSlug) && $nameParts[0] === $groupSlug) {
+                                $remainder = array_slice($nameParts, 1);
+                                if (!empty($remainder)) {
+                                    $colorName = $currentGroup . ' ' . $this->formatVariableName(implode('-', $remainder));
+                                } else {
+                                    $colorName = $currentGroup;
+                                }
+                            } else {
+                                $colorName = $this->formatVariableName($varName);
+                            }
+                        } else {
+                            $colorName = $this->formatVariableName($varName);
+                        }
 
                         $colorGroups[$currentGroup][] = [
                             'name' => $colorName,
@@ -363,11 +378,52 @@ class ColorPickerField extends \acf_field
         // Split by hyphens
         $parts = explode('-', $varName);
 
-        // Capitalize first letter of each part
-        $parts = array_map('ucfirst', $parts);
+        // Capitalize first letter of each part (multibyte-safe)
+        $parts = array_map(function ($p) {
+            return mb_convert_case($p, MB_CASE_TITLE, 'UTF-8');
+        }, $parts);
 
         // Join with spaces
         return implode(' ', $parts);
+    }
+
+    /**
+     * Create a simple slug from a group name for matching against variable prefixes
+     * e.g. "Pären" -> "paren"
+     *
+     * @param string $name
+     * @return string
+     */
+    protected function slugifyGroupName(string $name): string
+    {
+        // Try transliteration to ASCII using Intl, iconv or simple replacements
+        $s = $name;
+
+        if (function_exists('transliterator_transliterate')) {
+            $res = transliterator_transliterate('Any-Latin; Latin-ASCII;', $name);
+            if ($res !== false && $res !== null) {
+                $s = $res;
+            }
+        } elseif (function_exists('iconv')) {
+            $res = iconv('UTF-8', 'ASCII//TRANSLIT', $name);
+            if ($res !== false && $res !== null) {
+                $s = $res;
+            }
+        } else {
+            // Fallback common replacements for Scandinavian characters
+            $s = strtr($s, [
+                'å' => 'a', 'ä' => 'a', 'ö' => 'o',
+                'Å' => 'A', 'Ä' => 'A', 'Ö' => 'O',
+                'é' => 'e', 'è' => 'e', 'ü' => 'u', 'ß' => 'ss'
+            ]);
+        }
+
+        // Lowercase and strip non alphanumeric
+        $s = strtolower($s);
+        $s = preg_replace('/[^a-z0-9]+/', '-', $s);
+        $s = trim($s, '-');
+
+        return $s;
     }
 
     /**

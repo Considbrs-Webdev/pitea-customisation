@@ -1,15 +1,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pitea-customisation\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pitea-"
+"customisation\n"
+"POT-Creation-Date: 2026-03-11T08:09:36+00:00\n"
+"PO-Revision-Date: 2026-03-11 09:17+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: sv_SE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-06T11:43:12+00:00\n"
-"PO-Revision-Date: 2026-03-06 12:45+0100\n"
-"Language: sv_SE\n"
 "X-Generator: Poedit 3.8\n"
 "X-Domain: pitea-customisation\n"
 
@@ -20,7 +21,8 @@ msgstr ""
 
 #. Description of the plugin
 #: pitea-customisation.php
-msgid "Custom functionality and modifications for the Piteå WordPress installation"
+msgid ""
+"Custom functionality and modifications for the Piteå WordPress installation"
 msgstr ""
 
 #. Author of the plugin
@@ -85,7 +87,6 @@ msgid "No icon selected"
 msgstr "Ingen ikon vald"
 
 #: source/php/AcfFields/FontAwesomeIconField.php:143
-#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:113
 msgid "Search icons..."
 msgstr "Sök ikon..."
 
@@ -109,41 +110,45 @@ msgstr "Ingen"
 msgid "Bottom of content"
 msgstr "Botten av innehållet"
 
-#: source/php/Admin/Settings.php:83
+#: source/php/Admin/Settings.php:51 source/php/Admin/Settings.php:52
+msgid "Piteå kommun"
+msgstr ""
+
+#: source/php/Admin/Settings.php:85
 msgid "Saving…"
 msgstr "Sparar…"
 
-#: source/php/Admin/Settings.php:84
+#: source/php/Admin/Settings.php:86
 msgid "Changes saved"
 msgstr "Ändringar sparade"
 
-#: source/php/Admin/Settings.php:85
+#: source/php/Admin/Settings.php:87
 msgid "Could not save settings"
 msgstr "Kunde inte spara ändringar"
 
-#: source/php/Admin/Settings.php:98
+#: source/php/Admin/Settings.php:100
 msgid "Insufficient permissions."
 msgstr "Otillräckliga rättigheter."
 
-#: source/php/Admin/Settings.php:104
+#: source/php/Admin/Settings.php:106
 msgid "Security check failed."
 msgstr "Säkerhetskontroll misslyckades."
 
-#: source/php/Admin/Settings.php:118
+#: source/php/Admin/Settings.php:120
 msgid "Unknown tab."
 msgstr "Okänd flik."
 
-#: source/php/Admin/Settings.php:127
+#: source/php/Admin/Settings.php:129
 msgid "Settings saved."
 msgstr "Inställningarna sparades."
 
-#: source/php/Admin/Settings.php:184
+#: source/php/Admin/Settings.php:186
 msgid "Save Changes"
 msgstr "Spara"
 
-#: source/php/Admin/Settings.php:193
+#: source/php/Admin/Settings.php:195
 msgid "Settings sections"
-msgstr ""
+msgstr "Inställningssektioner"
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:46
 msgid "External Content"
@@ -154,8 +159,14 @@ msgid "Traffic Disruptions"
 msgstr "Trafikstörningar"
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:81
-msgid "Automatically import traffic disruption data from an ArcGIS FeatureServer and publish it as service information posts. Leave the URL empty to disable importing."
+msgid ""
+"Automatically import traffic disruption data from an ArcGIS FeatureServer "
+"and publish it as service information posts. Leave the URL empty to disable "
+"importing."
 msgstr ""
+"Importera automatiskt data om trafikstörningar från en ArcGIS FeatureServer "
+"och publicera dem som inlägg för serviceinformation. Lämna URL:en tom för "
+"att inaktivera import."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:91
 #: source/php/Admin/Tabs/ExternalContentTab.php:129
@@ -167,16 +178,28 @@ msgid "E-Services"
 msgstr "E-tjänster"
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:119
-msgid "Automatically index Piteå's public e-services from the eNämnd API into the Typesense search engine. Leave the URL empty to disable indexing."
+msgid ""
+"Automatically index Piteå's public e-services from the eNämnd API into the "
+"Typesense search engine. Leave the URL empty to disable indexing."
 msgstr ""
+"Indexera automatiskt Piteås offentliga e-tjänster från eNämnds API i "
+"sökmotorn Typesense. Lämna URL:en tom för att inaktivera indexeringen."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:174
-msgid "The eNämnd public-services API URL. Leave empty to disable e-service indexing."
+msgid ""
+"The eNämnd public-services API URL. Leave empty to disable e-service "
+"indexing."
 msgstr ""
+"API-URL för eNämnds tjänst för offentliga e-tjänster. Lämna tomt för att "
+"inaktivera indexering av e-tjänster."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:197
-msgid "The GeoJSON endpoint URL for the traffic disruption layer. Leave empty to disable importing."
+msgid ""
+"The GeoJSON endpoint URL for the traffic disruption layer. Leave empty to "
+"disable importing."
 msgstr ""
+"GeoJSON-endpoint-URL för lagret med trafikstörningar. Lämna tomt för att "
+"inaktivera import."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:213
 msgid "Service Information"
@@ -186,9 +209,91 @@ msgstr "Driftinformation"
 msgid "Search"
 msgstr "Sök"
 
-#: source/php/Customisations/Accessibility.php:123
+#: source/php/Admin/Tabs/GeneralTab.php:31
+#: source/php/Admin/Tabs/GeneralTab.php:80
+msgid "General settings"
+msgstr "Allmänna inställningar"
+
+#: source/php/Admin/Tabs/GeneralTab.php:52
+msgid "Overview"
+msgstr "Översikt"
+
+#: source/php/Admin/Tabs/GeneralTab.php:54
+msgid "Here you will find settings for Piteå kommun's homepage."
+msgstr "Här hittar du inställningar för Piteå kommuns webbplats."
+
+#: source/php/Admin/Tabs/LatestEventsTab.php:37
+msgid "Latest Events"
+msgstr "Senaste evenemang"
+
+#: source/php/Admin/Tabs/LatestEventsTab.php:80
+msgid "API Configuration"
+msgstr "API-konfiguration"
+
+#: source/php/Admin/Tabs/LatestEventsTab.php:82
+msgid ""
+"Configure the API credentials for the Latest Events module. These settings "
+"allow the module to fetch event data from the Visit Piteå API."
+msgstr ""
+"Konfigurera API-uppgifterna för modulen Senaste evenemang. Dessa "
+"inställningar gör det möjligt för modulen att hämta evenemangsdata från "
+"Visit Piteå-API:t."
+
+#: source/php/Admin/Tabs/LatestEventsTab.php:92
+msgid "API URL"
+msgstr "API-URL"
+
+#: source/php/Admin/Tabs/LatestEventsTab.php:100
+msgid "API Token"
+msgstr "API-token"
+
+#: source/php/Admin/Tabs/LatestEventsTab.php:146
+msgid ""
+"The Visit Piteå API base URL. Include the full path up to the API version."
+msgstr ""
+"Bas-URL för Visit Piteå-API:t. Ange hela sökvägen fram till API-versionen."
+
+#: source/php/Admin/Tabs/LatestEventsTab.php:170
+msgid "The API Bearer token for authenticating with the Visit Piteå API."
+msgstr "API Bearer-token för autentisering mot Visit Piteå-API:t."
+
+#: source/php/Admin/Tabs/LatestEventsTab.php:186
+msgid "Latest Events Settings"
+msgstr "Inställningar för senaste evenemang"
+
+#: source/php/Customisations/Accessibility.php:174
 msgid "Listen to this page"
 msgstr "Lyssna på sidan"
+
+#: source/php/Customisations/Admin.php:78
+msgctxt "Editor font size preset"
+msgid "Small"
+msgstr "Liten"
+
+#: source/php/Customisations/Admin.php:83
+msgctxt "Editor font size preset"
+msgid "Medium"
+msgstr "Normal"
+
+#: source/php/Customisations/Admin.php:88
+msgctxt "Editor font size preset"
+msgid "Large"
+msgstr "Stor"
+
+#: source/php/Customisations/Admin.php:93
+msgctxt "Editor font size preset"
+msgid "Extra large"
+msgstr "Extra stor"
+
+#: source/php/Customisations/Admin.php:98
+msgctxt "Editor font size preset"
+msgid "Larger"
+msgstr "Större"
+
+#: source/php/Customisations/Admin.php:117
+msgctxt "Paragraph block style"
+msgid "Preamble"
+msgstr "Ingress"
 
 #: source/php/Customisations/Breadcrumbs.php:81
 msgid "Start"
@@ -223,67 +328,3 @@ msgstr "Plats för trafikstörning"
 msgctxt "E-services"
 msgid "Section"
 msgstr "Avdelning"
-
-#: source/php/Admin/Settings.php:49
-#: source/php/Admin/Settings.php:50
-msgid "Piteå kommun"
-msgstr ""
-
-#: source/php/Admin/Tabs/GeneralTab.php:31
-#: source/php/Admin/Tabs/GeneralTab.php:80
-msgid "General settings"
-msgstr ""
-
-#: source/php/Admin/Tabs/GeneralTab.php:52
-msgid "Overview"
-msgstr ""
-
-#: source/php/Admin/Tabs/GeneralTab.php:54
-msgid "Here you will find settings for Piteå kommun's homepage."
-msgstr ""
-
-#: source/php/Customisations/Admin.php:82
-msgctxt "Editor font size preset"
-msgid "Small"
-msgstr "Liten"
-
-#: source/php/Customisations/Admin.php:87
-msgctxt "Editor font size preset"
-msgid "Medium"
-msgstr "Normal"
-
-#: source/php/Customisations/Admin.php:92
-msgctxt "Editor font size preset"
-msgid "Large"
-msgstr "Stor"
-
-#: source/php/Customisations/Admin.php:97
-msgctxt "Editor font size preset"
-msgid "Extra large"
-msgstr "Extra stor"
-
-#: source/php/Customisations/Admin.php:102
-msgctxt "Editor font size preset"
-msgid "Larger"
-msgstr "Större"
-
-#: source/php/Customisations/Admin.php:121
-msgctxt "Paragraph block style"
-msgid "Preamble"
-msgstr "Ingress"
-
-#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:104
-msgid "Select Icon"
-msgstr ""
-
-#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:127
-msgid "No icons found"
-msgstr ""
-
-#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:194
-msgid "Insert Icon"
-msgstr ""
-
-#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:213
-msgid "Font Awesome Icon"
-msgstr ""
