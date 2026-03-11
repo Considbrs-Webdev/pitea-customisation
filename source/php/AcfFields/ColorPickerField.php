@@ -2,6 +2,8 @@
 
 namespace PiteaCustomisation\AcfFields;
 
+use PiteaCustomisation\Helpers\ScssColorParser;
+
 class ColorPickerField extends \acf_field
 {
     /**
@@ -268,69 +270,10 @@ class ColorPickerField extends \acf_field
 
             // Prefer data/variables.scss (copied during build); fallback to source for dev
             $pluginDir = dirname(__DIR__, 3);
-            $scssPath = $pluginDir . '/data/variables.scss';
-            error_log($scssPath);
-            if (!file_exists($scssPath)) {
-                $scssPath = $pluginDir . '/source/sass/general/variables.scss';
-            }
+            $scssPath  = ScssColorParser::resolveScssPath($pluginDir);
 
-            if (file_exists($scssPath)) {
-                $content = file_get_contents($scssPath);
-                $lines = explode("\n", $content);
-
-                $currentGroup = null;
-
-                foreach ($lines as $line) {
-                    $line = trim($line);
-
-                    // Check for group comment: /* Group Name */
-                    if (preg_match('/^\/\*\s*(.+?)\s*\*\/$/', $line, $matches)) {
-                        $currentGroup = trim($matches[1]);
-                        if (!isset($colorGroups[$currentGroup])) {
-                            $colorGroups[$currentGroup] = [];
-                        }
-                        continue;
-                    }
-
-                    // Check for CSS variable: --color-*: #hex;
-                    if (preg_match('/^--color-([^:]+):\s*(#[0-9A-Fa-f]{6});?\s*$/', $line, $matches)) {
-                        if ($currentGroup === null) {
-                            // If no group found, use "Other" as default
-                            $currentGroup = 'Other';
-                            if (!isset($colorGroups[$currentGroup])) {
-                                $colorGroups[$currentGroup] = [];
-                            }
-                        }
-
-                        $varName = trim($matches[1]);
-                        $hex = strtoupper(trim($matches[2]));
-
-                        // Prefer using the current group name as prefix when the variable
-                        // starts with the group's slug (e.g., group "Pären" -> var "paren-dark-3")
-                        $nameParts = explode('-', $varName);
-                        if ($currentGroup !== null) {
-                            $groupSlug = $this->slugifyGroupName($currentGroup);
-                            if (!empty($groupSlug) && $nameParts[0] === $groupSlug) {
-                                $remainder = array_slice($nameParts, 1);
-                                if (!empty($remainder)) {
-                                    $colorName = $currentGroup . ' ' . $this->formatVariableName(implode('-', $remainder));
-                                } else {
-                                    $colorName = $currentGroup;
-                                }
-                            } else {
-                                $colorName = $this->formatVariableName($varName);
-                            }
-                        } else {
-                            $colorName = $this->formatVariableName($varName);
-                        }
-
-                        $colorGroups[$currentGroup][] = [
-                            'name' => $colorName,
-                            'hex' => $hex,
-                            'var' => '--color-' . $varName,
-                        ];
-                    }
-                }
+            if ($scssPath !== null) {
+                $colorGroups = ScssColorParser::parseFile($scssPath);
             }
 
             // Fallback to Municipio if SCSS file not found or empty
@@ -363,67 +306,6 @@ class ColorPickerField extends \acf_field
         }
 
         return $flatColors;
-    }
-
-    /**
-     * Format CSS variable name to readable color name
-     * e.g., "branbara-base" -> "Branbara Base"
-     * e.g., "darjnalen-dark-3" -> "Darjnalen Dark 3"
-     *
-     * @param string $varName
-     * @return string
-     */
-    protected function formatVariableName(string $varName): string
-    {
-        // Split by hyphens
-        $parts = explode('-', $varName);
-
-        // Capitalize first letter of each part (multibyte-safe)
-        $parts = array_map(function ($p) {
-            return mb_convert_case($p, MB_CASE_TITLE, 'UTF-8');
-        }, $parts);
-
-        // Join with spaces
-        return implode(' ', $parts);
-    }
-
-    /**
-     * Create a simple slug from a group name for matching against variable prefixes
-     * e.g. "Pären" -> "paren"
-     *
-     * @param string $name
-     * @return string
-     */
-    protected function slugifyGroupName(string $name): string
-    {
-        // Try transliteration to ASCII using Intl, iconv or simple replacements
-        $s = $name;
-
-        if (function_exists('transliterator_transliterate')) {
-            $res = transliterator_transliterate('Any-Latin; Latin-ASCII;', $name);
-            if ($res !== false && $res !== null) {
-                $s = $res;
-            }
-        } elseif (function_exists('iconv')) {
-            $res = iconv('UTF-8', 'ASCII//TRANSLIT', $name);
-            if ($res !== false && $res !== null) {
-                $s = $res;
-            }
-        } else {
-            // Fallback common replacements for Scandinavian characters
-            $s = strtr($s, [
-                'å' => 'a', 'ä' => 'a', 'ö' => 'o',
-                'Å' => 'A', 'Ä' => 'A', 'Ö' => 'O',
-                'é' => 'e', 'è' => 'e', 'ü' => 'u', 'ß' => 'ss'
-            ]);
-        }
-
-        // Lowercase and strip non alphanumeric
-        $s = strtolower($s);
-        $s = preg_replace('/[^a-z0-9]+/', '-', $s);
-        $s = trim($s, '-');
-
-        return $s;
     }
 
     /**

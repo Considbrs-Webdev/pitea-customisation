@@ -52,6 +52,7 @@ class App
             Customisations\Typesense::class,
             Customisations\Modules\InlayList::class,
             Customisations\Modules\Container::class,
+            Customisations\Modules\LinkCards::class,
             Customisations\Modules\Posts::class,
             Customisations\Modules\Text::class,
             Customisations\Modules\Slider::class,
