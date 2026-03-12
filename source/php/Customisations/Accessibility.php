@@ -109,7 +109,7 @@ class Accessibility
 
         wp_add_inline_script(
             'readspeaker-webreader',
-            "window.rsConf = { settings: { hl: 'word,sentence', hlscroll: true } };",
+            "window.rsConf = { settings: { hl: 'wordsent', hlscroll: true } };",
             'before'
         );
     }
