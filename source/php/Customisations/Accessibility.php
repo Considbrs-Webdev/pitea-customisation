@@ -31,6 +31,8 @@ class Accessibility
         add_filter('Municipio/Template/viewData', [$this, 'maybeAddPrintMenuToViewData'], 10, 1);
         add_filter('Municipio/Template/viewData', [$this, 'addAccessibilityMenuToViewData'], 20, 1);
         add_action('template_redirect', [$this, 'maybeWrapContentInArticle']);
+        add_action('wp_enqueue_scripts', [$this, 'enqueueWebReaderScript'], 10);
+        add_filter('script_loader_tag', [$this, 'addReadSpeakerScriptId'], 10, 3);
     }
 
     /**
@@ -51,14 +53,29 @@ class Accessibility
     }
 
     /**
-     * Returns the opening <article> tag that wraps the page content modules.
-     *
-     * The id "article" matches READSPEAKER_READ_ID and tells ReadSpeaker where
-     * the readable content begins.
+     * Returns the opening <article> tag that wraps the page content modules,
+     * followed by a visually hidden ReadSpeaker button that webReader.js
+     * initialises on. The hidden button is positioned at the top of the article
+     * so that when triggered the player expands there (matching the in-page
+     * preview layout). Our custom accessibility menu button triggers this hidden
+     * button via JavaScript rather than navigating to the rsent URL directly.
      */
     public function openArticleWrapper(string $content): string
     {
-        return '<article id="article">';
+        $currentUrl     = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        $readspeakerUrl = sprintf(
+            self::READSPEAKER_BASE_URL,
+            self::READSPEAKER_CUSTOMER_ID,
+            self::READSPEAKER_READ_ID
+        ) . urlencode($currentUrl);
+
+        return '<article id="article">'
+            . '<div id="readspeaker-hidden-btn" class="rsbtn rs_skip" style="display:none;" aria-hidden="true">'
+            . '<a rel="nofollow" class="rsbtn_play" href="' . esc_attr($readspeakerUrl) . '">'
+            . '<span class="rsbtn_left rsimg rspart"><span class="rsbtn_text"><span>' . esc_html__('Listen to this page', 'pitea-customisation') . '</span></span></span>'
+            . '<span class="rsbtn_right rsimg rsplay rspart"></span>'
+            . '</a>'
+            . '</div>';
     }
 
     /**
@@ -67,6 +84,54 @@ class Accessibility
     public function closeArticleWrapper(string $content): string
     {
         return '</article>';
+    }
+
+    /**
+     * Enqueues the ReadSpeaker webReader script on singular pages where the
+     * accessibility menu is shown. When loaded, webReader intercepts clicks on
+     * the Listen link and opens the player in-page with highlighting instead
+     * of navigating away.
+     */
+    public function enqueueWebReaderScript(): void
+    {
+        if (!is_singular() || is_front_page() || !$this->shouldShowAccessibilityMenu()) {
+            return;
+        }
+
+        $scriptUrl = 'https://cdn-eu.readspeaker.com/script/' . self::READSPEAKER_CUSTOMER_ID . '/webReader/webReader.js?pids=wr';
+        wp_enqueue_script(
+            'readspeaker-webreader',
+            $scriptUrl,
+            [],
+            null,
+            false
+        );
+
+        wp_add_inline_script(
+            'readspeaker-webreader',
+            "window.rsConf = { settings: { hl: 'word,sentence', hlscroll: true } };",
+            'before'
+        );
+    }
+
+    /**
+     * Adds the required id="rs_req_Init" to the ReadSpeaker webReader script tag.
+     * ReadSpeaker requires this id for correct loading.
+     *
+     * @param string $tag    The script tag.
+     * @param string $handle The script handle.
+     * @param string $src    The script source URL.
+     * @return string Modified script tag.
+     */
+    public function addReadSpeakerScriptId(string $tag, string $handle, string $src): string
+    {
+        if ($handle !== 'readspeaker-webreader') {
+            return $tag;
+        }
+
+        $tag = preg_replace('/\sid=[\'"][^\'"]*[\'"]/', '', $tag);
+
+        return str_replace('<script ', '<script id="rs_req_Init" ', $tag);
     }
 
     public function maybeAddPrintMenuToViewData(array $data): array
@@ -165,15 +230,14 @@ class Accessibility
 
     private function getReadSpeakerMenuItem(): array
     {
-        $currentUrl = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-        $readspeakerUrl = sprintf(self::READSPEAKER_BASE_URL, self::READSPEAKER_CUSTOMER_ID, self::READSPEAKER_READ_ID) . urlencode($currentUrl);
-
         return [
-            'icon' => 'fa-solid fa-headphones',
-            'href' => $readspeakerUrl,
-            'text' => __('Listen to this page', 'pitea-customisation'),
-            'style' => self::DEFAULT_BUTTON_STYLE,
-            'color' => self::DEFAULT_BUTTON_COLOR,
+            'icon'   => 'fa-solid fa-headphones',
+            'href'   => '#',
+            'script' => 'var btn=document.querySelector("#readspeaker-hidden-btn .rsbtn_play");if(btn){btn.click();}return false;',
+            'text'   => __('Listen to this page', 'pitea-customisation'),
+            'label'  => __('Listen to this page with ReadSpeaker', 'pitea-customisation'),
+            'style'  => self::DEFAULT_BUTTON_STYLE,
+            'color'  => self::DEFAULT_BUTTON_COLOR,
         ];
     }
 
