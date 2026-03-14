@@ -2,6 +2,8 @@
 
 namespace PiteaCustomisation\Customisations;
 
+use PiteaCustomisation\Admin\Tabs\ReadSpeakerTab;
+
 /**
  * Handles accessibility features for the site, including:
  *
@@ -18,8 +20,6 @@ namespace PiteaCustomisation\Customisations;
  */
 class Accessibility
 {
-    const READSPEAKER_CUSTOMER_ID = '9687';
-    const READSPEAKER_READ_ID = 'article';
     const READSPEAKER_BASE_URL = 'https://app-eu.readspeaker.com/cgi-bin/rsent?customerid=%s&lang=sv_se&readid=%s&url=';
 
     const DEFAULT_BUTTON_STYLE = 'filled';
@@ -30,9 +30,34 @@ class Accessibility
         new \PiteaCustomisation\AcfFields\AccessibilityFields();
         add_filter('Municipio/Template/viewData', [$this, 'maybeAddPrintMenuToViewData'], 10, 1);
         add_filter('Municipio/Template/viewData', [$this, 'addAccessibilityMenuToViewData'], 20, 1);
+        add_action('Municipio/Hook/innerLoopStart', [$this, 'addReadSpeakerHiddenButton']);
         add_action('template_redirect', [$this, 'maybeWrapContentInArticle']);
         add_action('wp_enqueue_scripts', [$this, 'enqueueWebReaderScript'], 10);
         add_filter('script_loader_tag', [$this, 'addReadSpeakerScriptId'], 10, 3);
+    }
+
+    public function addReadSpeakerHiddenButton($content): string
+    {
+        if (!is_singular() || is_front_page() || !$this->shouldShowAccessibilityMenu()) {
+            return $content;
+        }
+
+        $customerId = ReadSpeakerTab::getCustomerId();
+        $readId = ReadSpeakerTab::getReadId();
+
+        $currentUrl     = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        $readspeakerUrl = sprintf(
+            self::READSPEAKER_BASE_URL,
+            $customerId,
+            $readId
+        ) . urlencode($currentUrl);
+        
+        return $content . '<div id="readspeaker-hidden-btn" class="rsbtn rs_skip" style="display:none;" aria-hidden="true">'
+            . '<a rel="nofollow" class="rsbtn_play" href="' . esc_attr($readspeakerUrl) . '">'
+            . '<span class="rsbtn_left rsimg rspart"><span class="rsbtn_text"><span>' . esc_html__('Listen to this page', 'pitea-customisation') . '</span></span></span>'
+            . '<span class="rsbtn_right rsimg rsplay rspart"></span>'
+            . '</a>'
+            . '</div>';
     }
 
     /**
@@ -42,48 +67,34 @@ class Accessibility
      * (but not the front page) and the accessibility menu should be shown, hooks
      * openArticleWrapper() and closeArticleWrapper() so that the page modules
      * are wrapped in <article id="article">. ReadSpeaker uses this id to locate
-     * the content it should read aloud.
+     * the content it should read aloud. The article wrapper is only added when
+     * using the 'one-page.blade.php' template to avoid conflicts with existing
+     * article tags in other templates.
      */
     public function maybeWrapContentInArticle(): void
     {
         if (!is_front_page() && is_singular() && $this->shouldShowAccessibilityMenu()) {
-            add_filter('Municipio/Hook/innerLoopStart', [$this, 'openArticleWrapper']);
-            add_filter('Municipio/Hook/innerLoopEnd', [$this, 'closeArticleWrapper']);
+            $template = get_page_template_slug();
+            if ($template === 'one-page.blade.php') {
+                // Get read ID from settings
+                $readId = ReadSpeakerTab::getReadId();
+                
+                add_filter('Municipio/Hook/innerLoopStart', [$this, 'openArticleWrapper'], 20);
+                add_filter('Municipio/Hook/innerLoopEnd', [$this, 'closeArticleWrapper'], 20);
+            }
         }
     }
 
-    /**
-     * Returns the opening <article> tag that wraps the page content modules,
-     * followed by a visually hidden ReadSpeaker button that webReader.js
-     * initialises on. The hidden button is positioned at the top of the article
-     * so that when triggered the player expands there (matching the in-page
-     * preview layout). Our custom accessibility menu button triggers this hidden
-     * button via JavaScript rather than navigating to the rsent URL directly.
-     */
-    public function openArticleWrapper(string $content): string
+    public function openArticleWrapper($content): string
     {
-        $currentUrl     = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-        $readspeakerUrl = sprintf(
-            self::READSPEAKER_BASE_URL,
-            self::READSPEAKER_CUSTOMER_ID,
-            self::READSPEAKER_READ_ID
-        ) . urlencode($currentUrl);
-
-        return '<article id="article">'
-            . '<div id="readspeaker-hidden-btn" class="rsbtn rs_skip" style="display:none;" aria-hidden="true">'
-            . '<a rel="nofollow" class="rsbtn_play" href="' . esc_attr($readspeakerUrl) . '">'
-            . '<span class="rsbtn_left rsimg rspart"><span class="rsbtn_text"><span>' . esc_html__('Listen to this page', 'pitea-customisation') . '</span></span></span>'
-            . '<span class="rsbtn_right rsimg rsplay rspart"></span>'
-            . '</a>'
-            . '</div>';
+        $readId = ReadSpeakerTab::getReadId();
+   
+        return $content . '<article id="' . esc_attr($readId) . '">';
     }
 
-    /**
-     * Returns the closing </article> tag that ends the ReadSpeaker content region.
-     */
-    public function closeArticleWrapper(string $content): string
-    {
-        return '</article>';
+    public function closeArticleWrapper($content): string
+    {   
+        return $content . '</article>';
     }
 
     /**
@@ -98,7 +109,9 @@ class Accessibility
             return;
         }
 
-        $scriptUrl = 'https://cdn-eu.readspeaker.com/script/' . self::READSPEAKER_CUSTOMER_ID . '/webReader/webReader.js?pids=wr';
+        $customerId = ReadSpeakerTab::getCustomerId();
+        
+        $scriptUrl = 'https://cdn-eu.readspeaker.com/script/' . $customerId . '/webReader/webReader.js?pids=wr';
         wp_enqueue_script(
             'readspeaker-webreader',
             $scriptUrl,

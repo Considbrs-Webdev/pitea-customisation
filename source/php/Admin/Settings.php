@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace PiteaCustomisation\Admin;
 
+use PiteaCustomisation\Admin\Tabs\AccessibilityTab;
 use PiteaCustomisation\Admin\Tabs\ExternalContentTab;
 use PiteaCustomisation\Admin\Tabs\GeneralTab;
 use PiteaCustomisation\Admin\Tabs\LatestEventsTab;
+use PiteaCustomisation\Admin\Tabs\ReadSpeakerTab;
 
 /**
  * Class Settings
@@ -32,6 +34,7 @@ class Settings
         $this->tabs = [
             new GeneralTab(),
             new ExternalContentTab(),
+            new ReadSpeakerTab(),
             new LatestEventsTab(),
         ];
 
