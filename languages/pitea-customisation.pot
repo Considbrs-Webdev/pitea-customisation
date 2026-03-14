@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-11T08:09:36+00:00\n"
+"POT-Creation-Date: 2026-03-14T03:00:29+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: pitea-customisation\n"
@@ -41,43 +41,43 @@ msgstr ""
 msgid "Display accessibility buttons (ReadSpeaker and Print) on this page."
 msgstr ""
 
-#: source/php/AcfFields/ColorPickerField.php:56
+#: source/php/AcfFields/ColorPickerField.php:58
 msgid "Allow Custom Colors?"
 msgstr ""
 
-#: source/php/AcfFields/ColorPickerField.php:57
+#: source/php/AcfFields/ColorPickerField.php:59
 msgid "Allow users to enter custom hex colors"
 msgstr ""
 
-#: source/php/AcfFields/ColorPickerField.php:133
-#: source/php/AcfFields/ColorPickerField.php:146
-#: source/php/AcfFields/ColorPickerField.php:163
+#: source/php/AcfFields/ColorPickerField.php:135
+#: source/php/AcfFields/ColorPickerField.php:148
+#: source/php/AcfFields/ColorPickerField.php:165
 msgid "Select Color"
 msgstr ""
 
-#: source/php/AcfFields/ColorPickerField.php:154
-#: source/php/AcfFields/ColorPickerField.php:244
+#: source/php/AcfFields/ColorPickerField.php:156
+#: source/php/AcfFields/ColorPickerField.php:246
 #: source/php/AcfFields/FontAwesomeIconField.php:150
 msgid "Clear"
 msgstr ""
 
-#: source/php/AcfFields/ColorPickerField.php:164
+#: source/php/AcfFields/ColorPickerField.php:166
 msgid "Close"
 msgstr ""
 
-#: source/php/AcfFields/ColorPickerField.php:186
+#: source/php/AcfFields/ColorPickerField.php:188
 msgid "No color selected"
 msgstr ""
 
-#: source/php/AcfFields/ColorPickerField.php:224
+#: source/php/AcfFields/ColorPickerField.php:226
 msgid "Use Custom Color"
 msgstr ""
 
-#: source/php/AcfFields/ColorPickerField.php:234
+#: source/php/AcfFields/ColorPickerField.php:236
 msgid "Apply"
 msgstr ""
 
-#: source/php/AcfFields/ColorPickerField.php:248
+#: source/php/AcfFields/ColorPickerField.php:250
 msgid "Done"
 msgstr ""
 
@@ -109,44 +109,44 @@ msgstr ""
 msgid "Bottom of content"
 msgstr ""
 
-#: source/php/Admin/Settings.php:51
-#: source/php/Admin/Settings.php:52
+#: source/php/Admin/Settings.php:54
+#: source/php/Admin/Settings.php:55
 msgid "Piteå kommun"
 msgstr ""
 
-#: source/php/Admin/Settings.php:85
+#: source/php/Admin/Settings.php:88
 msgid "Saving…"
 msgstr ""
 
-#: source/php/Admin/Settings.php:86
+#: source/php/Admin/Settings.php:89
 msgid "Changes saved"
 msgstr ""
 
-#: source/php/Admin/Settings.php:87
+#: source/php/Admin/Settings.php:90
 msgid "Could not save settings"
 msgstr ""
 
-#: source/php/Admin/Settings.php:100
+#: source/php/Admin/Settings.php:103
 msgid "Insufficient permissions."
 msgstr ""
 
-#: source/php/Admin/Settings.php:106
+#: source/php/Admin/Settings.php:109
 msgid "Security check failed."
 msgstr ""
 
-#: source/php/Admin/Settings.php:120
+#: source/php/Admin/Settings.php:123
 msgid "Unknown tab."
 msgstr ""
 
-#: source/php/Admin/Settings.php:129
+#: source/php/Admin/Settings.php:132
 msgid "Settings saved."
 msgstr ""
 
-#: source/php/Admin/Settings.php:186
+#: source/php/Admin/Settings.php:189
 msgid "Save Changes"
 msgstr ""
 
-#: source/php/Admin/Settings.php:195
+#: source/php/Admin/Settings.php:198
 msgid "Settings sections"
 msgstr ""
 
@@ -236,8 +236,45 @@ msgstr ""
 msgid "Latest Events Settings"
 msgstr ""
 
-#: source/php/Customisations/Accessibility.php:174
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:37
+msgid "ReadSpeaker"
+msgstr ""
+
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:80
+msgid "ReadSpeaker Configuration"
+msgstr ""
+
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:82
+msgid "Configure ReadSpeaker integration settings."
+msgstr ""
+
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:92
+msgid "Customer ID"
+msgstr ""
+
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:100
+msgid "Read ID"
+msgstr ""
+
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:113
+msgid "ReadSpeaker Settings"
+msgstr ""
+
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:142
+msgid "Enter your ReadSpeaker customer ID"
+msgstr ""
+
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:160
+msgid "Enter the ID of the element to read"
+msgstr ""
+
+#: source/php/Customisations/Accessibility.php:57
+#: source/php/Customisations/Accessibility.php:250
 msgid "Listen to this page"
+msgstr ""
+
+#: source/php/Customisations/Accessibility.php:251
+msgid "Listen to this page with ReadSpeaker"
 msgstr ""
 
 #: source/php/Customisations/Admin.php:78
@@ -287,7 +324,7 @@ msgstr ""
 msgid "Share page"
 msgstr ""
 
-#: source/php/ExternalContent/Search/EServices/EServicesImporter.php:268
+#: source/php/ExternalContent/Search/EServices/EServicesImporter.php:274
 msgid "E-services"
 msgstr ""
 
