@@ -1,16 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pitea-"
-"customisation\n"
-"POT-Creation-Date: 2026-03-14T03:00:29+00:00\n"
-"PO-Revision-Date: 2026-03-14 04:03+0100\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pitea-customisation\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: sv_SE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-03-14T03:00:29+00:00\n"
+"PO-Revision-Date: 2026-03-17 10:00+0100\n"
+"Language: sv_SE\n"
 "X-Generator: Poedit 3.9\n"
 "X-Domain: pitea-customisation\n"
 
@@ -21,10 +20,8 @@ msgstr "Anpassning för Piteå"
 
 #. Description of the plugin
 #: pitea-customisation.php
-msgid ""
-"Custom functionality and modifications for the Piteå WordPress installation"
-msgstr ""
-"Anpassade funktioner och modifieringar för Piteås WordPress-installation"
+msgid "Custom functionality and modifications for the Piteå WordPress installation"
+msgstr "Anpassade funktioner och modifieringar för Piteås WordPress-installation"
 
 #. Author of the plugin
 #: pitea-customisation.php
@@ -88,6 +85,7 @@ msgid "No icon selected"
 msgstr "Ingen ikon vald"
 
 #: source/php/AcfFields/FontAwesomeIconField.php:143
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:113
 msgid "Search icons..."
 msgstr "Sök ikon..."
 
@@ -111,7 +109,8 @@ msgstr "Ingen"
 msgid "Bottom of content"
 msgstr "Botten av innehållet"
 
-#: source/php/Admin/Settings.php:54 source/php/Admin/Settings.php:55
+#: source/php/Admin/Settings.php:54
+#: source/php/Admin/Settings.php:55
 msgid "Piteå kommun"
 msgstr "Piteå kommun"
 
@@ -160,14 +159,8 @@ msgid "Traffic Disruptions"
 msgstr "Trafikstörningar"
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:81
-msgid ""
-"Automatically import traffic disruption data from an ArcGIS FeatureServer "
-"and publish it as service information posts. Leave the URL empty to disable "
-"importing."
-msgstr ""
-"Importera automatiskt data om trafikstörningar från en ArcGIS FeatureServer "
-"och publicera dem som inlägg för serviceinformation. Lämna URL:en tom för "
-"att inaktivera import."
+msgid "Automatically import traffic disruption data from an ArcGIS FeatureServer and publish it as service information posts. Leave the URL empty to disable importing."
+msgstr "Importera automatiskt data om trafikstörningar från en ArcGIS FeatureServer och publicera dem som inlägg för serviceinformation. Lämna URL:en tom för att inaktivera import."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:91
 #: source/php/Admin/Tabs/ExternalContentTab.php:129
@@ -179,28 +172,16 @@ msgid "E-Services"
 msgstr "E-tjänster"
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:119
-msgid ""
-"Automatically index Piteå's public e-services from the eNämnd API into the "
-"Typesense search engine. Leave the URL empty to disable indexing."
-msgstr ""
-"Indexera automatiskt Piteås offentliga e-tjänster från eNämnds API i "
-"sökmotorn Typesense. Lämna URL:en tom för att inaktivera indexeringen."
+msgid "Automatically index Piteå's public e-services from the eNämnd API into the Typesense search engine. Leave the URL empty to disable indexing."
+msgstr "Indexera automatiskt Piteås offentliga e-tjänster från eNämnds API i sökmotorn Typesense. Lämna URL:en tom för att inaktivera indexeringen."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:174
-msgid ""
-"The eNämnd public-services API URL. Leave empty to disable e-service "
-"indexing."
-msgstr ""
-"API-URL för eNämnds tjänst för offentliga e-tjänster. Lämna tomt för att "
-"inaktivera indexering av e-tjänster."
+msgid "The eNämnd public-services API URL. Leave empty to disable e-service indexing."
+msgstr "API-URL för eNämnds tjänst för offentliga e-tjänster. Lämna tomt för att inaktivera indexering av e-tjänster."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:197
-msgid ""
-"The GeoJSON endpoint URL for the traffic disruption layer. Leave empty to "
-"disable importing."
-msgstr ""
-"GeoJSON-endpoint-URL för lagret med trafikstörningar. Lämna tomt för att "
-"inaktivera import."
+msgid "The GeoJSON endpoint URL for the traffic disruption layer. Leave empty to disable importing."
+msgstr "GeoJSON-endpoint-URL för lagret med trafikstörningar. Lämna tomt för att inaktivera import."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:213
 msgid "Service Information"
@@ -232,13 +213,8 @@ msgid "API Configuration"
 msgstr "API-konfiguration"
 
 #: source/php/Admin/Tabs/LatestEventsTab.php:82
-msgid ""
-"Configure the API credentials for the Latest Events module. These settings "
-"allow the module to fetch event data from the Visit Piteå API."
-msgstr ""
-"Konfigurera API-uppgifterna för modulen Senaste evenemang. Dessa "
-"inställningar gör det möjligt för modulen att hämta evenemangsdata från "
-"Visit Piteå-API:t."
+msgid "Configure the API credentials for the Latest Events module. These settings allow the module to fetch event data from the Visit Piteå API."
+msgstr "Konfigurera API-uppgifterna för modulen Senaste evenemang. Dessa inställningar gör det möjligt för modulen att hämta evenemangsdata från Visit Piteå-API:t."
 
 #: source/php/Admin/Tabs/LatestEventsTab.php:92
 msgid "API URL"
@@ -249,10 +225,8 @@ msgid "API Token"
 msgstr "API-token"
 
 #: source/php/Admin/Tabs/LatestEventsTab.php:146
-msgid ""
-"The Visit Piteå API base URL. Include the full path up to the API version."
-msgstr ""
-"Bas-URL för Visit Piteå-API:t. Ange hela sökvägen fram till API-versionen."
+msgid "The Visit Piteå API base URL. Include the full path up to the API version."
+msgstr "Bas-URL för Visit Piteå-API:t. Ange hela sökvägen fram till API-versionen."
 
 #: source/php/Admin/Tabs/LatestEventsTab.php:170
 msgid "The API Bearer token for authenticating with the Visit Piteå API."
@@ -366,3 +340,47 @@ msgstr "Plats för trafikstörning"
 msgctxt "E-services"
 msgid "Section"
 msgstr "Avdelning"
+
+#: source/php/Customisations/Dashboard.php:19
+msgid "Materials for editors"
+msgstr "Material för redaktörer"
+
+#: source/php/Customisations/Dashboard.php:93
+msgid "Materials folder not found."
+msgstr "Mappen för material hittades inte."
+
+#: source/php/Customisations/Dashboard.php:105
+msgid "No PDF materials available yet."
+msgstr "Inga PDF-material tillgängliga ännu."
+
+#: source/php/Customisations/Dashboard.php:111
+msgid "Media library & images guide"
+msgstr "Guide för mediabibliotek och bilder"
+
+#: source/php/Customisations/Dashboard.php:112
+msgid "Before you publish: Editor checklist"
+msgstr "Innan du publicerar: Redaktörens checklista"
+
+#: source/php/Customisations/Dashboard.php:113
+msgid "Module names vs appearance"
+msgstr "Modulnamn kontra utseende"
+
+#: source/php/Customisations/Dashboard.php:117
+msgid "Guides and checklists to help you add and manage content."
+msgstr "Guider och checklistor för att lägga till och hantera innehåll."
+
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:104
+msgid "Select Icon"
+msgstr "Välj ikon"
+
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:127
+msgid "No icons found"
+msgstr "Inga ikoner hittades"
+
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:194
+msgid "Insert Icon"
+msgstr "Infoga ikon"
+
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:213
+msgid "Font Awesome Icon"
+msgstr "Font Awesome-ikon"

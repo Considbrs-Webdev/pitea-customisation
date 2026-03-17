@@ -50,6 +50,7 @@ class App
             Customisations\Taxonomies::class,
             Customisations\Templates::class,
             Customisations\Typesense::class,
+            Customisations\Dashboard::class,
             Customisations\Modules\InlayList::class,
             Customisations\Modules\Container::class,
             Customisations\Modules\LinkCards::class,

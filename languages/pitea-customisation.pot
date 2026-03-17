@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-14T03:00:29+00:00\n"
+"POT-Creation-Date: 2026-03-17T09:49:38+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: pitea-customisation\n"
 
 #. Plugin Name of the plugin
@@ -86,6 +86,7 @@ msgid "No icon selected"
 msgstr ""
 
 #: source/php/AcfFields/FontAwesomeIconField.php:143
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:113
 msgid "Search icons..."
 msgstr ""
 
@@ -311,6 +312,34 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
+#: source/php/Customisations/Dashboard.php:19
+msgid "Materials for editors"
+msgstr ""
+
+#: source/php/Customisations/Dashboard.php:93
+msgid "Materials folder not found."
+msgstr ""
+
+#: source/php/Customisations/Dashboard.php:105
+msgid "No PDF materials available yet."
+msgstr ""
+
+#: source/php/Customisations/Dashboard.php:111
+msgid "Media library & images guide"
+msgstr ""
+
+#: source/php/Customisations/Dashboard.php:112
+msgid "Before you publish: Editor checklist"
+msgstr ""
+
+#: source/php/Customisations/Dashboard.php:113
+msgid "Module names vs appearance"
+msgstr ""
+
+#: source/php/Customisations/Dashboard.php:117
+msgid "Guides and checklists to help you add and manage content."
+msgstr ""
+
 #: source/php/Customisations/Modules/Slider.php:63
 #: source/php/Customisations/Modules/Text.php:99
 msgid "Enable"
@@ -339,4 +368,20 @@ msgstr ""
 #: views/search/hits/hit-eservice.blade.php:23
 msgctxt "E-services"
 msgid "Section"
+msgstr ""
+
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:104
+msgid "Select Icon"
+msgstr ""
+
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:127
+msgid "No icons found"
+msgstr ""
+
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:194
+msgid "Insert Icon"
+msgstr ""
+
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:213
+msgid "Font Awesome Icon"
 msgstr ""
