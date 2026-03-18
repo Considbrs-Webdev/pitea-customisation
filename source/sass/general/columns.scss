@@ -1,0 +1,13 @@
+@media screen and (min-width: 56em) {
+  .o-grid:has(.o-grid-column-block.has-custom-width) {
+    gap: 0;
+
+    .o-grid-column-block:first-child {
+      padding-right: calc(var(--grid-gap, 16px));
+    }
+
+    .o-grid-column-block:last-child {
+      padding-left: calc(var(--grid-gap, 16px));
+    }
+  }
+}
