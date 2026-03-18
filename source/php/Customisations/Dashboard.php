@@ -4,7 +4,7 @@ namespace PiteaCustomisation\Customisations;
 
 class Dashboard
 {
-    private const PDF_ASSETS_DIR = 'source/assets/pdf';
+    private const PDF_ASSETS_DIR = 'assets/pdf';
 
     public function __construct()
     {
