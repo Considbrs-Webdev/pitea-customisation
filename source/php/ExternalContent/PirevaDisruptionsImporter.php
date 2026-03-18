@@ -64,6 +64,7 @@ class PirevaDisruptionsImporter implements ImporterInterface
         return $items;
     }
 
+
     /**
      * Extract all source IDs from the API response.
      *
@@ -103,6 +104,8 @@ class PirevaDisruptionsImporter implements ImporterInterface
         $now   = new \DateTimeImmutable('now', wp_timezone());
 
         foreach ($existingPosts as $sourceId => $post) {
+            $sourceId = (string) $sourceId;
+
             if (in_array($sourceId, $activeSourceIds, true)) {
                 continue;
             }
@@ -113,12 +116,12 @@ class PirevaDisruptionsImporter implements ImporterInterface
                 : $now;
 
             $items[] = new ServiceInfoItem(
-                sourceId: (string) $sourceId,
+                sourceId: $sourceId,
                 title: $post->post_title,
                 content: $post->post_content,
                 startDate: $startDt ?: $now,
                 endDate: $now,
-                categories: ['Pireva'],
+                categories: [],
                 unpublishDate: $now,
                 onUnpublish: 'trash',
                 publishDate: null,
@@ -136,17 +139,19 @@ class PirevaDisruptionsImporter implements ImporterInterface
     private function getExistingPirevaPostsMap(): array
     {
         $query = new \WP_Query([
-            'post_type'      => ServiceInformation::POST_TYPE_NAME,
-            'post_status'    => ['publish', 'draft', 'pending', 'private', 'future'],
-            'posts_per_page' => -1,
-            'meta_query'     => [
+            'post_type'              => ServiceInformation::POST_TYPE_NAME,
+            'post_status'            => ['publish', 'draft', 'pending', 'private', 'future'],
+            'posts_per_page'         => -1,
+            'meta_query'             => [
                 [
                     'key'     => self::META_SOURCE_KEY,
                     'value'   => $this->getKey() . ':',
                     'compare' => 'LIKE',
                 ],
             ],
-            'no_found_rows'  => true,
+            'no_found_rows'          => true,
+            'suppress_filters'       => true,
+            'update_post_term_cache' => false,
         ]);
 
         $map = [];
@@ -185,9 +190,15 @@ class PirevaDisruptionsImporter implements ImporterInterface
         $endDate   = $this->parseStartDate($disruption['expected_end_date'] ?? null);
         $content   = $this->buildContent($disruption);
 
+
         $categories = $this->extractCategories($disruption['categories'] ?? []);
 
-        return new ServiceInfoItem(
+        $status = $disruption['status'] ?? null;
+        if ($status === 'planned') {
+            $categories[] = 'Planerade arbeten';
+        }
+
+        $serviceItem = new ServiceInfoItem(
             sourceId: (string) $id,
             title: $title,
             content: $content,
@@ -196,6 +207,8 @@ class PirevaDisruptionsImporter implements ImporterInterface
             categories: $categories,
             publishDate: $publishDate,
         );
+
+        return $serviceItem;
     }
 
     /**
@@ -216,6 +229,23 @@ class PirevaDisruptionsImporter implements ImporterInterface
         $mainContent = trim($disruption['content'] ?? '');
         if (!empty($mainContent)) {
             $content .= wp_kses_post($mainContent);
+        }
+
+        $statusUpdates = $disruption['status_updates'] ?? [];
+        if (!empty($statusUpdates)) {
+            $content .= '<ul>';
+            foreach ($statusUpdates as $update) {
+                $updateText = trim($update['update'] ?? '');
+                $timestamp  = trim($update['timestamp'] ?? '');
+                if (!empty($updateText)) {
+                    $content .= '<li>';
+                    if (!empty($timestamp)) {
+                        $content .= '<strong>' . esc_html($timestamp) . '</strong>: ';
+                    }
+                    $content .= esc_html($updateText) . '</li>';
+                }
+            }
+            $content .= '</ul>';
         }
 
         $link = $disruption['link'] ?? '';
@@ -271,13 +301,13 @@ class PirevaDisruptionsImporter implements ImporterInterface
     private function extractCategories(array $categories): array
     {
         if (empty($categories)) {
-            return ['Pireva'];
+            return [];
         }
 
         $names = array_map(fn($cat) => $cat['name'] ?? '', $categories);
         $names = array_filter($names);
 
-        return !empty($names) ? $names : ['Pireva'];
+        return array_values($names);
     }
 
     /**
