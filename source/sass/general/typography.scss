@@ -19,16 +19,13 @@ a,
 }
 
 // Global p margin (applies on all templates including onepage where .c-article is absent)
-p {
-  margin-top: calc(var(--base, 8px) * 3);
-}
-
 .c-article p,
 .c-article ul,
 .c-article ol,
 .c-article blockquote,
 .c-article img,
 .c-article table,
-.c-article > div {
+.c-article > div,
+.page-template-one-page-blade #main-content > .o-container > p {
   margin-top: calc(var(--base, 8px) * 3);
 }

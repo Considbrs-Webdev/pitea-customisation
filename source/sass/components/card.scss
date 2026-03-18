@@ -221,3 +221,11 @@
     }
   }
 }
+
+.c-card {
+  &__content {
+    p {
+      margin-top: 0;
+    }
+  }
+}
