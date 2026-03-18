@@ -57,7 +57,7 @@
   z-index: 1;
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     inset: -0.5em -0.75em;
   }
@@ -88,7 +88,7 @@
   }
 }
 
-@media screen and (max-width: 32.5em) {
+@media screen and (max-width: 36em) {
   .c-breadcrumb--js-controlled {
     // Override theme's "show only direct parent" rule — our JS handles visibility
     .c-breadcrumb__item:not(:nth-last-child(2)) {

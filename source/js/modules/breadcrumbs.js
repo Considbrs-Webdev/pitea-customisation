@@ -22,7 +22,7 @@
  */
 
 // Matches the Municipio theme's breakpoint for breadcrumb collapsing
-const MOBILE_MQ = window.matchMedia('(max-width: 32.5em)');
+const MOBILE_MQ = window.matchMedia('(max-width: 36em)');
 
 export function initMobileBreadcrumbs() {
     document.querySelectorAll('nav.c-breadcrumb').forEach(setupBreadcrumb);
