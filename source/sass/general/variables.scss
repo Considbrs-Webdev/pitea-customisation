@@ -101,6 +101,7 @@
 // Municipio overrides
 :root {
   --page-title-color: var(--color-stain-dark-3);
+  --sticky-sidebar-top: calc(104px + var(--wp-admin--admin-bar--height, 0px));
 }
 
 // Search hit card backgrounds (used on search results page)
