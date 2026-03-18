@@ -12,8 +12,10 @@
  *   - Clicking "…" reveals the full path and focuses the first collapsed item
  *
  * WCAG notes:
- *   - Collapsed items are hidden from AT with aria-hidden="true"; the direct
- *     parent and current page (aria-current="page") always remain visible
+ *   - Collapsed items are hidden from AT with aria-hidden="true"; the current
+ *     page (aria-current="page") always remains visible; the direct parent
+ *     also remains visible unless there are only 3 items total (in which case
+ *     it too is collapsed so the "…" button is meaningful)
  *   - The expand button carries aria-expanded and aria-label in Swedish
  *   - The home icon uses aria-hidden="true"; the text "Start" lives in a
  *     visually-hidden span that is always in the DOM for screen readers
@@ -37,8 +39,8 @@ function setupBreadcrumb(nav) {
     setupHomeIcon(items[0]);
 
     // Only apply collapse behaviour when there are enough items to warrant it
-    // (home + at least 1 middle + direct parent + current = 4 minimum)
-    if (items.length < 4) return;
+    // (home + direct parent + current = 3 minimum)
+    if (items.length < 3) return;
 
     nav.classList.add('c-breadcrumb--js-controlled');
 
@@ -71,8 +73,12 @@ function setupBreadcrumb(nav) {
 }
 
 function collapseMiddle(items, expandLi) {
-    // Keep first item, expand button, last two items; hide everything in between
-    const middleItems = items.slice(1, items.length - 2);
+    // Keep first item, expand button, and the last N items visible.
+    // With 4+ items the direct parent (second-to-last) stays visible;
+    // with exactly 3 items (home + parent + current) the parent is also
+    // collapsed so the "…" button is meaningful.
+    const keepFromEnd = items.length <= 3 ? 1 : 2;
+    const middleItems = items.slice(1, items.length - keepFromEnd);
     middleItems.forEach(li => {
         li.setAttribute('aria-hidden', 'true');
         li.style.display = 'none';
