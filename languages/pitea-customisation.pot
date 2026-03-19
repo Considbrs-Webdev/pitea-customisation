@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-17T09:49:38+01:00\n"
+"POT-Creation-Date: 2026-03-19T06:48:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.12.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: pitea-customisation\n"
 
 #. Plugin Name of the plugin
@@ -86,7 +86,6 @@ msgid "No icon selected"
 msgstr ""
 
 #: source/php/AcfFields/FontAwesomeIconField.php:143
-#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:113
 msgid "Search icons..."
 msgstr ""
 
@@ -110,44 +109,44 @@ msgstr ""
 msgid "Bottom of content"
 msgstr ""
 
-#: source/php/Admin/Settings.php:54
-#: source/php/Admin/Settings.php:55
+#: source/php/Admin/Settings.php:56
+#: source/php/Admin/Settings.php:57
 msgid "Piteå kommun"
 msgstr ""
 
-#: source/php/Admin/Settings.php:88
+#: source/php/Admin/Settings.php:90
 msgid "Saving…"
 msgstr ""
 
-#: source/php/Admin/Settings.php:89
+#: source/php/Admin/Settings.php:91
 msgid "Changes saved"
 msgstr ""
 
-#: source/php/Admin/Settings.php:90
+#: source/php/Admin/Settings.php:92
 msgid "Could not save settings"
 msgstr ""
 
-#: source/php/Admin/Settings.php:103
+#: source/php/Admin/Settings.php:105
 msgid "Insufficient permissions."
 msgstr ""
 
-#: source/php/Admin/Settings.php:109
+#: source/php/Admin/Settings.php:111
 msgid "Security check failed."
 msgstr ""
 
-#: source/php/Admin/Settings.php:123
+#: source/php/Admin/Settings.php:125
 msgid "Unknown tab."
 msgstr ""
 
-#: source/php/Admin/Settings.php:132
+#: source/php/Admin/Settings.php:134
 msgid "Settings saved."
 msgstr ""
 
-#: source/php/Admin/Settings.php:189
+#: source/php/Admin/Settings.php:191
 msgid "Save Changes"
 msgstr ""
 
-#: source/php/Admin/Settings.php:198
+#: source/php/Admin/Settings.php:200
 msgid "Settings sections"
 msgstr ""
 
@@ -235,6 +234,65 @@ msgstr ""
 
 #: source/php/Admin/Tabs/LatestEventsTab.php:186
 msgid "Latest Events Settings"
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:37
+msgid "Page permissions"
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:69
+#: source/php/Admin/Tabs/PagePermissionsTab.php:183
+msgid "Protected pages / Templates"
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:71
+msgid "These pages cannot be edited, moved or deleted by other roles than administrators."
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:81
+msgid "Protected pages"
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:102
+#: source/php/Admin/Tabs/PagePermissionsTab.php:184
+msgid "User group ownership"
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:104
+msgid "Define which user groups own and manage particular parts of the page tree. Users who do not belong to the owning user group cannot see those pages or their descendants in the admin."
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:114
+msgid "Ownership rules"
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:220
+msgid "+ Add page"
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:243
+msgid "Apply to all subpages"
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:247
+#: source/php/Admin/Tabs/PagePermissionsTab.php:319
+msgid "Remove"
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:277
+msgid "+ Add rule"
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:297
+msgid "— Select user group —"
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:315
+msgid "Include all subpages"
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:344
+msgid "— Select a page —"
 msgstr ""
 
 #: source/php/Admin/Tabs/ReadSpeakerTab.php:37
@@ -345,6 +403,14 @@ msgstr ""
 msgid "Enable"
 msgstr ""
 
+#: source/php/Customisations/Permissions/ReadOnlyPermissions.php:86
+msgid "This page is protected and cannot be edited."
+msgstr ""
+
+#: source/php/Customisations/Permissions/ReadOnlyPermissions.php:144
+msgid "This page is protected. Your changes were not saved."
+msgstr ""
+
 #: source/php/Customisations/ShareButton.php:90
 msgid "Copy page link to clipboard"
 msgstr ""
@@ -355,6 +421,10 @@ msgstr ""
 
 #: source/php/ExternalContent/Search/EServices/EServicesImporter.php:274
 msgid "E-services"
+msgstr ""
+
+#: source/php/ExternalContent/ServiceInfo/PirevaDisruptionsImporter.php:253
+msgid "Läs mer på pireva.se"
 msgstr ""
 
 #: source/php/ExternalContent/ServiceInfo/TrafficDisruptionsImporter.php:162
@@ -368,20 +438,4 @@ msgstr ""
 #: views/search/hits/hit-eservice.blade.php:23
 msgctxt "E-services"
 msgid "Section"
-msgstr ""
-
-#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:104
-msgid "Select Icon"
-msgstr ""
-
-#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:127
-msgid "No icons found"
-msgstr ""
-
-#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:194
-msgid "Insert Icon"
-msgstr ""
-
-#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:213
-msgid "Font Awesome Icon"
 msgstr ""

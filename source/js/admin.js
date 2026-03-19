@@ -115,6 +115,45 @@
         }, 3000);
     }
 
+    // -------------------------------------------------------------------------
+    // Page-permissions repeater
+    // -------------------------------------------------------------------------
+    (function initRepeaters() {
+        root.querySelectorAll('[data-repeater]').forEach((repeater) => {
+            const addBtn       = repeater.querySelector('.pitea-settings__repeater-add');
+            const rowsContainer = repeater.querySelector('.pitea-settings__repeater-rows');
+            const template     = repeater.querySelector('template');
+
+            if (!addBtn || !rowsContainer || !template) return;
+
+            function getNextIndex() {
+                return rowsContainer.querySelectorAll('.pitea-settings__repeater-row').length;
+            }
+
+            function bindRemoveBtn(row) {
+                const removeBtn = row.querySelector('.pitea-settings__repeater-remove');
+                if (removeBtn) {
+                    removeBtn.addEventListener('click', () => row.remove());
+                }
+            }
+
+            // Bind existing rows.
+            rowsContainer.querySelectorAll('.pitea-settings__repeater-row').forEach(bindRemoveBtn);
+
+            addBtn.addEventListener('click', () => {
+                const index = getNextIndex();
+                const html  = template.innerHTML.replaceAll('{{INDEX}}', String(index));
+                const temp  = document.createElement('div');
+                temp.innerHTML = html;
+                const newRow = temp.firstElementChild;
+                if (newRow) {
+                    rowsContainer.appendChild(newRow);
+                    bindRemoveBtn(newRow);
+                }
+            });
+        });
+    }());
+
     if (!saveBtn) return;
 
     const saveBtnOriginalLabel = saveBtn.textContent;

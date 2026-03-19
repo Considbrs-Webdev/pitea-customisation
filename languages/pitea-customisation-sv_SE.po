@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pitea-customisation\n"
+"POT-Creation-Date: 2026-03-19T06:48:59+00:00\n"
+"PO-Revision-Date: 2026-03-19 07:53+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: sv_SE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-14T03:00:29+00:00\n"
-"PO-Revision-Date: 2026-03-17 10:00+0100\n"
-"Language: sv_SE\n"
 "X-Generator: Poedit 3.9\n"
 "X-Domain: pitea-customisation\n"
 
@@ -85,7 +85,6 @@ msgid "No icon selected"
 msgstr "Ingen ikon vald"
 
 #: source/php/AcfFields/FontAwesomeIconField.php:143
-#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:113
 msgid "Search icons..."
 msgstr "Sök ikon..."
 
@@ -109,44 +108,43 @@ msgstr "Ingen"
 msgid "Bottom of content"
 msgstr "Botten av innehållet"
 
-#: source/php/Admin/Settings.php:54
-#: source/php/Admin/Settings.php:55
+#: source/php/Admin/Settings.php:56 source/php/Admin/Settings.php:57
 msgid "Piteå kommun"
 msgstr "Piteå kommun"
 
-#: source/php/Admin/Settings.php:88
+#: source/php/Admin/Settings.php:90
 msgid "Saving…"
 msgstr "Sparar…"
 
-#: source/php/Admin/Settings.php:89
+#: source/php/Admin/Settings.php:91
 msgid "Changes saved"
 msgstr "Ändringar sparade"
 
-#: source/php/Admin/Settings.php:90
+#: source/php/Admin/Settings.php:92
 msgid "Could not save settings"
 msgstr "Kunde inte spara inställningar"
 
-#: source/php/Admin/Settings.php:103
+#: source/php/Admin/Settings.php:105
 msgid "Insufficient permissions."
 msgstr "Otillräckliga rättigheter."
 
-#: source/php/Admin/Settings.php:109
+#: source/php/Admin/Settings.php:111
 msgid "Security check failed."
 msgstr "Säkerhetskontroll misslyckades."
 
-#: source/php/Admin/Settings.php:123
+#: source/php/Admin/Settings.php:125
 msgid "Unknown tab."
 msgstr "Okänd flik."
 
-#: source/php/Admin/Settings.php:132
+#: source/php/Admin/Settings.php:134
 msgid "Settings saved."
 msgstr "Inställningarna sparades."
 
-#: source/php/Admin/Settings.php:189
+#: source/php/Admin/Settings.php:191
 msgid "Save Changes"
 msgstr "Spara"
 
-#: source/php/Admin/Settings.php:198
+#: source/php/Admin/Settings.php:200
 msgid "Settings sections"
 msgstr "Inställningssektioner"
 
@@ -236,6 +234,65 @@ msgstr "API Bearer-token för autentisering mot Visit Piteå-API:t."
 msgid "Latest Events Settings"
 msgstr "Inställningar för senaste evenemang"
 
+#: source/php/Admin/Tabs/PagePermissionsTab.php:37
+msgid "Page permissions"
+msgstr "Sidrättigheter"
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:69
+#: source/php/Admin/Tabs/PagePermissionsTab.php:183
+msgid "Protected pages / Templates"
+msgstr "Skyddade sidor / Mallar"
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:71
+msgid "These pages cannot be edited, moved or deleted by other roles than administrators."
+msgstr "Dessa sidor kan inte redigeras, flyttas eller raderas av andra roller än administratörer."
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:81
+msgid "Protected pages"
+msgstr "Skyddade sidor"
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:102
+#: source/php/Admin/Tabs/PagePermissionsTab.php:184
+msgid "User group ownership"
+msgstr "Ägarskap för användargrupp"
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:104
+msgid "Define which user groups own and manage particular parts of the page tree. Users who do not belong to the owning user group cannot see those pages or their descendants in the admin."
+msgstr "Ange vilka användargrupper som äger och hanterar särskilda delar av sidträdet. Användare som inte tillhör den ägande användargruppen kan inte se dessa sidor eller deras underordnade sidor i admin."
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:114
+msgid "Ownership rules"
+msgstr "Regler för ägarskap"
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:220
+msgid "+ Add page"
+msgstr "+ Lägg till sida"
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:243
+msgid "Apply to all subpages"
+msgstr "Gäller för alla undersidor"
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:247
+#: source/php/Admin/Tabs/PagePermissionsTab.php:319
+msgid "Remove"
+msgstr "Ta bort"
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:277
+msgid "+ Add rule"
+msgstr "+ Lägg till regel"
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:297
+msgid "— Select user group —"
+msgstr "— Välj användargrupp —"
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:315
+msgid "Include all subpages"
+msgstr "Inkludera alla undersidor"
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:344
+msgid "— Select a page —"
+msgstr "— Välj en sida —"
+
 #: source/php/Admin/Tabs/ReadSpeakerTab.php:37
 msgid "ReadSpeaker"
 msgstr "ReadSpeaker"
@@ -311,36 +368,6 @@ msgstr "Ingress"
 msgid "Start"
 msgstr "Start"
 
-#: source/php/Customisations/Modules/Slider.php:63
-#: source/php/Customisations/Modules/Text.php:99
-msgid "Enable"
-msgstr "Aktivera"
-
-#: source/php/Customisations/ShareButton.php:90
-msgid "Copy page link to clipboard"
-msgstr "Kopiera sidadress"
-
-#: source/php/Customisations/ShareButton.php:91
-msgid "Share page"
-msgstr "Dela sidan"
-
-#: source/php/ExternalContent/Search/EServices/EServicesImporter.php:274
-msgid "E-services"
-msgstr "E-tjänster"
-
-#: source/php/ExternalContent/ServiceInfo/TrafficDisruptionsImporter.php:162
-msgid "Map showing traffic disruption"
-msgstr "Karta över trafikstörning"
-
-#: source/php/ExternalContent/ServiceInfo/TrafficDisruptionsImporter.php:170
-msgid "Traffic disruption location"
-msgstr "Plats för trafikstörning"
-
-#: views/search/hits/hit-eservice.blade.php:23
-msgctxt "E-services"
-msgid "Section"
-msgstr "Avdelning"
-
 #: source/php/Customisations/Dashboard.php:19
 msgid "Materials for editors"
 msgstr "Material för redaktörer"
@@ -369,18 +396,56 @@ msgstr "Modulnamn kontra utseende"
 msgid "Guides and checklists to help you add and manage content."
 msgstr "Guider och checklistor för att lägga till och hantera innehåll."
 
-#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:104
-msgid "Select Icon"
-msgstr "Välj ikon"
+#: source/php/Customisations/Modules/Slider.php:63
+#: source/php/Customisations/Modules/Text.php:99
+msgid "Enable"
+msgstr "Aktivera"
 
-#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:127
-msgid "No icons found"
-msgstr "Inga ikoner hittades"
+#: source/php/Customisations/Permissions/ReadOnlyPermissions.php:86
+msgid "This page is protected and cannot be edited."
+msgstr "Denna sida är skyddad och kan inte redigeras."
 
-#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:194
-msgid "Insert Icon"
-msgstr "Infoga ikon"
+#: source/php/Customisations/Permissions/ReadOnlyPermissions.php:144
+msgid "This page is protected. Your changes were not saved."
+msgstr "Denna sida är skyddad. Dina ändringar sparades inte."
 
-#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:213
-msgid "Font Awesome Icon"
-msgstr "Font Awesome-ikon"
+#: source/php/Customisations/ShareButton.php:90
+msgid "Copy page link to clipboard"
+msgstr "Kopiera sidadress"
+
+#: source/php/Customisations/ShareButton.php:91
+msgid "Share page"
+msgstr "Dela sidan"
+
+#: source/php/ExternalContent/Search/EServices/EServicesImporter.php:274
+msgid "E-services"
+msgstr "E-tjänster"
+
+#: source/php/ExternalContent/ServiceInfo/PirevaDisruptionsImporter.php:253
+msgid "Läs mer på pireva.se"
+msgstr "Läs mer på pireva.se"
+
+#: source/php/ExternalContent/ServiceInfo/TrafficDisruptionsImporter.php:162
+msgid "Map showing traffic disruption"
+msgstr "Karta över trafikstörning"
+
+#: source/php/ExternalContent/ServiceInfo/TrafficDisruptionsImporter.php:170
+msgid "Traffic disruption location"
+msgstr "Plats för trafikstörning"
+
+#: views/search/hits/hit-eservice.blade.php:23
+msgctxt "E-services"
+msgid "Section"
+msgstr "Avdelning"
+
+#~ msgid "Select Icon"
+#~ msgstr "Välj ikon"
+
+#~ msgid "No icons found"
+#~ msgstr "Inga ikoner hittades"
+
+#~ msgid "Insert Icon"
+#~ msgstr "Infoga ikon"
+
+#~ msgid "Font Awesome Icon"
+#~ msgstr "Font Awesome-ikon"

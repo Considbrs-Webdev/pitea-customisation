@@ -1,0 +1,314 @@
+<?php
+
+declare(strict_types=1);
+
+namespace PiteaCustomisation\Customisations\Permissions;
+
+use PiteaCustomisation\Admin\Tabs\PagePermissionsTab;
+
+/**
+ * Class UserGroupOwnership
+ *
+ * Enforces user group ownership rules: users who do not belong to the user
+ * group that owns a page tree cannot see or access those pages in the admin.
+ *
+ * Administrators and super-administrators are always exempt.
+ */
+class UserGroupOwnership
+{
+    public function __construct()
+    {
+        // Filter the standard admin Pages list view (WP_List_Table).
+        add_action('pre_get_posts', [$this, 'filterAdminPagesList']);
+
+        // Filter the Nested Pages plugin's own WP_Query (not is_main_query).
+        add_filter('nestedpages_page_listing', [$this, 'filterNestedPagesQuery'], 10, 1);
+
+        // Block direct read/edit/delete access to owned pages the user can't see.
+        add_filter('map_meta_cap', [$this, 'restrictOwnedPageAccess'], 10, 4);
+    }
+
+    // -------------------------------------------------------------------------
+    // Hooks
+    // -------------------------------------------------------------------------
+
+    /**
+     * Limit the admin Pages list query to pages the current user is permitted to see.
+     *
+     * When ownership rules are configured, non-privileged users may only see pages
+     * that belong to one of their own user groups. Pages outside those trees are
+     * hidden entirely (post__in approach rather than post__not_in).
+     */
+    public function filterAdminPagesList(\WP_Query $query): void
+    {
+        if (!is_admin() || !$query->is_main_query()) {
+            return;
+        }
+
+        if ($query->get('post_type') !== 'page') {
+            return;
+        }
+
+        $userId = get_current_user_id();
+        if ($this->isPrivilegedUser($userId)) {
+            return;
+        }
+
+        if (empty($this->getOwnershipRules())) {
+            return;
+        }
+
+        $accessibleIds = $this->getAccessiblePageIdsForUser($userId);
+        // Use post__in so only explicitly accessible pages are shown.
+        // If the user owns nothing, pass a non-existent ID to produce an empty list.
+        $query->set('post__in', empty($accessibleIds) ? [0] : $accessibleIds);
+    }
+
+    /**
+     * Limit Nested Pages' own WP_Query to pages the current user is permitted to see.
+     *
+     * Nested Pages bypasses is_main_query() by running a separate WP_Query and
+     * exposes the query args via the nestedpages_page_listing filter.
+     *
+     * @param  array<string, mixed> $queryArgs
+     * @return array<string, mixed>
+     */
+    public function filterNestedPagesQuery(array $queryArgs): array
+    {
+        $userId = get_current_user_id();
+        if ($this->isPrivilegedUser($userId)) {
+            return $queryArgs;
+        }
+
+        if (empty($this->getOwnershipRules())) {
+            return $queryArgs;
+        }
+
+        $accessibleIds = $this->getAccessiblePageIdsForUser($userId);
+        $queryArgs['post__in'] = empty($accessibleIds) ? [0] : $accessibleIds;
+        // Ensure no conflicting exclusion list remains.
+        unset($queryArgs['post__not_in']);
+
+        return $queryArgs;
+    }
+
+    /**
+     * Deny read/edit/delete capabilities on pages the current user cannot access.
+     *
+     * @param string[]          $caps
+     * @param string            $cap
+     * @param int               $userId
+     * @param array<int, mixed> $args
+     * @return string[]
+     */
+    public function restrictOwnedPageAccess(array $caps, string $cap, int $userId, array $args): array
+    {
+        $watchedCaps = ['read_post', 'read_page', 'edit_post', 'edit_page', 'delete_post', 'delete_page'];
+        if (!in_array($cap, $watchedCaps, true)) {
+            return $caps;
+        }
+
+        $postId = isset($args[0]) ? (int) $args[0] : 0;
+        if ($postId === 0) {
+            return $caps;
+        }
+
+        if (!$this->isRestrictedForUser($postId, $userId)) {
+            return $caps;
+        }
+
+        return ['do_not_allow'];
+    }
+
+    // -------------------------------------------------------------------------
+    // Internal helpers
+    // -------------------------------------------------------------------------
+
+    private function isRestrictedForUser(int $postId, int $userId): bool
+    {
+        if ($this->isPrivilegedUser($userId)) {
+            return false;
+        }
+
+        if (empty($this->getOwnershipRules())) {
+            return false;
+        }
+
+        // Only apply restrictions to pages that are explicitly owned by some group.
+        // New pages, auto-drafts, and pages outside all ownership rules are not restricted
+        // here — normal WordPress capability checks handle those.
+        if (!in_array($postId, $this->getAllOwnedPageIds(), true)) {
+            return false;
+        }
+
+        // Page is owned by some group; restrict if not accessible to the user's own groups.
+        return !in_array($postId, $this->getAccessiblePageIdsForUser($userId), true);
+    }
+
+    private function isPrivilegedUser(int $userId): bool
+    {
+        if (is_multisite() && is_super_admin($userId)) {
+            return true;
+        }
+
+        $user = get_userdata($userId);
+        return $user && in_array('administrator', (array) $user->roles, true);
+    }
+
+    /**
+     * Return the page IDs the given user may see, based on their user group ownership rules.
+     *
+     * Only pages (and their descendants, when inherit is enabled) that belong to one of
+     * the user's own groups are returned. Pages outside all ownership rules are NOT
+     * included — access is strictly additive (positive-permission model).
+     *
+     * @return int[]
+     */
+    private function getAccessiblePageIdsForUser(int $userId): array
+    {
+        static $cache = [];
+        if (array_key_exists($userId, $cache)) {
+            return $cache[$userId];
+        }
+
+        $rules = $this->getOwnershipRules();
+        if (empty($rules)) {
+            $cache[$userId] = [];
+            return [];
+        }
+
+        $userGroupIds = $this->getUserGroupTermIds($userId);
+
+        // Build map: group_id → [page_ids] for all rules.
+        $ownedByGroup = [];
+        foreach ($rules as $rule) {
+            $groupId = (int) ($rule['user_group_id'] ?? 0);
+            $pageId  = (int) ($rule['page_id'] ?? 0);
+            if ($groupId === 0 || $pageId === 0) {
+                continue;
+            }
+            $pageIds = [$pageId];
+            if (!empty($rule['inherit'])) {
+                $pageIds = array_merge($pageIds, $this->getDescendantIds($pageId));
+            }
+            foreach ($pageIds as $pid) {
+                $ownedByGroup[$groupId][] = $pid;
+            }
+        }
+
+        // Accessible = union of all pages owned by any of the user's groups.
+        $accessibleIds = [];
+        foreach ($userGroupIds as $gid) {
+            if (isset($ownedByGroup[$gid])) {
+                $accessibleIds = array_merge($accessibleIds, $ownedByGroup[$gid]);
+            }
+        }
+
+        $cache[$userId] = array_values(array_unique($accessibleIds));
+        return $cache[$userId];
+    }
+
+    /**
+     * Return all page IDs that are under any ownership rule (any group).
+     *
+     * Used to distinguish "owned by someone" from "not in any rule" so that
+     * new pages and unassigned pages are not accidentally blocked.
+     *
+     * @return int[]
+     */
+    private function getAllOwnedPageIds(): array
+    {
+        static $cache = null;
+        if ($cache !== null) {
+            return $cache;
+        }
+
+        $ids = [];
+        foreach ($this->getOwnershipRules() as $rule) {
+            $pageId = (int) ($rule['page_id'] ?? 0);
+            if ($pageId === 0) {
+                continue;
+            }
+            $ids[] = $pageId;
+            if (!empty($rule['inherit'])) {
+                $ids = array_merge($ids, $this->getDescendantIds($pageId));
+            }
+        }
+
+        $cache = array_values(array_unique($ids));
+        return $cache;
+    }
+
+    /**
+     * Return the user group term IDs (integers) for a given user.
+     *
+     * On multisite the user_group taxonomy is only registered on the main site,
+     * so we must switch context before querying term relationships — this mirrors
+     * how Municipio's own User::getUserGroup() retrieves the data.
+     *
+     * @return int[]
+     */
+    private function getUserGroupTermIds(int $userId): array
+    {
+        if (is_multisite()) {
+            switch_to_blog(get_main_site_id());
+            $terms = wp_get_object_terms($userId, 'user_group', ['fields' => 'ids']);
+            restore_current_blog();
+        } else {
+            $terms = wp_get_object_terms($userId, 'user_group', ['fields' => 'ids']);
+        }
+
+        if (is_wp_error($terms)) {
+            return [];
+        }
+        return array_map('intval', (array) $terms);
+    }
+
+    /**
+     * Load and cache ownership rules from the option.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    private function getOwnershipRules(): array
+    {
+        static $rules = null;
+        if ($rules !== null) {
+            return $rules;
+        }
+
+        $raw   = (string) get_option(PagePermissionsTab::OPTION_USER_GROUP_OWNERSHIP, '[]');
+        $rules = json_decode($raw, true);
+        if (!is_array($rules)) {
+            $rules = [];
+        }
+
+        return $rules;
+    }
+
+    /**
+     * Recursively collect all descendant page IDs for a given parent.
+     * Uses suppress_filters so private/hidden pages are included.
+     *
+     * @return int[]
+     */
+    private function getDescendantIds(int $parentId): array
+    {
+        $children = get_posts([
+            'post_type'        => 'page',
+            'post_status'      => ['publish', 'private'],
+            'post_parent'      => $parentId,
+            'numberposts'      => -1,
+            'fields'           => 'ids',
+            'suppress_filters' => true,
+        ]);
+
+        $ids = [];
+        foreach ($children as $childId) {
+            $childId = (int) $childId;
+            $ids[]   = $childId;
+            $ids     = array_merge($ids, $this->getDescendantIds($childId));
+        }
+
+        return $ids;
+    }
+}

@@ -36,6 +36,7 @@ class App
             Customisations\Breadcrumbs::class,
             Customisations\ColorPicker::class,
             Customisations\Config::class,
+            Customisations\Dashboard::class,
             Customisations\Decorators::class,
             Customisations\ExternalContent::class,
             Customisations\FontAwesome::class,
@@ -50,13 +51,13 @@ class App
             Customisations\Taxonomies::class,
             Customisations\Templates::class,
             Customisations\Typesense::class,
-            Customisations\Dashboard::class,
             Customisations\Modules\InlayList::class,
             Customisations\Modules\Container::class,
             Customisations\Modules\LinkCards::class,
             Customisations\Modules\Posts::class,
             Customisations\Modules\Text::class,
             Customisations\Modules\Slider::class,
+            Customisations\Permissions\Permissions::class,
             // Add more customisation classes here
             // Customisations\YourCustomClass::class,
         ];

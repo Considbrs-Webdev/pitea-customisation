@@ -8,6 +8,7 @@ use PiteaCustomisation\Admin\Tabs\AccessibilityTab;
 use PiteaCustomisation\Admin\Tabs\ExternalContentTab;
 use PiteaCustomisation\Admin\Tabs\GeneralTab;
 use PiteaCustomisation\Admin\Tabs\LatestEventsTab;
+use PiteaCustomisation\Admin\Tabs\PagePermissionsTab;
 use PiteaCustomisation\Admin\Tabs\ReadSpeakerTab;
 
 /**
@@ -36,6 +37,7 @@ class Settings
             new ExternalContentTab(),
             new ReadSpeakerTab(),
             new LatestEventsTab(),
+            new PagePermissionsTab(),
         ];
 
         add_action('admin_menu', [$this, 'addMenuPage']);

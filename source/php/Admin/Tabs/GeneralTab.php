@@ -15,7 +15,7 @@ class GeneralTab implements SettingsTabInterface
 {
     private const OPTION_GROUP = 'pitea_customisation_general';
 
-    private const GROUP_INTRO    = 'pitea_customisation_group_intro';
+    private const GROUP_INTRO = 'pitea_customisation_group_intro';
 
     // -------------------------------------------------------------------------
     // SettingsTabInterface
@@ -97,22 +97,6 @@ class GeneralTab implements SettingsTabInterface
     // -------------------------------------------------------------------------
     // Helpers
     // -------------------------------------------------------------------------
-
-    private function renderTextField(string $optionName, string $placeholder = ''): void
-    {
-        $value = (string) get_option($optionName, '');
-        ?>
-        <div class="pitea-settings__field">
-            <input
-                type="text"
-                name="<?php echo esc_attr($optionName); ?>"
-                value="<?php echo esc_attr($value); ?>"
-                class="pitea-settings__input"
-                placeholder="<?php echo esc_attr($placeholder); ?>"
-            />
-        </div>
-        <?php
-    }
 
     public function sanitizeNoticeType(string $value): string
     {

@@ -418,6 +418,80 @@ $settings-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
   // --------------------------------------------------------------------------
   // Toast notification  (absolute positioned at top-right of header)
   // --------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
+  // Repeater (page-permissions rows)
+  // --------------------------------------------------------------------------
+  &__repeater {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  &__repeater-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__repeater-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    background: var(--color-darjnalen-light-4, #f0f0f0);
+    border: 1px solid var(--color-darjnalen-light-3, #ddd);
+    border-radius: $settings-radius;
+  }
+
+  &__repeater-fields {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    select.pitea-settings__input {
+      width: auto;
+      flex: 1;
+      min-width: 200px;
+      max-width: 400px;
+    }
+  }
+
+  &__repeater-add {
+    align-self: flex-start;
+  }
+
+  &__repeater-remove {
+    flex-shrink: 0;
+    color: $settings-color-error !important;
+    border-color: $settings-color-error !important;
+
+    &:hover {
+      background: $settings-color-error !important;
+      color: #fff !important;
+    }
+  }
+
+  &__checkbox-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: $settings-color-text;
+    cursor: pointer;
+    white-space: nowrap;
+    user-select: none;
+
+    input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: $settings-color-accent;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+  }
+
   &__toast {
     position: fixed;
     top: 80px;
