@@ -36,6 +36,7 @@ class App
             Customisations\Breadcrumbs::class,
             Customisations\ColorPicker::class,
             Customisations\Config::class,
+            Customisations\CustomerFeedback::class,
             Customisations\Dashboard::class,
             Customisations\Decorators::class,
             Customisations\ExternalContent::class,
