@@ -1,9 +1,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pitea-customisation\n"
-"POT-Creation-Date: 2026-03-19T06:48:59+00:00\n"
-"PO-Revision-Date: 2026-03-19 07:53+0100\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pitea-"
+"customisation\n"
+"POT-Creation-Date: 2026-03-19T14:20:40+00:00\n"
+"PO-Revision-Date: 2026-03-19 15:21+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -20,8 +21,10 @@ msgstr "Anpassning för Piteå"
 
 #. Description of the plugin
 #: pitea-customisation.php
-msgid "Custom functionality and modifications for the Piteå WordPress installation"
-msgstr "Anpassade funktioner och modifieringar för Piteås WordPress-installation"
+msgid ""
+"Custom functionality and modifications for the Piteå WordPress installation"
+msgstr ""
+"Anpassade funktioner och modifieringar för Piteås WordPress-installation"
 
 #. Author of the plugin
 #: pitea-customisation.php
@@ -157,8 +160,14 @@ msgid "Traffic Disruptions"
 msgstr "Trafikstörningar"
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:81
-msgid "Automatically import traffic disruption data from an ArcGIS FeatureServer and publish it as service information posts. Leave the URL empty to disable importing."
-msgstr "Importera automatiskt data om trafikstörningar från en ArcGIS FeatureServer och publicera dem som inlägg för serviceinformation. Lämna URL:en tom för att inaktivera import."
+msgid ""
+"Automatically import traffic disruption data from an ArcGIS FeatureServer "
+"and publish it as service information posts. Leave the URL empty to disable "
+"importing."
+msgstr ""
+"Importera automatiskt data om trafikstörningar från en ArcGIS FeatureServer "
+"och publicera dem som inlägg för serviceinformation. Lämna URL:en tom för "
+"att inaktivera import."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:91
 #: source/php/Admin/Tabs/ExternalContentTab.php:129
@@ -170,16 +179,28 @@ msgid "E-Services"
 msgstr "E-tjänster"
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:119
-msgid "Automatically index Piteå's public e-services from the eNämnd API into the Typesense search engine. Leave the URL empty to disable indexing."
-msgstr "Indexera automatiskt Piteås offentliga e-tjänster från eNämnds API i sökmotorn Typesense. Lämna URL:en tom för att inaktivera indexeringen."
+msgid ""
+"Automatically index Piteå's public e-services from the eNämnd API into the "
+"Typesense search engine. Leave the URL empty to disable indexing."
+msgstr ""
+"Indexera automatiskt Piteås offentliga e-tjänster från eNämnds API i "
+"sökmotorn Typesense. Lämna URL:en tom för att inaktivera indexeringen."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:174
-msgid "The eNämnd public-services API URL. Leave empty to disable e-service indexing."
-msgstr "API-URL för eNämnds tjänst för offentliga e-tjänster. Lämna tomt för att inaktivera indexering av e-tjänster."
+msgid ""
+"The eNämnd public-services API URL. Leave empty to disable e-service "
+"indexing."
+msgstr ""
+"API-URL för eNämnds tjänst för offentliga e-tjänster. Lämna tomt för att "
+"inaktivera indexering av e-tjänster."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:197
-msgid "The GeoJSON endpoint URL for the traffic disruption layer. Leave empty to disable importing."
-msgstr "GeoJSON-endpoint-URL för lagret med trafikstörningar. Lämna tomt för att inaktivera import."
+msgid ""
+"The GeoJSON endpoint URL for the traffic disruption layer. Leave empty to "
+"disable importing."
+msgstr ""
+"GeoJSON-endpoint-URL för lagret med trafikstörningar. Lämna tomt för att "
+"inaktivera import."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:213
 msgid "Service Information"
@@ -211,8 +232,13 @@ msgid "API Configuration"
 msgstr "API-konfiguration"
 
 #: source/php/Admin/Tabs/LatestEventsTab.php:82
-msgid "Configure the API credentials for the Latest Events module. These settings allow the module to fetch event data from the Visit Piteå API."
-msgstr "Konfigurera API-uppgifterna för modulen Senaste evenemang. Dessa inställningar gör det möjligt för modulen att hämta evenemangsdata från Visit Piteå-API:t."
+msgid ""
+"Configure the API credentials for the Latest Events module. These settings "
+"allow the module to fetch event data from the Visit Piteå API."
+msgstr ""
+"Konfigurera API-uppgifterna för modulen Senaste evenemang. Dessa "
+"inställningar gör det möjligt för modulen att hämta evenemangsdata från "
+"Visit Piteå-API:t."
 
 #: source/php/Admin/Tabs/LatestEventsTab.php:92
 msgid "API URL"
@@ -223,8 +249,10 @@ msgid "API Token"
 msgstr "API-token"
 
 #: source/php/Admin/Tabs/LatestEventsTab.php:146
-msgid "The Visit Piteå API base URL. Include the full path up to the API version."
-msgstr "Bas-URL för Visit Piteå-API:t. Ange hela sökvägen fram till API-versionen."
+msgid ""
+"The Visit Piteå API base URL. Include the full path up to the API version."
+msgstr ""
+"Bas-URL för Visit Piteå-API:t. Ange hela sökvägen fram till API-versionen."
 
 #: source/php/Admin/Tabs/LatestEventsTab.php:170
 msgid "The API Bearer token for authenticating with the Visit Piteå API."
@@ -244,8 +272,12 @@ msgid "Protected pages / Templates"
 msgstr "Skyddade sidor / Mallar"
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:71
-msgid "These pages cannot be edited, moved or deleted by other roles than administrators."
-msgstr "Dessa sidor kan inte redigeras, flyttas eller raderas av andra roller än administratörer."
+msgid ""
+"These pages cannot be edited, moved or deleted by other roles than "
+"administrators."
+msgstr ""
+"Dessa sidor kan inte redigeras, flyttas eller raderas av andra roller än "
+"administratörer."
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:81
 msgid "Protected pages"
@@ -257,8 +289,14 @@ msgid "User group ownership"
 msgstr "Ägarskap för användargrupp"
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:104
-msgid "Define which user groups own and manage particular parts of the page tree. Users who do not belong to the owning user group cannot see those pages or their descendants in the admin."
-msgstr "Ange vilka användargrupper som äger och hanterar särskilda delar av sidträdet. Användare som inte tillhör den ägande användargruppen kan inte se dessa sidor eller deras underordnade sidor i admin."
+msgid ""
+"Define which user groups own and manage particular parts of the page tree. "
+"Users who do not belong to the owning user group cannot see those pages or "
+"their descendants in the admin."
+msgstr ""
+"Ange vilka användargrupper som äger och hanterar särskilda delar av "
+"sidträdet. Användare som inte tillhör den ägande användargruppen kan inte se "
+"dessa sidor eller deras underordnade sidor i admin."
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:114
 msgid "Ownership rules"
@@ -367,6 +405,14 @@ msgstr "Ingress"
 #: source/php/Customisations/Breadcrumbs.php:81
 msgid "Start"
 msgstr "Start"
+
+#: source/php/Customisations/CustomerFeedback.php:134
+msgid "Customer Feedback"
+msgstr "Kundfeedback"
+
+#: source/php/Customisations/CustomerFeedback.php:154
+msgid "Exclude customer feedback form on this page"
+msgstr "Exkludera kundfeedbackformulär på denna sida"
 
 #: source/php/Customisations/Dashboard.php:19
 msgid "Materials for editors"
