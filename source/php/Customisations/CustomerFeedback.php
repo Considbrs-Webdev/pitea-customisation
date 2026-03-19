@@ -12,36 +12,7 @@ class CustomerFeedback
         add_filter('CustomerFeedback/post_types', array($this, 'hideCustomerFeedbackOnExcludedPost'));
         add_action('add_meta_boxes', array($this, 'registerMetaBox'), 10, 2);
         add_action('save_post', array($this, 'saveMetaBox'));
-
-        // Remove feedback summary metabox from the front page edit screen, or
-        // from any post that has the exclude meta set. Uses the current post's
-        // post type when removing the metabox.
-        add_action('add_meta_boxes', function () {
-            if (!isset($_GET['post'])) {
-                return;
-            }
-
-            $postId = (int) $_GET['post'];
-            $post = get_post($postId);
-
-            if (!$post) {
-                return;
-            }
-
-            $shouldRemove = $postId === (int) get_option('page_on_front');
-
-            if (!$shouldRemove) {
-                $shouldRemove = (bool) get_post_meta($postId, $this->metaKey, true);
-            }
-
-            if ($shouldRemove) {
-                remove_meta_box(
-                    'customer-feedback-summary-meta',
-                    $post->post_type,
-                    'side'
-                );
-            }
-        }, 1000);
+        add_action('add_meta_boxes', array($this, 'removeSummaryMetaBox'), 1000);
     }
 
     /**
@@ -97,6 +68,39 @@ class CustomerFeedback
     }
 
     /**
+     * Remove the feedback summary metabox from the front page edit screen, or
+     * from any post that has the exclude meta set. Uses the current post's
+     * post type when removing the metabox.
+     */
+    public function removeSummaryMetaBox(): void
+    {
+        if (!isset($_GET['post'])) {
+            return;
+        }
+
+        $postId = (int) $_GET['post'];
+        $post = get_post($postId);
+
+        if (!$post) {
+            return;
+        }
+
+        $shouldRemove = $postId === (int) get_option('page_on_front');
+
+        if (!$shouldRemove) {
+            $shouldRemove = (bool) get_post_meta($postId, $this->metaKey, true);
+        }
+
+        if ($shouldRemove) {
+            remove_meta_box(
+                'customer-feedback-summary-meta',
+                $post->post_type,
+                'side'
+            );
+        }
+    }
+
+    /**
      * Register a metabox on all post types where customer feedback is enabled.
      * Also registers on the specific post set as the front page, as an exception,
      * since the feedback form is always hidden there regardless of post type settings.
@@ -104,9 +108,9 @@ class CustomerFeedback
      * the metabox for $postType here only affects the post currently being edited.
      *
      * @param string   $postType
-     * @param \WP_Post $post
+     * @param \WP_Post|null $post
      */
-    public function registerMetaBox(string $postType, \WP_Post $post): void
+    public function registerMetaBox(string $postType, ?\WP_Post $post): void
     {
         $allowedPostTypes = function_exists('get_field') ? get_field('customer_feedback_posttypes', 'option') : [];
 
@@ -114,10 +118,14 @@ class CustomerFeedback
             $allowedPostTypes = [];
         }
 
-        $isFrontPage = $post->ID === (int) get_option('page_on_front');
         $isAllowedPostType = in_array($postType, $allowedPostTypes, true);
 
-        if (!$isAllowedPostType || $isFrontPage) {
+        if (!$isAllowedPostType) {
+            return;
+        }
+
+        // When editing an existing post, skip if it is the front page.
+        if ($post && $post->ID === (int) get_option('page_on_front')) {
             return;
         }
 
