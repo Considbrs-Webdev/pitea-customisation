@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pitea-"
 "customisation\n"
-"POT-Creation-Date: 2026-03-19T14:20:40+00:00\n"
-"PO-Revision-Date: 2026-03-19 15:21+0100\n"
+"POT-Creation-Date: 2026-03-19T19:48:56+00:00\n"
+"PO-Revision-Date: 2026-03-19 20:49+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -372,35 +372,44 @@ msgstr "Lyssna på sidan"
 msgid "Listen to this page with ReadSpeaker"
 msgstr "Lyssna på sidan med ReadSpeaker"
 
-#: source/php/Customisations/Admin.php:78
+#: source/php/Customisations/Admin/Admin.php:78
 msgctxt "Editor font size preset"
 msgid "Small"
 msgstr "Liten"
 
-#: source/php/Customisations/Admin.php:83
+#: source/php/Customisations/Admin/Admin.php:83
 msgctxt "Editor font size preset"
 msgid "Medium"
 msgstr "Normal"
 
-#: source/php/Customisations/Admin.php:88
+#: source/php/Customisations/Admin/Admin.php:88
 msgctxt "Editor font size preset"
 msgid "Large"
 msgstr "Stor"
 
-#: source/php/Customisations/Admin.php:93
+#: source/php/Customisations/Admin/Admin.php:93
 msgctxt "Editor font size preset"
 msgid "Extra large"
 msgstr "Extra stor"
 
-#: source/php/Customisations/Admin.php:98
+#: source/php/Customisations/Admin/Admin.php:98
 msgctxt "Editor font size preset"
 msgid "Larger"
 msgstr "Större"
 
-#: source/php/Customisations/Admin.php:117
+#: source/php/Customisations/Admin/Admin.php:117
 msgctxt "Paragraph block style"
 msgid "Preamble"
 msgstr "Ingress"
+
+#: source/php/Customisations/Admin/PostTemplates.php:26
+#: source/php/Customisations/Admin/PostTemplates.php:27
+msgid "New navigation page"
+msgstr "Ny navigationssida"
+
+#: source/php/Customisations/Admin/PostTemplates.php:45
+msgid "You do not have permission to perform this action."
+msgstr "Du har inte rättigheter att utföra den här åtgärden."
 
 #: source/php/Customisations/Breadcrumbs.php:81
 msgid "Start"

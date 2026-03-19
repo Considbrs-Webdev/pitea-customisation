@@ -32,7 +32,6 @@ class App
         $classes = [
             Admin\Settings::class,
             Customisations\Accessibility::class,
-            Customisations\Admin::class,
             Customisations\Breadcrumbs::class,
             Customisations\ColorPicker::class,
             Customisations\Config::class,
@@ -52,6 +51,8 @@ class App
             Customisations\Taxonomies::class,
             Customisations\Templates::class,
             Customisations\Typesense::class,
+            Customisations\Admin\Admin::class,
+            Customisations\Admin\PostTemplates::class,
             Customisations\Modules\InlayList::class,
             Customisations\Modules\Container::class,
             Customisations\Modules\LinkCards::class,

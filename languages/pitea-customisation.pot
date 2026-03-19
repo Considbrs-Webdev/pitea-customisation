@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-19T14:20:40+00:00\n"
+"POT-Creation-Date: 2026-03-19T19:48:56+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: pitea-customisation\n"
@@ -336,34 +336,43 @@ msgstr ""
 msgid "Listen to this page with ReadSpeaker"
 msgstr ""
 
-#: source/php/Customisations/Admin.php:78
+#: source/php/Customisations/Admin/Admin.php:78
 msgctxt "Editor font size preset"
 msgid "Small"
 msgstr ""
 
-#: source/php/Customisations/Admin.php:83
+#: source/php/Customisations/Admin/Admin.php:83
 msgctxt "Editor font size preset"
 msgid "Medium"
 msgstr ""
 
-#: source/php/Customisations/Admin.php:88
+#: source/php/Customisations/Admin/Admin.php:88
 msgctxt "Editor font size preset"
 msgid "Large"
 msgstr ""
 
-#: source/php/Customisations/Admin.php:93
+#: source/php/Customisations/Admin/Admin.php:93
 msgctxt "Editor font size preset"
 msgid "Extra large"
 msgstr ""
 
-#: source/php/Customisations/Admin.php:98
+#: source/php/Customisations/Admin/Admin.php:98
 msgctxt "Editor font size preset"
 msgid "Larger"
 msgstr ""
 
-#: source/php/Customisations/Admin.php:117
+#: source/php/Customisations/Admin/Admin.php:117
 msgctxt "Paragraph block style"
 msgid "Preamble"
+msgstr ""
+
+#: source/php/Customisations/Admin/PostTemplates.php:26
+#: source/php/Customisations/Admin/PostTemplates.php:27
+msgid "New navigation page"
+msgstr ""
+
+#: source/php/Customisations/Admin/PostTemplates.php:45
+msgid "You do not have permission to perform this action."
 msgstr ""
 
 #: source/php/Customisations/Breadcrumbs.php:81

@@ -1,6 +1,6 @@
 <?php
 
-namespace PiteaCustomisation\Customisations;
+namespace PiteaCustomisation\Customisations\Admin;
 
 use PiteaCustomisation\Helpers\CacheBust;
 
