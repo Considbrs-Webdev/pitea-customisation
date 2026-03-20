@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pitea-"
 "customisation\n"
-"POT-Creation-Date: 2026-03-19T19:48:56+00:00\n"
-"PO-Revision-Date: 2026-03-19 20:49+0100\n"
+"POT-Creation-Date: 2026-03-20T08:47:36+00:00\n"
+"PO-Revision-Date: 2026-03-20 09:47+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -402,12 +402,18 @@ msgctxt "Paragraph block style"
 msgid "Preamble"
 msgstr "Ingress"
 
-#: source/php/Customisations/Admin/PostTemplates.php:26
 #: source/php/Customisations/Admin/PostTemplates.php:27
+#: source/php/Customisations/Admin/PostTemplates.php:28
 msgid "New navigation page"
 msgstr "Ny navigationssida"
 
-#: source/php/Customisations/Admin/PostTemplates.php:45
+#: source/php/Customisations/Admin/PostTemplates.php:38
+#: source/php/Customisations/Admin/PostTemplates.php:39
+msgid "New theme page"
+msgstr "Ny temasida"
+
+#: source/php/Customisations/Admin/PostTemplates.php:57
+#: source/php/Customisations/Admin/PostTemplates.php:198
 msgid "You do not have permission to perform this action."
 msgstr "Du har inte rättigheter att utföra den här åtgärden."
 

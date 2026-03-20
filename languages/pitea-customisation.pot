@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-19T19:48:56+00:00\n"
+"POT-Creation-Date: 2026-03-20T08:47:36+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: pitea-customisation\n"
@@ -366,12 +366,18 @@ msgctxt "Paragraph block style"
 msgid "Preamble"
 msgstr ""
 
-#: source/php/Customisations/Admin/PostTemplates.php:26
 #: source/php/Customisations/Admin/PostTemplates.php:27
+#: source/php/Customisations/Admin/PostTemplates.php:28
 msgid "New navigation page"
 msgstr ""
 
-#: source/php/Customisations/Admin/PostTemplates.php:45
+#: source/php/Customisations/Admin/PostTemplates.php:38
+#: source/php/Customisations/Admin/PostTemplates.php:39
+msgid "New theme page"
+msgstr ""
+
+#: source/php/Customisations/Admin/PostTemplates.php:57
+#: source/php/Customisations/Admin/PostTemplates.php:198
 msgid "You do not have permission to perform this action."
 msgstr ""
 
