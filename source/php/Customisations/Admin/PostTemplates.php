@@ -4,7 +4,8 @@ namespace PiteaCustomisation\Customisations\Admin;
 
 class PostTemplates
 {
-    private const PAGE = 'pitea-create-navigation-page';
+    private const PAGE       = 'pitea-create-navigation-page';
+    private const PAGE_THEME = 'pitea-create-theme-page';
 
     public function __construct()
     {
@@ -31,6 +32,17 @@ class PostTemplates
         );
 
         add_action('load-' . $hook, [$this, 'handleCreateNavigationPage']);
+
+        $hookTheme = add_submenu_page(
+            'edit.php?post_type=page',
+            __('New theme page', 'pitea-customisation'),
+            __('New theme page', 'pitea-customisation'),
+            'edit_pages',
+            self::PAGE_THEME,
+            '__return_false'
+        );
+
+        add_action('load-' . $hookTheme, [$this, 'handleCreateThemePage']);
     }
 
     /**
@@ -107,7 +119,7 @@ class PostTemplates
 <!-- wp:columns {"verticalAlignment":"center"} -->
 <div class="wp-block-columns are-vertically-aligned-center"><!-- wp:column {"verticalAlignment":"center","width":"50%"} -->
 <div class="wp-block-column is-vertically-aligned-center" style="flex-basis:50%"><!-- wp:image {"id":471,"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><img src="https://pitea.local/wp-content/uploads/2026/01/fd7450470648bc7be5d5371975a4b304c2af4324-2.png?_t=1773414694" alt="Kids fishing" class="wp-image-471"/></figure>
+<figure class="wp-block-image size-full"><img src="/wp-content/plugins/pitea-customisation/assets/images/dummies/dummy-image.jpg" alt="Dummy image" class="wp-image-471"/></figure>
 <!-- /wp:image --></div>
 <!-- /wp:column -->
 
@@ -137,7 +149,7 @@ class PostTemplates
 EOT;
 
         $post_id = wp_insert_post([
-            'post_title'   => '(Navigationssida huvudområde)',
+            'post_title'   => 'Navigationssida – huvudområde',
             'post_content' => $post_content,
             'post_status'  => 'draft',
             'post_type'    => 'page',
@@ -165,6 +177,146 @@ EOT;
             '_share_button_placement'          => 'field_share_button_placement',
             'show_accessibility_buttons'       => '0',
             '_show_accessibility_buttons'      => 'field_show_accessibility_buttons',
+        ];
+
+        foreach ($meta as $key => $value) {
+            update_post_meta($post_id, $key, $value);
+        }
+
+        return $post_id;
+    }
+
+    /**
+     * Create the theme page and redirect the user to the block editor.
+     * Fires on load-{hook} before any output is sent.
+     *
+     * @return void
+     */
+    public function handleCreateThemePage(): void
+    {
+        if (!current_user_can('edit_pages')) {
+            wp_die(esc_html__('You do not have permission to perform this action.', 'pitea-customisation'));
+        }
+
+        $post_id = $this->insertThemePage();
+
+        if (is_wp_error($post_id)) {
+            wp_die(esc_html($post_id->get_error_message()));
+        }
+
+        wp_redirect(admin_url('post.php?post=' . $post_id . '&action=edit'));
+        exit;
+    }
+
+    /**
+     * Create the theme page with starter block content and ACF metadata.
+     *
+     * @return int|\WP_Error
+     */
+    private function insertThemePage(): int|\WP_Error
+    {
+        $post_content = <<<'EOT'
+<!-- wp:acf/container {"name":"acf/container","data":{"amount":"4","_amount":"field_63cfdba39a6d2","border_radius":"","_border_radius":"field_6807afdfba66c","shadow":"0","_shadow":"field_68088e6bbe241","content_width":"standard","_content_width":"field_644b6d221b7a4","backgroundImage":"","_backgroundImage":"field_6405fea65cc8f","background_color_type":"default","_background_color_type":"field_64831fa89c119","color":"#D1DBC8","_color":"field_63cfdc219a6d3","text_color":"#000000","_text_color":"field_644b77128c900","lang":"auto","_lang":"field_636e42408367e"},"align":"full","mode":"preview","className":"top-element","metadata":{"name":"Modul: Hero temasida","patternName":"core/block/2056"}} -->
+<!-- wp:acf/spacer {"name":"acf/spacer","data":{"custom_block_title":"","_custom_block_title":"field_block_title","lang":"auto","_lang":"field_636e42408367e","space_amount":"4","_space_amount":"field_611d0016546f1"},"mode":"preview"} /-->
+
+<!-- wp:columns -->
+<div class="wp-block-columns"><!-- wp:column {"verticalAlignment":"center"} -->
+<div class="wp-block-column is-vertically-aligned-center"><!-- wp:heading {"level":1} -->
+<h1 class="wp-block-heading">Temasida</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>En ingress som sammanfattar sidans innehåll. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column -->
+
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:image {"sizeSlug":"large","linkDestination":"none"} -->
+<figure class="wp-block-image size-large"><img src="/wp-content/plugins/pitea-customisation/assets/images/dummies/dummy-image-inverted.jpg" alt="Dummybild"/></figure>
+<!-- /wp:image --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->
+
+<!-- wp:acf/spacer {"name":"acf/spacer","data":{"custom_block_title":"","_custom_block_title":"field_block_title","lang":"auto","_lang":"field_636e42408367e","space_amount":"4","_space_amount":"field_611d0016546f1"},"mode":"preview"} /-->
+<!-- /wp:acf/container -->
+
+<!-- wp:acf/spacer {"name":"acf/spacer","data":{"custom_block_title":"","_custom_block_title":"field_block_title","lang":"auto","_lang":"field_636e42408367e","space_amount":"2","_space_amount":"field_611d0016546f1"},"mode":"preview"} /-->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Lorem ipsum</h2>
+<!-- /wp:heading -->
+
+<!-- wp:acf/spacer {"name":"acf/spacer","data":{"custom_block_title":"","_custom_block_title":"field_block_title","lang":"auto","_lang":"field_636e42408367e","space_amount":"4","_space_amount":"field_611d0016546f1"},"mode":"preview"} /-->
+
+<!-- wp:acf/manualinput {"name":"acf/manualinput","data":{"custom_block_title":"","_custom_block_title":"field_block_title","display_as":"card","_display_as":"field_64ff23d0d91bf","display_as_conditional":"card","_display_as_conditional":"field_6752f959acfda","allow_user_modification":"0","_allow_user_modification":"field_67126c170c176","columns":"o-grid-4","_columns":"field_65001d039d4c4","highlight_first_input":"0","_highlight_first_input":"field_663372f4922a5","title_above_image":"0","_title_above_image":"field_68975344a0707","disable_resize_layout_shift":"0","_disable_resize_layout_shift":"field_689751b4887b6","use_custom_card_color":"0","_use_custom_card_color":"field_689b2ce333d43","manual_inputs_0_eyebrow":"","_manual_inputs_0_eyebrow":"field_6945264b7d66e","manual_inputs_0_title":"Lorem ipsum","_manual_inputs_0_title":"field_64ff22fdd91b8","manual_inputs_0_content":"Dolor sit amet, consectetur adipiscing elit. Vivamus imperdiet imperdiet leo, eu accumsan neque aliquam vitae. Integer egestas vulputate risus porttitor porta.","_manual_inputs_0_content":"field_64ff231ed91b9","manual_inputs_0_link":"#","_manual_inputs_0_link":"field_64ff232ad91ba","manual_inputs_0_link_text":"","_manual_inputs_0_link_text":"field_65002bce6d459","manual_inputs_0_show_link_as_button":"0","_manual_inputs_0_show_link_as_button":"field_69985fac063ef","manual_inputs_0_image":"","_manual_inputs_0_image":"field_64ff2355d91bb","manual_inputs_0_box_icon":"","_manual_inputs_0_box_icon":"field_65293de2a26c7","manual_inputs_1_eyebrow":"","_manual_inputs_1_eyebrow":"field_6945264b7d66e","manual_inputs_1_title":"Lorem ipsum","_manual_inputs_1_title":"field_64ff22fdd91b8","manual_inputs_1_content":"Dolor sit amet, consectetur adipiscing elit. Vivamus imperdiet imperdiet leo, eu accumsan neque aliquam vitae. Integer egestas vulputate risus porttitor porta.","_manual_inputs_1_content":"field_64ff231ed91b9","manual_inputs_1_link":"#","_manual_inputs_1_link":"field_64ff232ad91ba","manual_inputs_1_link_text":"","_manual_inputs_1_link_text":"field_65002bce6d459","manual_inputs_1_show_link_as_button":"0","_manual_inputs_1_show_link_as_button":"field_69985fac063ef","manual_inputs_1_image":"","_manual_inputs_1_image":"field_64ff2355d91bb","manual_inputs_1_box_icon":"","_manual_inputs_1_box_icon":"field_65293de2a26c7","manual_inputs_2_eyebrow":"","_manual_inputs_2_eyebrow":"field_6945264b7d66e","manual_inputs_2_title":"Lorem ipsum","_manual_inputs_2_title":"field_64ff22fdd91b8","manual_inputs_2_content":"Dolor sit amet, consectetur adipiscing elit. Vivamus imperdiet imperdiet leo, eu accumsan neque aliquam vitae. Integer egestas vulputate risus porttitor porta.","_manual_inputs_2_content":"field_64ff231ed91b9","manual_inputs_2_link":"#","_manual_inputs_2_link":"field_64ff232ad91ba","manual_inputs_2_link_text":"","_manual_inputs_2_link_text":"field_65002bce6d459","manual_inputs_2_show_link_as_button":"0","_manual_inputs_2_show_link_as_button":"field_69985fac063ef","manual_inputs_2_image":"","_manual_inputs_2_image":"field_64ff2355d91bb","manual_inputs_2_box_icon":"","_manual_inputs_2_box_icon":"field_65293de2a26c7","manual_inputs":3,"_manual_inputs":"field_64ff22b2d91b7","lang":"auto","_lang":"field_636e42408367e"},"mode":"edit","metadata":{"name":"Modul: Puffar/inkastare undersida","categories":[78],"patternName":"core/block/1858"}} /-->
+
+<!-- wp:acf/spacer {"name":"acf/spacer","data":{"custom_block_title":"","_custom_block_title":"field_block_title","lang":"auto","_lang":"field_636e42408367e","space_amount":"4","_space_amount":"field_611d0016546f1"},"mode":"preview"} /-->
+
+<!-- wp:acf/container {"name":"acf/container","data":{"amount":"4","_amount":"field_63cfdba39a6d2","border_radius":"","_border_radius":"field_6807afdfba66c","shadow":"0","_shadow":"field_68088e6bbe241","content_width":"standard","_content_width":"field_644b6d221b7a4","backgroundImage":"","_backgroundImage":"field_6405fea65cc8f","background_color_type":"default","_background_color_type":"field_64831fa89c119","color":"#F6EFE5","_color":"field_63cfdc219a6d3","text_color":"","_text_color":"field_644b77128c900","lang":"auto","_lang":"field_636e42408367e"},"align":"full","mode":"preview","metadata":{"name":"Modul: Puffar/inkastare med ikon","categories":[78],"patternName":"core/block/1872"}} -->
+<!-- wp:acf/spacer {"name":"acf/spacer","data":{"custom_block_title":"","_custom_block_title":"field_block_title","lang":"auto","_lang":"field_636e42408367e","space_amount":"2","_space_amount":"field_611d0016546f1"},"mode":"preview"} /-->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Lorem ipsum</h2>
+<!-- /wp:heading -->
+
+<!-- wp:acf/spacer {"name":"acf/spacer","data":{"custom_block_title":"","_custom_block_title":"field_block_title","lang":"auto","_lang":"field_636e42408367e","space_amount":"4","_space_amount":"field_611d0016546f1"},"mode":"preview"} /-->
+
+<!-- wp:acf/link-cards {"name":"acf/link-cards","data":{"custom_block_title":"","_custom_block_title":"field_block_title","columns":"2","_columns":"field_67892a1b3c4d5e70","cards_0_title":"Lorem ipsum","_cards_0_title":"field_67892a1b3c4d5e72","cards_0_description":"Dolor sit amet","_cards_0_description":"field_67892a1b3c4d5e73","cards_0_link":"","_cards_0_link":"field_67892a1b3c4d5e74","cards_0_icon":"fa-regular fa-icons","_cards_0_icon":"field_67892a1b3c4d5e75","cards_0_color_theme":"{\"mode\":\"theme\",\"theme\":\"brown\",\"backgroundColor\":\"#764a0f\",\"iconColor\":\"#e7d6bf\"}","_cards_0_color_theme":"field_67892a1b3c4d5e76","cards_1_title":"Lorem ipsum","_cards_1_title":"field_67892a1b3c4d5e72","cards_1_description":"Dolor sit amet","_cards_1_description":"field_67892a1b3c4d5e73","cards_1_link":"","_cards_1_link":"field_67892a1b3c4d5e74","cards_1_icon":"fa-regular fa-icons","_cards_1_icon":"field_67892a1b3c4d5e75","cards_1_color_theme":"{\"mode\":\"theme\",\"theme\":\"brown\",\"backgroundColor\":\"#764a0f\",\"iconColor\":\"#e7d6bf\"}","_cards_1_color_theme":"field_67892a1b3c4d5e76","cards_2_title":"Lorem ipsum","_cards_2_title":"field_67892a1b3c4d5e72","cards_2_description":"Dolor sit amet","_cards_2_description":"field_67892a1b3c4d5e73","cards_2_link":"","_cards_2_link":"field_67892a1b3c4d5e74","cards_2_icon":"fa-regular fa-icons","_cards_2_icon":"field_67892a1b3c4d5e75","cards_2_color_theme":"{\"mode\":\"theme\",\"theme\":\"brown\",\"backgroundColor\":\"#764a0f\",\"iconColor\":\"#e7d6bf\"}","_cards_2_color_theme":"field_67892a1b3c4d5e76","cards_3_title":"Lorem ipsum","_cards_3_title":"field_67892a1b3c4d5e72","cards_3_description":"Dolor sit amet","_cards_3_description":"field_67892a1b3c4d5e73","cards_3_link":"","_cards_3_link":"field_67892a1b3c4d5e74","cards_3_icon":"fa-regular fa-icons","_cards_3_icon":"field_67892a1b3c4d5e75","cards_3_color_theme":"{\"mode\":\"theme\",\"theme\":\"brown\",\"backgroundColor\":\"#764a0f\",\"iconColor\":\"#e7d6bf\"}","_cards_3_color_theme":"field_67892a1b3c4d5e76","cards":4,"_cards":"field_67892a1b3c4d5e71","lang":"auto","_lang":"field_636e42408367e"},"mode":"edit"} /-->
+
+<!-- wp:acf/spacer {"name":"acf/spacer","data":{"custom_block_title":"","_custom_block_title":"field_block_title","lang":"auto","_lang":"field_636e42408367e","space_amount":"8","_space_amount":"field_611d0016546f1"},"mode":"preview"} /-->
+<!-- /wp:acf/container -->
+
+<!-- wp:acf/spacer {"name":"acf/spacer","data":{"custom_block_title":"","_custom_block_title":"field_block_title","lang":"auto","_lang":"field_636e42408367e","space_amount":"8","_space_amount":"field_611d0016546f1"},"mode":"preview"} /-->
+
+<!-- wp:columns {"verticalAlignment":"center","metadata":{"name":"Modul: Bild vänster, text höger (undersida)","categories":[78],"patternName":"core/block/1887"}} -->
+<div class="wp-block-columns are-vertically-aligned-center"><!-- wp:column {"verticalAlignment":"center","width":"45%","className":"has-custom-width"} -->
+<div class="wp-block-column is-vertically-aligned-center has-custom-width" style="flex-basis:45%"><!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"></figure>
+<!-- /wp:image --></div>
+<!-- /wp:column -->
+
+<!-- wp:column {"verticalAlignment":"center","width":"55%","className":"has-custom-width"} -->
+<div class="wp-block-column is-vertically-aligned-center has-custom-width" style="flex-basis:55%"><!-- wp:acf/manualinput {"name":"acf/manualinput","data":{"custom_block_title":"","_custom_block_title":"field_block_title","display_as":"card","_display_as":"field_64ff23d0d91bf","display_as_conditional":"card","_display_as_conditional":"field_6752f959acfda","allow_user_modification":"0","_allow_user_modification":"field_67126c170c176","columns":"o-grid-12","_columns":"field_65001d039d4c4","highlight_first_input":"0","_highlight_first_input":"field_663372f4922a5","title_above_image":"0","_title_above_image":"field_68975344a0707","disable_resize_layout_shift":"0","_disable_resize_layout_shift":"field_689751b4887b6","use_custom_card_color":"0","_use_custom_card_color":"field_689b2ce333d43","manual_inputs_0_eyebrow":"","_manual_inputs_0_eyebrow":"field_6945264b7d66e","manual_inputs_0_title":"Lorem ipsum rubrik","_manual_inputs_0_title":"field_64ff22fdd91b8","manual_inputs_0_content":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus imperdiet imperdiet leo, eu accumsan neque aliquam vitae. Integer egestas vulputate risus porttitor porta.","_manual_inputs_0_content":"field_64ff231ed91b9","manual_inputs_0_link":"#","_manual_inputs_0_link":"field_64ff232ad91ba","manual_inputs_0_link_text":"Lorem Ipsum","_manual_inputs_0_link_text":"field_65002bce6d459","manual_inputs_0_show_link_as_button":"1","_manual_inputs_0_show_link_as_button":"field_69985fac063ef","manual_inputs_0_button_color":"primary","_manual_inputs_0_button_color":"field_69986078063f1","manual_inputs_0_image":"","_manual_inputs_0_image":"field_64ff2355d91bb","manual_inputs_0_box_icon":"","_manual_inputs_0_box_icon":"field_65293de2a26c7","manual_inputs":1,"_manual_inputs":"field_64ff22b2d91b7","lang":"auto","_lang":"field_636e42408367e"},"mode":"preview"} /--></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->
+
+<!-- wp:acf/spacer {"name":"acf/spacer","data":{"custom_block_title":"","_custom_block_title":"field_block_title","lang":"auto","_lang":"field_636e42408367e","space_amount":"8","_space_amount":"field_611d0016546f1"},"mode":"preview"} /-->
+
+<!-- wp:columns {"verticalAlignment":"center","metadata":{"name":"Modul: Text vänster, bild höger (undersida)","categories":[78],"patternName":"core/block/1888"}} -->
+<div class="wp-block-columns are-vertically-aligned-center"><!-- wp:column {"verticalAlignment":"center","width":"55%","className":"has-custom-width"} -->
+<div class="wp-block-column is-vertically-aligned-center has-custom-width" style="flex-basis:55%"><!-- wp:acf/manualinput {"name":"acf/manualinput","data":{"custom_block_title":"","_custom_block_title":"field_block_title","display_as":"card","_display_as":"field_64ff23d0d91bf","display_as_conditional":"card","_display_as_conditional":"field_6752f959acfda","allow_user_modification":"0","_allow_user_modification":"field_67126c170c176","columns":"o-grid-12","_columns":"field_65001d039d4c4","highlight_first_input":"0","_highlight_first_input":"field_663372f4922a5","title_above_image":"0","_title_above_image":"field_68975344a0707","disable_resize_layout_shift":"0","_disable_resize_layout_shift":"field_689751b4887b6","use_custom_card_color":"0","_use_custom_card_color":"field_689b2ce333d43","manual_inputs_0_eyebrow":"","_manual_inputs_0_eyebrow":"field_6945264b7d66e","manual_inputs_0_title":"Lorem ipsum rubrik","_manual_inputs_0_title":"field_64ff22fdd91b8","manual_inputs_0_content":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus imperdiet imperdiet leo, eu accumsan neque aliquam vitae. Integer egestas vulputate risus porttitor porta.","_manual_inputs_0_content":"field_64ff231ed91b9","manual_inputs_0_link":"#","_manual_inputs_0_link":"field_64ff232ad91ba","manual_inputs_0_link_text":"Lorem Ipsum","_manual_inputs_0_link_text":"field_65002bce6d459","manual_inputs_0_show_link_as_button":"1","_manual_inputs_0_show_link_as_button":"field_69985fac063ef","manual_inputs_0_button_color":"primary","_manual_inputs_0_button_color":"field_69986078063f1","manual_inputs_0_image":"","_manual_inputs_0_image":"field_64ff2355d91bb","manual_inputs_0_box_icon":"","_manual_inputs_0_box_icon":"field_65293de2a26c7","manual_inputs":1,"_manual_inputs":"field_64ff22b2d91b7","lang":"auto","_lang":"field_636e42408367e"},"mode":"preview"} /--></div>
+<!-- /wp:column -->
+
+<!-- wp:column {"verticalAlignment":"center","width":"45%","className":"has-custom-width"} -->
+<div class="wp-block-column is-vertically-aligned-center has-custom-width" style="flex-basis:45%"><!-- wp:image {"sizeSlug":"full","linkDestination":"none"} -->
+<figure class="wp-block-image size-full"></figure>
+<!-- /wp:image --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->
+
+<!-- wp:acf/spacer {"name":"acf/spacer","data":{"custom_block_title":"","_custom_block_title":"field_block_title","lang":"auto","_lang":"field_636e42408367e","space_amount":"16","_space_amount":"field_611d0016546f1"},"mode":"preview"} /-->
+EOT;
+
+        $post_id = wp_insert_post([
+            'post_title'   => 'Temasida',
+            'post_content' => $post_content,
+            'post_status'  => 'draft',
+            'post_type'    => 'page',
+            'post_parent'  => 0,
+            'post_author'  => get_current_user_id(),
+        ], true);
+
+        if (is_wp_error($post_id)) {
+            return $post_id;
+        }
+
+        $meta = [
+            '_wp_page_template'          => 'one-page.blade.php',
+            'share_button_placement'     => 'none',
+            '_share_button_placement'    => 'field_share_button_placement',
+            'show_accessibility_buttons' => '0',
+            '_show_accessibility_buttons' => 'field_show_accessibility_buttons',
+            '_customer_feedback_exclude' => '1',
         ];
 
         foreach ($meta as $key => $value) {
