@@ -104,8 +104,14 @@
         padding: calc(var(--base, 8px) * 4);
       }
     }
+
+    // Match footer inset to body (styleguide uses 16px on footer; body uses different rhythm)
     .c-card__footer {
       border-top: none;
+      margin-top: 0;
+      padding-top: 0;
+      padding-bottom: calc(var(--base, 8px) * 2);
+      padding-inline: 0;
     }
 
     &.c-card--has-custom-background {
@@ -113,8 +119,23 @@
         padding: 30px 36px;
       }
 
+      .c-card__footer {
+        padding-inline: 36px;
+        padding-bottom: 30px;
+      }
+
       &:hover {
         background-color: var(--c-card-color-background) !important;
+      }
+    }
+
+    @media screen and (max-width: 499px) {
+      .c-card__footer {
+        padding-inline: calc(var(--base, 8px) * 4);
+      }
+
+      &.c-card--has-custom-background .c-card__footer {
+        padding-inline: 36px;
       }
     }
 
