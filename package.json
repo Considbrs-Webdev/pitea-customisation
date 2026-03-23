@@ -6,7 +6,8 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build",
+        "build": "vite build && npm run build:gutenberg",
+        "build:vite": "vite build",
         "watch": "vite build --watch",
         "build:gutenberg": "wp-scripts build source/js/gutenberg/index.js --output-path=dist/gutenberg",
         "watch:gutenberg": "wp-scripts start source/js/gutenberg/index.js --output-path=dist/gutenberg",
