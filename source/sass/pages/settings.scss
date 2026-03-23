@@ -503,6 +503,107 @@ $settings-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
     margin-top: 8px;
   }
 
+  // Color picker tab: sticky preview (left) + rules (right)
+  &__color-picker-layout {
+    display: grid;
+    grid-template-columns: minmax(220px, 30%) minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+    margin-top: 4px;
+
+    @media (max-width: 960px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__color-picker-preview-col {
+    position: sticky;
+    // Below WP admin bar + sticky settings header (see &__nav-inner)
+    top: calc(var(--wp-admin--admin-bar--height, 32px) + #{$settings-header-height} + 12px);
+    z-index: 5;
+    align-self: start;
+    max-height: calc(
+      100vh - var(--wp-admin--admin-bar--height, 32px) - #{$settings-header-height} - 28px
+    );
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 2px 6px 12px 2px;
+    margin: 0 -6px 0 -2px;
+
+    .pitea-settings__palette-reference {
+      margin-bottom: 0;
+    }
+
+    // Single column of cards in the sidebar (readable when narrow)
+    .pitea-settings__palette-reference-grid {
+      grid-template-columns: 1fr;
+    }
+
+    @media (max-width: 960px) {
+      position: static;
+      max-height: none;
+      overflow: visible;
+      margin: 0;
+      padding: 0 0 8px;
+    }
+  }
+
+  &__color-picker-rules-col {
+    min-width: 0;
+  }
+
+  // Color picker tab: palette reference panel (inside preview column)
+  &__palette-reference {
+    margin-bottom: 0;
+    padding: 12px 14px;
+    background: #fff;
+    border: 1px solid var(--color-darjnalen-light-3, #ddd);
+    border-radius: $settings-radius;
+  }
+
+  &__palette-reference-intro {
+    margin: 0 0 14px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: $settings-color-muted;
+  }
+
+  &__palette-reference-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+  }
+
+  &__palette-reference-card {
+    padding: 10px 12px;
+    background: #fafafa;
+    border: 1px solid var(--color-darjnalen-light-3, #ddd);
+    border-radius: $settings-radius;
+  }
+
+  &__palette-reference-card-title {
+    margin: 0 0 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: $settings-color-text;
+  }
+
+  &__palette-reference-swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  &__palette-swatch {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border-radius: 3px;
+    border: 1px solid rgba(0, 0, 0, 0.18);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+    flex-shrink: 0;
+  }
+
   &__repeater-add {
     align-self: flex-start;
   }

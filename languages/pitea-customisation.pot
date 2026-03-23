@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-23T12:00:34+01:00\n"
+"POT-Creation-Date: 2026-03-23T14:32:00+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: pitea-customisation\n"
@@ -175,29 +175,37 @@ msgstr ""
 msgid "No design system palette groups were found. Check that variables.scss is available or Municipio color helpers are loaded."
 msgstr ""
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:180
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:182
 #: source/php/Admin/Tabs/PagePermissionsTab.php:277
 msgid "+ Add rule"
 msgstr ""
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:212
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:202
+msgid "Palette group preview"
+msgstr ""
+
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:205
+msgid "Each name below is a palette group in the editor color picker. Hover a square to see the color label and hex code."
+msgstr ""
+
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:253
 msgid "User group"
 msgstr ""
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:214
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:255
 #: source/php/Admin/Tabs/PagePermissionsTab.php:297
 msgid "— Select user group —"
 msgstr ""
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:228
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:269
 msgid "Allowed palette groups"
 msgstr ""
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:252
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:293
 msgid "Allow custom hex color"
 msgstr ""
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:256
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:297
 #: source/php/Admin/Tabs/PagePermissionsTab.php:247
 #: source/php/Admin/Tabs/PagePermissionsTab.php:319
 msgid "Remove"

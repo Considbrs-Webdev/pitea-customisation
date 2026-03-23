@@ -274,18 +274,18 @@ msgstr "+ Lägg till sida"
 msgid "Apply to all subpages"
 msgstr "Gäller för alla undersidor"
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:256
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:297
 #: source/php/Admin/Tabs/PagePermissionsTab.php:247
 #: source/php/Admin/Tabs/PagePermissionsTab.php:319
 msgid "Remove"
 msgstr "Ta bort"
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:180
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:182
 #: source/php/Admin/Tabs/PagePermissionsTab.php:277
 msgid "+ Add rule"
 msgstr "+ Lägg till regel"
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:214
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:255
 #: source/php/Admin/Tabs/PagePermissionsTab.php:297
 msgid "— Select user group —"
 msgstr "— Välj användargrupp —"
@@ -507,14 +507,22 @@ msgstr "Behörigheter för färgväljare"
 msgid "No design system palette groups were found. Check that variables.scss is available or Municipio color helpers are loaded."
 msgstr "Inga palettgrupper i designsystemet hittades. Kontrollera att variables.scss finns eller att Municipios färghjälpare är inlästa."
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:212
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:253
 msgid "User group"
 msgstr "Användargrupp"
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:228
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:269
 msgid "Allowed palette groups"
 msgstr "Tillåtna palettgrupper"
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:252
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:293
 msgid "Allow custom hex color"
 msgstr "Tillåt egen hex-färg"
+
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:202
+msgid "Palette group preview"
+msgstr "Förhandsvisning av palettgrupper"
+
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:205
+msgid "Each name below is a palette group in the editor color picker. Hover a square to see the color label and hex code."
+msgstr "Varje namn nedan är en palettgrupp i redaktörens färgväljare. Hovra över en ruta för att se färgets namn och hex-kod."

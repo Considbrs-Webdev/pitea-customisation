@@ -52,25 +52,27 @@ class ColorPickerPermissionsTab implements SettingsTabInterface
             ]
         );
 
+        // No add_settings_field here: WordPress wraps every field in <table class="form-table"><tr><td>>,
+        // which breaks full-width layouts. With only a section callback and zero fields, core skips the table
+        // (see do_settings_sections() — it outputs the table only when fields exist for the section).
         add_settings_section(
             'pitea_customisation_color_picker_permissions',
-            __('User group color access', 'pitea-customisation'),
-            function (): void {
-                echo '<p class="pitea-settings__section-desc">' . esc_html__(
-                    'Limit which palette groups each user group may use in the design system color picker, and whether they may enter a custom hex color. Users without a matching rule here keep full access. Users in several groups get the union of allowed palette groups; custom color is allowed if any matching rule allows it.',
-                    'pitea-customisation'
-                ) . '</p>';
-            },
+            '',
+            [$this, 'renderColorPickerSection'],
             self::GROUP_MAIN
         );
+    }
 
-        add_settings_field(
-            UserGroupPaletteAccess::OPTION_KEY,
-            __('Rules', 'pitea-customisation'),
-            [$this, 'renderRulesField'],
-            self::GROUP_MAIN,
-            'pitea_customisation_color_picker_permissions'
-        );
+    /**
+     * Section content: intro + layout (not inside a form-table row).
+     */
+    public function renderColorPickerSection(): void
+    {
+        echo '<p class="pitea-settings__section-desc">' . esc_html__(
+            'Limit which palette groups each user group may use in the design system color picker, and whether they may enter a custom hex color. Users without a matching rule here keep full access. Users in several groups get the union of allowed palette groups; custom color is allowed if any matching rule allows it.',
+            'pitea-customisation'
+        ) . '</p>';
+        $this->renderRulesField();
     }
 
     // -------------------------------------------------------------------------
@@ -141,7 +143,7 @@ class ColorPickerPermissionsTab implements SettingsTabInterface
         <?php
     }
 
-    public function renderRulesField(): void
+    private function renderRulesField(): void
     {
         $paletteGroups = DesignSystemColors::getGroupedColors();
         $groupNames    = array_keys($paletteGroups);
@@ -157,7 +159,28 @@ class ColorPickerPermissionsTab implements SettingsTabInterface
                 'No design system palette groups were found. Check that variables.scss is available or Municipio color helpers are loaded.',
                 'pitea-customisation'
             ) . '</strong></p>';
+            $this->renderColorPickerRepeater($rows, $groupNames);
+
+            return;
         }
+        ?>
+        <div class="pitea-settings__color-picker-layout">
+            <aside class="pitea-settings__color-picker-preview-col">
+                <?php $this->renderPaletteGroupReference($paletteGroups); ?>
+            </aside>
+            <div class="pitea-settings__color-picker-rules-col">
+                <?php $this->renderColorPickerRepeater($rows, $groupNames); ?>
+            </div>
+        </div>
+        <?php
+    }
+
+    /**
+     * @param list<array<string, mixed>> $rows
+     * @param list<string>               $groupNames
+     */
+    private function renderColorPickerRepeater(array $rows, array $groupNames): void
+    {
         ?>
         <div class="pitea-settings__repeater" data-repeater="color-picker-permissions">
             <div class="pitea-settings__repeater-rows" id="color-picker-permissions-rows">
@@ -182,6 +205,45 @@ class ColorPickerPermissionsTab implements SettingsTabInterface
             <template id="color-picker-permissions-row-template">
                 <?php $this->renderRuleRow('{{INDEX}}', 0, [], false, $groupNames); ?>
             </template>
+        </div>
+        <?php
+    }
+
+    /**
+     * Full-width guide: group name + every swatch (hover shows color name + hex).
+     *
+     * @param array<string, list<array{name: string, hex: string, var: string|null}>> $paletteGroups
+     */
+    private function renderPaletteGroupReference(array $paletteGroups): void
+    {
+        ?>
+        <div
+            class="pitea-settings__palette-reference"
+            role="region"
+            aria-label="<?php echo esc_attr__('Palette group preview', 'pitea-customisation'); ?>"
+        >
+            <p class="pitea-settings__palette-reference-intro">
+                <?php esc_html_e(
+                    'Each name below is a palette group in the editor color picker. Hover a square to see the color label and hex code.',
+                    'pitea-customisation'
+                ); ?>
+            </p>
+            <div class="pitea-settings__palette-reference-grid">
+                <?php foreach ($paletteGroups as $gName => $colors) : ?>
+                    <div class="pitea-settings__palette-reference-card">
+                        <div class="pitea-settings__palette-reference-card-title"><?php echo esc_html($gName); ?></div>
+                        <div class="pitea-settings__palette-reference-swatches" aria-hidden="true">
+                            <?php foreach ($colors as $c) : ?>
+                                <span
+                                    class="pitea-settings__palette-swatch"
+                                    style="background-color: <?php echo esc_attr($c['hex']); ?>;"
+                                    title="<?php echo esc_attr($c['name'] . ' — ' . $c['hex']); ?>"
+                                ></span>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
         </div>
         <?php
     }
