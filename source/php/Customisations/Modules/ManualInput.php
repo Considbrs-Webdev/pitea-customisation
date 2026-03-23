@@ -12,6 +12,9 @@ class ManualInput
 
     private const DISPLAY_AS_FIELD_KEY = 'field_6752f959acfda';
 
+    /** Municipio “Eyebrow” text subfield (manual_inputs repeater). */
+    private const EYEBROW_TEXT_FIELD_KEY = 'field_6945264b7d66e';
+
     private const FIELDS = [
         'manual_input_eyebrow_background' => [
             'key' => 'field_pitea_mi_eyebrow_bg',
@@ -30,6 +33,7 @@ class ManualInput
     public function __construct()
     {
         add_action('acf/init', [$this, 'registerFields'], 20);
+        add_filter('acf/load_field/key=' . self::MANUAL_INPUTS_REPEATER_KEY, [$this, 'orderEyebrowColorFieldsAfterEyebrow'], 99, 1);
         add_filter('Modularity/Display/mod-manualinput/viewData', [$this, 'applyEyebrowStylesToItems'], 10, 1);
     }
 
@@ -54,6 +58,10 @@ class ManualInput
                             'operator' => '==',
                             'value' => 'card',
                         ],
+                        [
+                            'field' => self::EYEBROW_TEXT_FIELD_KEY,
+                            'operator' => '!=empty',
+                        ],
                     ],
                 ],
                 'wrapper' => ['width' => '50', 'class' => '', 'id' => ''],
@@ -68,6 +76,56 @@ class ManualInput
 
             acf_add_local_field($field);
         }
+    }
+
+    /**
+     * acf_add_local_field() appends repeater subfields at the end; move our color fields directly after Eyebrow.
+     *
+     * @param array<string, mixed>|false $field
+     * @return array<string, mixed>|false
+     */
+    public function orderEyebrowColorFieldsAfterEyebrow(array|false $field): array|false
+    {
+        if ($field === false || !is_array($field)) {
+            return $field;
+        }
+
+        if (empty($field['sub_fields']) || !is_array($field['sub_fields'])) {
+            return $field;
+        }
+
+        $ourKeys = [
+            self::FIELDS['manual_input_eyebrow_background']['key'],
+            self::FIELDS['manual_input_eyebrow_text_color']['key'],
+        ];
+
+        $oursByKey = [];
+        $rest = [];
+        foreach ($field['sub_fields'] as $sub) {
+            $key = $sub['key'] ?? '';
+            if (in_array($key, $ourKeys, true)) {
+                $oursByKey[$key] = $sub;
+            } else {
+                $rest[] = $sub;
+            }
+        }
+
+        if (count($oursByKey) !== count($ourKeys)) {
+            return $field;
+        }
+
+        $ordered = [];
+        foreach ($rest as $sub) {
+            $ordered[] = $sub;
+            if (($sub['key'] ?? '') === self::EYEBROW_TEXT_FIELD_KEY) {
+                foreach ($ourKeys as $k) {
+                    $ordered[] = $oursByKey[$k];
+                }
+            }
+        }
+
+        $field['sub_fields'] = $ordered;
+        return $field;
     }
 
     /**
@@ -88,6 +146,11 @@ class ManualInput
                 $input = (array) $input;
             }
             if (!is_array($input)) {
+                continue;
+            }
+
+            $eyebrow = isset($input['eyebrow']) ? trim((string) $input['eyebrow']) : '';
+            if ($eyebrow === '') {
                 continue;
             }
 
