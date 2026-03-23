@@ -50,9 +50,10 @@ pitea-customisation/
 ├── taxonomies/                      # ACF JSON definitions for custom taxonomies
 ├── views/
 │   └── search/hits/                 # Blade templates for Typesense search result hits
-├── assets/                          # Static/source assets
 ├── dist/                            # Built CSS/JS output (generated, do not edit)
 └── source/
+    ├── assets/                      # PDFs, SVGs, dummy images for templates (not Vite entries)
+    ├── css/                         # Plain CSS sources; Vite emits hashed files under dist/css/editor-plugins/
     ├── php/
     │   ├── App.php                  # Bootstrap — enqueues assets, instantiates all classes
     │   ├── Admin/                   # Settings page with tab system (General, External Content, Latest Events)
@@ -65,9 +66,10 @@ pitea-customisation/
     ├── js/
     │   ├── main.js                  # Frontend JS entry
     │   ├── admin.js                 # Admin JS entry
+    │   ├── editor-plugins/          # TinyMCE / Quicktags / ACF color picker (Vite entries → dist/js/editor-plugins/)
     │   ├── gutenberg/               # Gutenberg block editor extensions
     │   ├── modules/                 # Per-module JS
-    │   └── acf/                     # ACF field JS (icon picker, color picker)
+    │   └── acf/                     # ACF field JS built by Vite (icon picker)
     └── sass/
         ├── style.scss               # Frontend styles entry
         ├── admin.scss               # Admin styles entry

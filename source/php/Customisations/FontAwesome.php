@@ -2,6 +2,7 @@
 
 namespace PiteaCustomisation\Customisations;
 
+use PiteaCustomisation\Helpers\CacheBust;
 use PiteaCustomisation\Helpers\Utils;
 
 use ComponentLibrary\Component\BaseController as ComponentController;
@@ -58,7 +59,7 @@ class FontAwesome
         if (!Utils::containsInAttributes($attributes, 'fa-')) {
             return $wasString ? ComponentController::buildAttributes($attributes) : $attributes;
         }
-        
+
         $attributes['aria-hidden'] = 'true';
 
         unset($attributes['data-material-symbol']);
@@ -85,7 +86,7 @@ class FontAwesome
 
         $icon = explode(' ', $data['icon']);
         $data['classList'] = array_merge($data['classList'], $icon);
-        
+
         $data['icon'] = str_replace(' ', '-', $data['icon']);
 
         // Remove data-material-symbol attribute for FontAwesome icons
@@ -171,7 +172,7 @@ class FontAwesome
      */
     public function registerTinyMcePlugin($plugins): array
     {
-        $plugins['fontawesome_icons'] = plugin_dir_url(dirname(__DIR__, 2)) . 'assets/js/tinymce-fontawesome-plugin.js';
+        $plugins['fontawesome_icons'] = CacheBust::getFile('source/js/editor-plugins/tinymce-fontawesome-plugin.js');
         return $plugins;
     }
 
@@ -197,9 +198,9 @@ class FontAwesome
         // TinyMCE plugin styles
         wp_enqueue_style(
             'tinymce-fontawesome-plugin',
-            plugin_dir_url(dirname(__DIR__, 2)) . 'assets/css/tinymce-fontawesome-plugin.css',
+            CacheBust::getFile('source/css/tinymce-fontawesome-plugin.css'),
             [],
-            '1.0.0'
+            PITEA_CUSTOMISATION_VERSION
         );
     }
 
@@ -211,8 +212,8 @@ class FontAwesome
      */
     public function addFontAwesomeToTinyMce(string $mce_css): string
     {
-        $fontAwesomeUrl = \PiteaCustomisation\Helpers\CacheBust::getFile('source/sass/font-awesome.scss');
-        
+        $fontAwesomeUrl = CacheBust::getFile('source/sass/font-awesome.scss');
+
         if (!$fontAwesomeUrl) {
             return $mce_css;
         }
@@ -235,9 +236,9 @@ class FontAwesome
     {
         wp_enqueue_script(
             'quicktags-fontawesome-plugin',
-            plugin_dir_url(dirname(__DIR__, 2)) . 'assets/js/quicktags-fontawesome-plugin.js',
+            CacheBust::getFile('source/js/editor-plugins/quicktags-fontawesome-plugin.js'),
             ['quicktags'],
-            '1.0.0',
+            PITEA_CUSTOMISATION_VERSION,
             true
         );
     }

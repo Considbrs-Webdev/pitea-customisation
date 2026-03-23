@@ -119,7 +119,7 @@ class PostTemplates
 <!-- wp:columns {"verticalAlignment":"center"} -->
 <div class="wp-block-columns are-vertically-aligned-center"><!-- wp:column {"verticalAlignment":"center","width":"50%"} -->
 <div class="wp-block-column is-vertically-aligned-center" style="flex-basis:50%"><!-- wp:image {"id":471,"sizeSlug":"full","linkDestination":"none"} -->
-<figure class="wp-block-image size-full"><img src="/wp-content/plugins/pitea-customisation/assets/images/dummies/dummy-image.jpg" alt="Dummy image" class="wp-image-471"/></figure>
+<figure class="wp-block-image size-full"><img src="/wp-content/plugins/pitea-customisation/source/assets/images/dummies/dummy-image.jpg" alt="Dummy image" class="wp-image-471"/></figure>
 <!-- /wp:image --></div>
 <!-- /wp:column -->
 
@@ -232,7 +232,7 @@ EOT;
 
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:image {"sizeSlug":"large","linkDestination":"none"} -->
-<figure class="wp-block-image size-large"><img src="/wp-content/plugins/pitea-customisation/assets/images/dummies/dummy-image-inverted.jpg" alt="Dummybild"/></figure>
+<figure class="wp-block-image size-large"><img src="/wp-content/plugins/pitea-customisation/source/assets/images/dummies/dummy-image-inverted.jpg" alt="Dummybild"/></figure>
 <!-- /wp:image --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns -->

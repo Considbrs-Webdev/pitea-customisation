@@ -3,6 +3,7 @@
 namespace PiteaCustomisation\AcfFields;
 
 use PiteaCustomisation\Customisations\ColorPicker\UserGroupPaletteAccess;
+use PiteaCustomisation\Helpers\CacheBust;
 use PiteaCustomisation\Helpers\DesignSystemColors;
 
 class ColorPickerField extends \acf_field
@@ -78,13 +79,14 @@ class ColorPickerField extends \acf_field
      */
     public function input_admin_enqueue_scripts(): void
     {
-        $version = '1.0.0';
+        $scriptUrl = CacheBust::getFile('source/js/editor-plugins/acf-pitea-color-picker-field.js');
+        $styleUrl  = CacheBust::getFile('source/css/acf-pitea-color-picker-field.css');
 
         wp_enqueue_script(
             'acf-pitea-color-picker-field',
-            plugin_dir_url(dirname(__DIR__, 2)) . 'assets/js/acf-pitea-color-picker-field.js',
+            $scriptUrl,
             ['acf-input', 'jquery'],
-            $version,
+            PITEA_CUSTOMISATION_VERSION,
             true
         );
 
@@ -98,9 +100,9 @@ class ColorPickerField extends \acf_field
 
         wp_enqueue_style(
             'acf-pitea-color-picker-field',
-            plugin_dir_url(dirname(__DIR__, 2)) . 'assets/css/acf-pitea-color-picker-field.css',
+            $styleUrl,
             ['acf-input'],
-            $version
+            PITEA_CUSTOMISATION_VERSION
         );
     }
 
