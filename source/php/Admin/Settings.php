@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PiteaCustomisation\Admin;
 
-use PiteaCustomisation\Admin\Tabs\AccessibilityTab;
+use PiteaCustomisation\Admin\Tabs\ColorPickerPermissionsTab;
 use PiteaCustomisation\Admin\Tabs\ExternalContentTab;
 use PiteaCustomisation\Admin\Tabs\GeneralTab;
 use PiteaCustomisation\Admin\Tabs\LatestEventsTab;
@@ -38,6 +38,7 @@ class Settings
             new ReadSpeakerTab(),
             new LatestEventsTab(),
             new PagePermissionsTab(),
+            new ColorPickerPermissionsTab(),
         ];
 
         add_action('admin_menu', [$this, 'addMenuPage']);

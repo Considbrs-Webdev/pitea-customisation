@@ -2,7 +2,8 @@
 
 namespace PiteaCustomisation\AcfFields;
 
-use PiteaCustomisation\Helpers\ScssColorParser;
+use PiteaCustomisation\Customisations\ColorPicker\UserGroupPaletteAccess;
+use PiteaCustomisation\Helpers\DesignSystemColors;
 
 class ColorPickerField extends \acf_field
 {
@@ -87,10 +88,12 @@ class ColorPickerField extends \acf_field
             true
         );
 
+        $colorGroups = $this->getEffectiveColorGroups();
+
         // Localize script with design system colors (grouped)
         wp_localize_script('acf-pitea-color-picker-field', 'piteaColorPicker', [
-            'colorGroups' => $this->getDesignSystemColors(),
-            'flatColors' => $this->getFlatColorList(),
+            'colorGroups' => $colorGroups,
+            'flatColors' => UserGroupPaletteAccess::flattenGroups($colorGroups),
         ]);
 
         wp_enqueue_style(
@@ -116,8 +119,8 @@ class ColorPickerField extends \acf_field
             'data-allow_custom' => $field['allow_custom'] ?? 1,
         ];
 
-        $colorGroups = $this->getDesignSystemColors();
-        $flatColors = $this->getFlatColorList();
+        $colorGroups = $this->getEffectiveColorGroups();
+        $flatColors = UserGroupPaletteAccess::flattenGroups($colorGroups);
         $currentValue = $field['value'] ?? '';
         $currentColorName = $this->getColorNameByValue($currentValue, $flatColors);
 ?>
@@ -257,117 +260,15 @@ class ColorPickerField extends \acf_field
     }
 
     /**
-     * Get design system colors from SCSS variables file, grouped by comment sections
+     * Palette groups for the current user (filtered by user-group rules when configured).
      *
-     * @return array Array of group name => array of color data
+     * @return array<string, list<array{name: string, hex: string, var: string|null}>>
      */
-    protected function getDesignSystemColors(): array
+    protected function getEffectiveColorGroups(): array
     {
-        static $colorGroups = null;
+        $full = DesignSystemColors::getGroupedColors();
 
-        if ($colorGroups === null) {
-            $colorGroups = [];
-
-            // Prefer data/variables.scss (copied during build); fallback to source for dev
-            $pluginDir = dirname(__DIR__, 3);
-            $scssPath  = ScssColorParser::resolveScssPath($pluginDir);
-
-            if ($scssPath !== null) {
-                $colorGroups = ScssColorParser::parseFile($scssPath);
-            }
-
-            // Fallback to Municipio if SCSS file not found or empty
-            if (empty($colorGroups)) {
-                $colorGroups = $this->getFallbackColors();
-            }
-        }
-
-        return apply_filters('PiteaCustomisation/ColorPicker/DesignSystemColorGroups', $colorGroups);
-    }
-
-    /**
-     * Get flat list of all colors (name => hex) for backward compatibility
-     *
-     * @return array
-     */
-    protected function getFlatColorList(): array
-    {
-        static $flatColors = null;
-
-        if ($flatColors === null) {
-            $flatColors = [];
-            $colorGroups = $this->getDesignSystemColors();
-
-            foreach ($colorGroups as $group => $colors) {
-                foreach ($colors as $colorData) {
-                    $flatColors[$colorData['name']] = $colorData['hex'];
-                }
-            }
-        }
-
-        return $flatColors;
-    }
-
-    /**
-     * Fallback to Municipio colors if SCSS file parsing fails
-     *
-     * @return array
-     */
-    protected function getFallbackColors(): array
-    {
-        $colorGroups = [];
-
-        // Get colors from Municipio design system
-        if (class_exists('\Municipio\Helper\Color')) {
-            $palettes = \Municipio\Helper\Color::getPalettes([
-                'color_palette_primary',
-                'color_palette_secondary',
-                'color_palette_complement',
-                'color_palette_additional',
-            ]);
-
-            foreach ($palettes as $paletteName => $palette) {
-                if (!is_array($palette)) {
-                    continue;
-                }
-
-                $groupName = str_replace('color_palette_', '', $paletteName);
-                $groupName = ucfirst($groupName);
-
-                if (!isset($colorGroups[$groupName])) {
-                    $colorGroups[$groupName] = [];
-                }
-
-                foreach ($palette as $colorKey => $hex) {
-                    if (empty($hex)) {
-                        continue;
-                    }
-
-                    $colorName = ucfirst(str_replace('_', ' ', $colorKey));
-
-                    $colorGroups[$groupName][] = [
-                        'name' => $colorName,
-                        'hex' => $hex,
-                        'var' => null,
-                    ];
-                }
-            }
-        }
-
-        // Fallback to KirkiSwatches if available
-        if (empty($colorGroups) && class_exists('\Municipio\Helper\KirkiSwatches')) {
-            $swatches = \Municipio\Helper\KirkiSwatches::getColors();
-            $colorGroups['Default'] = [];
-            foreach ($swatches as $index => $hex) {
-                $colorGroups['Default'][] = [
-                    'name' => 'Color ' . ($index + 1),
-                    'hex' => $hex,
-                    'var' => null,
-                ];
-            }
-        }
-
-        return $colorGroups;
+        return UserGroupPaletteAccess::filterGroupsForUser($full, get_current_user_id());
     }
 
     /**
@@ -380,7 +281,7 @@ class ColorPickerField extends \acf_field
     protected function getColorNameByValue(string $value, array $colors): ?string
     {
         foreach ($colors as $name => $hex) {
-            if (strtolower($hex) === strtolower($value)) {
+            if (strtolower((string) $hex) === strtolower($value)) {
                 return $name;
             }
         }

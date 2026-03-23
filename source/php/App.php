@@ -58,6 +58,8 @@ class App
             Customisations\Modules\LinkCards::class,
             Customisations\Modules\Posts::class,
             Customisations\Modules\Text::class,
+            Customisations\Modules\QuickLinks::class,
+            Customisations\Modules\ManualInput::class,
             Customisations\Modules\Slider::class,
             Customisations\Permissions\Permissions::class,
             // Add more customisation classes here

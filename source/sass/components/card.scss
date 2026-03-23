@@ -74,14 +74,18 @@
 
 // =============================================================================
 
+// Eyebrow colors: defaults use var() fallbacks so ancestors (e.g. manual input item wrapper)
+// can set --c-card-eyebrow-* via inline style without being overridden by .c-card.
 .c-card {
   --c-card-eyebrow-border-radius: var(--border-radius-small);
-  --c-card-eyebrow-background-color: var(--color-primary);
-  --c-card-eyebrow-color: var(--color-white);
+
   .c-card__eyebrow {
-    background-color: var(--c-card-eyebrow-background-color);
+    background-color: var(
+      --c-card-eyebrow-background-color,
+      var(--color-primary)
+    );
     border-radius: var(--c-card-eyebrow-border-radius);
-    color: var(--c-card-eyebrow-color);
+    color: var(--c-card-eyebrow-color, var(--color-white));
     width: fit-content;
     padding: 5px 8px;
   }

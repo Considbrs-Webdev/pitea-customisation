@@ -1,16 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pitea-"
-"customisation\n"
-"POT-Creation-Date: 2026-03-20T08:47:36+00:00\n"
-"PO-Revision-Date: 2026-03-20 09:47+0100\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pitea-customisation\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: sv_SE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-03-23T12:00:34+01:00\n"
+"PO-Revision-Date: 2026-03-23 13:00+0100\n"
+"Language: sv_SE\n"
 "X-Generator: Poedit 3.9\n"
 "X-Domain: pitea-customisation\n"
 
@@ -21,10 +20,8 @@ msgstr "Anpassning för Piteå"
 
 #. Description of the plugin
 #: pitea-customisation.php
-msgid ""
-"Custom functionality and modifications for the Piteå WordPress installation"
-msgstr ""
-"Anpassade funktioner och modifieringar för Piteås WordPress-installation"
+msgid "Custom functionality and modifications for the Piteå WordPress installation"
+msgstr "Anpassade funktioner och modifieringar för Piteås WordPress-installation"
 
 #. Author of the plugin
 #: pitea-customisation.php
@@ -43,43 +40,43 @@ msgstr "Visa tillgänglighetsikoner"
 msgid "Display accessibility buttons (ReadSpeaker and Print) on this page."
 msgstr "Visa tillgänglighetsikoner på denna sida."
 
-#: source/php/AcfFields/ColorPickerField.php:58
+#: source/php/AcfFields/ColorPickerField.php:59
 msgid "Allow Custom Colors?"
 msgstr "Tillåt skräddarsydda färger?"
 
-#: source/php/AcfFields/ColorPickerField.php:59
+#: source/php/AcfFields/ColorPickerField.php:60
 msgid "Allow users to enter custom hex colors"
 msgstr "Tillåt redaktören att mata in egna färgvärden"
 
-#: source/php/AcfFields/ColorPickerField.php:135
-#: source/php/AcfFields/ColorPickerField.php:148
-#: source/php/AcfFields/ColorPickerField.php:165
+#: source/php/AcfFields/ColorPickerField.php:138
+#: source/php/AcfFields/ColorPickerField.php:151
+#: source/php/AcfFields/ColorPickerField.php:168
 msgid "Select Color"
 msgstr "Välj färg"
 
-#: source/php/AcfFields/ColorPickerField.php:156
-#: source/php/AcfFields/ColorPickerField.php:246
+#: source/php/AcfFields/ColorPickerField.php:159
+#: source/php/AcfFields/ColorPickerField.php:249
 #: source/php/AcfFields/FontAwesomeIconField.php:150
 msgid "Clear"
 msgstr "Rensa"
 
-#: source/php/AcfFields/ColorPickerField.php:166
+#: source/php/AcfFields/ColorPickerField.php:169
 msgid "Close"
 msgstr "Stäng"
 
-#: source/php/AcfFields/ColorPickerField.php:188
+#: source/php/AcfFields/ColorPickerField.php:191
 msgid "No color selected"
 msgstr "Ingen färg vald"
 
-#: source/php/AcfFields/ColorPickerField.php:226
+#: source/php/AcfFields/ColorPickerField.php:229
 msgid "Use Custom Color"
 msgstr "Använd skräddarsydd färg"
 
-#: source/php/AcfFields/ColorPickerField.php:236
+#: source/php/AcfFields/ColorPickerField.php:239
 msgid "Apply"
 msgstr "Verkställ"
 
-#: source/php/AcfFields/ColorPickerField.php:250
+#: source/php/AcfFields/ColorPickerField.php:253
 msgid "Done"
 msgstr "Klar"
 
@@ -88,6 +85,7 @@ msgid "No icon selected"
 msgstr "Ingen ikon vald"
 
 #: source/php/AcfFields/FontAwesomeIconField.php:143
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:113
 msgid "Search icons..."
 msgstr "Sök ikon..."
 
@@ -111,43 +109,44 @@ msgstr "Ingen"
 msgid "Bottom of content"
 msgstr "Botten av innehållet"
 
-#: source/php/Admin/Settings.php:56 source/php/Admin/Settings.php:57
+#: source/php/Admin/Settings.php:57
+#: source/php/Admin/Settings.php:58
 msgid "Piteå kommun"
 msgstr "Piteå kommun"
 
-#: source/php/Admin/Settings.php:90
+#: source/php/Admin/Settings.php:91
 msgid "Saving…"
 msgstr "Sparar…"
 
-#: source/php/Admin/Settings.php:91
+#: source/php/Admin/Settings.php:92
 msgid "Changes saved"
 msgstr "Ändringar sparade"
 
-#: source/php/Admin/Settings.php:92
+#: source/php/Admin/Settings.php:93
 msgid "Could not save settings"
 msgstr "Kunde inte spara inställningar"
 
-#: source/php/Admin/Settings.php:105
+#: source/php/Admin/Settings.php:106
 msgid "Insufficient permissions."
 msgstr "Otillräckliga rättigheter."
 
-#: source/php/Admin/Settings.php:111
+#: source/php/Admin/Settings.php:112
 msgid "Security check failed."
 msgstr "Säkerhetskontroll misslyckades."
 
-#: source/php/Admin/Settings.php:125
+#: source/php/Admin/Settings.php:126
 msgid "Unknown tab."
 msgstr "Okänd flik."
 
-#: source/php/Admin/Settings.php:134
+#: source/php/Admin/Settings.php:135
 msgid "Settings saved."
 msgstr "Inställningarna sparades."
 
-#: source/php/Admin/Settings.php:191
+#: source/php/Admin/Settings.php:192
 msgid "Save Changes"
 msgstr "Spara"
 
-#: source/php/Admin/Settings.php:200
+#: source/php/Admin/Settings.php:201
 msgid "Settings sections"
 msgstr "Inställningssektioner"
 
@@ -160,14 +159,8 @@ msgid "Traffic Disruptions"
 msgstr "Trafikstörningar"
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:81
-msgid ""
-"Automatically import traffic disruption data from an ArcGIS FeatureServer "
-"and publish it as service information posts. Leave the URL empty to disable "
-"importing."
-msgstr ""
-"Importera automatiskt data om trafikstörningar från en ArcGIS FeatureServer "
-"och publicera dem som inlägg för serviceinformation. Lämna URL:en tom för "
-"att inaktivera import."
+msgid "Automatically import traffic disruption data from an ArcGIS FeatureServer and publish it as service information posts. Leave the URL empty to disable importing."
+msgstr "Importera automatiskt data om trafikstörningar från en ArcGIS FeatureServer och publicera dem som inlägg för serviceinformation. Lämna URL:en tom för att inaktivera import."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:91
 #: source/php/Admin/Tabs/ExternalContentTab.php:129
@@ -179,28 +172,16 @@ msgid "E-Services"
 msgstr "E-tjänster"
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:119
-msgid ""
-"Automatically index Piteå's public e-services from the eNämnd API into the "
-"Typesense search engine. Leave the URL empty to disable indexing."
-msgstr ""
-"Indexera automatiskt Piteås offentliga e-tjänster från eNämnds API i "
-"sökmotorn Typesense. Lämna URL:en tom för att inaktivera indexeringen."
+msgid "Automatically index Piteå's public e-services from the eNämnd API into the Typesense search engine. Leave the URL empty to disable indexing."
+msgstr "Indexera automatiskt Piteås offentliga e-tjänster från eNämnds API i sökmotorn Typesense. Lämna URL:en tom för att inaktivera indexeringen."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:174
-msgid ""
-"The eNämnd public-services API URL. Leave empty to disable e-service "
-"indexing."
-msgstr ""
-"API-URL för eNämnds tjänst för offentliga e-tjänster. Lämna tomt för att "
-"inaktivera indexering av e-tjänster."
+msgid "The eNämnd public-services API URL. Leave empty to disable e-service indexing."
+msgstr "API-URL för eNämnds tjänst för offentliga e-tjänster. Lämna tomt för att inaktivera indexering av e-tjänster."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:197
-msgid ""
-"The GeoJSON endpoint URL for the traffic disruption layer. Leave empty to "
-"disable importing."
-msgstr ""
-"GeoJSON-endpoint-URL för lagret med trafikstörningar. Lämna tomt för att "
-"inaktivera import."
+msgid "The GeoJSON endpoint URL for the traffic disruption layer. Leave empty to disable importing."
+msgstr "GeoJSON-endpoint-URL för lagret med trafikstörningar. Lämna tomt för att inaktivera import."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:213
 msgid "Service Information"
@@ -232,13 +213,8 @@ msgid "API Configuration"
 msgstr "API-konfiguration"
 
 #: source/php/Admin/Tabs/LatestEventsTab.php:82
-msgid ""
-"Configure the API credentials for the Latest Events module. These settings "
-"allow the module to fetch event data from the Visit Piteå API."
-msgstr ""
-"Konfigurera API-uppgifterna för modulen Senaste evenemang. Dessa "
-"inställningar gör det möjligt för modulen att hämta evenemangsdata från "
-"Visit Piteå-API:t."
+msgid "Configure the API credentials for the Latest Events module. These settings allow the module to fetch event data from the Visit Piteå API."
+msgstr "Konfigurera API-uppgifterna för modulen Senaste evenemang. Dessa inställningar gör det möjligt för modulen att hämta evenemangsdata från Visit Piteå-API:t."
 
 #: source/php/Admin/Tabs/LatestEventsTab.php:92
 msgid "API URL"
@@ -249,10 +225,8 @@ msgid "API Token"
 msgstr "API-token"
 
 #: source/php/Admin/Tabs/LatestEventsTab.php:146
-msgid ""
-"The Visit Piteå API base URL. Include the full path up to the API version."
-msgstr ""
-"Bas-URL för Visit Piteå-API:t. Ange hela sökvägen fram till API-versionen."
+msgid "The Visit Piteå API base URL. Include the full path up to the API version."
+msgstr "Bas-URL för Visit Piteå-API:t. Ange hela sökvägen fram till API-versionen."
 
 #: source/php/Admin/Tabs/LatestEventsTab.php:170
 msgid "The API Bearer token for authenticating with the Visit Piteå API."
@@ -272,12 +246,8 @@ msgid "Protected pages / Templates"
 msgstr "Skyddade sidor / Mallar"
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:71
-msgid ""
-"These pages cannot be edited, moved or deleted by other roles than "
-"administrators."
-msgstr ""
-"Dessa sidor kan inte redigeras, flyttas eller raderas av andra roller än "
-"administratörer."
+msgid "These pages cannot be edited, moved or deleted by other roles than administrators."
+msgstr "Dessa sidor kan inte redigeras, flyttas eller raderas av andra roller än administratörer."
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:81
 msgid "Protected pages"
@@ -289,14 +259,8 @@ msgid "User group ownership"
 msgstr "Ägarskap för användargrupp"
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:104
-msgid ""
-"Define which user groups own and manage particular parts of the page tree. "
-"Users who do not belong to the owning user group cannot see those pages or "
-"their descendants in the admin."
-msgstr ""
-"Ange vilka användargrupper som äger och hanterar särskilda delar av "
-"sidträdet. Användare som inte tillhör den ägande användargruppen kan inte se "
-"dessa sidor eller deras underordnade sidor i admin."
+msgid "Define which user groups own and manage particular parts of the page tree. Users who do not belong to the owning user group cannot see those pages or their descendants in the admin."
+msgstr "Ange vilka användargrupper som äger och hanterar särskilda delar av sidträdet. Användare som inte tillhör den ägande användargruppen kan inte se dessa sidor eller deras underordnade sidor i admin."
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:114
 msgid "Ownership rules"
@@ -310,15 +274,18 @@ msgstr "+ Lägg till sida"
 msgid "Apply to all subpages"
 msgstr "Gäller för alla undersidor"
 
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:256
 #: source/php/Admin/Tabs/PagePermissionsTab.php:247
 #: source/php/Admin/Tabs/PagePermissionsTab.php:319
 msgid "Remove"
 msgstr "Ta bort"
 
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:180
 #: source/php/Admin/Tabs/PagePermissionsTab.php:277
 msgid "+ Add rule"
 msgstr "+ Lägg till regel"
 
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:214
 #: source/php/Admin/Tabs/PagePermissionsTab.php:297
 msgid "— Select user group —"
 msgstr "— Välj användargrupp —"
@@ -457,6 +424,7 @@ msgstr "Modulnamn kontra utseende"
 msgid "Guides and checklists to help you add and manage content."
 msgstr "Guider och checklistor för att lägga till och hantera innehåll."
 
+#: source/php/Customisations/Modules/QuickLinks.php:54
 #: source/php/Customisations/Modules/Slider.php:63
 #: source/php/Customisations/Modules/Text.php:99
 msgid "Enable"
@@ -499,14 +467,54 @@ msgctxt "E-services"
 msgid "Section"
 msgstr "Avdelning"
 
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:104
 #~ msgid "Select Icon"
 #~ msgstr "Välj ikon"
 
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:127
 #~ msgid "No icons found"
 #~ msgstr "Inga ikoner hittades"
 
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:194
 #~ msgid "Insert Icon"
 #~ msgstr "Infoga ikon"
 
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:213
 #~ msgid "Font Awesome Icon"
 #~ msgstr "Font Awesome-ikon"
+
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:31
+msgid "Color picker"
+msgstr "Färgväljare"
+
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:57
+msgid "User group color access"
+msgstr "Färgåtkomst per användargrupp"
+
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:59
+msgid "Limit which palette groups each user group may use in the design system color picker, and whether they may enter a custom hex color. Users without a matching rule here keep full access. Users in several groups get the union of allowed palette groups; custom color is allowed if any matching rule allows it."
+msgstr "Begränsa vilka palettgrupper varje användargrupp får använda i designsystemets färgväljare, och om de får ange en egen hex-färg. Användare utan matchande regel här behåller full åtkomst. Användare som tillhör flera grupper får sammanslagning av tillåtna palettgrupper; egen hex-färg tillåts om någon matchande regel tillåter det."
+
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:69
+msgid "Rules"
+msgstr "Regler"
+
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:127
+msgid "Color picker permissions"
+msgstr "Behörigheter för färgväljare"
+
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:156
+msgid "No design system palette groups were found. Check that variables.scss is available or Municipio color helpers are loaded."
+msgstr "Inga palettgrupper i designsystemet hittades. Kontrollera att variables.scss finns eller att Municipios färghjälpare är inlästa."
+
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:212
+msgid "User group"
+msgstr "Användargrupp"
+
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:228
+msgid "Allowed palette groups"
+msgstr "Tillåtna palettgrupper"
+
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:252
+msgid "Allow custom hex color"
+msgstr "Tillåt egen hex-färg"

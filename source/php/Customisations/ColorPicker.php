@@ -2,6 +2,8 @@
 
 namespace PiteaCustomisation\Customisations;
 
+use PiteaCustomisation\Customisations\ColorPicker\UserGroupPaletteAccess;
+
 class ColorPicker
 {
     /**
@@ -12,6 +14,7 @@ class ColorPicker
 
         add_action('acf/include_field_types', [$this, 'registerAcfFieldType']);
         add_filter('acf/prepare_field/type=color_picker', [$this, 'convertToColorPickerField']);
+        add_filter('acf/prepare_field/type=pitea_color_picker', [$this, 'applyUserGroupColorRules']);
     }
 
     /**
@@ -36,6 +39,25 @@ class ColorPicker
     {
         $field['type']       = 'pitea_color_picker';
         $field['allow_null'] = 1;
+
+        return $field;
+    }
+
+    /**
+     * Apply user-group palette settings to allow_custom (union with ACF field setting).
+     *
+     * @param array<string, mixed> $field
+     * @return array<string, mixed>
+     */
+    public function applyUserGroupColorRules(array $field): array
+    {
+        $fieldAllows = !empty($field['allow_custom'] ?? 1);
+        $effective   = UserGroupPaletteAccess::getEffectiveAllowCustom(
+            get_current_user_id(),
+            $fieldAllows
+        );
+
+        $field['allow_custom'] = $effective ? 1 : 0;
 
         return $field;
     }
