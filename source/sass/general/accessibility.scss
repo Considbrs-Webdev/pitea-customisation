@@ -1,3 +1,13 @@
 .nav-helper {
   justify-content: flex-end;
 }
+
+// Modularity “Accessibility buttons” (acc-buttons): row, aligned to end (sidebar).
+.mod-acc-buttons__list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5rem;
+}

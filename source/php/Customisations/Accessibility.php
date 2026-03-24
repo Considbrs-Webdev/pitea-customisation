@@ -17,6 +17,10 @@ use PiteaCustomisation\Admin\Tabs\ReadSpeakerTab;
  * Whether the accessibility menu (and the article wrapper) is shown on a given
  * page can be controlled per-post via the ACF field "show_accessibility_buttons".
  * For non-page post types the menu is always shown.
+ *
+ * Optional: the Modularity module AccButtons repeats the same buttons in a sidebar.
+ * When “Use module placement” is enabled in settings, nav-helper buttons are removed
+ * from view data so only the module shows them.
  */
 class Accessibility
 {
@@ -25,11 +29,19 @@ class Accessibility
     const DEFAULT_BUTTON_STYLE = 'filled';
     const DEFAULT_BUTTON_COLOR = 'primary';
 
+    /**
+     * Copy of merged accessibility menu items for the AccButtons module (after viewData priority 20).
+     *
+     * @var array<string, mixed>|null
+     */
+    private static ?array $accessibilityMenuItemsSnapshot = null;
+
     public function __construct()
     {
         new \PiteaCustomisation\AcfFields\AccessibilityFields();
         add_filter('Municipio/Template/viewData', [$this, 'maybeAddPrintMenuToViewData'], 10, 1);
         add_filter('Municipio/Template/viewData', [$this, 'addAccessibilityMenuToViewData'], 20, 1);
+        add_filter('Municipio/Template/viewData', [$this, 'stripNavAccessibilityMenuWhenUsingModule'], 30, 1);
         add_action('Municipio/Hook/innerLoopStart', [$this, 'addReadSpeakerHiddenButton']);
         add_action('template_redirect', [$this, 'maybeWrapContentInArticle']);
         add_action('wp_enqueue_scripts', [$this, 'enqueueWebReaderScript'], 10);
@@ -167,10 +179,14 @@ class Accessibility
     public function addAccessibilityMenuToViewData(array $data): array
     {
         if (!is_singular()) {
+            self::$accessibilityMenuItemsSnapshot = null;
+
             return $data;
         }
 
         if (!$this->shouldShowAccessibilityMenu()) {
+            self::$accessibilityMenuItemsSnapshot = null;
+
             return $data;
         }
 
@@ -180,7 +196,42 @@ class Accessibility
         $data['accessibilityMenu']['items'] = $this->sortMenuItems($data['accessibilityMenu']['items']);
         $data['accessibilityMenu']['items'] = $this->changeDefaultStyles($data['accessibilityMenu']['items']);
 
+        self::$accessibilityMenuItemsSnapshot = $data['accessibilityMenu']['items'];
+
         return $data;
+    }
+
+    /**
+     * When module placement is enabled, remove items from the nav-helper accessibility
+     * partial so only the AccButtons module shows Listen/Print.
+     */
+    public function stripNavAccessibilityMenuWhenUsingModule(array $data): array
+    {
+        if (!is_singular() || !$this->shouldShowAccessibilityMenu()) {
+            return $data;
+        }
+
+        if (!ReadSpeakerTab::useModulePlacementForAccessibility()) {
+            return $data;
+        }
+
+        if (!isset($data['accessibilityMenu']) || !is_array($data['accessibilityMenu'])) {
+            return $data;
+        }
+
+        $data['accessibilityMenu']['items'] = [];
+
+        return $data;
+    }
+
+    /**
+     * Final merged items for the AccButtons Modularity module (same as nav bar when not stripped).
+     *
+     * @return array<string, mixed>
+     */
+    public static function getAccessibilityMenuItemsSnapshot(): array
+    {
+        return self::$accessibilityMenuItemsSnapshot ?? [];
     }
 
     /**
