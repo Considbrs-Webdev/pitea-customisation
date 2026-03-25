@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-23T14:32:00+01:00\n"
+"POT-Creation-Date: 2026-03-25T16:21:40+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: pitea-customisation\n"
@@ -41,43 +41,43 @@ msgstr ""
 msgid "Display accessibility buttons (ReadSpeaker and Print) on this page."
 msgstr ""
 
-#: source/php/AcfFields/ColorPickerField.php:59
+#: source/php/AcfFields/ColorPickerField.php:60
 msgid "Allow Custom Colors?"
 msgstr ""
 
-#: source/php/AcfFields/ColorPickerField.php:60
+#: source/php/AcfFields/ColorPickerField.php:61
 msgid "Allow users to enter custom hex colors"
 msgstr ""
 
-#: source/php/AcfFields/ColorPickerField.php:138
-#: source/php/AcfFields/ColorPickerField.php:151
-#: source/php/AcfFields/ColorPickerField.php:168
+#: source/php/AcfFields/ColorPickerField.php:140
+#: source/php/AcfFields/ColorPickerField.php:153
+#: source/php/AcfFields/ColorPickerField.php:170
 msgid "Select Color"
 msgstr ""
 
-#: source/php/AcfFields/ColorPickerField.php:159
-#: source/php/AcfFields/ColorPickerField.php:249
+#: source/php/AcfFields/ColorPickerField.php:161
+#: source/php/AcfFields/ColorPickerField.php:251
 #: source/php/AcfFields/FontAwesomeIconField.php:150
 msgid "Clear"
 msgstr ""
 
-#: source/php/AcfFields/ColorPickerField.php:169
+#: source/php/AcfFields/ColorPickerField.php:171
 msgid "Close"
 msgstr ""
 
-#: source/php/AcfFields/ColorPickerField.php:191
+#: source/php/AcfFields/ColorPickerField.php:193
 msgid "No color selected"
 msgstr ""
 
-#: source/php/AcfFields/ColorPickerField.php:229
+#: source/php/AcfFields/ColorPickerField.php:231
 msgid "Use Custom Color"
 msgstr ""
 
-#: source/php/AcfFields/ColorPickerField.php:239
+#: source/php/AcfFields/ColorPickerField.php:241
 msgid "Apply"
 msgstr ""
 
-#: source/php/AcfFields/ColorPickerField.php:253
+#: source/php/AcfFields/ColorPickerField.php:255
 msgid "Done"
 msgstr ""
 
@@ -155,57 +155,49 @@ msgstr ""
 msgid "Color picker"
 msgstr ""
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:57
-msgid "User group color access"
-msgstr ""
-
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:59
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:71
 msgid "Limit which palette groups each user group may use in the design system color picker, and whether they may enter a custom hex color. Users without a matching rule here keep full access. Users in several groups get the union of allowed palette groups; custom color is allowed if any matching rule allows it."
 msgstr ""
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:69
-msgid "Rules"
-msgstr ""
-
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:127
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:129
 msgid "Color picker permissions"
 msgstr ""
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:156
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:158
 msgid "No design system palette groups were found. Check that variables.scss is available or Municipio color helpers are loaded."
 msgstr ""
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:182
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:203
 #: source/php/Admin/Tabs/PagePermissionsTab.php:277
 msgid "+ Add rule"
 msgstr ""
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:202
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:223
 msgid "Palette group preview"
 msgstr ""
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:205
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:226
 msgid "Each name below is a palette group in the editor color picker. Hover a square to see the color label and hex code."
 msgstr ""
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:253
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:274
 msgid "User group"
 msgstr ""
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:255
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:276
 #: source/php/Admin/Tabs/PagePermissionsTab.php:297
 msgid "— Select user group —"
 msgstr ""
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:269
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:290
 msgid "Allowed palette groups"
 msgstr ""
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:293
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:314
 msgid "Allow custom hex color"
 msgstr ""
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:297
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:318
 #: source/php/Admin/Tabs/PagePermissionsTab.php:247
 #: source/php/Admin/Tabs/PagePermissionsTab.php:319
 msgid "Remove"
@@ -343,44 +335,56 @@ msgstr ""
 msgid "— Select a page —"
 msgstr ""
 
-#: source/php/Admin/Tabs/ReadSpeakerTab.php:37
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:42
 msgid "ReadSpeaker"
 msgstr ""
 
-#: source/php/Admin/Tabs/ReadSpeakerTab.php:80
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:96
 msgid "ReadSpeaker Configuration"
 msgstr ""
 
-#: source/php/Admin/Tabs/ReadSpeakerTab.php:82
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:98
 msgid "Configure ReadSpeaker integration settings."
 msgstr ""
 
-#: source/php/Admin/Tabs/ReadSpeakerTab.php:92
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:108
 msgid "Customer ID"
 msgstr ""
 
-#: source/php/Admin/Tabs/ReadSpeakerTab.php:100
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:116
 msgid "Read ID"
 msgstr ""
 
-#: source/php/Admin/Tabs/ReadSpeakerTab.php:113
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:124
+msgid "Module placement"
+msgstr ""
+
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:137
 msgid "ReadSpeaker Settings"
 msgstr ""
 
-#: source/php/Admin/Tabs/ReadSpeakerTab.php:142
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:166
 msgid "Enter your ReadSpeaker customer ID"
 msgstr ""
 
-#: source/php/Admin/Tabs/ReadSpeakerTab.php:160
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:184
 msgid "Enter the ID of the element to read"
 msgstr ""
 
-#: source/php/Customisations/Accessibility.php:57
-#: source/php/Customisations/Accessibility.php:250
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:202
+msgid "Hide nav bar buttons; use Modularity module only"
+msgstr ""
+
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:205
+msgid "When enabled, Listen and Print are removed from the top nav-helper area. Add the “Accessibility buttons” module (mod-acc-buttons) in the sidebar on each template where you want them. Enable that module under Modularity → Modules."
+msgstr ""
+
+#: source/php/Customisations/Accessibility.php:69
+#: source/php/Customisations/Accessibility.php:301
 msgid "Listen to this page"
 msgstr ""
 
-#: source/php/Customisations/Accessibility.php:251
+#: source/php/Customisations/Accessibility.php:302
 msgid "Listen to this page with ReadSpeaker"
 msgstr ""
 
@@ -505,6 +509,15 @@ msgstr ""
 
 #: source/php/ExternalContent/ServiceInfo/TrafficDisruptionsImporter.php:170
 msgid "Traffic disruption location"
+msgstr ""
+
+#: source/php/Module/AccButtons.php:26
+#: source/php/Module/AccButtons.php:27
+msgid "Accessibility buttons"
+msgstr ""
+
+#: source/php/Module/AccButtons.php:28
+msgid "Listen and print buttons (same as the nav bar). Place in a sidebar for layout control."
 msgstr ""
 
 #: views/search/hits/hit-eservice.blade.php:23

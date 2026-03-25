@@ -40,43 +40,43 @@ msgstr "Visa tillgänglighetsikoner"
 msgid "Display accessibility buttons (ReadSpeaker and Print) on this page."
 msgstr "Visa tillgänglighetsikoner på denna sida."
 
-#: source/php/AcfFields/ColorPickerField.php:59
+#: source/php/AcfFields/ColorPickerField.php:60
 msgid "Allow Custom Colors?"
 msgstr "Tillåt skräddarsydda färger?"
 
-#: source/php/AcfFields/ColorPickerField.php:60
+#: source/php/AcfFields/ColorPickerField.php:61
 msgid "Allow users to enter custom hex colors"
 msgstr "Tillåt redaktören att mata in egna färgvärden"
 
-#: source/php/AcfFields/ColorPickerField.php:138
-#: source/php/AcfFields/ColorPickerField.php:151
-#: source/php/AcfFields/ColorPickerField.php:168
+#: source/php/AcfFields/ColorPickerField.php:140
+#: source/php/AcfFields/ColorPickerField.php:153
+#: source/php/AcfFields/ColorPickerField.php:170
 msgid "Select Color"
 msgstr "Välj färg"
 
-#: source/php/AcfFields/ColorPickerField.php:159
-#: source/php/AcfFields/ColorPickerField.php:249
+#: source/php/AcfFields/ColorPickerField.php:161
+#: source/php/AcfFields/ColorPickerField.php:251
 #: source/php/AcfFields/FontAwesomeIconField.php:150
 msgid "Clear"
 msgstr "Rensa"
 
-#: source/php/AcfFields/ColorPickerField.php:169
+#: source/php/AcfFields/ColorPickerField.php:171
 msgid "Close"
 msgstr "Stäng"
 
-#: source/php/AcfFields/ColorPickerField.php:191
+#: source/php/AcfFields/ColorPickerField.php:193
 msgid "No color selected"
 msgstr "Ingen färg vald"
 
-#: source/php/AcfFields/ColorPickerField.php:229
+#: source/php/AcfFields/ColorPickerField.php:231
 msgid "Use Custom Color"
 msgstr "Använd skräddarsydd färg"
 
-#: source/php/AcfFields/ColorPickerField.php:239
+#: source/php/AcfFields/ColorPickerField.php:241
 msgid "Apply"
 msgstr "Verkställ"
 
-#: source/php/AcfFields/ColorPickerField.php:253
+#: source/php/AcfFields/ColorPickerField.php:255
 msgid "Done"
 msgstr "Klar"
 
@@ -274,18 +274,18 @@ msgstr "+ Lägg till sida"
 msgid "Apply to all subpages"
 msgstr "Gäller för alla undersidor"
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:297
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:318
 #: source/php/Admin/Tabs/PagePermissionsTab.php:247
 #: source/php/Admin/Tabs/PagePermissionsTab.php:319
 msgid "Remove"
 msgstr "Ta bort"
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:182
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:203
 #: source/php/Admin/Tabs/PagePermissionsTab.php:277
 msgid "+ Add rule"
 msgstr "+ Lägg till regel"
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:255
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:276
 #: source/php/Admin/Tabs/PagePermissionsTab.php:297
 msgid "— Select user group —"
 msgstr "— Välj användargrupp —"
@@ -298,44 +298,44 @@ msgstr "Inkludera alla undersidor"
 msgid "— Select a page —"
 msgstr "— Välj en sida —"
 
-#: source/php/Admin/Tabs/ReadSpeakerTab.php:37
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:42
 msgid "ReadSpeaker"
 msgstr "ReadSpeaker"
 
-#: source/php/Admin/Tabs/ReadSpeakerTab.php:80
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:96
 msgid "ReadSpeaker Configuration"
 msgstr "Konfiguration av ReadSpeaker"
 
-#: source/php/Admin/Tabs/ReadSpeakerTab.php:82
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:98
 msgid "Configure ReadSpeaker integration settings."
 msgstr "Konfigurera inställningar för ReadSpeaker-integration."
 
-#: source/php/Admin/Tabs/ReadSpeakerTab.php:92
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:108
 msgid "Customer ID"
 msgstr "Kund-ID"
 
-#: source/php/Admin/Tabs/ReadSpeakerTab.php:100
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:116
 msgid "Read ID"
 msgstr "Läs-ID"
 
-#: source/php/Admin/Tabs/ReadSpeakerTab.php:113
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:137
 msgid "ReadSpeaker Settings"
 msgstr "ReadSpeaker-inställningar"
 
-#: source/php/Admin/Tabs/ReadSpeakerTab.php:142
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:166
 msgid "Enter your ReadSpeaker customer ID"
 msgstr "Ange ditt ReadSpeaker-kund-ID"
 
-#: source/php/Admin/Tabs/ReadSpeakerTab.php:160
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:184
 msgid "Enter the ID of the element to read"
 msgstr "Ange ID för elementet som ska läsas upp"
 
-#: source/php/Customisations/Accessibility.php:57
-#: source/php/Customisations/Accessibility.php:250
+#: source/php/Customisations/Accessibility.php:69
+#: source/php/Customisations/Accessibility.php:301
 msgid "Listen to this page"
 msgstr "Lyssna på sidan"
 
-#: source/php/Customisations/Accessibility.php:251
+#: source/php/Customisations/Accessibility.php:302
 msgid "Listen to this page with ReadSpeaker"
 msgstr "Lyssna på sidan med ReadSpeaker"
 
@@ -487,42 +487,55 @@ msgstr "Avdelning"
 msgid "Color picker"
 msgstr "Färgväljare"
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:57
-msgid "User group color access"
-msgstr "Färgåtkomst per användargrupp"
-
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:59
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:71
 msgid "Limit which palette groups each user group may use in the design system color picker, and whether they may enter a custom hex color. Users without a matching rule here keep full access. Users in several groups get the union of allowed palette groups; custom color is allowed if any matching rule allows it."
 msgstr "Begränsa vilka palettgrupper varje användargrupp får använda i designsystemets färgväljare, och om de får ange en egen hex-färg. Användare utan matchande regel här behåller full åtkomst. Användare som tillhör flera grupper får sammanslagning av tillåtna palettgrupper; egen hex-färg tillåts om någon matchande regel tillåter det."
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:69
-msgid "Rules"
-msgstr "Regler"
-
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:127
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:129
 msgid "Color picker permissions"
 msgstr "Behörigheter för färgväljare"
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:156
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:158
 msgid "No design system palette groups were found. Check that variables.scss is available or Municipio color helpers are loaded."
 msgstr "Inga palettgrupper i designsystemet hittades. Kontrollera att variables.scss finns eller att Municipios färghjälpare är inlästa."
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:253
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:274
 msgid "User group"
 msgstr "Användargrupp"
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:269
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:290
 msgid "Allowed palette groups"
 msgstr "Tillåtna palettgrupper"
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:293
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:314
 msgid "Allow custom hex color"
 msgstr "Tillåt egen hex-färg"
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:202
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:223
 msgid "Palette group preview"
 msgstr "Förhandsvisning av palettgrupper"
 
-#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:205
+#: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:226
 msgid "Each name below is a palette group in the editor color picker. Hover a square to see the color label and hex code."
 msgstr "Varje namn nedan är en palettgrupp i redaktörens färgväljare. Hovra över en ruta för att se färgets namn och hex-kod."
+
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:124
+msgid "Module placement"
+msgstr "Modulplacering"
+
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:202
+msgid "Hide nav bar buttons; use Modularity module only"
+msgstr "Dölj knappar i navigeringsfältet; använd endast Modularity-modulen"
+
+#: source/php/Admin/Tabs/ReadSpeakerTab.php:205
+msgid "When enabled, Listen and Print are removed from the top nav-helper area. Add the “Accessibility buttons” module (mod-acc-buttons) in the sidebar on each template where you want them. Enable that module under Modularity → Modules."
+msgstr "När detta är aktiverat tas Lyssna och Skriv ut bort från det övre navigeringshjälpsområdet. Lägg till modulen «Tillgänglighetsknappar» (mod-acc-buttons) i sidopanelen på varje mall där du vill ha dem. Aktivera modulen under Modularity → Moduler."
+
+#: source/php/Module/AccButtons.php:26
+#: source/php/Module/AccButtons.php:27
+msgid "Accessibility buttons"
+msgstr "Tillgänglighetsknappar"
+
+#: source/php/Module/AccButtons.php:28
+msgid "Listen and print buttons (same as the nav bar). Place in a sidebar for layout control."
+msgstr "Lyssna- och skriv ut-knappar (samma som i navigeringsfältet). Placera i en sidopanel för kontroll över layouten."
