@@ -30,6 +30,9 @@ class Config
 
         // Change the default username validation to allow dots and uppercase letters
         add_filter('wpmu_validate_user_signup', [$this, 'validateUserSignupUsername']);
+
+        // Ensure that the original username (with dots and uppercase) is preserved during sanitization
+        add_filter('sanitize_user', [$this, 'preserveUsernameCase'], 10, 3);
     }
 
     /**
@@ -81,6 +84,24 @@ class Config
         $styles = preg_replace('/@font-face\s*{[^}]*}/', '', $styles);
 
         return $styles;
+    }
+
+    /**
+     * Preserve the original username casing and dots during sanitization.
+     *
+     * @param string $username
+     * @param string $raw_username
+     * @param bool   $strict
+     * @return string
+     */
+    public function preserveUsernameCase(string $username, string $raw_username, bool $strict): string
+    {
+        // Allow uppercase + lowercase + numbers + dots
+        if (preg_match('/^[A-Za-z0-9\.]+$/', $raw_username)) {
+            return $raw_username;
+        }
+
+        return $username;
     }
 
     /**
