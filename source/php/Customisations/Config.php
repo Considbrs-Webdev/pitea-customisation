@@ -23,6 +23,10 @@ class Config
 
         // Remove font-face declarations from Kirki inline styles on the frontend
         add_filter('kirki_inline_styles', [$this, 'maybeRemoveFontFaces']);
+
+        // Remove page template from Gutenberg so that we don't get the setting twice
+        // Otherwise they will have to change both values
+        add_action('add_meta_boxes', [$this, 'removePageTemplateMetaBox'], 100);
     }
 
     /**
@@ -74,6 +78,16 @@ class Config
         $styles = preg_replace('/@font-face\s*{[^}]*}/', '', $styles);
 
         return $styles;
+    }
+
+    /**
+     * Remove the page template meta box in Gutenberg (prevents duplicate setting)
+     *
+     * @return void
+     */
+    public function removePageTemplateMetaBox(): void
+    {
+        remove_meta_box('pageparentdiv', 'page', 'side');
     }
 
     /**
