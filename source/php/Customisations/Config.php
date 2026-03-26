@@ -27,6 +27,9 @@ class Config
         // Remove page template from Gutenberg so that we don't get the setting twice
         // Otherwise they will have to change both values
         add_action('add_meta_boxes', [$this, 'removePageTemplateMetaBox'], 100);
+
+        // Change the default username validation to allow dots and uppercase letters
+        add_filter('wpmu_validate_user_signup', [$this, 'validateUserSignupUsername']);
     }
 
     /**
@@ -78,6 +81,49 @@ class Config
         $styles = preg_replace('/@font-face\s*{[^}]*}/', '', $styles);
 
         return $styles;
+    }
+
+    /**
+     * Validate user signup username to allow dots and uppercase letters.
+     * Removes the default "lowercase only" error and enforces a custom pattern.
+     *
+     * @param array $result
+     * @return array
+     */
+    public function validateUserSignupUsername(array $result): array
+    {
+        $username = $result['user_name'];
+        $errors   = $result['errors'];
+
+        $is_valid = preg_match('/^[A-Za-z0-9\.]+$/', $username);
+
+        // Always remove default "lowercase only" errors
+        if (isset($errors->errors['user_name'])) {
+            foreach ($errors->errors['user_name'] as $key => $message) {
+                if (
+                    str_contains($message, 'gemener') ||
+                    str_contains($message, 'lowercase')
+                ) {
+                    unset($errors->errors['user_name'][$key]);
+                }
+            }
+
+            if (empty($errors->errors['user_name'])) {
+                unset($errors->errors['user_name']);
+            }
+        }
+
+        // If NOT valid → add your custom error
+        if (!$is_valid) {
+            $errors->add(
+                'user_name',
+                __('Username may only contain letters (A–Z), numbers (0–9) and dots (.)', 'pitea-customisation')
+            );
+        }
+
+        $result['errors'] = $errors;
+
+        return $result;
     }
 
     /**

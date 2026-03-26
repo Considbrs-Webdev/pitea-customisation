@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-25T16:21:40+01:00\n"
+"POT-Creation-Date: 2026-03-26T18:20:50+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.12.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: pitea-customisation\n"
 
 #. Plugin Name of the plugin
@@ -86,7 +86,6 @@ msgid "No icon selected"
 msgstr ""
 
 #: source/php/AcfFields/FontAwesomeIconField.php:143
-#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:113
 msgid "Search icons..."
 msgstr ""
 
@@ -418,23 +417,62 @@ msgctxt "Paragraph block style"
 msgid "Preamble"
 msgstr ""
 
-#: source/php/Customisations/Admin/PostTemplates.php:27
-#: source/php/Customisations/Admin/PostTemplates.php:28
+#: source/php/Customisations/Admin/PostTemplates.php:50
+#: source/php/Customisations/Admin/PostTemplates.php:51
 msgid "New navigation page"
 msgstr ""
 
-#: source/php/Customisations/Admin/PostTemplates.php:38
-#: source/php/Customisations/Admin/PostTemplates.php:39
+#: source/php/Customisations/Admin/PostTemplates.php:61
+#: source/php/Customisations/Admin/PostTemplates.php:62
 msgid "New theme page"
 msgstr ""
 
-#: source/php/Customisations/Admin/PostTemplates.php:57
-#: source/php/Customisations/Admin/PostTemplates.php:198
+#: source/php/Customisations/Admin/PostTemplates.php:72
+#: source/php/Customisations/Admin/PostTemplates.php:73
+msgid "New navigation page (second level)"
+msgstr ""
+
+#: source/php/Customisations/Admin/PostTemplates.php:83
+#: source/php/Customisations/Admin/PostTemplates.php:84
+msgid "New content page"
+msgstr ""
+
+#: source/php/Customisations/Admin/PostTemplates.php:102
+#: source/php/Customisations/Admin/PostTemplates.php:248
+#: source/php/Customisations/Admin/PostTemplates.php:392
+#: source/php/Customisations/Admin/PostTemplates.php:536
 msgid "You do not have permission to perform this action."
+msgstr ""
+
+#. translators: %s: path relative to plugin
+#: source/php/Customisations/Admin/PostTemplates.php:718
+msgid "Dummy image file not found: %s"
+msgstr ""
+
+#: source/php/Customisations/Admin/PostTemplates.php:754
+msgid "Could not create upload directory for dummy images."
+msgstr ""
+
+#. translators: %s: file name
+#: source/php/Customisations/Admin/PostTemplates.php:766
+msgid "Could not copy dummy image %s into uploads."
+msgstr ""
+
+#. translators: %s: file name
+#: source/php/Customisations/Admin/PostTemplates.php:778
+msgid "Unknown file type for dummy image %s."
+msgstr ""
+
+#: source/php/Customisations/Admin/PostTemplates.php:803
+msgid "Could not register dummy image in the media library."
 msgstr ""
 
 #: source/php/Customisations/Breadcrumbs.php:81
 msgid "Start"
+msgstr ""
+
+#: source/php/Customisations/Config.php:120
+msgid "Username may only contain letters (A–Z), numbers (0–9) and dots (.)"
 msgstr ""
 
 #: source/php/Customisations/CustomerFeedback.php:134
@@ -523,20 +561,4 @@ msgstr ""
 #: views/search/hits/hit-eservice.blade.php:23
 msgctxt "E-services"
 msgid "Section"
-msgstr ""
-
-#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:104
-msgid "Select Icon"
-msgstr ""
-
-#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:127
-msgid "No icons found"
-msgstr ""
-
-#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:194
-msgid "Insert Icon"
-msgstr ""
-
-#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:213
-msgid "Font Awesome Icon"
 msgstr ""
