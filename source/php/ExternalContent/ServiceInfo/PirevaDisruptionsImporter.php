@@ -328,16 +328,20 @@ class PirevaDisruptionsImporter implements ImporterInterface
             );
         }
 
+        // API returns 404 if no disruptions are found, dont wanna throw here.
         $statusCode = wp_remote_retrieve_response_code($response);
+        $body       = wp_remote_retrieve_body($response);
+        $data       = json_decode($body, true);
+
+        if (is_array($data) && ($data['code'] ?? null) === 'no_driftinformation') {
+            return [];
+        }
 
         if ($statusCode !== 200) {
             throw new \RuntimeException(
                 sprintf('Pireva disruptions endpoint returned HTTP %d', $statusCode)
             );
         }
-
-        $body = wp_remote_retrieve_body($response);
-        $data = json_decode($body, true);
 
         if (!is_array($data)) {
             throw new \RuntimeException('Failed to parse Pireva disruptions data.');
