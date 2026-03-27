@@ -11,17 +11,17 @@ use PiteaCustomisation\Admin\SettingsTabInterface;
  *
  * Settings tab for page-level permissions:
  *   - "Protected pages / Templates": pages non-admins cannot edit/move/delete.
- *   - "User group ownership": maps user groups to page trees they can manage.
+ *   - "Page tree ownership": maps user groups and/or user roles to page trees they can manage.
  */
 class PagePermissionsTab implements SettingsTabInterface
 {
     private const OPTION_GROUP = 'pitea_customisation_page_permissions_tab';
 
-    public const OPTION_PAGE_PERMISSIONS     = 'pitea_customisation_page_permissions';
-    public const OPTION_USER_GROUP_OWNERSHIP = 'pitea_customisation_user_group_ownership';
+    public const OPTION_PAGE_PERMISSIONS    = 'pitea_customisation_page_permissions';
+    public const OPTION_PAGE_TREE_OWNERSHIP = 'pitea_customisation_user_group_ownership';
 
-    private const GROUP_PROTECTED   = 'pitea_customisation_group_protected_pages';
-    private const GROUP_USER_GROUPS = 'pitea_customisation_group_user_group_ownership';
+    private const GROUP_PROTECTED           = 'pitea_customisation_group_protected_pages';
+    private const GROUP_PAGE_TREE_OWNERSHIP = 'pitea_customisation_group_user_group_ownership';
 
     // -------------------------------------------------------------------------
     // SettingsTabInterface
@@ -49,7 +49,7 @@ class PagePermissionsTab implements SettingsTabInterface
     public function register(): void
     {
         $this->registerProtectedPagesGroup();
-        $this->registerUserGroupOwnershipGroup();
+        $this->registerPageTreeOwnershipGroup();
     }
 
     private function registerProtectedPagesGroup(): void
@@ -85,11 +85,11 @@ class PagePermissionsTab implements SettingsTabInterface
         );
     }
 
-    private function registerUserGroupOwnershipGroup(): void
+    private function registerPageTreeOwnershipGroup(): void
     {
         register_setting(
             self::OPTION_GROUP,
-            self::OPTION_USER_GROUP_OWNERSHIP,
+            self::OPTION_PAGE_TREE_OWNERSHIP,
             [
                 'type'         => 'string',
                 'default'      => '[]',
@@ -99,21 +99,21 @@ class PagePermissionsTab implements SettingsTabInterface
 
         add_settings_section(
             'pitea_customisation_user_group_ownership',
-            __('User group ownership', 'pitea-customisation'),
+            __('Page tree ownership', 'pitea-customisation'),
             function (): void {
                 echo '<p class="pitea-settings__section-desc">' . esc_html__(
-                    'Define which user groups own and manage particular parts of the page tree. Users who do not belong to the owning user group cannot see those pages or their descendants in the admin.',
+                    'Define which user groups and/or user roles own and manage particular parts of the page tree. Users who do not match an owning rule cannot see those pages or their descendants in the admin.',
                     'pitea-customisation'
                 ) . '</p>';
             },
-            self::GROUP_USER_GROUPS
+            self::GROUP_PAGE_TREE_OWNERSHIP
         );
 
         add_settings_field(
-            self::OPTION_USER_GROUP_OWNERSHIP,
+            self::OPTION_PAGE_TREE_OWNERSHIP,
             __('Ownership rules', 'pitea-customisation'),
-            [$this, 'renderUserGroupOwnershipField'],
-            self::GROUP_USER_GROUPS,
+            [$this, 'renderPageTreeOwnershipField'],
+            self::GROUP_PAGE_TREE_OWNERSHIP,
             'pitea_customisation_user_group_ownership'
         );
     }
@@ -125,7 +125,7 @@ class PagePermissionsTab implements SettingsTabInterface
     public function save(array $data): true|\WP_Error
     {
         $this->saveProtectedPages($data);
-        $this->saveUserGroupOwnership($data);
+        $this->savePageTreeOwnership($data);
 
         return true;
     }
@@ -151,27 +151,29 @@ class PagePermissionsTab implements SettingsTabInterface
         update_option(self::OPTION_PAGE_PERMISSIONS, wp_json_encode($permissions));
     }
 
-    private function saveUserGroupOwnership(array $data): void
+    private function savePageTreeOwnership(array $data): void
     {
-        $rawRows = isset($data[self::OPTION_USER_GROUP_OWNERSHIP]) && is_array($data[self::OPTION_USER_GROUP_OWNERSHIP])
-            ? $data[self::OPTION_USER_GROUP_OWNERSHIP]
+        $rawRows = isset($data[self::OPTION_PAGE_TREE_OWNERSHIP]) && is_array($data[self::OPTION_PAGE_TREE_OWNERSHIP])
+            ? $data[self::OPTION_PAGE_TREE_OWNERSHIP]
             : [];
 
         $ownership = [];
         foreach ($rawRows as $row) {
             $groupId = isset($row['user_group_id']) ? absint($row['user_group_id']) : 0;
+            $role    = isset($row['user_role']) ? sanitize_key((string) $row['user_role']) : '';
             $pageId  = isset($row['page_id']) ? absint($row['page_id']) : 0;
-            if ($groupId === 0 || $pageId === 0) {
+            if (($groupId === 0 && $role === '') || $pageId === 0) {
                 continue;
             }
             $ownership[] = [
                 'user_group_id' => $groupId,
+                'user_role'     => $role,
                 'page_id'       => $pageId,
                 'inherit'       => !empty($row['inherit']),
             ];
         }
 
-        update_option(self::OPTION_USER_GROUP_OWNERSHIP, wp_json_encode($ownership));
+        update_option(self::OPTION_PAGE_TREE_OWNERSHIP, wp_json_encode($ownership));
     }
 
     // -------------------------------------------------------------------------
@@ -181,7 +183,7 @@ class PagePermissionsTab implements SettingsTabInterface
     public function render(): void
     {
         $this->renderGroup(__('Protected pages / Templates', 'pitea-customisation'), self::GROUP_PROTECTED);
-        $this->renderGroup(__('User group ownership', 'pitea-customisation'), self::GROUP_USER_GROUPS);
+        $this->renderGroup(__('Page tree ownership', 'pitea-customisation'), self::GROUP_PAGE_TREE_OWNERSHIP);
     }
 
     private function renderGroup(string $title, string $groupPageSlug): void
@@ -251,12 +253,12 @@ class PagePermissionsTab implements SettingsTabInterface
     }
 
     // -------------------------------------------------------------------------
-    // Field renderers — user group ownership
+    // Field renderers — page tree ownership
     // -------------------------------------------------------------------------
 
-    public function renderUserGroupOwnershipField(): void
+    public function renderPageTreeOwnershipField(): void
     {
-        $raw  = (string) get_option(self::OPTION_USER_GROUP_OWNERSHIP, '[]');
+        $raw  = (string) get_option(self::OPTION_PAGE_TREE_OWNERSHIP, '[]');
         $rows = json_decode($raw, true);
         if (!is_array($rows)) {
             $rows = [];
@@ -265,9 +267,10 @@ class PagePermissionsTab implements SettingsTabInterface
         <div class="pitea-settings__repeater" data-repeater="user-group-ownership">
             <div class="pitea-settings__repeater-rows" id="user-group-ownership-rows">
                 <?php foreach ($rows as $i => $row) : ?>
-                    <?php $this->renderUserGroupOwnershipRow(
+                    <?php $this->renderPageTreeOwnershipRow(
                         $i,
                         (int) ($row['user_group_id'] ?? 0),
+                        (string) ($row['user_role'] ?? ''),
                         (int) ($row['page_id'] ?? 0),
                         !empty($row['inherit'])
                     ); ?>
@@ -277,15 +280,21 @@ class PagePermissionsTab implements SettingsTabInterface
                 <?php esc_html_e('+ Add rule', 'pitea-customisation'); ?>
             </button>
             <template id="user-group-ownership-row-template">
-                <?php $this->renderUserGroupOwnershipRow('{{INDEX}}', 0, 0, true); ?>
+                <?php $this->renderPageTreeOwnershipRow('{{INDEX}}', 0, '', 0, true); ?>
             </template>
         </div>
         <?php
     }
 
-    private function renderUserGroupOwnershipRow(string|int $index, int $selectedGroupId, int $selectedPageId, bool $inherit): void
+    private function renderPageTreeOwnershipRow(
+        string|int $index,
+        int $selectedGroupId,
+        string $selectedRole,
+        int $selectedPageId,
+        bool $inherit
+    ): void
     {
-        $namePrefix = self::OPTION_USER_GROUP_OWNERSHIP . '[' . $index . ']';
+        $namePrefix = self::OPTION_PAGE_TREE_OWNERSHIP . '[' . $index . ']';
         $terms      = get_terms(['taxonomy' => 'user_group', 'hide_empty' => false]);
         if (is_wp_error($terms)) {
             $terms = [];
@@ -294,7 +303,7 @@ class PagePermissionsTab implements SettingsTabInterface
         <div class="pitea-settings__repeater-row">
             <div class="pitea-settings__repeater-fields">
                 <select name="<?php echo esc_attr($namePrefix); ?>[user_group_id]" class="pitea-settings__input">
-                    <option value="0"><?php esc_html_e('— Select user group —', 'pitea-customisation'); ?></option>
+                    <option value="0"><?php esc_html_e('— Optional user group —', 'pitea-customisation'); ?></option>
                     <?php foreach ($terms as $term) : ?>
                         <option
                             value="<?php echo esc_attr((string) $term->term_id); ?>"
@@ -304,6 +313,10 @@ class PagePermissionsTab implements SettingsTabInterface
                         </option>
                     <?php endforeach; ?>
                 </select>
+                <span class="pitea-settings__inline-separator">
+                    <?php esc_html_e('or', 'pitea-customisation'); ?>
+                </span>
+                <?php $this->renderRoleDropdown($namePrefix . '[user_role]', $selectedRole); ?>
                 <?php $this->renderPageDropdown($namePrefix . '[page_id]', $selectedPageId); ?>
                 <label class="pitea-settings__checkbox-label">
                     <input
@@ -314,6 +327,9 @@ class PagePermissionsTab implements SettingsTabInterface
                     />
                     <?php esc_html_e('Include all subpages', 'pitea-customisation'); ?>
                 </label>
+                <p class="description">
+                    <?php esc_html_e('A rule matches when the user belongs to the selected user group or has the selected user role.', 'pitea-customisation'); ?>
+                </p>
             </div>
             <button type="button" class="button pitea-settings__repeater-remove">
                 <?php esc_html_e('Remove', 'pitea-customisation'); ?>
@@ -343,6 +359,25 @@ class PagePermissionsTab implements SettingsTabInterface
         echo '<select name="' . esc_attr($name) . '" class="pitea-settings__input">';
         echo '<option value="0">' . esc_html__('— Select a page —', 'pitea-customisation') . '</option>';
         echo walk_page_dropdown_tree($pages, 0, ['selected' => $selectedId]);
+        echo '</select>';
+    }
+
+    private function renderRoleDropdown(string $name, string $selectedRole): void
+    {
+        $roles = wp_roles();
+
+        echo '<select name="' . esc_attr($name) . '" class="pitea-settings__input">';
+        echo '<option value="">' . esc_html__('— Optional user role —', 'pitea-customisation') . '</option>';
+
+        if ($roles instanceof \WP_Roles) {
+            foreach ($roles->roles as $roleKey => $roleData) {
+                $label = isset($roleData['name']) ? translate_user_role((string) $roleData['name']) : $roleKey;
+                echo '<option value="' . esc_attr($roleKey) . '" ' . selected($selectedRole, $roleKey, false) . '>';
+                echo esc_html($label);
+                echo '</option>';
+            }
+        }
+
         echo '</select>';
     }
 }

@@ -9,6 +9,6 @@ class Permissions
     public function __construct()
     {
         new ReadOnlyPermissions();
-        new UserGroupOwnership();
+        new PageTreeOwnership();
     }
 }

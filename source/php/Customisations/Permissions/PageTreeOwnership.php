@@ -7,14 +7,15 @@ namespace PiteaCustomisation\Customisations\Permissions;
 use PiteaCustomisation\Admin\Tabs\PagePermissionsTab;
 
 /**
- * Class UserGroupOwnership
+ * Class PageTreeOwnership
  *
- * Enforces user group ownership rules: users who do not belong to the user
- * group that owns a page tree cannot see or access those pages in the admin.
+ * Enforces page tree ownership rules: users who do not match the configured
+ * user-group and/or user-role rules for a page tree cannot see or access those
+ * pages in the admin.
  *
  * Administrators and super-administrators are always exempt.
  */
-class UserGroupOwnership
+class PageTreeOwnership
 {
     public function __construct()
     {
@@ -39,8 +40,8 @@ class UserGroupOwnership
      * Limit the admin Pages list query to pages the current user is permitted to see.
      *
      * When ownership rules are configured, non-privileged users may only see pages
-     * that belong to one of their own user groups. Pages outside those trees are
-     * hidden entirely (post__in approach rather than post__not_in).
+     * that belong to one of their matching groups/roles. Pages outside those trees
+     * are hidden entirely (post__in approach rather than post__not_in).
      */
     public function filterAdminPagesList(\WP_Query $query): void
     {
@@ -143,14 +144,14 @@ class UserGroupOwnership
             return false;
         }
 
-        // Only apply restrictions to pages that are explicitly owned by some group.
+        // Only apply restrictions to pages that are explicitly covered by some ownership rule.
         // New pages, auto-drafts, and pages outside all ownership rules are not restricted
         // here — normal WordPress capability checks handle those.
         if (!in_array($postId, $this->getAllOwnedPageIds(), true)) {
             return false;
         }
 
-        // Page is owned by some group; restrict if not accessible to the user's own groups.
+        // Page is covered by an ownership rule; restrict if it is not accessible to the user.
         return !in_array($postId, $this->getAccessiblePageIdsForUser($userId), true);
     }
 
@@ -238,11 +239,11 @@ class UserGroupOwnership
     }
 
     /**
-     * Return the page IDs the given user may see, based on their user group ownership rules.
+     * Return the page IDs the given user may see, based on page tree ownership rules.
      *
      * Only pages (and their descendants, when inherit is enabled) that belong to one of
-     * the user's own groups are returned. Pages outside all ownership rules are NOT
-     * included — access is strictly additive (positive-permission model).
+     * the user's matching groups and/or roles are returned. Pages outside all ownership
+     * rules are NOT included — access is strictly additive (positive-permission model).
      *
      * @return int[]
      */
@@ -260,29 +261,22 @@ class UserGroupOwnership
         }
 
         $userGroupIds = $this->getUserGroupTermIds($userId);
+        $userRoles    = $this->getUserRoleNames($userId);
 
-        // Build map: group_id → [page_ids] for all rules.
-        $ownedByGroup = [];
+        $accessibleIds = [];
         foreach ($rules as $rule) {
-            $groupId = (int) ($rule['user_group_id'] ?? 0);
-            $pageId  = (int) ($rule['page_id'] ?? 0);
-            if ($groupId === 0 || $pageId === 0) {
+            if (!$this->ruleMatchesUser($rule, $userGroupIds, $userRoles)) {
                 continue;
             }
-            $pageIds = [$pageId];
-            if (!empty($rule['inherit'])) {
-                $pageIds = array_merge($pageIds, $this->getDescendantIds($pageId));
-            }
-            foreach ($pageIds as $pid) {
-                $ownedByGroup[$groupId][] = $pid;
-            }
-        }
 
-        // Accessible = union of all pages owned by any of the user's groups.
-        $accessibleIds = [];
-        foreach ($userGroupIds as $gid) {
-            if (isset($ownedByGroup[$gid])) {
-                $accessibleIds = array_merge($accessibleIds, $ownedByGroup[$gid]);
+            $pageId = (int) ($rule['page_id'] ?? 0);
+            if ($pageId === 0) {
+                continue;
+            }
+
+            $accessibleIds[] = $pageId;
+            if (!empty($rule['inherit'])) {
+                $accessibleIds = array_merge($accessibleIds, $this->getDescendantIds($pageId));
             }
         }
 
@@ -291,7 +285,29 @@ class UserGroupOwnership
     }
 
     /**
-     * Return all page IDs that are under any ownership rule (any group).
+     * @param  array<string, mixed> $rule
+     * @param  int[]                $userGroupIds
+     * @param  string[]             $userRoles
+     * @return bool
+     */
+    private function ruleMatchesUser(array $rule, array $userGroupIds, array $userRoles): bool
+    {
+        $groupId = (int) ($rule['user_group_id'] ?? 0);
+        $role    = sanitize_key((string) ($rule['user_role'] ?? ''));
+
+        if ($groupId === 0 && $role === '') {
+            return false;
+        }
+
+        if ($groupId !== 0 && in_array($groupId, $userGroupIds, true)) {
+            return true;
+        }
+
+        return $role !== '' && in_array($role, $userRoles, true);
+    }
+
+    /**
+     * Return all page IDs that are covered by any ownership rule.
      *
      * Used to distinguish "owned by someone" from "not in any rule" so that
      * new pages and unassigned pages are not accidentally blocked.
@@ -319,6 +335,21 @@ class UserGroupOwnership
 
         $cache = array_values(array_unique($ids));
         return $cache;
+    }
+
+    /**
+     * Return the current user's role names.
+     *
+     * @return string[]
+     */
+    private function getUserRoleNames(int $userId): array
+    {
+        $user = get_userdata($userId);
+        if (!$user) {
+            return [];
+        }
+
+        return array_map('strval', (array) $user->roles);
     }
 
     /**
@@ -358,7 +389,7 @@ class UserGroupOwnership
             return $rules;
         }
 
-        $raw   = (string) get_option(PagePermissionsTab::OPTION_USER_GROUP_OWNERSHIP, '[]');
+        $raw   = (string) get_option(PagePermissionsTab::OPTION_PAGE_TREE_OWNERSHIP, '[]');
         $rules = json_decode($raw, true);
         if (!is_array($rules)) {
             $rules = [];

@@ -35,10 +35,10 @@ class Settings
         $this->tabs = [
             new GeneralTab(),
             new ExternalContentTab(),
+            new ColorPickerPermissionsTab(),
             new ReadSpeakerTab(),
             new LatestEventsTab(),
             new PagePermissionsTab(),
-            new ColorPickerPermissionsTab(),
         ];
 
         add_action('admin_menu', [$this, 'addMenuPage']);

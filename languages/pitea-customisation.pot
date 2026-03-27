@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-26T18:20:50+00:00\n"
+"POT-Creation-Date: 2026-03-27T19:16:03+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: pitea-customisation\n"
@@ -167,7 +167,7 @@ msgid "No design system palette groups were found. Check that variables.scss is 
 msgstr ""
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:203
-#: source/php/Admin/Tabs/PagePermissionsTab.php:277
+#: source/php/Admin/Tabs/PagePermissionsTab.php:280
 msgid "+ Add rule"
 msgstr ""
 
@@ -184,7 +184,6 @@ msgid "User group"
 msgstr ""
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:276
-#: source/php/Admin/Tabs/PagePermissionsTab.php:297
 msgid "— Select user group —"
 msgstr ""
 
@@ -197,8 +196,8 @@ msgid "Allow custom hex color"
 msgstr ""
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:318
-#: source/php/Admin/Tabs/PagePermissionsTab.php:247
-#: source/php/Admin/Tabs/PagePermissionsTab.php:319
+#: source/php/Admin/Tabs/PagePermissionsTab.php:249
+#: source/php/Admin/Tabs/PagePermissionsTab.php:335
 msgid "Remove"
 msgstr ""
 
@@ -293,7 +292,7 @@ msgid "Page permissions"
 msgstr ""
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:69
-#: source/php/Admin/Tabs/PagePermissionsTab.php:183
+#: source/php/Admin/Tabs/PagePermissionsTab.php:185
 msgid "Protected pages / Templates"
 msgstr ""
 
@@ -306,32 +305,48 @@ msgid "Protected pages"
 msgstr ""
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:102
-#: source/php/Admin/Tabs/PagePermissionsTab.php:184
-msgid "User group ownership"
+#: source/php/Admin/Tabs/PagePermissionsTab.php:186
+msgid "Page tree ownership"
 msgstr ""
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:104
-msgid "Define which user groups own and manage particular parts of the page tree. Users who do not belong to the owning user group cannot see those pages or their descendants in the admin."
+msgid "Define which user groups and/or user roles own and manage particular parts of the page tree. Users who do not match an owning rule cannot see those pages or their descendants in the admin."
 msgstr ""
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:114
 msgid "Ownership rules"
 msgstr ""
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:220
+#: source/php/Admin/Tabs/PagePermissionsTab.php:222
 msgid "+ Add page"
 msgstr ""
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:243
+#: source/php/Admin/Tabs/PagePermissionsTab.php:245
 msgid "Apply to all subpages"
 msgstr ""
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:315
+#: source/php/Admin/Tabs/PagePermissionsTab.php:306
+msgid "— Optional user group —"
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:317
+msgid "or"
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:328
 msgid "Include all subpages"
 msgstr ""
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:344
+#: source/php/Admin/Tabs/PagePermissionsTab.php:331
+msgid "A rule matches when the user belongs to the selected user group or has the selected user role."
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:360
 msgid "— Select a page —"
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:370
+msgid "— Optional user role —"
 msgstr ""
 
 #: source/php/Admin/Tabs/ReadSpeakerTab.php:42
@@ -471,7 +486,7 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
-#: source/php/Customisations/Config.php:120
+#: source/php/Customisations/Config.php:141
 msgid "Username may only contain letters (A–Z), numbers (0–9) and dots (.)"
 msgstr ""
 

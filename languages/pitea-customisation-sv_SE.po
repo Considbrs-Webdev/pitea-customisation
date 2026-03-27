@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pitea-"
 "customisation\n"
-"POT-Creation-Date: 2026-03-26T18:20:50+00:00\n"
-"PO-Revision-Date: 2026-03-26 19:23+0100\n"
+"POT-Creation-Date: 2026-03-27T19:16:03+00:00\n"
+"PO-Revision-Date: 2026-03-27 20:19+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -23,8 +23,7 @@ msgstr "Anpassning för Piteå"
 #: pitea-customisation.php
 msgid ""
 "Custom functionality and modifications for the Piteå WordPress installation"
-msgstr ""
-"Anpassade funktioner och modifieringar för Piteås WordPress-installation"
+msgstr "Anpassade funktioner och modifieringar för Piteås WordPress-installation"
 
 #. Author of the plugin
 #: pitea-customisation.php
@@ -157,17 +156,16 @@ msgstr "Färgväljare"
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:71
 msgid ""
-"Limit which palette groups each user group may use in the design system "
-"color picker, and whether they may enter a custom hex color. Users without a "
-"matching rule here keep full access. Users in several groups get the union "
-"of allowed palette groups; custom color is allowed if any matching rule "
-"allows it."
+"Limit which palette groups each user group may use in the design system color "
+"picker, and whether they may enter a custom hex color. Users without a "
+"matching rule here keep full access. Users in several groups get the union of "
+"allowed palette groups; custom color is allowed if any matching rule allows it."
 msgstr ""
-"Begränsa vilka palettgrupper varje användargrupp får använda i "
-"designsystemets färgväljare, och om de får ange en egen hex-färg. Användare "
-"utan matchande regel här behåller full åtkomst. Användare som tillhör flera "
-"grupper får sammanslagning av tillåtna palettgrupper; egen hex-färg tillåts "
-"om någon matchande regel tillåter det."
+"Begränsa vilka palettgrupper varje användargrupp får använda i designsystemets "
+"färgväljare, och om de får ange en egen hex-färg. Användare utan matchande "
+"regel här behåller full åtkomst. Användare som tillhör flera grupper får "
+"sammanslagning av tillåtna palettgrupper; egen hex-färg tillåts om någon "
+"matchande regel tillåter det."
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:129
 msgid "Color picker permissions"
@@ -182,7 +180,7 @@ msgstr ""
 "finns eller att Municipios färghjälpare är inlästa."
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:203
-#: source/php/Admin/Tabs/PagePermissionsTab.php:277
+#: source/php/Admin/Tabs/PagePermissionsTab.php:280
 msgid "+ Add rule"
 msgstr "+ Lägg till regel"
 
@@ -192,8 +190,8 @@ msgstr "Förhandsvisning av palettgrupper"
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:226
 msgid ""
-"Each name below is a palette group in the editor color picker. Hover a "
-"square to see the color label and hex code."
+"Each name below is a palette group in the editor color picker. Hover a square "
+"to see the color label and hex code."
 msgstr ""
 "Varje namn nedan är en palettgrupp i redaktörens färgväljare. Hovra över en "
 "ruta för att se färgets namn och hex-kod."
@@ -203,7 +201,6 @@ msgid "User group"
 msgstr "Användargrupp"
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:276
-#: source/php/Admin/Tabs/PagePermissionsTab.php:297
 msgid "— Select user group —"
 msgstr "— Välj användargrupp —"
 
@@ -216,8 +213,8 @@ msgid "Allow custom hex color"
 msgstr "Tillåt egen hex-färg"
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:318
-#: source/php/Admin/Tabs/PagePermissionsTab.php:247
-#: source/php/Admin/Tabs/PagePermissionsTab.php:319
+#: source/php/Admin/Tabs/PagePermissionsTab.php:249
+#: source/php/Admin/Tabs/PagePermissionsTab.php:335
 msgid "Remove"
 msgstr "Ta bort"
 
@@ -231,13 +228,13 @@ msgstr "Trafikstörningar"
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:81
 msgid ""
-"Automatically import traffic disruption data from an ArcGIS FeatureServer "
-"and publish it as service information posts. Leave the URL empty to disable "
+"Automatically import traffic disruption data from an ArcGIS FeatureServer and "
+"publish it as service information posts. Leave the URL empty to disable "
 "importing."
 msgstr ""
 "Importera automatiskt data om trafikstörningar från en ArcGIS FeatureServer "
-"och publicera dem som inlägg för serviceinformation. Lämna URL:en tom för "
-"att inaktivera import."
+"och publicera dem som inlägg för serviceinformation. Lämna URL:en tom för att "
+"inaktivera import."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:91
 #: source/php/Admin/Tabs/ExternalContentTab.php:129
@@ -253,13 +250,12 @@ msgid ""
 "Automatically index Piteå's public e-services from the eNämnd API into the "
 "Typesense search engine. Leave the URL empty to disable indexing."
 msgstr ""
-"Indexera automatiskt Piteås offentliga e-tjänster från eNämnds API i "
-"sökmotorn Typesense. Lämna URL:en tom för att inaktivera indexeringen."
+"Indexera automatiskt Piteås offentliga e-tjänster från eNämnds API i sökmotorn "
+"Typesense. Lämna URL:en tom för att inaktivera indexeringen."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:174
 msgid ""
-"The eNämnd public-services API URL. Leave empty to disable e-service "
-"indexing."
+"The eNämnd public-services API URL. Leave empty to disable e-service indexing."
 msgstr ""
 "API-URL för eNämnds tjänst för offentliga e-tjänster. Lämna tomt för att "
 "inaktivera indexering av e-tjänster."
@@ -306,9 +302,8 @@ msgid ""
 "Configure the API credentials for the Latest Events module. These settings "
 "allow the module to fetch event data from the Visit Piteå API."
 msgstr ""
-"Konfigurera API-uppgifterna för modulen Senaste evenemang. Dessa "
-"inställningar gör det möjligt för modulen att hämta evenemangsdata från "
-"Visit Piteå-API:t."
+"Konfigurera API-uppgifterna för modulen Senaste evenemang. Dessa inställningar "
+"gör det möjligt för modulen att hämta evenemangsdata från Visit Piteå-API:t."
 
 #: source/php/Admin/Tabs/LatestEventsTab.php:92
 msgid "API URL"
@@ -337,7 +332,7 @@ msgid "Page permissions"
 msgstr "Sidrättigheter"
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:69
-#: source/php/Admin/Tabs/PagePermissionsTab.php:183
+#: source/php/Admin/Tabs/PagePermissionsTab.php:185
 msgid "Protected pages / Templates"
 msgstr "Skyddade sidor / Mallar"
 
@@ -354,39 +349,59 @@ msgid "Protected pages"
 msgstr "Skyddade sidor"
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:102
-#: source/php/Admin/Tabs/PagePermissionsTab.php:184
-msgid "User group ownership"
-msgstr "Ägarskap för användargrupp"
+#: source/php/Admin/Tabs/PagePermissionsTab.php:186
+msgid "Page tree ownership"
+msgstr "Ägarskap för sidträdet"
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:104
 msgid ""
-"Define which user groups own and manage particular parts of the page tree. "
-"Users who do not belong to the owning user group cannot see those pages or "
+"Define which user groups and/or user roles own and manage particular parts of "
+"the page tree. Users who do not match an owning rule cannot see those pages or "
 "their descendants in the admin."
 msgstr ""
-"Ange vilka användargrupper som äger och hanterar särskilda delar av "
-"sidträdet. Användare som inte tillhör den ägande användargruppen kan inte se "
-"dessa sidor eller deras underordnade sidor i admin."
+"Definiera vilka användargrupper och/eller användarroller som äger och styr "
+"specifika delar av sidträdet. Användare som inte matchar någon sådan regel kan "
+"inte se dessa sidor eller deras underordnade sidor i admin."
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:114
 msgid "Ownership rules"
 msgstr "Regler för ägarskap"
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:220
+#: source/php/Admin/Tabs/PagePermissionsTab.php:222
 msgid "+ Add page"
 msgstr "+ Lägg till sida"
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:243
+#: source/php/Admin/Tabs/PagePermissionsTab.php:245
 msgid "Apply to all subpages"
 msgstr "Gäller för alla undersidor"
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:315
+#: source/php/Admin/Tabs/PagePermissionsTab.php:306
+msgid "— Optional user group —"
+msgstr "— Valfri användargrupp —"
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:317
+msgid "or"
+msgstr "eller"
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:328
 msgid "Include all subpages"
 msgstr "Inkludera alla undersidor"
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:344
+#: source/php/Admin/Tabs/PagePermissionsTab.php:331
+msgid ""
+"A rule matches when the user belongs to the selected user group or has the "
+"selected user role."
+msgstr ""
+"En regel matchar när användaren tillhör den valda gruppen eller har den valda "
+"rollen."
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:360
 msgid "— Select a page —"
 msgstr "— Välj en sida —"
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:370
+msgid "— Optional user role —"
+msgstr "— Valfri användarroll —"
 
 #: source/php/Admin/Tabs/ReadSpeakerTab.php:42
 msgid "ReadSpeaker"
@@ -435,9 +450,9 @@ msgid ""
 "template where you want them. Enable that module under Modularity → Modules."
 msgstr ""
 "När detta är aktiverat tas Lyssna och Skriv ut bort från det övre "
-"navigeringshjälpsområdet. Lägg till modulen «Tillgänglighetsknappar» (mod-"
-"acc-buttons) i sidopanelen på varje mall där du vill ha dem. Aktivera "
-"modulen under Modularity → Moduler."
+"navigeringshjälpsområdet. Lägg till modulen «Tillgänglighetsknappar» (mod-acc-"
+"buttons) i sidopanelen på varje mall där du vill ha dem. Aktivera modulen "
+"under Modularity → Moduler."
 
 #: source/php/Customisations/Accessibility.php:69
 #: source/php/Customisations/Accessibility.php:301
@@ -532,7 +547,7 @@ msgstr "Kunde inte registrera dummybild i mediebiblioteket."
 msgid "Start"
 msgstr "Start"
 
-#: source/php/Customisations/Config.php:120
+#: source/php/Customisations/Config.php:141
 msgid "Username may only contain letters (A–Z), numbers (0–9) and dots (.)"
 msgstr ""
 "Användarnamn får endast innehålla bokstäver (A–Z), siffror (0–9) och punkter "
@@ -618,8 +633,8 @@ msgstr "Tillgänglighetsknappar"
 
 #: source/php/Module/AccButtons.php:28
 msgid ""
-"Listen and print buttons (same as the nav bar). Place in a sidebar for "
-"layout control."
+"Listen and print buttons (same as the nav bar). Place in a sidebar for layout "
+"control."
 msgstr ""
 "Lyssna- och skriv ut-knappar (samma som i navigeringsfältet). Placera i en "
 "sidopanel för kontroll över layouten."
