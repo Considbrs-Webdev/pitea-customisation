@@ -24,15 +24,72 @@ class Config
         // Remove font-face declarations from Kirki inline styles on the frontend
         add_filter('kirki_inline_styles', [$this, 'maybeRemoveFontFaces']);
 
-        // Remove page template from Gutenberg so that we don't get the setting twice
-        // Otherwise they will have to change both values
-        add_action('add_meta_boxes', [$this, 'removePageTemplateMetaBox'], 100);
-
         // Change the default username validation to allow dots and uppercase letters
         add_filter('wpmu_validate_user_signup', [$this, 'validateUserSignupUsername']);
 
         // Ensure that the original username (with dots and uppercase) is preserved during sanitization
         add_filter('sanitize_user', [$this, 'preserveUsernameCase'], 10, 3);
+
+        // Better Post UI renders its own page template selector in pageparentdiv.
+        // Remove Gutenberg's duplicate classic-theme template control from the block editor.
+        add_filter('block_editor_settings_all', [$this, 'maybeRemoveBlockEditorTemplateSelector'], 10, 2);
+    }
+
+    public function maybeRemoveBlockEditorTemplateSelector(array $settings, $blockEditorContext): array
+    {
+        if (!$this->isBetterPostUiActive()) {
+            return $settings;
+        }
+
+        if (current_theme_supports('block-templates')) {
+            return $settings;
+        }
+
+        $post = $blockEditorContext->post ?? null;
+        if (!$post instanceof \WP_Post) {
+            return $settings;
+        }
+
+        if (empty(get_page_templates($post, $post->post_type))) {
+            return $settings;
+        }
+
+        if ((int) get_option('page_for_posts') === (int) $post->ID) {
+            return $settings;
+        }
+
+        $settings['availableTemplates'] = [];
+
+        return $settings;
+    }
+
+    /**
+     * Check if Better Post UI is active on this site or network.
+     *
+     * @return bool
+     */
+    private function isBetterPostUiActive(): bool
+    {
+        $pluginFiles = [
+            'better-post-ui/better-post-ui.php',
+            'better-post-UI/better-post-ui.php',
+        ];
+
+        $activePlugins = (array) get_option('active_plugins', []);
+        $networkActivePlugins = is_multisite()
+            ? array_keys((array) get_site_option('active_sitewide_plugins', []))
+            : [];
+
+        foreach ($pluginFiles as $pluginFile) {
+            if (
+                in_array($pluginFile, $activePlugins, true) ||
+                in_array($pluginFile, $networkActivePlugins, true)
+            ) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -145,16 +202,6 @@ class Config
         $result['errors'] = $errors;
 
         return $result;
-    }
-
-    /**
-     * Remove the page template meta box in Gutenberg (prevents duplicate setting)
-     *
-     * @return void
-     */
-    public function removePageTemplateMetaBox(): void
-    {
-        remove_meta_box('pageparentdiv', 'page', 'side');
     }
 
     /**
