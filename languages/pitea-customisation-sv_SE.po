@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pitea-"
 "customisation\n"
-"POT-Creation-Date: 2026-03-27T20:42:19+00:00\n"
+"POT-Creation-Date: 2026-03-27T22:12:56+00:00\n"
 "PO-Revision-Date: 2026-03-27 20:19+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -111,43 +111,43 @@ msgstr "Ingen"
 msgid "Bottom of content"
 msgstr "Botten av innehållet"
 
-#: source/php/Admin/Settings.php:57 source/php/Admin/Settings.php:58
+#: source/php/Admin/Settings.php:59 source/php/Admin/Settings.php:60
 msgid "Piteå kommun"
 msgstr "Piteå kommun"
 
-#: source/php/Admin/Settings.php:91
+#: source/php/Admin/Settings.php:93
 msgid "Saving…"
 msgstr "Sparar…"
 
-#: source/php/Admin/Settings.php:92
+#: source/php/Admin/Settings.php:94
 msgid "Changes saved"
 msgstr "Ändringar sparade"
 
-#: source/php/Admin/Settings.php:93
+#: source/php/Admin/Settings.php:95
 msgid "Could not save settings"
 msgstr "Kunde inte spara inställningar"
 
-#: source/php/Admin/Settings.php:106
+#: source/php/Admin/Settings.php:108
 msgid "Insufficient permissions."
 msgstr "Otillräckliga rättigheter."
 
-#: source/php/Admin/Settings.php:112
+#: source/php/Admin/Settings.php:114
 msgid "Security check failed."
 msgstr "Säkerhetskontroll misslyckades."
 
-#: source/php/Admin/Settings.php:126
+#: source/php/Admin/Settings.php:128
 msgid "Unknown tab."
 msgstr "Okänd flik."
 
-#: source/php/Admin/Settings.php:135
+#: source/php/Admin/Settings.php:137
 msgid "Settings saved."
 msgstr "Inställningarna sparades."
 
-#: source/php/Admin/Settings.php:192
+#: source/php/Admin/Settings.php:194
 msgid "Save Changes"
 msgstr "Spara"
 
-#: source/php/Admin/Settings.php:201
+#: source/php/Admin/Settings.php:203
 msgid "Settings sections"
 msgstr "Inställningssektioner"
 
@@ -223,6 +223,86 @@ msgstr "Tillåt egen hex-färg"
 #: source/php/Admin/Tabs/PagePermissionsTab.php:526
 msgid "Remove"
 msgstr "Ta bort"
+
+#: source/php/Admin/Tabs/CustomerFeedbackTab.php:32
+msgid "Customer feedback"
+msgstr "Kundfeedback"
+
+#: source/php/Admin/Tabs/CustomerFeedbackTab.php:68
+msgid "Visibility"
+msgstr "Synlighet"
+
+#: source/php/Admin/Tabs/CustomerFeedbackTab.php:70
+msgid ""
+"Control where the customer feedback form should be hidden. Front page and "
+"individually excluded singular posts/pages are already handled separately."
+msgstr ""
+"Styr var formuläret för kundfeedback ska döljas. Startsidan och individuellt "
+"exkluderade enskilda inlägg/sidor hanteras redan separat."
+
+#: source/php/Admin/Tabs/CustomerFeedbackTab.php:80
+msgid "Exclude on post type archives"
+msgstr "Exkludera på arkivsidor för inläggstyper"
+
+#: source/php/Admin/Tabs/CustomerFeedbackTab.php:88
+msgid "Exclude on other page types"
+msgstr "Exkludera på andra sidtyper"
+
+#: source/php/Admin/Tabs/CustomerFeedbackTab.php:124
+msgid "Customer feedback settings"
+msgstr "Inställningar för kundfeedback"
+
+#: source/php/Admin/Tabs/CustomerFeedbackTab.php:149
+msgid "No public post types with archives were found."
+msgstr "Inga publika inläggstyper med arkivsidor hittades."
+
+#: source/php/Admin/Tabs/CustomerFeedbackTab.php:167
+msgid ""
+"When checked, the feedback form is hidden on archive pages for the selected "
+"post types."
+msgstr ""
+"När den är markerad döljs feedbackformuläret på arkivsidor för valda "
+"inläggstyper."
+
+#: source/php/Admin/Tabs/CustomerFeedbackTab.php:193
+msgid ""
+"Use these toggles to hide feedback on common non-singular or utility page "
+"types."
+msgstr ""
+"Använd dessa reglage för att dölja feedback på vanliga icke-enskilda eller "
+"tekniska sidtyper."
+
+#: source/php/Admin/Tabs/CustomerFeedbackTab.php:290
+msgid "Posts page (blog index)"
+msgstr "Inläggssida (bloggindex)"
+
+#: source/php/Admin/Tabs/CustomerFeedbackTab.php:291
+msgid "Search results"
+msgstr "Sökresultat"
+
+#: source/php/Admin/Tabs/CustomerFeedbackTab.php:292
+msgid "Taxonomy archives"
+msgstr "Taxonomiarkiv"
+
+#: source/php/Admin/Tabs/CustomerFeedbackTab.php:293
+msgid "Category archives"
+msgstr "Kategoriarkiv"
+
+#: source/php/Admin/Tabs/CustomerFeedbackTab.php:294
+msgid "Tag archives"
+msgstr "Taggarkiv"
+
+#: source/php/Admin/Tabs/CustomerFeedbackTab.php:295
+msgid "Date archives"
+msgstr "Datumarkiv"
+
+#: source/php/Admin/Tabs/CustomerFeedbackTab.php:296
+msgid "Author archives"
+msgstr "Författararkiv"
+
+#: source/php/Admin/Tabs/CustomerFeedbackTab.php:297
+msgid "404 pages"
+msgstr "404-sidor"
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:46
 msgid "External Content"
@@ -634,17 +714,17 @@ msgstr "(Utan titel) #%d"
 msgid "Start"
 msgstr "Start"
 
-#: source/php/Customisations/Config.php:141
+#: source/php/Customisations/Config.php:198
 msgid "Username may only contain letters (A–Z), numbers (0–9) and dots (.)"
 msgstr ""
 "Användarnamn får endast innehålla bokstäver (A–Z), siffror (0–9) och punkter "
 "(.)"
 
-#: source/php/Customisations/CustomerFeedback.php:134
+#: source/php/Customisations/CustomerFeedback.php:162
 msgid "Customer Feedback"
 msgstr "Kundfeedback"
 
-#: source/php/Customisations/CustomerFeedback.php:154
+#: source/php/Customisations/CustomerFeedback.php:182
 msgid "Exclude customer feedback form on this page"
 msgstr "Exkludera kundfeedbackformulär på denna sida"
 

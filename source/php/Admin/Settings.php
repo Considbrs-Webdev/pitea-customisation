@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PiteaCustomisation\Admin;
 
 use PiteaCustomisation\Admin\Tabs\ColorPickerPermissionsTab;
+use PiteaCustomisation\Admin\Tabs\CustomerFeedbackTab;
 use PiteaCustomisation\Admin\Tabs\ExternalContentTab;
 use PiteaCustomisation\Admin\Tabs\GeneralTab;
 use PiteaCustomisation\Admin\Tabs\LatestEventsTab;
@@ -36,6 +37,7 @@ class Settings
             new GeneralTab(),
             new ExternalContentTab(),
             new ColorPickerPermissionsTab(),
+            new CustomerFeedbackTab(),
             new ReadSpeakerTab(),
             new LatestEventsTab(),
             new PagePermissionsTab(),

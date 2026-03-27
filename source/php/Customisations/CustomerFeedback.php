@@ -2,6 +2,8 @@
 
 namespace PiteaCustomisation\Customisations;
 
+use PiteaCustomisation\Admin\Tabs\CustomerFeedbackTab;
+
 class CustomerFeedback
 {
     private string $metaKey = '_customer_feedback_exclude';
@@ -9,6 +11,7 @@ class CustomerFeedback
     public function __construct()
     {
         add_filter('CustomerFeedback/post_types', array($this, 'hideCustomerFeedbackOnStartpage'));
+        add_filter('CustomerFeedback/post_types', array($this, 'hideCustomerFeedbackOnExcludedContexts'));
         add_filter('CustomerFeedback/post_types', array($this, 'hideCustomerFeedbackOnExcludedPost'));
         add_action('add_meta_boxes', array($this, 'registerMetaBox'), 10, 2);
         add_action('save_post', array($this, 'saveMetaBox'));
@@ -61,6 +64,31 @@ class CustomerFeedback
         global $post;
 
         if (is_a($post, 'WP_Post') && get_post_meta($post->ID, $this->metaKey, true)) {
+            return [];
+        }
+
+        return $postTypes;
+    }
+
+    /**
+     * Hide customer feedback based on global settings for archive and utility pages.
+     *
+     * @param array|null $postTypes
+     * @return array|null
+     */
+    public function hideCustomerFeedbackOnExcludedContexts($postTypes)
+    {
+        if (is_admin()) {
+            return $postTypes;
+        }
+
+        $excludedContexts = CustomerFeedbackTab::getExcludedContexts();
+        if ($this->isExcludedContext($excludedContexts)) {
+            return [];
+        }
+
+        $excludedArchivePostTypes = CustomerFeedbackTab::getExcludedArchivePostTypes();
+        if ($this->isExcludedPostTypeArchive($excludedArchivePostTypes)) {
             return [];
         }
 
@@ -183,5 +211,81 @@ class CustomerFeedback
         } else {
             delete_post_meta($postId, $this->metaKey);
         }
+    }
+
+    /**
+     * @param array<int, string> $excludedContexts
+     */
+    private function isExcludedContext(array $excludedContexts): bool
+    {
+        if (in_array('home', $excludedContexts, true) && is_home()) {
+            return true;
+        }
+
+        if (in_array('search', $excludedContexts, true) && is_search()) {
+            return true;
+        }
+
+        if (in_array('taxonomy', $excludedContexts, true) && (is_tax() || is_category() || is_tag())) {
+            return true;
+        }
+
+        if (in_array('category', $excludedContexts, true) && is_category()) {
+            return true;
+        }
+
+        if (in_array('tag', $excludedContexts, true) && is_tag()) {
+            return true;
+        }
+
+        if (in_array('date', $excludedContexts, true) && is_date()) {
+            return true;
+        }
+
+        if (in_array('author', $excludedContexts, true) && is_author()) {
+            return true;
+        }
+
+        if (in_array('404', $excludedContexts, true) && is_404()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param array<int, string> $excludedPostTypes
+     */
+    private function isExcludedPostTypeArchive(array $excludedPostTypes): bool
+    {
+        if ($excludedPostTypes === [] || !is_post_type_archive()) {
+            return false;
+        }
+
+        $archivePostTypes = [];
+        $queryVarPostType = get_query_var('post_type');
+
+        if (is_string($queryVarPostType) && $queryVarPostType !== '') {
+            $archivePostTypes[] = $queryVarPostType;
+        } elseif (is_array($queryVarPostType)) {
+            foreach ($queryVarPostType as $postType) {
+                if (is_string($postType) && $postType !== '') {
+                    $archivePostTypes[] = $postType;
+                }
+            }
+        }
+
+        $queriedObject = get_queried_object();
+        if (is_object($queriedObject) && isset($queriedObject->name) && is_string($queriedObject->name)) {
+            $archivePostTypes[] = $queriedObject->name;
+        }
+
+        foreach ($archivePostTypes as $postType) {
+            if (in_array(sanitize_key($postType), $excludedPostTypes, true)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
