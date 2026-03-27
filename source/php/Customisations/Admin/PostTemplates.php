@@ -33,6 +33,7 @@ class PostTemplates
     public function __construct()
     {
         add_action('admin_menu', [$this, 'registerMenuItems']);
+        add_action('admin_footer', [$this, 'renderParentChooserModals']);
     }
 
     /**
@@ -51,7 +52,7 @@ class PostTemplates
             __('New navigation page', 'pitea-customisation'),
             'edit_pages',
             self::PAGE,
-            '__return_false'
+            [$this, 'renderNavigationPageChooser']
         );
 
         add_action('load-' . $hook, [$this, 'handleCreateNavigationPage']);
@@ -62,7 +63,7 @@ class PostTemplates
             __('New theme page', 'pitea-customisation'),
             'edit_pages',
             self::PAGE_THEME,
-            '__return_false'
+            [$this, 'renderThemePageChooser']
         );
 
         add_action('load-' . $hookTheme, [$this, 'handleCreateThemePage']);
@@ -73,7 +74,7 @@ class PostTemplates
             __('New navigation page (second level)', 'pitea-customisation'),
             'edit_pages',
             self::PAGE_NAV_SECOND_LEVEL,
-            '__return_false'
+            [$this, 'renderNavSecondLevelPageChooser']
         );
 
         add_action('load-' . $hookNavSecondLevel, [$this, 'handleCreateNavSecondLevelPage']);
@@ -84,7 +85,7 @@ class PostTemplates
             __('New content page', 'pitea-customisation'),
             'edit_pages',
             self::PAGE_CONTENT_PAGE,
-            '__return_false'
+            [$this, 'renderContentPageChooser']
         );
 
         add_action('load-' . $hookContentPage, [$this, 'handleCreateContentPage']);
@@ -98,11 +99,26 @@ class PostTemplates
      */
     public function handleCreateNavigationPage(): void
     {
+        $method = strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET'));
+        if ($method !== 'POST') {
+            return;
+        }
+
         if (!current_user_can('edit_pages')) {
             wp_die(esc_html__('You do not have permission to perform this action.', 'pitea-customisation'));
         }
 
-        $post_id = $this->insertNavigationPage();
+        check_admin_referer('pitea_create_page_' . self::PAGE);
+
+        $parentId = isset($_POST['post_parent']) ? (int) $_POST['post_parent'] : 0;
+        if ($parentId !== 0 && !$this->isCurrentUserPrivileged()) {
+            $accessible = $this->getAccessibleParentPageIds();
+            if ($accessible !== null && !in_array($parentId, $accessible, true)) {
+                wp_die(esc_html__('Du har inte tillgång till den valda föräldrasidan.', 'pitea-customisation'));
+            }
+        }
+
+        $post_id = $this->insertNavigationPage($parentId);
 
         if (is_wp_error($post_id)) {
             wp_die(esc_html($post_id->get_error_message()));
@@ -117,7 +133,7 @@ class PostTemplates
      *
      * @return int|\WP_Error
      */
-    private function insertNavigationPage(): int|\WP_Error
+    private function insertNavigationPage(int $parentId = 0): int|\WP_Error
     {
         $post_content = <<<'EOT'
 <!-- wp:acf/container {"name":"acf/container","data":{"amount":"0","_amount":"field_63cfdba39a6d2","border_radius":"","_border_radius":"field_6807afdfba66c","shadow":"0","_shadow":"field_68088e6bbe241","content_width":"standard","_content_width":"field_644b6d221b7a4","backgroundImage":"","_backgroundImage":"field_6405fea65cc8f","background_color_type":"default","_background_color_type":"field_64831fa89c119","color":"","_color":"field_63cfdc219a6d3","text_color":"","_text_color":"field_644b77128c900","lang":"auto","_lang":"field_636e42408367e"},"align":"full","mode":"preview","metadata":{"name":"Modul: Hero undersida","patternName":"core/block/1820"}} -->
@@ -203,7 +219,7 @@ EOT;
             'post_content' => $post_content,
             'post_status'  => 'draft',
             'post_type'    => 'page',
-            'post_parent'  => 0,
+            'post_parent'  => $parentId,
             'post_author'  => get_current_user_id(),
         ], true);
 
@@ -244,11 +260,26 @@ EOT;
      */
     public function handleCreateThemePage(): void
     {
+        $method = strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET'));
+        if ($method !== 'POST') {
+            return;
+        }
+
         if (!current_user_can('edit_pages')) {
             wp_die(esc_html__('You do not have permission to perform this action.', 'pitea-customisation'));
         }
 
-        $post_id = $this->insertThemePage();
+        check_admin_referer('pitea_create_page_' . self::PAGE_THEME);
+
+        $parentId = isset($_POST['post_parent']) ? (int) $_POST['post_parent'] : 0;
+        if ($parentId !== 0 && !$this->isCurrentUserPrivileged()) {
+            $accessible = $this->getAccessibleParentPageIds();
+            if ($accessible !== null && !in_array($parentId, $accessible, true)) {
+                wp_die(esc_html__('Du har inte tillgång till den valda föräldrasidan.', 'pitea-customisation'));
+            }
+        }
+
+        $post_id = $this->insertThemePage($parentId);
 
         if (is_wp_error($post_id)) {
             wp_die(esc_html($post_id->get_error_message()));
@@ -263,7 +294,7 @@ EOT;
      *
      * @return int|\WP_Error
      */
-    private function insertThemePage(): int|\WP_Error
+    private function insertThemePage(int $parentId = 0): int|\WP_Error
     {
         $post_content = <<<'EOT'
 <!-- wp:acf/container {"name":"acf/container","data":{"amount":"4","_amount":"field_63cfdba39a6d2","border_radius":"","_border_radius":"field_6807afdfba66c","shadow":"0","_shadow":"field_68088e6bbe241","content_width":"standard","_content_width":"field_644b6d221b7a4","backgroundImage":"","_backgroundImage":"field_6405fea65cc8f","background_color_type":"default","_background_color_type":"field_64831fa89c119","color":"#D1DBC8","_color":"field_63cfdc219a6d3","text_color":"#000000","_text_color":"field_644b77128c900","lang":"auto","_lang":"field_636e42408367e"},"align":"full","mode":"preview","className":"top-element","metadata":{"name":"Modul: Hero temasida","patternName":"core/block/2056"}} -->
@@ -357,7 +388,7 @@ EOT;
             'post_content' => $post_content,
             'post_status'  => 'draft',
             'post_type'    => 'page',
-            'post_parent'  => 0,
+            'post_parent'  => $parentId,
             'post_author'  => get_current_user_id(),
         ], true);
 
@@ -388,11 +419,26 @@ EOT;
      */
     public function handleCreateNavSecondLevelPage(): void
     {
+        $method = strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET'));
+        if ($method !== 'POST') {
+            return;
+        }
+
         if (!current_user_can('edit_pages')) {
             wp_die(esc_html__('You do not have permission to perform this action.', 'pitea-customisation'));
         }
 
-        $post_id = $this->insertNavSecondLevelPage();
+        check_admin_referer('pitea_create_page_' . self::PAGE_NAV_SECOND_LEVEL);
+
+        $parentId = isset($_POST['post_parent']) ? (int) $_POST['post_parent'] : 0;
+        if ($parentId !== 0 && !$this->isCurrentUserPrivileged()) {
+            $accessible = $this->getAccessibleParentPageIds();
+            if ($accessible !== null && !in_array($parentId, $accessible, true)) {
+                wp_die(esc_html__('Du har inte tillgång till den valda föräldrasidan.', 'pitea-customisation'));
+            }
+        }
+
+        $post_id = $this->insertNavSecondLevelPage($parentId);
 
         if (is_wp_error($post_id)) {
             wp_die(esc_html($post_id->get_error_message()));
@@ -407,7 +453,7 @@ EOT;
      *
      * @return int|\WP_Error
      */
-    private function insertNavSecondLevelPage(): int|\WP_Error
+    private function insertNavSecondLevelPage(int $parentId = 0): int|\WP_Error
     {
         $post_content = <<<'EOT'
 <!-- wp:acf/container {"name":"acf/container","data":{"amount":"0","_amount":"field_63cfdba39a6d2","border_radius":"","_border_radius":"field_6807afdfba66c","shadow":"0","_shadow":"field_68088e6bbe241","content_width":"standard","_content_width":"field_644b6d221b7a4","backgroundImage":"","_backgroundImage":"field_6405fea65cc8f","background_color_type":"default","_background_color_type":"field_64831fa89c119","color":"","_color":"field_63cfdc219a6d3","text_color":"","_text_color":"field_644b77128c900","lang":"auto","_lang":"field_636e42408367e"},"align":"full","mode":"preview","metadata":{"name":"Modul: Hero undersida","patternName":"core/block/1820"}} -->
@@ -501,7 +547,7 @@ EOT;
             'post_content' => $post_content,
             'post_status'  => 'draft',
             'post_type'    => 'page',
-            'post_parent'  => 0,
+            'post_parent'  => $parentId,
             'post_author'  => get_current_user_id(),
         ], true);
 
@@ -532,11 +578,26 @@ EOT;
      */
     public function handleCreateContentPage(): void
     {
+        $method = strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET'));
+        if ($method !== 'POST') {
+            return;
+        }
+
         if (!current_user_can('edit_pages')) {
             wp_die(esc_html__('You do not have permission to perform this action.', 'pitea-customisation'));
         }
 
-        $post_id = $this->insertContentPage();
+        check_admin_referer('pitea_create_page_' . self::PAGE_CONTENT_PAGE);
+
+        $parentId = isset($_POST['post_parent']) ? (int) $_POST['post_parent'] : 0;
+        if ($parentId !== 0 && !$this->isCurrentUserPrivileged()) {
+            $accessible = $this->getAccessibleParentPageIds();
+            if ($accessible !== null && !in_array($parentId, $accessible, true)) {
+                wp_die(esc_html__('Du har inte tillgång till den valda föräldrasidan.', 'pitea-customisation'));
+            }
+        }
+
+        $post_id = $this->insertContentPage($parentId);
 
         if (is_wp_error($post_id)) {
             wp_die(esc_html($post_id->get_error_message()));
@@ -551,7 +612,7 @@ EOT;
      *
      * @return int|\WP_Error
      */
-    private function insertContentPage(): int|\WP_Error
+    private function insertContentPage(int $parentId = 0): int|\WP_Error
     {
         $post_content = <<<'EOT'
 <!-- wp:paragraph -->
@@ -629,7 +690,7 @@ EOT;
             'post_content' => $post_content,
             'post_status'  => 'draft',
             'post_type'    => 'page',
-            'post_parent'  => 0,
+            'post_parent'  => $parentId,
             'post_author'  => get_current_user_id(),
         ], true);
 
@@ -809,5 +870,607 @@ EOT;
         update_option($optionKey, $attachmentId, false);
 
         return $attachmentId;
+    }
+
+    // -------------------------------------------------------------------------
+    // Parent page chooser
+    // -------------------------------------------------------------------------
+
+    /**
+     * @return array<string, string>
+     */
+    private function getParentChooserTemplates(): array
+    {
+        return [
+            self::PAGE => __('New navigation page', 'pitea-customisation'),
+            self::PAGE_THEME => __('New theme page', 'pitea-customisation'),
+            self::PAGE_NAV_SECOND_LEVEL => __('New navigation page (second level)', 'pitea-customisation'),
+            self::PAGE_CONTENT_PAGE => __('New content page', 'pitea-customisation'),
+        ];
+    }
+
+    private function buildParentChooserFormAction(string $templateSlug): string
+    {
+        return admin_url('edit.php?post_type=page&page=' . rawurlencode($templateSlug));
+    }
+
+    /**
+     * Render the parent chooser form for navigation pages.
+     */
+    public function renderNavigationPageChooser(): void
+    {
+        $this->renderParentChooserPage(
+            __('New navigation page', 'pitea-customisation'),
+            self::PAGE
+        );
+    }
+
+    /**
+     * Render the parent chooser form for theme pages.
+     */
+    public function renderThemePageChooser(): void
+    {
+        $this->renderParentChooserPage(
+            __('New theme page', 'pitea-customisation'),
+            self::PAGE_THEME
+        );
+    }
+
+    /**
+     * Render the parent chooser form for second-level navigation pages.
+     */
+    public function renderNavSecondLevelPageChooser(): void
+    {
+        $this->renderParentChooserPage(
+            __('New navigation page (second level)', 'pitea-customisation'),
+            self::PAGE_NAV_SECOND_LEVEL
+        );
+    }
+
+    /**
+     * Render the parent chooser form for content pages.
+     */
+    public function renderContentPageChooser(): void
+    {
+        $this->renderParentChooserPage(
+            __('New content page', 'pitea-customisation'),
+            self::PAGE_CONTENT_PAGE
+        );
+    }
+
+    /**
+     * Render chooser modals on admin pages.
+     */
+    public function renderParentChooserModals(): void
+    {
+        if (!current_user_can('edit_pages')) {
+            return;
+        }
+
+        $templates = $this->getParentChooserTemplates();
+        if (empty($templates)) {
+            return;
+        }
+
+        $accessibleIds = $this->getAccessibleParentPageIds();
+        $hasAccessiblePages = !($accessibleIds !== null && empty($accessibleIds));
+        $openFromQuery = isset($_GET['pitea_parent_modal']) ? sanitize_key((string) $_GET['pitea_parent_modal']) : '';
+
+        $this->renderParentChooserModalStyles();
+        ?>
+        <div class="pitea-parent-modal-container">
+            <?php foreach ($templates as $templateSlug => $pageTitle) : ?>
+                <?php
+                $fieldId = 'post_parent_' . sanitize_html_class($templateSlug);
+                ?>
+                <div class="pitea-parent-modal" data-template-slug="<?php echo esc_attr($templateSlug); ?>" hidden>
+                    <div class="pitea-parent-modal__backdrop" data-pitea-modal-close></div>
+                    <div
+                        class="pitea-parent-modal__dialog"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="<?php echo esc_attr($fieldId . '_label'); ?>"
+                    >
+                        <button
+                            type="button"
+                            class="pitea-parent-modal__close"
+                            data-pitea-modal-close
+                            aria-label="<?php esc_attr_e('Close modal', 'pitea-customisation'); ?>"
+                        >×</button>
+                        <h2 id="<?php echo esc_attr($fieldId . '_label'); ?>"><?php echo esc_html($pageTitle); ?></h2>
+                        <p><?php esc_html_e('Välj under vilken sida den nya sidan ska skapas.', 'pitea-customisation'); ?></p>
+
+                        <?php if (!$hasAccessiblePages) : ?>
+                            <div class="notice notice-error inline">
+                                <p><?php esc_html_e('Du har inte tillgång till några sidor att skapa undersidor till.', 'pitea-customisation'); ?></p>
+                            </div>
+                            <div class="pitea-parent-modal__actions">
+                                <button type="button" class="button button-primary" data-pitea-modal-close>
+                                    <?php esc_html_e('Stäng', 'pitea-customisation'); ?>
+                                </button>
+                            </div>
+                        <?php else : ?>
+                            <form method="post" action="<?php echo esc_url($this->buildParentChooserFormAction($templateSlug)); ?>">
+                                <?php wp_nonce_field('pitea_create_page_' . $templateSlug); ?>
+                                <label for="<?php echo esc_attr($fieldId); ?>" class="screen-reader-text">
+                                    <?php esc_html_e('Föräldrasida', 'pitea-customisation'); ?>
+                                </label>
+                                <?php echo $this->getParentPageSelectHtml($accessibleIds, $fieldId); ?>
+                                <div class="pitea-parent-modal__actions">
+                                    <button type="button" class="button" data-pitea-modal-close>
+                                        <?php esc_html_e('Avbryt', 'pitea-customisation'); ?>
+                                    </button>
+                                    <button type="submit" class="button button-primary">
+                                        <?php esc_html_e('Skapa sida', 'pitea-customisation'); ?>
+                                    </button>
+                                </div>
+                            </form>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <?php
+
+        $this->renderParentChooserModalScript($openFromQuery, array_keys($templates));
+    }
+
+    private function renderParentChooserModalStyles(): void
+    {
+        ?>
+        <style>
+            .pitea-parent-modal[hidden] {
+                display: none !important;
+            }
+
+            .pitea-parent-modal {
+                position: fixed;
+                inset: 0;
+                z-index: 100000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 24px;
+            }
+
+            .pitea-parent-modal__backdrop {
+                position: absolute;
+                inset: 0;
+                background: rgba(19, 35, 54, 0.5);
+            }
+
+            .pitea-parent-modal__dialog {
+                position: relative;
+                width: min(100%, 560px);
+                max-height: calc(100vh - 48px);
+                overflow-y: auto;
+                padding: 28px;
+                border-radius: 12px;
+                border: 1px solid #dcdcde;
+                background: #fff;
+                box-shadow: 0 28px 60px rgba(15, 23, 42, 0.22);
+            }
+
+            .pitea-parent-modal__dialog h2 {
+                margin: 0 0 10px;
+                padding-right: 28px;
+            }
+
+            .pitea-parent-modal__dialog p {
+                margin-top: 0;
+            }
+
+            .pitea-parent-modal__close {
+                position: absolute;
+                top: 12px;
+                right: 14px;
+                width: 28px;
+                height: 28px;
+                border: 0;
+                border-radius: 4px;
+                background: transparent;
+                color: #50575e;
+                cursor: pointer;
+                font-size: 22px;
+                line-height: 1;
+            }
+
+            .pitea-parent-modal__close:hover,
+            .pitea-parent-modal__close:focus-visible {
+                background: #f0f0f1;
+                color: #1d2327;
+            }
+
+            .pitea-parent-modal select {
+                width: 100%;
+                max-width: none;
+                margin-top: 8px;
+            }
+
+            .pitea-parent-modal__actions {
+                display: flex;
+                justify-content: flex-end;
+                gap: 10px;
+                margin-top: 18px;
+            }
+
+            body.pitea-parent-modal-open {
+                overflow: hidden;
+            }
+        </style>
+        <?php
+    }
+
+    /**
+     * @param string[] $templateSlugs
+     */
+    private function renderParentChooserModalScript(string $openFromQuery, array $templateSlugs): void
+    {
+        $openFromQuery = in_array($openFromQuery, $templateSlugs, true) ? $openFromQuery : '';
+        ?>
+        <script>
+            (function () {
+                const allowedSlugs = <?php echo wp_json_encode(array_values($templateSlugs)); ?>;
+                const openFromQuery = <?php echo wp_json_encode($openFromQuery); ?>;
+                if (!Array.isArray(allowedSlugs) || allowedSlugs.length === 0) return;
+
+                const modals = {};
+                document.querySelectorAll('.pitea-parent-modal[data-template-slug]').forEach((modal) => {
+                    modals[modal.dataset.templateSlug] = modal;
+                });
+
+                let activeModal = null;
+                let lastTrigger = null;
+
+                const closeModal = () => {
+                    if (!activeModal) return;
+                    activeModal.hidden = true;
+                    document.body.classList.remove('pitea-parent-modal-open');
+                    if (lastTrigger && typeof lastTrigger.focus === 'function') {
+                        lastTrigger.focus();
+                    }
+                    activeModal = null;
+                    lastTrigger = null;
+                };
+
+                const openModal = (slug, trigger) => {
+                    const modal = modals[slug];
+                    if (!modal) return;
+                    if (activeModal) closeModal();
+                    activeModal = modal;
+                    lastTrigger = trigger || null;
+                    modal.hidden = false;
+                    document.body.classList.add('pitea-parent-modal-open');
+                    const focusTarget = modal.querySelector('select, button, input');
+                    if (focusTarget) focusTarget.focus();
+                };
+
+                const getTemplateSlugFromLink = (link) => {
+                    try {
+                        const url = new URL(link.href, window.location.origin);
+                        if (url.searchParams.get('post_type') !== 'page') return null;
+                        return url.searchParams.get('page');
+                    } catch (error) {
+                        return null;
+                    }
+                };
+
+                document.addEventListener('click', (event) => {
+                    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) {
+                        return;
+                    }
+
+                    const trigger = event.target.closest('a[href*="post_type=page"][href*="page="]');
+                    if (!trigger) return;
+
+                    const slug = getTemplateSlugFromLink(trigger);
+                    if (!slug || !allowedSlugs.includes(slug) || !modals[slug]) {
+                        return;
+                    }
+
+                    event.preventDefault();
+                    openModal(slug, trigger);
+                });
+
+                document.addEventListener('click', (event) => {
+                    if (!activeModal) return;
+                    if (event.target.closest('[data-pitea-modal-close]')) {
+                        event.preventDefault();
+                        closeModal();
+                    }
+                });
+
+                document.addEventListener('keydown', (event) => {
+                    if (event.key === 'Escape') closeModal();
+                });
+
+                if (openFromQuery && modals[openFromQuery]) {
+                    openModal(openFromQuery, null);
+                    const url = new URL(window.location.href);
+                    url.searchParams.delete('pitea_parent_modal');
+                    history.replaceState({}, document.title, url.toString());
+                }
+            }());
+        </script>
+        <?php
+    }
+
+    /**
+     * Render a standard WP admin page asking the user to choose a parent page.
+     *
+     * On GET this outputs the form. The load-{hook} handler picks up the POST
+     * submission before this callback runs, so this method is only ever called
+     * for GET requests.
+     */
+    private function renderParentChooserPage(string $pageTitle, string $templateSlug): void
+    {
+        if (!current_user_can('edit_pages')) {
+            wp_die(esc_html__('You do not have permission to perform this action.', 'pitea-customisation'));
+        }
+
+        $accessibleIds = $this->getAccessibleParentPageIds();
+        $dropdown    = $this->getParentPageSelectHtml($accessibleIds, 'post_parent');
+        $formAction  = esc_url($this->buildParentChooserFormAction($templateSlug));
+        ?>
+        <div class="wrap">
+            <h1><?php echo esc_html($pageTitle); ?></h1>
+            <p><?php esc_html_e('Välj under vilken sida den nya sidan ska skapas. Normalt visas detta som en modal ovanpå sidlistan.', 'pitea-customisation'); ?></p>
+
+            <?php if ($accessibleIds !== null && empty($accessibleIds)) : ?>
+                <div class="notice notice-error inline">
+                    <p><?php esc_html_e('Du har inte tillgång till några sidor att skapa undersidor till.', 'pitea-customisation'); ?></p>
+                </div>
+            <?php else : ?>
+                <form method="post" action="<?php echo $formAction; ?>">
+                    <?php wp_nonce_field('pitea_create_page_' . $templateSlug); ?>
+                    <table class="form-table" role="presentation">
+                        <tr>
+                            <th scope="row">
+                                <label for="post_parent"><?php esc_html_e('Föräldrasida', 'pitea-customisation'); ?></label>
+                            </th>
+                            <td><?php echo $dropdown; ?></td>
+                        </tr>
+                    </table>
+                    <?php submit_button(__('Skapa sida', 'pitea-customisation')); ?>
+                </form>
+            <?php endif; ?>
+        </div>
+        <?php
+    }
+
+    private function getParentPageSelectHtml(?array $accessibleIds, string $fieldId): string
+    {
+        $options = $this->getOrderedParentPageOptions($accessibleIds);
+
+        $html  = '<select name="post_parent" id="' . esc_attr($fieldId) . '">';
+        $html .= '<option value="0">' . esc_html__('— Toppnivå (ingen föräldrasida) —', 'pitea-customisation') . '</option>';
+
+        foreach ($options as $option) {
+            $html .= sprintf(
+                '<option value="%d">%s</option>',
+                (int) $option['id'],
+                esc_html($option['label'])
+            );
+        }
+
+        $html .= '</select>';
+        return $html;
+    }
+
+    /**
+     * Get pages sorted by menu_order and organised in their parent hierarchy.
+     *
+     * @param int[]|null $accessibleIds
+     * @return array<int, array{id: int, label: string}>
+     */
+    private function getOrderedParentPageOptions(?array $accessibleIds): array
+    {
+        $queryArgs = [
+            'post_type'        => 'page',
+            'post_status'      => ['publish', 'private'],
+            'posts_per_page'   => -1,
+            'orderby'          => [
+                'menu_order' => 'ASC',
+                'title'      => 'ASC',
+                'ID'         => 'ASC',
+            ],
+            'suppress_filters' => true,
+        ];
+
+        if ($accessibleIds !== null) {
+            if (empty($accessibleIds)) {
+                return [];
+            }
+
+            $queryArgs['post__in'] = array_values(array_map('intval', $accessibleIds));
+        }
+
+        $pages = get_posts($queryArgs);
+        if (empty($pages)) {
+            return [];
+        }
+
+        $pagesById = [];
+        foreach ($pages as $page) {
+            if (!$page instanceof \WP_Post) {
+                continue;
+            }
+
+            $pagesById[(int) $page->ID] = $page;
+        }
+
+        if (empty($pagesById)) {
+            return [];
+        }
+
+        $pagesByParent = [];
+        foreach ($pagesById as $page) {
+            $parentId = (int) $page->post_parent;
+            if ($parentId !== 0 && !isset($pagesById[$parentId])) {
+                $parentId = 0;
+            }
+
+            if (!isset($pagesByParent[$parentId])) {
+                $pagesByParent[$parentId] = [];
+            }
+
+            $pagesByParent[$parentId][] = $page;
+        }
+
+        $options = [];
+        $visited = [];
+
+        $walk = function (int $parentId, int $depth) use (&$walk, &$pagesByParent, &$options, &$visited): void {
+            if (empty($pagesByParent[$parentId])) {
+                return;
+            }
+
+            foreach ($pagesByParent[$parentId] as $page) {
+                $pageId = (int) $page->ID;
+                if (isset($visited[$pageId])) {
+                    continue;
+                }
+
+                $visited[$pageId] = true;
+
+                $prefix = $depth > 0 ? str_repeat('— ', $depth) : '';
+                $title  = trim((string) $page->post_title);
+                if ($title === '') {
+                    $title = sprintf(__('(Utan titel) #%d', 'pitea-customisation'), $pageId);
+                }
+
+                $options[] = [
+                    'id'    => $pageId,
+                    'label' => $prefix . $title,
+                ];
+
+                $walk($pageId, $depth + 1);
+            }
+        };
+
+        $walk(0, 0);
+
+        // Fallback for unexpected or cyclic parent chains.
+        foreach ($pagesById as $pageId => $page) {
+            if (isset($visited[$pageId])) {
+                continue;
+            }
+
+            $title = trim((string) $page->post_title);
+            if ($title === '') {
+                $title = sprintf(__('(Utan titel) #%d', 'pitea-customisation'), $pageId);
+            }
+
+            $options[] = [
+                'id'    => $pageId,
+                'label' => $title,
+            ];
+            $walk($pageId, 1);
+        }
+
+        return $options;
+    }
+
+    /**
+     * Return the page IDs the current user may select as a parent, or null if unrestricted.
+     *
+     * Returns null for administrators and when no ownership rules are configured.
+     * Returns an int[] (possibly empty) when ownership rules apply.
+     *
+     * @return int[]|null
+     */
+    private function getAccessibleParentPageIds(): ?array
+    {
+        $userId = get_current_user_id();
+
+        if ($this->isCurrentUserPrivileged()) {
+            return null;
+        }
+
+        $raw   = (string) get_option('pitea_customisation_user_group_ownership', '[]');
+        $rules = json_decode($raw, true);
+        if (!is_array($rules) || empty($rules)) {
+            return null;
+        }
+
+        // Resolve user group term IDs (mirrors PageTreeOwnership::getUserGroupTermIds).
+        if (is_multisite()) {
+            switch_to_blog(get_main_site_id());
+            $terms = wp_get_object_terms($userId, 'user_group', ['fields' => 'ids']);
+            restore_current_blog();
+        } else {
+            $terms = wp_get_object_terms($userId, 'user_group', ['fields' => 'ids']);
+        }
+        $userGroupIds = is_wp_error($terms) ? [] : array_map('intval', (array) $terms);
+
+        $user      = get_userdata($userId);
+        $userRoles = $user ? array_map('strval', (array) $user->roles) : [];
+
+        $accessibleIds = [];
+        foreach ($rules as $rule) {
+            $groupId = (int) ($rule['user_group_id'] ?? 0);
+            $role    = sanitize_key((string) ($rule['user_role'] ?? ''));
+
+            $matches = ($groupId !== 0 && in_array($groupId, $userGroupIds, true))
+                    || ($role !== ''   && in_array($role, $userRoles, true));
+
+            if (!$matches) {
+                continue;
+            }
+
+            $pageId = (int) ($rule['page_id'] ?? 0);
+            if ($pageId === 0) {
+                continue;
+            }
+
+            $accessibleIds[] = $pageId;
+
+            if (!empty($rule['inherit'])) {
+                $accessibleIds = array_merge($accessibleIds, $this->getChildPageIds($pageId));
+            }
+        }
+
+        return array_values(array_unique($accessibleIds));
+    }
+
+    /**
+     * Recursively collect all descendant page IDs for the given parent.
+     *
+     * @return int[]
+     */
+    private function getChildPageIds(int $parentId): array
+    {
+        $children = get_posts([
+            'post_type'        => 'page',
+            'post_status'      => ['publish', 'private'],
+            'post_parent'      => $parentId,
+            'numberposts'      => -1,
+            'fields'           => 'ids',
+            'suppress_filters' => true,
+        ]);
+
+        $ids = [];
+        foreach ($children as $childId) {
+            $childId = (int) $childId;
+            $ids[]   = $childId;
+            $ids     = array_merge($ids, $this->getChildPageIds($childId));
+        }
+
+        return $ids;
+    }
+
+    /**
+     * Return true if the current user is an administrator or network super-admin.
+     */
+    private function isCurrentUserPrivileged(): bool
+    {
+        $userId = get_current_user_id();
+
+        if (is_multisite() && is_super_admin($userId)) {
+            return true;
+        }
+
+        $user = get_userdata($userId);
+        return $user && in_array('administrator', (array) $user->roles, true);
     }
 }
