@@ -22,7 +22,10 @@ class UserGroupOwnership
         add_action('pre_get_posts', [$this, 'filterAdminPagesList']);
 
         // Filter the Nested Pages plugin's own WP_Query (not is_main_query).
-        add_filter('nestedpages_page_listing', [$this, 'filterNestedPagesQuery'], 10, 1);
+        add_filter('nestedpages_page_listing', [$this, 'filterNestedPagesQuery'], 10, 2);
+        add_filter('nestedpages_post_tree_parent', [$this, 'filterNestedPagesTreeQuery']);
+        add_filter('nestedpages_post_tree_children', [$this, 'filterNestedPagesTreeQuery']);
+        add_filter('the_posts', [$this, 'reparentNestedPagesListingPosts'], 10, 2);
 
         // Block direct read/edit/delete access to owned pages the user can't see.
         add_filter('map_meta_cap', [$this, 'restrictOwnedPageAccess'], 10, 4);
@@ -71,25 +74,31 @@ class UserGroupOwnership
      * exposes the query args via the nestedpages_page_listing filter.
      *
      * @param  array<string, mixed> $queryArgs
+     * @param  mixed                $postType
      * @return array<string, mixed>
      */
-    public function filterNestedPagesQuery(array $queryArgs): array
+    public function filterNestedPagesQuery(array $queryArgs, mixed $postType = null): array
     {
-        $userId = get_current_user_id();
-        if ($this->isPrivilegedUser($userId)) {
+        if (!$this->isPagePostType($postType) && !$this->isPagePostType($queryArgs['post_type'] ?? null)) {
             return $queryArgs;
         }
 
-        if (empty($this->getOwnershipRules())) {
+        return $this->limitQueryArgsToAccessiblePages($queryArgs, true);
+    }
+
+    /**
+     * Limit Nested Pages' tree parent/children queries to pages the current user is permitted to see.
+     *
+     * @param  array<string, mixed> $queryArgs
+     * @return array<string, mixed>
+     */
+    public function filterNestedPagesTreeQuery(array $queryArgs): array
+    {
+        if (!$this->isPagePostType($queryArgs['post_type'] ?? null)) {
             return $queryArgs;
         }
 
-        $accessibleIds = $this->getAccessiblePageIdsForUser($userId);
-        $queryArgs['post__in'] = empty($accessibleIds) ? [0] : $accessibleIds;
-        // Ensure no conflicting exclusion list remains.
-        unset($queryArgs['post__not_in']);
-
-        return $queryArgs;
+        return $this->limitQueryArgsToAccessiblePages($queryArgs);
     }
 
     /**
@@ -153,6 +162,79 @@ class UserGroupOwnership
 
         $user = get_userdata($userId);
         return $user && in_array('administrator', (array) $user->roles, true);
+    }
+
+    /**
+     * @param  array<string, mixed> $queryArgs
+     * @return array<string, mixed>
+     */
+    public function reparentNestedPagesListingPosts(array $posts, \WP_Query $query): array
+    {
+        if (!$query->get('pitea_root_nested_pages_listing')) {
+            return $posts;
+        }
+
+        if (empty($posts)) {
+            return $posts;
+        }
+
+        $postIds = [];
+        foreach ($posts as $post) {
+            $postIds[(int) $post->ID] = true;
+        }
+
+        foreach ($posts as $post) {
+            $parentId = (int) $post->post_parent;
+            if ($parentId !== 0 && !isset($postIds[$parentId])) {
+                $post->post_parent = 0;
+            }
+        }
+
+        return $posts;
+    }
+
+    private function limitQueryArgsToAccessiblePages(array $queryArgs, bool $rootNestedPagesListing = false): array
+    {
+        $userId = get_current_user_id();
+        if ($this->isPrivilegedUser($userId)) {
+            return $queryArgs;
+        }
+
+        if (empty($this->getOwnershipRules())) {
+            return $queryArgs;
+        }
+
+        $accessibleIds = $this->getAccessiblePageIdsForUser($userId);
+        $queryArgs['post__in'] = empty($accessibleIds) ? [0] : $accessibleIds;
+        if ($rootNestedPagesListing) {
+            $queryArgs['pitea_root_nested_pages_listing'] = true;
+        }
+
+        // Ensure no conflicting exclusion list remains.
+        unset($queryArgs['post__not_in']);
+
+        return $queryArgs;
+    }
+
+    private function isPagePostType(mixed $postType): bool
+    {
+        if (is_object($postType) && isset($postType->name)) {
+            $postType = $postType->name;
+        }
+
+        if (is_string($postType)) {
+            return in_array($postType, ['page', 'np-redirect'], true);
+        }
+
+        if (is_array($postType)) {
+            foreach ($postType as $singlePostType) {
+                if ($this->isPagePostType($singlePostType)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /**
