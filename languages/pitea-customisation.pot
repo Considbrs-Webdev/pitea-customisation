@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-27T19:16:03+00:00\n"
+"POT-Creation-Date: 2026-03-27T20:42:19+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: pitea-customisation\n"
@@ -167,7 +167,8 @@ msgid "No design system palette groups were found. Check that variables.scss is 
 msgstr ""
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:203
-#: source/php/Admin/Tabs/PagePermissionsTab.php:280
+#: source/php/Admin/Tabs/PagePermissionsTab.php:369
+#: source/php/Admin/Tabs/PagePermissionsTab.php:409
 msgid "+ Add rule"
 msgstr ""
 
@@ -180,10 +181,12 @@ msgid "Each name below is a palette group in the editor color picker. Hover a sq
 msgstr ""
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:274
+#: source/php/Admin/Tabs/PagePermissionsTab.php:440
 msgid "User group"
 msgstr ""
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:276
+#: source/php/Admin/Tabs/PagePermissionsTab.php:442
 msgid "— Select user group —"
 msgstr ""
 
@@ -196,8 +199,9 @@ msgid "Allow custom hex color"
 msgstr ""
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:318
-#: source/php/Admin/Tabs/PagePermissionsTab.php:249
-#: source/php/Admin/Tabs/PagePermissionsTab.php:335
+#: source/php/Admin/Tabs/PagePermissionsTab.php:338
+#: source/php/Admin/Tabs/PagePermissionsTab.php:474
+#: source/php/Admin/Tabs/PagePermissionsTab.php:526
 msgid "Remove"
 msgstr ""
 
@@ -287,66 +291,104 @@ msgstr ""
 msgid "Latest Events Settings"
 msgstr ""
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:37
+#: source/php/Admin/Tabs/PagePermissionsTab.php:40
 msgid "Page permissions"
 msgstr ""
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:69
-#: source/php/Admin/Tabs/PagePermissionsTab.php:185
-msgid "Protected pages / Templates"
-msgstr ""
-
-#: source/php/Admin/Tabs/PagePermissionsTab.php:71
+#: source/php/Admin/Tabs/PagePermissionsTab.php:75
 msgid "These pages cannot be edited, moved or deleted by other roles than administrators."
 msgstr ""
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:81
+#: source/php/Admin/Tabs/PagePermissionsTab.php:85
 msgid "Protected pages"
 msgstr ""
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:102
-#: source/php/Admin/Tabs/PagePermissionsTab.php:186
-msgid "Page tree ownership"
-msgstr ""
-
-#: source/php/Admin/Tabs/PagePermissionsTab.php:104
+#: source/php/Admin/Tabs/PagePermissionsTab.php:108
 msgid "Define which user groups and/or user roles own and manage particular parts of the page tree. Users who do not match an owning rule cannot see those pages or their descendants in the admin."
 msgstr ""
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:114
+#: source/php/Admin/Tabs/PagePermissionsTab.php:118
 msgid "Ownership rules"
 msgstr ""
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:222
+#: source/php/Admin/Tabs/PagePermissionsTab.php:141
+msgid "Control which user groups can use each post template in the Page menu. Administrators always have access to all templates."
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:151
+msgid "Template rules"
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:273
+msgid "Protected pages and templates"
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:274
+msgid "Page tree ownership rules"
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:275
+msgid "Post template access"
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:311
 msgid "+ Add page"
 msgstr ""
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:245
+#: source/php/Admin/Tabs/PagePermissionsTab.php:334
 msgid "Apply to all subpages"
 msgstr ""
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:306
+#: source/php/Admin/Tabs/PagePermissionsTab.php:456
+msgid "Allowed templates"
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:497
 msgid "— Optional user group —"
 msgstr ""
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:317
+#: source/php/Admin/Tabs/PagePermissionsTab.php:508
 msgid "or"
 msgstr ""
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:328
+#: source/php/Admin/Tabs/PagePermissionsTab.php:519
 msgid "Include all subpages"
 msgstr ""
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:331
+#: source/php/Admin/Tabs/PagePermissionsTab.php:522
 msgid "A rule matches when the user belongs to the selected user group or has the selected user role."
 msgstr ""
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:360
+#: source/php/Admin/Tabs/PagePermissionsTab.php:551
 msgid "— Select a page —"
 msgstr ""
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:370
+#: source/php/Admin/Tabs/PagePermissionsTab.php:561
 msgid "— Optional user role —"
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:581
+#: source/php/Customisations/Admin/PostTemplates.php:912
+#: source/php/Customisations/Admin/PostTemplates.php:1005
+msgid "New navigation page"
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:582
+#: source/php/Customisations/Admin/PostTemplates.php:913
+#: source/php/Customisations/Admin/PostTemplates.php:1016
+msgid "New theme page"
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:583
+#: source/php/Customisations/Admin/PostTemplates.php:914
+#: source/php/Customisations/Admin/PostTemplates.php:1027
+msgid "New navigation page (second level)"
+msgstr ""
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:584
+#: source/php/Customisations/Admin/PostTemplates.php:915
+#: source/php/Customisations/Admin/PostTemplates.php:1038
+msgid "New content page"
 msgstr ""
 
 #: source/php/Admin/Tabs/ReadSpeakerTab.php:42
@@ -432,54 +474,87 @@ msgctxt "Paragraph block style"
 msgid "Preamble"
 msgstr ""
 
-#: source/php/Customisations/Admin/PostTemplates.php:50
-#: source/php/Customisations/Admin/PostTemplates.php:51
-msgid "New navigation page"
-msgstr ""
-
-#: source/php/Customisations/Admin/PostTemplates.php:61
-#: source/php/Customisations/Admin/PostTemplates.php:62
-msgid "New theme page"
-msgstr ""
-
-#: source/php/Customisations/Admin/PostTemplates.php:72
-#: source/php/Customisations/Admin/PostTemplates.php:73
-msgid "New navigation page (second level)"
-msgstr ""
-
-#: source/php/Customisations/Admin/PostTemplates.php:83
-#: source/php/Customisations/Admin/PostTemplates.php:84
-msgid "New content page"
-msgstr ""
-
-#: source/php/Customisations/Admin/PostTemplates.php:102
-#: source/php/Customisations/Admin/PostTemplates.php:248
-#: source/php/Customisations/Admin/PostTemplates.php:392
-#: source/php/Customisations/Admin/PostTemplates.php:536
+#: source/php/Customisations/Admin/PostTemplates.php:131
+#: source/php/Customisations/Admin/PostTemplates.php:293
+#: source/php/Customisations/Admin/PostTemplates.php:453
+#: source/php/Customisations/Admin/PostTemplates.php:613
+#: source/php/Customisations/Admin/PostTemplates.php:939
+#: source/php/Customisations/Admin/PostTemplates.php:1310
 msgid "You do not have permission to perform this action."
 msgstr ""
 
+#: source/php/Customisations/Admin/PostTemplates.php:141
+#: source/php/Customisations/Admin/PostTemplates.php:303
+#: source/php/Customisations/Admin/PostTemplates.php:463
+#: source/php/Customisations/Admin/PostTemplates.php:623
+msgid "Du har inte tillgång till den valda föräldrasidan."
+msgstr ""
+
 #. translators: %s: path relative to plugin
-#: source/php/Customisations/Admin/PostTemplates.php:718
+#: source/php/Customisations/Admin/PostTemplates.php:806
 msgid "Dummy image file not found: %s"
 msgstr ""
 
-#: source/php/Customisations/Admin/PostTemplates.php:754
+#: source/php/Customisations/Admin/PostTemplates.php:842
 msgid "Could not create upload directory for dummy images."
 msgstr ""
 
 #. translators: %s: file name
-#: source/php/Customisations/Admin/PostTemplates.php:766
+#: source/php/Customisations/Admin/PostTemplates.php:854
 msgid "Could not copy dummy image %s into uploads."
 msgstr ""
 
 #. translators: %s: file name
-#: source/php/Customisations/Admin/PostTemplates.php:778
+#: source/php/Customisations/Admin/PostTemplates.php:866
 msgid "Unknown file type for dummy image %s."
 msgstr ""
 
-#: source/php/Customisations/Admin/PostTemplates.php:803
+#: source/php/Customisations/Admin/PostTemplates.php:891
 msgid "Could not register dummy image in the media library."
+msgstr ""
+
+#: source/php/Customisations/Admin/PostTemplates.php:1080
+msgid "Close modal"
+msgstr ""
+
+#: source/php/Customisations/Admin/PostTemplates.php:1083
+msgid "Välj under vilken sida den nya sidan ska skapas."
+msgstr ""
+
+#: source/php/Customisations/Admin/PostTemplates.php:1087
+#: source/php/Customisations/Admin/PostTemplates.php:1324
+msgid "Du har inte tillgång till några sidor att skapa undersidor till."
+msgstr ""
+
+#: source/php/Customisations/Admin/PostTemplates.php:1091
+msgid "Stäng"
+msgstr ""
+
+#: source/php/Customisations/Admin/PostTemplates.php:1098
+#: source/php/Customisations/Admin/PostTemplates.php:1332
+msgid "Föräldrasida"
+msgstr ""
+
+#: source/php/Customisations/Admin/PostTemplates.php:1103
+msgid "Avbryt"
+msgstr ""
+
+#: source/php/Customisations/Admin/PostTemplates.php:1106
+#: source/php/Customisations/Admin/PostTemplates.php:1337
+msgid "Skapa sida"
+msgstr ""
+
+#: source/php/Customisations/Admin/PostTemplates.php:1320
+msgid "Välj under vilken sida den nya sidan ska skapas. Normalt visas detta som en modal ovanpå sidlistan."
+msgstr ""
+
+#: source/php/Customisations/Admin/PostTemplates.php:1349
+msgid "— Toppnivå (ingen föräldrasida) —"
+msgstr ""
+
+#: source/php/Customisations/Admin/PostTemplates.php:1442
+#: source/php/Customisations/Admin/PostTemplates.php:1464
+msgid "(Utan titel) #%d"
 msgstr ""
 
 #: source/php/Customisations/Breadcrumbs.php:81

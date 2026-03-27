@@ -12,6 +12,7 @@ use PiteaCustomisation\Admin\SettingsTabInterface;
  * Settings tab for page-level permissions:
  *   - "Protected pages / Templates": pages non-admins cannot edit/move/delete.
  *   - "Page tree ownership": maps user groups and/or user roles to page trees they can manage.
+ *   - "Post template access": maps user groups to which page templates they may create.
  */
 class PagePermissionsTab implements SettingsTabInterface
 {
@@ -19,9 +20,11 @@ class PagePermissionsTab implements SettingsTabInterface
 
     public const OPTION_PAGE_PERMISSIONS    = 'pitea_customisation_page_permissions';
     public const OPTION_PAGE_TREE_OWNERSHIP = 'pitea_customisation_user_group_ownership';
+    public const OPTION_POST_TEMPLATE_ACCESS = 'pitea_customisation_post_template_access';
 
     private const GROUP_PROTECTED           = 'pitea_customisation_group_protected_pages';
     private const GROUP_PAGE_TREE_OWNERSHIP = 'pitea_customisation_group_user_group_ownership';
+    private const GROUP_POST_TEMPLATE_ACCESS = 'pitea_customisation_group_post_template_access';
 
     // -------------------------------------------------------------------------
     // SettingsTabInterface
@@ -50,6 +53,7 @@ class PagePermissionsTab implements SettingsTabInterface
     {
         $this->registerProtectedPagesGroup();
         $this->registerPageTreeOwnershipGroup();
+        $this->registerPostTemplateAccessGroup();
     }
 
     private function registerProtectedPagesGroup(): void
@@ -66,7 +70,7 @@ class PagePermissionsTab implements SettingsTabInterface
 
         add_settings_section(
             'pitea_customisation_protected_pages',
-            __('Protected pages / Templates', 'pitea-customisation'),
+            '',
             function (): void {
                 echo '<p class="pitea-settings__section-desc">' . esc_html__(
                     'These pages cannot be edited, moved or deleted by other roles than administrators.',
@@ -99,7 +103,7 @@ class PagePermissionsTab implements SettingsTabInterface
 
         add_settings_section(
             'pitea_customisation_user_group_ownership',
-            __('Page tree ownership', 'pitea-customisation'),
+            '',
             function (): void {
                 echo '<p class="pitea-settings__section-desc">' . esc_html__(
                     'Define which user groups and/or user roles own and manage particular parts of the page tree. Users who do not match an owning rule cannot see those pages or their descendants in the admin.',
@@ -118,6 +122,39 @@ class PagePermissionsTab implements SettingsTabInterface
         );
     }
 
+    private function registerPostTemplateAccessGroup(): void
+    {
+        register_setting(
+            self::OPTION_GROUP,
+            self::OPTION_POST_TEMPLATE_ACCESS,
+            [
+                'type'         => 'string',
+                'default'      => '[]',
+                'show_in_rest' => false,
+            ]
+        );
+
+        add_settings_section(
+            'pitea_customisation_post_template_access',
+            '',
+            function (): void {
+                echo '<p class="pitea-settings__section-desc">' . esc_html__(
+                    'Control which user groups can use each post template in the Page menu. Administrators always have access to all templates.',
+                    'pitea-customisation'
+                ) . '</p>';
+            },
+            self::GROUP_POST_TEMPLATE_ACCESS
+        );
+
+        add_settings_field(
+            self::OPTION_POST_TEMPLATE_ACCESS,
+            __('Template rules', 'pitea-customisation'),
+            [$this, 'renderPostTemplateAccessField'],
+            self::GROUP_POST_TEMPLATE_ACCESS,
+            'pitea_customisation_post_template_access'
+        );
+    }
+
     // -------------------------------------------------------------------------
     // save
     // -------------------------------------------------------------------------
@@ -126,6 +163,7 @@ class PagePermissionsTab implements SettingsTabInterface
     {
         $this->saveProtectedPages($data);
         $this->savePageTreeOwnership($data);
+        $this->savePostTemplateAccess($data);
 
         return true;
     }
@@ -176,14 +214,65 @@ class PagePermissionsTab implements SettingsTabInterface
         update_option(self::OPTION_PAGE_TREE_OWNERSHIP, wp_json_encode($ownership));
     }
 
+    private function savePostTemplateAccess(array $data): void
+    {
+        $rawRows = isset($data[self::OPTION_POST_TEMPLATE_ACCESS]) && is_array($data[self::OPTION_POST_TEMPLATE_ACCESS])
+            ? $data[self::OPTION_POST_TEMPLATE_ACCESS]
+            : [];
+
+        $validTemplateSlugs = array_flip(array_keys($this->getPostTemplateOptions()));
+        $byUserGroup        = [];
+
+        foreach ($rawRows as $row) {
+            $groupId = isset($row['user_group_id']) ? absint($row['user_group_id']) : 0;
+            if ($groupId === 0) {
+                continue;
+            }
+
+            if (!isset($byUserGroup[$groupId])) {
+                $byUserGroup[$groupId] = [];
+            }
+
+            $allowedTemplates = isset($row['allowed_templates']) && is_array($row['allowed_templates'])
+                ? $row['allowed_templates']
+                : [];
+
+            foreach ($allowedTemplates as $slug) {
+                $slug = sanitize_key((string) $slug);
+                if (isset($validTemplateSlugs[$slug])) {
+                    $byUserGroup[$groupId][$slug] = true;
+                }
+            }
+        }
+
+        $orderedTemplateSlugs = array_keys($this->getPostTemplateOptions());
+        $rules                = [];
+        foreach ($byUserGroup as $groupId => $allowedSet) {
+            $allowed = [];
+            foreach ($orderedTemplateSlugs as $templateSlug) {
+                if (isset($allowedSet[$templateSlug])) {
+                    $allowed[] = $templateSlug;
+                }
+            }
+
+            $rules[] = [
+                'user_group_id'    => (int) $groupId,
+                'allowed_templates' => $allowed,
+            ];
+        }
+
+        update_option(self::OPTION_POST_TEMPLATE_ACCESS, wp_json_encode($rules));
+    }
+
     // -------------------------------------------------------------------------
     // Rendering
     // -------------------------------------------------------------------------
 
     public function render(): void
     {
-        $this->renderGroup(__('Protected pages / Templates', 'pitea-customisation'), self::GROUP_PROTECTED);
-        $this->renderGroup(__('Page tree ownership', 'pitea-customisation'), self::GROUP_PAGE_TREE_OWNERSHIP);
+        $this->renderGroup(__('Protected pages and templates', 'pitea-customisation'), self::GROUP_PROTECTED);
+        $this->renderGroup(__('Page tree ownership rules', 'pitea-customisation'), self::GROUP_PAGE_TREE_OWNERSHIP);
+        $this->renderGroup(__('Post template access', 'pitea-customisation'), self::GROUP_POST_TEMPLATE_ACCESS);
     }
 
     private function renderGroup(string $title, string $groupPageSlug): void
@@ -286,6 +375,108 @@ class PagePermissionsTab implements SettingsTabInterface
         <?php
     }
 
+    // -------------------------------------------------------------------------
+    // Field renderers — post template access
+    // -------------------------------------------------------------------------
+
+    public function renderPostTemplateAccessField(): void
+    {
+        $raw  = (string) get_option(self::OPTION_POST_TEMPLATE_ACCESS, '[]');
+        $rows = json_decode($raw, true);
+        if (!is_array($rows)) {
+            $rows = [];
+        }
+
+        $templateOptions = $this->getPostTemplateOptions();
+        ?>
+        <div class="pitea-settings__repeater" data-repeater="post-template-access">
+            <div class="pitea-settings__repeater-rows" id="post-template-access-rows">
+                <?php foreach ($rows as $i => $row) : ?>
+                    <?php
+                    $allowedTemplates = isset($row['allowed_templates']) && is_array($row['allowed_templates'])
+                        ? $row['allowed_templates']
+                        : [];
+                    $this->renderPostTemplateAccessRow(
+                        $i,
+                        (int) ($row['user_group_id'] ?? 0),
+                        $allowedTemplates,
+                        $templateOptions
+                    );
+                    ?>
+                <?php endforeach; ?>
+            </div>
+            <button type="button" class="button pitea-settings__repeater-add">
+                <?php esc_html_e('+ Add rule', 'pitea-customisation'); ?>
+            </button>
+            <template id="post-template-access-row-template">
+                <?php $this->renderPostTemplateAccessRow('{{INDEX}}', 0, [], $templateOptions); ?>
+            </template>
+        </div>
+        <?php
+    }
+
+    /**
+     * @param string|int                   $index
+     * @param list<string>                 $allowedTemplates
+     * @param array<string, string>        $templateOptions
+     */
+    private function renderPostTemplateAccessRow(
+        string|int $index,
+        int $selectedGroupId,
+        array $allowedTemplates,
+        array $templateOptions
+    ): void {
+        $namePrefix = self::OPTION_POST_TEMPLATE_ACCESS . '[' . $index . ']';
+        $terms      = get_terms(['taxonomy' => 'user_group', 'hide_empty' => false]);
+        if (is_wp_error($terms)) {
+            $terms = [];
+        }
+
+        $selectedSet = array_flip(array_map('strval', $allowedTemplates));
+        ?>
+        <div class="pitea-settings__repeater-row">
+            <div class="pitea-settings__repeater-fields pitea-settings__repeater-fields--stack">
+                <label class="pitea-settings__field-label">
+                    <span><?php esc_html_e('User group', 'pitea-customisation'); ?></span>
+                    <select name="<?php echo esc_attr($namePrefix); ?>[user_group_id]" class="pitea-settings__input">
+                        <option value="0"><?php esc_html_e('— Select user group —', 'pitea-customisation'); ?></option>
+                        <?php foreach ($terms as $term) : ?>
+                            <option
+                                value="<?php echo esc_attr((string) $term->term_id); ?>"
+                                <?php selected($selectedGroupId, $term->term_id); ?>
+                            >
+                                <?php echo esc_html($term->name); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </label>
+
+                <fieldset class="pitea-settings__palette-fieldset">
+                    <legend class="pitea-settings__field-legend">
+                        <?php esc_html_e('Allowed templates', 'pitea-customisation'); ?>
+                    </legend>
+                    <div class="pitea-settings__palette-checkboxes">
+                        <?php foreach ($templateOptions as $slug => $label) : ?>
+                            <label class="pitea-settings__checkbox-label">
+                                <input
+                                    type="checkbox"
+                                    name="<?php echo esc_attr($namePrefix); ?>[allowed_templates][]"
+                                    value="<?php echo esc_attr($slug); ?>"
+                                    <?php checked(isset($selectedSet[$slug])); ?>
+                                />
+                                <?php echo esc_html($label); ?>
+                            </label>
+                        <?php endforeach; ?>
+                    </div>
+                </fieldset>
+            </div>
+            <button type="button" class="button pitea-settings__repeater-remove">
+                <?php esc_html_e('Remove', 'pitea-customisation'); ?>
+            </button>
+        </div>
+        <?php
+    }
+
     private function renderPageTreeOwnershipRow(
         string|int $index,
         int $selectedGroupId,
@@ -379,5 +570,18 @@ class PagePermissionsTab implements SettingsTabInterface
         }
 
         echo '</select>';
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function getPostTemplateOptions(): array
+    {
+        return [
+            'pitea-create-navigation-page'              => __('New navigation page', 'pitea-customisation'),
+            'pitea-create-theme-page'                   => __('New theme page', 'pitea-customisation'),
+            'pitea-create-navigation-second-level-page' => __('New navigation page (second level)', 'pitea-customisation'),
+            'pitea-create-content-page'                 => __('New content page', 'pitea-customisation'),
+        ];
     }
 }

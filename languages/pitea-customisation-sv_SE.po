@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pitea-"
 "customisation\n"
-"POT-Creation-Date: 2026-03-27T19:16:03+00:00\n"
+"POT-Creation-Date: 2026-03-27T20:42:19+00:00\n"
 "PO-Revision-Date: 2026-03-27 20:19+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -23,7 +23,8 @@ msgstr "Anpassning för Piteå"
 #: pitea-customisation.php
 msgid ""
 "Custom functionality and modifications for the Piteå WordPress installation"
-msgstr "Anpassade funktioner och modifieringar för Piteås WordPress-installation"
+msgstr ""
+"Anpassade funktioner och modifieringar för Piteås WordPress-installation"
 
 #. Author of the plugin
 #: pitea-customisation.php
@@ -156,16 +157,17 @@ msgstr "Färgväljare"
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:71
 msgid ""
-"Limit which palette groups each user group may use in the design system color "
-"picker, and whether they may enter a custom hex color. Users without a "
-"matching rule here keep full access. Users in several groups get the union of "
-"allowed palette groups; custom color is allowed if any matching rule allows it."
+"Limit which palette groups each user group may use in the design system "
+"color picker, and whether they may enter a custom hex color. Users without a "
+"matching rule here keep full access. Users in several groups get the union "
+"of allowed palette groups; custom color is allowed if any matching rule "
+"allows it."
 msgstr ""
-"Begränsa vilka palettgrupper varje användargrupp får använda i designsystemets "
-"färgväljare, och om de får ange en egen hex-färg. Användare utan matchande "
-"regel här behåller full åtkomst. Användare som tillhör flera grupper får "
-"sammanslagning av tillåtna palettgrupper; egen hex-färg tillåts om någon "
-"matchande regel tillåter det."
+"Begränsa vilka palettgrupper varje användargrupp får använda i "
+"designsystemets färgväljare, och om de får ange en egen hex-färg. Användare "
+"utan matchande regel här behåller full åtkomst. Användare som tillhör flera "
+"grupper får sammanslagning av tillåtna palettgrupper; egen hex-färg tillåts "
+"om någon matchande regel tillåter det."
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:129
 msgid "Color picker permissions"
@@ -180,7 +182,8 @@ msgstr ""
 "finns eller att Municipios färghjälpare är inlästa."
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:203
-#: source/php/Admin/Tabs/PagePermissionsTab.php:280
+#: source/php/Admin/Tabs/PagePermissionsTab.php:369
+#: source/php/Admin/Tabs/PagePermissionsTab.php:409
 msgid "+ Add rule"
 msgstr "+ Lägg till regel"
 
@@ -190,17 +193,19 @@ msgstr "Förhandsvisning av palettgrupper"
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:226
 msgid ""
-"Each name below is a palette group in the editor color picker. Hover a square "
-"to see the color label and hex code."
+"Each name below is a palette group in the editor color picker. Hover a "
+"square to see the color label and hex code."
 msgstr ""
 "Varje namn nedan är en palettgrupp i redaktörens färgväljare. Hovra över en "
 "ruta för att se färgets namn och hex-kod."
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:274
+#: source/php/Admin/Tabs/PagePermissionsTab.php:440
 msgid "User group"
 msgstr "Användargrupp"
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:276
+#: source/php/Admin/Tabs/PagePermissionsTab.php:442
 msgid "— Select user group —"
 msgstr "— Välj användargrupp —"
 
@@ -213,8 +218,9 @@ msgid "Allow custom hex color"
 msgstr "Tillåt egen hex-färg"
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:318
-#: source/php/Admin/Tabs/PagePermissionsTab.php:249
-#: source/php/Admin/Tabs/PagePermissionsTab.php:335
+#: source/php/Admin/Tabs/PagePermissionsTab.php:338
+#: source/php/Admin/Tabs/PagePermissionsTab.php:474
+#: source/php/Admin/Tabs/PagePermissionsTab.php:526
 msgid "Remove"
 msgstr "Ta bort"
 
@@ -228,13 +234,13 @@ msgstr "Trafikstörningar"
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:81
 msgid ""
-"Automatically import traffic disruption data from an ArcGIS FeatureServer and "
-"publish it as service information posts. Leave the URL empty to disable "
+"Automatically import traffic disruption data from an ArcGIS FeatureServer "
+"and publish it as service information posts. Leave the URL empty to disable "
 "importing."
 msgstr ""
 "Importera automatiskt data om trafikstörningar från en ArcGIS FeatureServer "
-"och publicera dem som inlägg för serviceinformation. Lämna URL:en tom för att "
-"inaktivera import."
+"och publicera dem som inlägg för serviceinformation. Lämna URL:en tom för "
+"att inaktivera import."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:91
 #: source/php/Admin/Tabs/ExternalContentTab.php:129
@@ -250,12 +256,13 @@ msgid ""
 "Automatically index Piteå's public e-services from the eNämnd API into the "
 "Typesense search engine. Leave the URL empty to disable indexing."
 msgstr ""
-"Indexera automatiskt Piteås offentliga e-tjänster från eNämnds API i sökmotorn "
-"Typesense. Lämna URL:en tom för att inaktivera indexeringen."
+"Indexera automatiskt Piteås offentliga e-tjänster från eNämnds API i "
+"sökmotorn Typesense. Lämna URL:en tom för att inaktivera indexeringen."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:174
 msgid ""
-"The eNämnd public-services API URL. Leave empty to disable e-service indexing."
+"The eNämnd public-services API URL. Leave empty to disable e-service "
+"indexing."
 msgstr ""
 "API-URL för eNämnds tjänst för offentliga e-tjänster. Lämna tomt för att "
 "inaktivera indexering av e-tjänster."
@@ -302,8 +309,9 @@ msgid ""
 "Configure the API credentials for the Latest Events module. These settings "
 "allow the module to fetch event data from the Visit Piteå API."
 msgstr ""
-"Konfigurera API-uppgifterna för modulen Senaste evenemang. Dessa inställningar "
-"gör det möjligt för modulen att hämta evenemangsdata från Visit Piteå-API:t."
+"Konfigurera API-uppgifterna för modulen Senaste evenemang. Dessa "
+"inställningar gör det möjligt för modulen att hämta evenemangsdata från "
+"Visit Piteå-API:t."
 
 #: source/php/Admin/Tabs/LatestEventsTab.php:92
 msgid "API URL"
@@ -327,16 +335,11 @@ msgstr "API Bearer-token för autentisering mot Visit Piteå-API:t."
 msgid "Latest Events Settings"
 msgstr "Inställningar för senaste evenemang"
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:37
+#: source/php/Admin/Tabs/PagePermissionsTab.php:40
 msgid "Page permissions"
 msgstr "Sidrättigheter"
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:69
-#: source/php/Admin/Tabs/PagePermissionsTab.php:185
-msgid "Protected pages / Templates"
-msgstr "Skyddade sidor / Mallar"
-
-#: source/php/Admin/Tabs/PagePermissionsTab.php:71
+#: source/php/Admin/Tabs/PagePermissionsTab.php:75
 msgid ""
 "These pages cannot be edited, moved or deleted by other roles than "
 "administrators."
@@ -344,64 +347,111 @@ msgstr ""
 "Dessa sidor kan inte redigeras, flyttas eller raderas av andra roller än "
 "administratörer."
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:81
+#: source/php/Admin/Tabs/PagePermissionsTab.php:85
 msgid "Protected pages"
 msgstr "Skyddade sidor"
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:102
-#: source/php/Admin/Tabs/PagePermissionsTab.php:186
-msgid "Page tree ownership"
-msgstr "Ägarskap för sidträdet"
-
-#: source/php/Admin/Tabs/PagePermissionsTab.php:104
+#: source/php/Admin/Tabs/PagePermissionsTab.php:108
 msgid ""
-"Define which user groups and/or user roles own and manage particular parts of "
-"the page tree. Users who do not match an owning rule cannot see those pages or "
-"their descendants in the admin."
+"Define which user groups and/or user roles own and manage particular parts "
+"of the page tree. Users who do not match an owning rule cannot see those "
+"pages or their descendants in the admin."
 msgstr ""
 "Definiera vilka användargrupper och/eller användarroller som äger och styr "
-"specifika delar av sidträdet. Användare som inte matchar någon sådan regel kan "
-"inte se dessa sidor eller deras underordnade sidor i admin."
+"specifika delar av sidträdet. Användare som inte matchar någon sådan regel "
+"kan inte se dessa sidor eller deras underordnade sidor i admin."
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:114
+#: source/php/Admin/Tabs/PagePermissionsTab.php:118
 msgid "Ownership rules"
 msgstr "Regler för ägarskap"
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:222
+#: source/php/Admin/Tabs/PagePermissionsTab.php:141
+msgid ""
+"Control which user groups can use each post template in the Page menu. "
+"Administrators always have access to all templates."
+msgstr ""
+"Styr vilka användargrupper som kan använda varje postmall i menyn Sidor. "
+"Administratörer har alltid tillgång till alla mallar."
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:151
+msgid "Template rules"
+msgstr "Mallregler"
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:273
+msgid "Protected pages and templates"
+msgstr "Skyddade sidor och mallar"
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:274
+msgid "Page tree ownership rules"
+msgstr "Regler för ägarskap av sidträd"
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:275
+msgid "Post template access"
+msgstr "Tillgång till postmallar"
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:311
 msgid "+ Add page"
 msgstr "+ Lägg till sida"
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:245
+#: source/php/Admin/Tabs/PagePermissionsTab.php:334
 msgid "Apply to all subpages"
 msgstr "Gäller för alla undersidor"
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:306
+#: source/php/Admin/Tabs/PagePermissionsTab.php:456
+msgid "Allowed templates"
+msgstr "Tillåtna mallar"
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:497
 msgid "— Optional user group —"
 msgstr "— Valfri användargrupp —"
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:317
+#: source/php/Admin/Tabs/PagePermissionsTab.php:508
 msgid "or"
 msgstr "eller"
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:328
+#: source/php/Admin/Tabs/PagePermissionsTab.php:519
 msgid "Include all subpages"
 msgstr "Inkludera alla undersidor"
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:331
+#: source/php/Admin/Tabs/PagePermissionsTab.php:522
 msgid ""
 "A rule matches when the user belongs to the selected user group or has the "
 "selected user role."
 msgstr ""
-"En regel matchar när användaren tillhör den valda gruppen eller har den valda "
-"rollen."
+"En regel matchar när användaren tillhör den valda gruppen eller har den "
+"valda rollen."
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:360
+#: source/php/Admin/Tabs/PagePermissionsTab.php:551
 msgid "— Select a page —"
 msgstr "— Välj en sida —"
 
-#: source/php/Admin/Tabs/PagePermissionsTab.php:370
+#: source/php/Admin/Tabs/PagePermissionsTab.php:561
 msgid "— Optional user role —"
 msgstr "— Valfri användarroll —"
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:581
+#: source/php/Customisations/Admin/PostTemplates.php:912
+#: source/php/Customisations/Admin/PostTemplates.php:1005
+msgid "New navigation page"
+msgstr "Ny navigationssida"
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:582
+#: source/php/Customisations/Admin/PostTemplates.php:913
+#: source/php/Customisations/Admin/PostTemplates.php:1016
+msgid "New theme page"
+msgstr "Ny temasida"
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:583
+#: source/php/Customisations/Admin/PostTemplates.php:914
+#: source/php/Customisations/Admin/PostTemplates.php:1027
+msgid "New navigation page (second level)"
+msgstr "Ny navigationssida (underområde)"
+
+#: source/php/Admin/Tabs/PagePermissionsTab.php:584
+#: source/php/Customisations/Admin/PostTemplates.php:915
+#: source/php/Customisations/Admin/PostTemplates.php:1038
+msgid "New content page"
+msgstr "Ny innehållssida"
 
 #: source/php/Admin/Tabs/ReadSpeakerTab.php:42
 msgid "ReadSpeaker"
@@ -450,9 +500,9 @@ msgid ""
 "template where you want them. Enable that module under Modularity → Modules."
 msgstr ""
 "När detta är aktiverat tas Lyssna och Skriv ut bort från det övre "
-"navigeringshjälpsområdet. Lägg till modulen «Tillgänglighetsknappar» (mod-acc-"
-"buttons) i sidopanelen på varje mall där du vill ha dem. Aktivera modulen "
-"under Modularity → Moduler."
+"navigeringshjälpsområdet. Lägg till modulen «Tillgänglighetsknappar» (mod-"
+"acc-buttons) i sidopanelen på varje mall där du vill ha dem. Aktivera "
+"modulen under Modularity → Moduler."
 
 #: source/php/Customisations/Accessibility.php:69
 #: source/php/Customisations/Accessibility.php:301
@@ -493,55 +543,92 @@ msgctxt "Paragraph block style"
 msgid "Preamble"
 msgstr "Ingress"
 
-#: source/php/Customisations/Admin/PostTemplates.php:50
-#: source/php/Customisations/Admin/PostTemplates.php:51
-msgid "New navigation page"
-msgstr "Ny navigationssida"
-
-#: source/php/Customisations/Admin/PostTemplates.php:61
-#: source/php/Customisations/Admin/PostTemplates.php:62
-msgid "New theme page"
-msgstr "Ny temasida"
-
-#: source/php/Customisations/Admin/PostTemplates.php:72
-#: source/php/Customisations/Admin/PostTemplates.php:73
-msgid "New navigation page (second level)"
-msgstr "Ny navigationssida (underområde)"
-
-#: source/php/Customisations/Admin/PostTemplates.php:83
-#: source/php/Customisations/Admin/PostTemplates.php:84
-msgid "New content page"
-msgstr "Ny innehållssida"
-
-#: source/php/Customisations/Admin/PostTemplates.php:102
-#: source/php/Customisations/Admin/PostTemplates.php:248
-#: source/php/Customisations/Admin/PostTemplates.php:392
-#: source/php/Customisations/Admin/PostTemplates.php:536
+#: source/php/Customisations/Admin/PostTemplates.php:131
+#: source/php/Customisations/Admin/PostTemplates.php:293
+#: source/php/Customisations/Admin/PostTemplates.php:453
+#: source/php/Customisations/Admin/PostTemplates.php:613
+#: source/php/Customisations/Admin/PostTemplates.php:939
+#: source/php/Customisations/Admin/PostTemplates.php:1310
 msgid "You do not have permission to perform this action."
 msgstr "Du har inte rättigheter att utföra den här åtgärden."
 
+#: source/php/Customisations/Admin/PostTemplates.php:141
+#: source/php/Customisations/Admin/PostTemplates.php:303
+#: source/php/Customisations/Admin/PostTemplates.php:463
+#: source/php/Customisations/Admin/PostTemplates.php:623
+msgid "Du har inte tillgång till den valda föräldrasidan."
+msgstr "Du har inte tillgång till den valda föräldrasidan."
+
 #. translators: %s: path relative to plugin
-#: source/php/Customisations/Admin/PostTemplates.php:718
+#: source/php/Customisations/Admin/PostTemplates.php:806
 msgid "Dummy image file not found: %s"
 msgstr "Dummybild hittades inte: %s"
 
-#: source/php/Customisations/Admin/PostTemplates.php:754
+#: source/php/Customisations/Admin/PostTemplates.php:842
 msgid "Could not create upload directory for dummy images."
 msgstr "Kunde inte skapa uppladdningskatalog för dummybilder."
 
 #. translators: %s: file name
-#: source/php/Customisations/Admin/PostTemplates.php:766
+#: source/php/Customisations/Admin/PostTemplates.php:854
 msgid "Could not copy dummy image %s into uploads."
 msgstr "Kunde inte kopiera dummybild %s till uppladdningar."
 
 #. translators: %s: file name
-#: source/php/Customisations/Admin/PostTemplates.php:778
+#: source/php/Customisations/Admin/PostTemplates.php:866
 msgid "Unknown file type for dummy image %s."
 msgstr "Okänd filtyp för dummybild %s."
 
-#: source/php/Customisations/Admin/PostTemplates.php:803
+#: source/php/Customisations/Admin/PostTemplates.php:891
 msgid "Could not register dummy image in the media library."
 msgstr "Kunde inte registrera dummybild i mediebiblioteket."
+
+#: source/php/Customisations/Admin/PostTemplates.php:1080
+msgid "Close modal"
+msgstr "Stäng dialogruta"
+
+#: source/php/Customisations/Admin/PostTemplates.php:1083
+msgid "Välj under vilken sida den nya sidan ska skapas."
+msgstr "Välj under vilken sida den nya sidan ska skapas."
+
+#: source/php/Customisations/Admin/PostTemplates.php:1087
+#: source/php/Customisations/Admin/PostTemplates.php:1324
+msgid "Du har inte tillgång till några sidor att skapa undersidor till."
+msgstr "Du har inte tillgång till några sidor att skapa undersidor till."
+
+#: source/php/Customisations/Admin/PostTemplates.php:1091
+msgid "Stäng"
+msgstr "Stäng"
+
+#: source/php/Customisations/Admin/PostTemplates.php:1098
+#: source/php/Customisations/Admin/PostTemplates.php:1332
+msgid "Föräldrasida"
+msgstr "Föräldrasida"
+
+#: source/php/Customisations/Admin/PostTemplates.php:1103
+msgid "Avbryt"
+msgstr "Avbryt"
+
+#: source/php/Customisations/Admin/PostTemplates.php:1106
+#: source/php/Customisations/Admin/PostTemplates.php:1337
+msgid "Skapa sida"
+msgstr "Skapa sida"
+
+#: source/php/Customisations/Admin/PostTemplates.php:1320
+msgid ""
+"Välj under vilken sida den nya sidan ska skapas. Normalt visas detta som en "
+"modal ovanpå sidlistan."
+msgstr ""
+"Välj under vilken sida den nya sidan ska skapas. Normalt visas detta som en "
+"modal ovanpå sidlistan."
+
+#: source/php/Customisations/Admin/PostTemplates.php:1349
+msgid "— Toppnivå (ingen föräldrasida) —"
+msgstr "— Toppnivå (ingen föräldrasida) —"
+
+#: source/php/Customisations/Admin/PostTemplates.php:1442
+#: source/php/Customisations/Admin/PostTemplates.php:1464
+msgid "(Utan titel) #%d"
+msgstr "(Utan titel) #%d"
 
 #: source/php/Customisations/Breadcrumbs.php:81
 msgid "Start"
@@ -633,8 +720,8 @@ msgstr "Tillgänglighetsknappar"
 
 #: source/php/Module/AccButtons.php:28
 msgid ""
-"Listen and print buttons (same as the nav bar). Place in a sidebar for layout "
-"control."
+"Listen and print buttons (same as the nav bar). Place in a sidebar for "
+"layout control."
 msgstr ""
 "Lyssna- och skriv ut-knappar (samma som i navigeringsfältet). Placera i en "
 "sidopanel för kontroll över layouten."

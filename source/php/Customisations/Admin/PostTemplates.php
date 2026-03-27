@@ -2,6 +2,8 @@
 
 namespace PiteaCustomisation\Customisations\Admin;
 
+use PiteaCustomisation\Admin\Tabs\PagePermissionsTab;
+
 class PostTemplates
 {
     /**
@@ -46,49 +48,70 @@ class PostTemplates
      */
     public function registerMenuItems(): void
     {
-        $hook = add_submenu_page(
-            'edit.php?post_type=page',
-            __('New navigation page', 'pitea-customisation'),
-            __('New navigation page', 'pitea-customisation'),
-            'edit_pages',
-            self::PAGE,
-            [$this, 'renderNavigationPageChooser']
-        );
+        if (!current_user_can('edit_pages')) {
+            return;
+        }
 
-        add_action('load-' . $hook, [$this, 'handleCreateNavigationPage']);
+        $templates = $this->getAvailableParentChooserTemplatesForCurrentUser();
+        if (empty($templates)) {
+            return;
+        }
 
-        $hookTheme = add_submenu_page(
-            'edit.php?post_type=page',
-            __('New theme page', 'pitea-customisation'),
-            __('New theme page', 'pitea-customisation'),
-            'edit_pages',
-            self::PAGE_THEME,
-            [$this, 'renderThemePageChooser']
-        );
+        if (isset($templates[self::PAGE])) {
+            $hook = add_submenu_page(
+                'edit.php?post_type=page',
+                $templates[self::PAGE],
+                $templates[self::PAGE],
+                'edit_pages',
+                self::PAGE,
+                [$this, 'renderNavigationPageChooser']
+            );
+            if (is_string($hook) && $hook !== '') {
+                add_action('load-' . $hook, [$this, 'handleCreateNavigationPage']);
+            }
+        }
 
-        add_action('load-' . $hookTheme, [$this, 'handleCreateThemePage']);
+        if (isset($templates[self::PAGE_THEME])) {
+            $hookTheme = add_submenu_page(
+                'edit.php?post_type=page',
+                $templates[self::PAGE_THEME],
+                $templates[self::PAGE_THEME],
+                'edit_pages',
+                self::PAGE_THEME,
+                [$this, 'renderThemePageChooser']
+            );
+            if (is_string($hookTheme) && $hookTheme !== '') {
+                add_action('load-' . $hookTheme, [$this, 'handleCreateThemePage']);
+            }
+        }
 
-        $hookNavSecondLevel = add_submenu_page(
-            'edit.php?post_type=page',
-            __('New navigation page (second level)', 'pitea-customisation'),
-            __('New navigation page (second level)', 'pitea-customisation'),
-            'edit_pages',
-            self::PAGE_NAV_SECOND_LEVEL,
-            [$this, 'renderNavSecondLevelPageChooser']
-        );
+        if (isset($templates[self::PAGE_NAV_SECOND_LEVEL])) {
+            $hookNavSecondLevel = add_submenu_page(
+                'edit.php?post_type=page',
+                $templates[self::PAGE_NAV_SECOND_LEVEL],
+                $templates[self::PAGE_NAV_SECOND_LEVEL],
+                'edit_pages',
+                self::PAGE_NAV_SECOND_LEVEL,
+                [$this, 'renderNavSecondLevelPageChooser']
+            );
+            if (is_string($hookNavSecondLevel) && $hookNavSecondLevel !== '') {
+                add_action('load-' . $hookNavSecondLevel, [$this, 'handleCreateNavSecondLevelPage']);
+            }
+        }
 
-        add_action('load-' . $hookNavSecondLevel, [$this, 'handleCreateNavSecondLevelPage']);
-
-        $hookContentPage = add_submenu_page(
-            'edit.php?post_type=page',
-            __('New content page', 'pitea-customisation'),
-            __('New content page', 'pitea-customisation'),
-            'edit_pages',
-            self::PAGE_CONTENT_PAGE,
-            [$this, 'renderContentPageChooser']
-        );
-
-        add_action('load-' . $hookContentPage, [$this, 'handleCreateContentPage']);
+        if (isset($templates[self::PAGE_CONTENT_PAGE])) {
+            $hookContentPage = add_submenu_page(
+                'edit.php?post_type=page',
+                $templates[self::PAGE_CONTENT_PAGE],
+                $templates[self::PAGE_CONTENT_PAGE],
+                'edit_pages',
+                self::PAGE_CONTENT_PAGE,
+                [$this, 'renderContentPageChooser']
+            );
+            if (is_string($hookContentPage) && $hookContentPage !== '') {
+                add_action('load-' . $hookContentPage, [$this, 'handleCreateContentPage']);
+            }
+        }
     }
 
     /**
@@ -107,6 +130,7 @@ class PostTemplates
         if (!current_user_can('edit_pages')) {
             wp_die(esc_html__('You do not have permission to perform this action.', 'pitea-customisation'));
         }
+        $this->assertCurrentUserCanUseTemplate(self::PAGE);
 
         check_admin_referer('pitea_create_page_' . self::PAGE);
 
@@ -268,6 +292,7 @@ EOT;
         if (!current_user_can('edit_pages')) {
             wp_die(esc_html__('You do not have permission to perform this action.', 'pitea-customisation'));
         }
+        $this->assertCurrentUserCanUseTemplate(self::PAGE_THEME);
 
         check_admin_referer('pitea_create_page_' . self::PAGE_THEME);
 
@@ -427,6 +452,7 @@ EOT;
         if (!current_user_can('edit_pages')) {
             wp_die(esc_html__('You do not have permission to perform this action.', 'pitea-customisation'));
         }
+        $this->assertCurrentUserCanUseTemplate(self::PAGE_NAV_SECOND_LEVEL);
 
         check_admin_referer('pitea_create_page_' . self::PAGE_NAV_SECOND_LEVEL);
 
@@ -586,6 +612,7 @@ EOT;
         if (!current_user_can('edit_pages')) {
             wp_die(esc_html__('You do not have permission to perform this action.', 'pitea-customisation'));
         }
+        $this->assertCurrentUserCanUseTemplate(self::PAGE_CONTENT_PAGE);
 
         check_admin_referer('pitea_create_page_' . self::PAGE_CONTENT_PAGE);
 
@@ -889,6 +916,81 @@ EOT;
         ];
     }
 
+    /**
+     * @return array<string, string>
+     */
+    private function getAvailableParentChooserTemplatesForCurrentUser(): array
+    {
+        $templates = $this->getParentChooserTemplates();
+        $allowed   = $this->getAllowedTemplateSlugsForCurrentUser();
+        if ($allowed === null) {
+            return $templates;
+        }
+
+        return array_intersect_key($templates, array_flip($allowed));
+    }
+
+    private function assertCurrentUserCanUseTemplate(string $templateSlug): void
+    {
+        if ($this->canCurrentUserUseTemplate($templateSlug)) {
+            return;
+        }
+
+        wp_die(esc_html__('You do not have permission to perform this action.', 'pitea-customisation'));
+    }
+
+    private function canCurrentUserUseTemplate(string $templateSlug): bool
+    {
+        $allowed = $this->getAllowedTemplateSlugsForCurrentUser();
+        return $allowed === null || in_array($templateSlug, $allowed, true);
+    }
+
+    /**
+     * Return allowed template slugs for the current user, or null if unrestricted.
+     *
+     * @return string[]|null
+     */
+    private function getAllowedTemplateSlugsForCurrentUser(): ?array
+    {
+        if ($this->isCurrentUserPrivileged()) {
+            return null;
+        }
+
+        $allTemplateSlugs = array_keys($this->getParentChooserTemplates());
+        $raw              = (string) get_option(PagePermissionsTab::OPTION_POST_TEMPLATE_ACCESS, '[]');
+        $rules            = json_decode($raw, true);
+        if (!is_array($rules) || empty($rules)) {
+            return null;
+        }
+
+        $userGroupIds = $this->getCurrentUserGroupIds();
+        if (empty($userGroupIds)) {
+            return [];
+        }
+
+        $validTemplateSlugs = array_flip($allTemplateSlugs);
+        $allowed            = [];
+        foreach ($rules as $rule) {
+            $groupId = (int) ($rule['user_group_id'] ?? 0);
+            if ($groupId === 0 || !in_array($groupId, $userGroupIds, true)) {
+                continue;
+            }
+
+            $allowedTemplates = isset($rule['allowed_templates']) && is_array($rule['allowed_templates'])
+                ? $rule['allowed_templates']
+                : [];
+
+            foreach ($allowedTemplates as $templateSlug) {
+                $templateSlug = sanitize_key((string) $templateSlug);
+                if (isset($validTemplateSlugs[$templateSlug])) {
+                    $allowed[$templateSlug] = true;
+                }
+            }
+        }
+
+        return array_values(array_keys($allowed));
+    }
+
     private function buildParentChooserFormAction(string $templateSlug): string
     {
         return admin_url('edit.php?post_type=page&page=' . rawurlencode($templateSlug));
@@ -947,7 +1049,7 @@ EOT;
             return;
         }
 
-        $templates = $this->getParentChooserTemplates();
+        $templates = $this->getAvailableParentChooserTemplatesForCurrentUser();
         if (empty($templates)) {
             return;
         }
@@ -1207,6 +1309,7 @@ EOT;
         if (!current_user_can('edit_pages')) {
             wp_die(esc_html__('You do not have permission to perform this action.', 'pitea-customisation'));
         }
+        $this->assertCurrentUserCanUseTemplate($templateSlug);
 
         $accessibleIds = $this->getAccessibleParentPageIds();
         $dropdown    = $this->getParentPageSelectHtml($accessibleIds, 'post_parent');
@@ -1393,15 +1496,7 @@ EOT;
             return null;
         }
 
-        // Resolve user group term IDs (mirrors PageTreeOwnership::getUserGroupTermIds).
-        if (is_multisite()) {
-            switch_to_blog(get_main_site_id());
-            $terms = wp_get_object_terms($userId, 'user_group', ['fields' => 'ids']);
-            restore_current_blog();
-        } else {
-            $terms = wp_get_object_terms($userId, 'user_group', ['fields' => 'ids']);
-        }
-        $userGroupIds = is_wp_error($terms) ? [] : array_map('intval', (array) $terms);
+        $userGroupIds = $this->getCurrentUserGroupIds();
 
         $user      = get_userdata($userId);
         $userRoles = $user ? array_map('strval', (array) $user->roles) : [];
@@ -1472,5 +1567,24 @@ EOT;
 
         $user = get_userdata($userId);
         return $user && in_array('administrator', (array) $user->roles, true);
+    }
+
+    /**
+     * Return current user group term IDs (user_group taxonomy).
+     *
+     * @return int[]
+     */
+    private function getCurrentUserGroupIds(): array
+    {
+        $userId = get_current_user_id();
+        if (is_multisite()) {
+            switch_to_blog(get_main_site_id());
+            $terms = wp_get_object_terms($userId, 'user_group', ['fields' => 'ids']);
+            restore_current_blog();
+        } else {
+            $terms = wp_get_object_terms($userId, 'user_group', ['fields' => 'ids']);
+        }
+
+        return is_wp_error($terms) ? [] : array_map('intval', (array) $terms);
     }
 }
