@@ -71,20 +71,6 @@ class PostTemplates
             }
         }
 
-        if (isset($templates[self::PAGE_THEME])) {
-            $hookTheme = add_submenu_page(
-                'edit.php?post_type=page',
-                $templates[self::PAGE_THEME],
-                $templates[self::PAGE_THEME],
-                'edit_pages',
-                self::PAGE_THEME,
-                [$this, 'renderThemePageChooser']
-            );
-            if (is_string($hookTheme) && $hookTheme !== '') {
-                add_action('load-' . $hookTheme, [$this, 'handleCreateThemePage']);
-            }
-        }
-
         if (isset($templates[self::PAGE_NAV_SECOND_LEVEL])) {
             $hookNavSecondLevel = add_submenu_page(
                 'edit.php?post_type=page',
@@ -96,6 +82,20 @@ class PostTemplates
             );
             if (is_string($hookNavSecondLevel) && $hookNavSecondLevel !== '') {
                 add_action('load-' . $hookNavSecondLevel, [$this, 'handleCreateNavSecondLevelPage']);
+            }
+        }
+
+        if (isset($templates[self::PAGE_THEME])) {
+            $hookTheme = add_submenu_page(
+                'edit.php?post_type=page',
+                $templates[self::PAGE_THEME],
+                $templates[self::PAGE_THEME],
+                'edit_pages',
+                self::PAGE_THEME,
+                [$this, 'renderThemePageChooser']
+            );
+            if (is_string($hookTheme) && $hookTheme !== '') {
+                add_action('load-' . $hookTheme, [$this, 'handleCreateThemePage']);
             }
         }
 
