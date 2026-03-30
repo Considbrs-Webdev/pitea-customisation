@@ -45,6 +45,7 @@ class App
             Customisations\Navigation::class,
             Customisations\News::class,
             Customisations\Pagination::class,
+            Customisations\Permissions::class,
             Customisations\Policies::class,
             Customisations\PostTypes::class,
             Customisations\Search::class,
@@ -62,7 +63,6 @@ class App
             Customisations\Modules\QuickLinks::class,
             Customisations\Modules\ManualInput::class,
             Customisations\Modules\Slider::class,
-            Customisations\Permissions\Permissions::class,
             // Add more customisation classes here
             // Customisations\YourCustomClass::class,
         ];
