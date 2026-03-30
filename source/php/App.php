@@ -33,6 +33,7 @@ class App
             Admin\Settings::class,
             Customisations\Accessibility::class,
             Customisations\Breadcrumbs::class,
+            Customisations\BlockPatternCompatibility::class,
             Customisations\ColorPicker::class,
             Customisations\Config::class,
             Customisations\CustomerFeedback::class,
