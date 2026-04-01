@@ -161,7 +161,6 @@
 .o-grid-column-block
   .modularity-mod-manualinput:not(:has(.c-accordion))
   .c-card {
-  transition: none !important;
   filter: none !important;
   opacity: 1 !important;
   box-shadow: none !important;
@@ -184,14 +183,12 @@
   &::before,
   &::after,
   * {
-    transition: none !important;
     filter: none !important;
   }
 
   &:hover {
     background-color: inherit !important;
     filter: none !important;
-    transition: none !important;
     opacity: 1 !important;
     box-shadow: none !important;
     scale: 1 !important;
@@ -200,13 +197,11 @@
     &::before,
     &::after,
     * {
-      transition: none !important;
       filter: none !important;
     }
   }
 
   &.c-card--has-custom-background {
-    transition: none !important;
     filter: none !important;
     opacity: 1 !important;
     box-shadow: none !important;
@@ -216,14 +211,12 @@
     &::before,
     &::after,
     * {
-      transition: none !important;
       filter: none !important;
     }
 
     &:hover {
       background-color: var(--c-card-color-background) !important;
       filter: none !important;
-      transition: none !important;
       opacity: 1 !important;
       box-shadow: none !important;
       scale: 1 !important;
@@ -232,7 +225,6 @@
       &::before,
       &::after,
       * {
-        transition: none !important;
         filter: none !important;
       }
     }
