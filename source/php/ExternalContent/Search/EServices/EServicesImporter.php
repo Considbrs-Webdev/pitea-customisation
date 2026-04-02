@@ -275,6 +275,7 @@ class EServicesImporter extends AbstractExternalIndexingStrategy
             'eservice_type'  => $type,
             'tags'           => $category !== '' ? [$category] : [],
             'date'           => 0,
+            'is_external'    => true,
         ]);
     }
 
