@@ -11,3 +11,15 @@
 .editor-styles-wrapper .wp-block-paragraph {
   margin-bottom: calc(var(--base, 8px) * 3) !important;
 }
+
+// List block: theme blockeditor.scss puts padding on html :where(.wp-block). For ul/ol that is
+// the list itself, so outside markers sit in that padded strip while text follows — looks broken.
+// Use margin for the block gutter; keep ~core list indent for markers + text (not padding: 0 alone).
+.editor-styles-wrapper :is(ul, ol).wp-block-list {
+  padding-inline-start: 1.5em;
+  margin-inline-start: calc(var(--base, 8px) * 3);
+}
+
+.editor-styles-wrapper li :is(ul, ol).wp-block-list {
+  margin-inline-start: 0;
+}

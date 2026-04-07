@@ -1,16 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pitea-"
-"customisation\n"
-"POT-Creation-Date: 2026-03-27T22:12:56+00:00\n"
-"PO-Revision-Date: 2026-03-27 20:19+0100\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pitea-customisation\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: sv_SE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-03-27T22:12:56+00:00\n"
+"PO-Revision-Date: 2026-03-27 20:19+0100\n"
+"Language: sv_SE\n"
 "X-Generator: Poedit 3.9\n"
 "X-Domain: pitea-customisation\n"
 
@@ -21,10 +20,8 @@ msgstr "Anpassning för Piteå"
 
 #. Description of the plugin
 #: pitea-customisation.php
-msgid ""
-"Custom functionality and modifications for the Piteå WordPress installation"
-msgstr ""
-"Anpassade funktioner och modifieringar för Piteås WordPress-installation"
+msgid "Custom functionality and modifications for the Piteå WordPress installation"
+msgstr "Anpassade funktioner och modifieringar för Piteås WordPress-installation"
 
 #. Author of the plugin
 #: pitea-customisation.php
@@ -88,6 +85,8 @@ msgid "No icon selected"
 msgstr "Ingen ikon vald"
 
 #: source/php/AcfFields/FontAwesomeIconField.php:143
+#: dist/gutenberg/index.js:1
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:113
 msgid "Search icons..."
 msgstr "Sök ikon..."
 
@@ -111,7 +110,8 @@ msgstr "Ingen"
 msgid "Bottom of content"
 msgstr "Botten av innehållet"
 
-#: source/php/Admin/Settings.php:59 source/php/Admin/Settings.php:60
+#: source/php/Admin/Settings.php:59
+#: source/php/Admin/Settings.php:60
 msgid "Piteå kommun"
 msgstr "Piteå kommun"
 
@@ -156,30 +156,16 @@ msgid "Color picker"
 msgstr "Färgväljare"
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:71
-msgid ""
-"Limit which palette groups each user group may use in the design system "
-"color picker, and whether they may enter a custom hex color. Users without a "
-"matching rule here keep full access. Users in several groups get the union "
-"of allowed palette groups; custom color is allowed if any matching rule "
-"allows it."
-msgstr ""
-"Begränsa vilka palettgrupper varje användargrupp får använda i "
-"designsystemets färgväljare, och om de får ange en egen hex-färg. Användare "
-"utan matchande regel här behåller full åtkomst. Användare som tillhör flera "
-"grupper får sammanslagning av tillåtna palettgrupper; egen hex-färg tillåts "
-"om någon matchande regel tillåter det."
+msgid "Limit which palette groups each user group may use in the design system color picker, and whether they may enter a custom hex color. Users without a matching rule here keep full access. Users in several groups get the union of allowed palette groups; custom color is allowed if any matching rule allows it."
+msgstr "Begränsa vilka palettgrupper varje användargrupp får använda i designsystemets färgväljare, och om de får ange en egen hex-färg. Användare utan matchande regel här behåller full åtkomst. Användare som tillhör flera grupper får sammanslagning av tillåtna palettgrupper; egen hex-färg tillåts om någon matchande regel tillåter det."
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:129
 msgid "Color picker permissions"
 msgstr "Behörigheter för färgväljare"
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:158
-msgid ""
-"No design system palette groups were found. Check that variables.scss is "
-"available or Municipio color helpers are loaded."
-msgstr ""
-"Inga palettgrupper i designsystemet hittades. Kontrollera att variables.scss "
-"finns eller att Municipios färghjälpare är inlästa."
+msgid "No design system palette groups were found. Check that variables.scss is available or Municipio color helpers are loaded."
+msgstr "Inga palettgrupper i designsystemet hittades. Kontrollera att variables.scss finns eller att Municipios färghjälpare är inlästa."
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:203
 #: source/php/Admin/Tabs/PagePermissionsTab.php:369
@@ -192,12 +178,8 @@ msgid "Palette group preview"
 msgstr "Förhandsvisning av palettgrupper"
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:226
-msgid ""
-"Each name below is a palette group in the editor color picker. Hover a "
-"square to see the color label and hex code."
-msgstr ""
-"Varje namn nedan är en palettgrupp i redaktörens färgväljare. Hovra över en "
-"ruta för att se färgets namn och hex-kod."
+msgid "Each name below is a palette group in the editor color picker. Hover a square to see the color label and hex code."
+msgstr "Varje namn nedan är en palettgrupp i redaktörens färgväljare. Hovra över en ruta för att se färgets namn och hex-kod."
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:274
 #: source/php/Admin/Tabs/PagePermissionsTab.php:440
@@ -233,12 +215,8 @@ msgid "Visibility"
 msgstr "Synlighet"
 
 #: source/php/Admin/Tabs/CustomerFeedbackTab.php:70
-msgid ""
-"Control where the customer feedback form should be hidden. Front page and "
-"individually excluded singular posts/pages are already handled separately."
-msgstr ""
-"Styr var formuläret för kundfeedback ska döljas. Startsidan och individuellt "
-"exkluderade enskilda inlägg/sidor hanteras redan separat."
+msgid "Control where the customer feedback form should be hidden. Front page and individually excluded singular posts/pages are already handled separately."
+msgstr "Styr var formuläret för kundfeedback ska döljas. Startsidan och individuellt exkluderade enskilda inlägg/sidor hanteras redan separat."
 
 #: source/php/Admin/Tabs/CustomerFeedbackTab.php:80
 msgid "Exclude on post type archives"
@@ -257,20 +235,12 @@ msgid "No public post types with archives were found."
 msgstr "Inga publika inläggstyper med arkivsidor hittades."
 
 #: source/php/Admin/Tabs/CustomerFeedbackTab.php:167
-msgid ""
-"When checked, the feedback form is hidden on archive pages for the selected "
-"post types."
-msgstr ""
-"När den är markerad döljs feedbackformuläret på arkivsidor för valda "
-"inläggstyper."
+msgid "When checked, the feedback form is hidden on archive pages for the selected post types."
+msgstr "När den är markerad döljs feedbackformuläret på arkivsidor för valda inläggstyper."
 
 #: source/php/Admin/Tabs/CustomerFeedbackTab.php:193
-msgid ""
-"Use these toggles to hide feedback on common non-singular or utility page "
-"types."
-msgstr ""
-"Använd dessa reglage för att dölja feedback på vanliga icke-enskilda eller "
-"tekniska sidtyper."
+msgid "Use these toggles to hide feedback on common non-singular or utility page types."
+msgstr "Använd dessa reglage för att dölja feedback på vanliga icke-enskilda eller tekniska sidtyper."
 
 #: source/php/Admin/Tabs/CustomerFeedbackTab.php:290
 msgid "Posts page (blog index)"
@@ -313,14 +283,8 @@ msgid "Traffic Disruptions"
 msgstr "Trafikstörningar"
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:81
-msgid ""
-"Automatically import traffic disruption data from an ArcGIS FeatureServer "
-"and publish it as service information posts. Leave the URL empty to disable "
-"importing."
-msgstr ""
-"Importera automatiskt data om trafikstörningar från en ArcGIS FeatureServer "
-"och publicera dem som inlägg för serviceinformation. Lämna URL:en tom för "
-"att inaktivera import."
+msgid "Automatically import traffic disruption data from an ArcGIS FeatureServer and publish it as service information posts. Leave the URL empty to disable importing."
+msgstr "Importera automatiskt data om trafikstörningar från en ArcGIS FeatureServer och publicera dem som inlägg för serviceinformation. Lämna URL:en tom för att inaktivera import."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:91
 #: source/php/Admin/Tabs/ExternalContentTab.php:129
@@ -332,28 +296,16 @@ msgid "E-Services"
 msgstr "E-tjänster"
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:119
-msgid ""
-"Automatically index Piteå's public e-services from the eNämnd API into the "
-"Typesense search engine. Leave the URL empty to disable indexing."
-msgstr ""
-"Indexera automatiskt Piteås offentliga e-tjänster från eNämnds API i "
-"sökmotorn Typesense. Lämna URL:en tom för att inaktivera indexeringen."
+msgid "Automatically index Piteå's public e-services from the eNämnd API into the Typesense search engine. Leave the URL empty to disable indexing."
+msgstr "Indexera automatiskt Piteås offentliga e-tjänster från eNämnds API i sökmotorn Typesense. Lämna URL:en tom för att inaktivera indexeringen."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:174
-msgid ""
-"The eNämnd public-services API URL. Leave empty to disable e-service "
-"indexing."
-msgstr ""
-"API-URL för eNämnds tjänst för offentliga e-tjänster. Lämna tomt för att "
-"inaktivera indexering av e-tjänster."
+msgid "The eNämnd public-services API URL. Leave empty to disable e-service indexing."
+msgstr "API-URL för eNämnds tjänst för offentliga e-tjänster. Lämna tomt för att inaktivera indexering av e-tjänster."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:197
-msgid ""
-"The GeoJSON endpoint URL for the traffic disruption layer. Leave empty to "
-"disable importing."
-msgstr ""
-"GeoJSON-endpoint-URL för lagret med trafikstörningar. Lämna tomt för att "
-"inaktivera import."
+msgid "The GeoJSON endpoint URL for the traffic disruption layer. Leave empty to disable importing."
+msgstr "GeoJSON-endpoint-URL för lagret med trafikstörningar. Lämna tomt för att inaktivera import."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:213
 msgid "Service Information"
@@ -385,13 +337,8 @@ msgid "API Configuration"
 msgstr "API-konfiguration"
 
 #: source/php/Admin/Tabs/LatestEventsTab.php:82
-msgid ""
-"Configure the API credentials for the Latest Events module. These settings "
-"allow the module to fetch event data from the Visit Piteå API."
-msgstr ""
-"Konfigurera API-uppgifterna för modulen Senaste evenemang. Dessa "
-"inställningar gör det möjligt för modulen att hämta evenemangsdata från "
-"Visit Piteå-API:t."
+msgid "Configure the API credentials for the Latest Events module. These settings allow the module to fetch event data from the Visit Piteå API."
+msgstr "Konfigurera API-uppgifterna för modulen Senaste evenemang. Dessa inställningar gör det möjligt för modulen att hämta evenemangsdata från Visit Piteå-API:t."
 
 #: source/php/Admin/Tabs/LatestEventsTab.php:92
 msgid "API URL"
@@ -402,10 +349,8 @@ msgid "API Token"
 msgstr "API-token"
 
 #: source/php/Admin/Tabs/LatestEventsTab.php:146
-msgid ""
-"The Visit Piteå API base URL. Include the full path up to the API version."
-msgstr ""
-"Bas-URL för Visit Piteå-API:t. Ange hela sökvägen fram till API-versionen."
+msgid "The Visit Piteå API base URL. Include the full path up to the API version."
+msgstr "Bas-URL för Visit Piteå-API:t. Ange hela sökvägen fram till API-versionen."
 
 #: source/php/Admin/Tabs/LatestEventsTab.php:170
 msgid "The API Bearer token for authenticating with the Visit Piteå API."
@@ -420,38 +365,24 @@ msgid "Page permissions"
 msgstr "Sidrättigheter"
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:75
-msgid ""
-"These pages cannot be edited, moved or deleted by other roles than "
-"administrators."
-msgstr ""
-"Dessa sidor kan inte redigeras, flyttas eller raderas av andra roller än "
-"administratörer."
+msgid "These pages cannot be edited, moved or deleted by other roles than administrators."
+msgstr "Dessa sidor kan inte redigeras, flyttas eller raderas av andra roller än administratörer."
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:85
 msgid "Protected pages"
 msgstr "Skyddade sidor"
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:108
-msgid ""
-"Define which user groups and/or user roles own and manage particular parts "
-"of the page tree. Users who do not match an owning rule cannot see those "
-"pages or their descendants in the admin."
-msgstr ""
-"Definiera vilka användargrupper och/eller användarroller som äger och styr "
-"specifika delar av sidträdet. Användare som inte matchar någon sådan regel "
-"kan inte se dessa sidor eller deras underordnade sidor i admin."
+msgid "Define which user groups and/or user roles own and manage particular parts of the page tree. Users who do not match an owning rule cannot see those pages or their descendants in the admin."
+msgstr "Definiera vilka användargrupper och/eller användarroller som äger och styr specifika delar av sidträdet. Användare som inte matchar någon sådan regel kan inte se dessa sidor eller deras underordnade sidor i admin."
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:118
 msgid "Ownership rules"
 msgstr "Regler för ägarskap"
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:141
-msgid ""
-"Control which user groups can use each post template in the Page menu. "
-"Administrators always have access to all templates."
-msgstr ""
-"Styr vilka användargrupper som kan använda varje postmall i menyn Sidor. "
-"Administratörer har alltid tillgång till alla mallar."
+msgid "Control which user groups can use each post template in the Page menu. Administrators always have access to all templates."
+msgstr "Styr vilka användargrupper som kan använda varje postmall i menyn Sidor. Administratörer har alltid tillgång till alla mallar."
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:151
 msgid "Template rules"
@@ -494,12 +425,8 @@ msgid "Include all subpages"
 msgstr "Inkludera alla undersidor"
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:522
-msgid ""
-"A rule matches when the user belongs to the selected user group or has the "
-"selected user role."
-msgstr ""
-"En regel matchar när användaren tillhör den valda gruppen eller har den "
-"valda rollen."
+msgid "A rule matches when the user belongs to the selected user group or has the selected user role."
+msgstr "En regel matchar när användaren tillhör den valda gruppen eller har den valda rollen."
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:551
 msgid "— Select a page —"
@@ -574,15 +501,8 @@ msgid "Hide nav bar buttons; use Modularity module only"
 msgstr "Dölj knappar i navigeringsfältet; använd endast Modularity-modulen"
 
 #: source/php/Admin/Tabs/ReadSpeakerTab.php:205
-msgid ""
-"When enabled, Listen and Print are removed from the top nav-helper area. Add "
-"the “Accessibility buttons” module (mod-acc-buttons) in the sidebar on each "
-"template where you want them. Enable that module under Modularity → Modules."
-msgstr ""
-"När detta är aktiverat tas Lyssna och Skriv ut bort från det övre "
-"navigeringshjälpsområdet. Lägg till modulen «Tillgänglighetsknappar» (mod-"
-"acc-buttons) i sidopanelen på varje mall där du vill ha dem. Aktivera "
-"modulen under Modularity → Moduler."
+msgid "When enabled, Listen and Print are removed from the top nav-helper area. Add the “Accessibility buttons” module (mod-acc-buttons) in the sidebar on each template where you want them. Enable that module under Modularity → Modules."
+msgstr "När detta är aktiverat tas Lyssna och Skriv ut bort från det övre navigeringshjälpsområdet. Lägg till modulen «Tillgänglighetsknappar» (mod-acc-buttons) i sidopanelen på varje mall där du vill ha dem. Aktivera modulen under Modularity → Moduler."
 
 #: source/php/Customisations/Accessibility.php:69
 #: source/php/Customisations/Accessibility.php:301
@@ -641,6 +561,7 @@ msgstr "Du har inte tillgång till den valda föräldrasidan."
 
 #. translators: %s: path relative to plugin
 #: source/php/Customisations/Admin/PostTemplates.php:806
+#, php-format
 msgid "Dummy image file not found: %s"
 msgstr "Dummybild hittades inte: %s"
 
@@ -650,11 +571,13 @@ msgstr "Kunde inte skapa uppladdningskatalog för dummybilder."
 
 #. translators: %s: file name
 #: source/php/Customisations/Admin/PostTemplates.php:854
+#, php-format
 msgid "Could not copy dummy image %s into uploads."
 msgstr "Kunde inte kopiera dummybild %s till uppladdningar."
 
 #. translators: %s: file name
 #: source/php/Customisations/Admin/PostTemplates.php:866
+#, php-format
 msgid "Unknown file type for dummy image %s."
 msgstr "Okänd filtyp för dummybild %s."
 
@@ -694,12 +617,8 @@ msgid "Skapa sida"
 msgstr "Skapa sida"
 
 #: source/php/Customisations/Admin/PostTemplates.php:1320
-msgid ""
-"Välj under vilken sida den nya sidan ska skapas. Normalt visas detta som en "
-"modal ovanpå sidlistan."
-msgstr ""
-"Välj under vilken sida den nya sidan ska skapas. Normalt visas detta som en "
-"modal ovanpå sidlistan."
+msgid "Välj under vilken sida den nya sidan ska skapas. Normalt visas detta som en modal ovanpå sidlistan."
+msgstr "Välj under vilken sida den nya sidan ska skapas. Normalt visas detta som en modal ovanpå sidlistan."
 
 #: source/php/Customisations/Admin/PostTemplates.php:1349
 msgid "— Toppnivå (ingen föräldrasida) —"
@@ -707,6 +626,7 @@ msgstr "— Toppnivå (ingen föräldrasida) —"
 
 #: source/php/Customisations/Admin/PostTemplates.php:1442
 #: source/php/Customisations/Admin/PostTemplates.php:1464
+#, php-format
 msgid "(Utan titel) #%d"
 msgstr "(Utan titel) #%d"
 
@@ -714,11 +634,9 @@ msgstr "(Utan titel) #%d"
 msgid "Start"
 msgstr "Start"
 
-#: source/php/Customisations/Config.php:198
+#: source/php/Customisations/Config.php:206
 msgid "Username may only contain letters (A–Z), numbers (0–9) and dots (.)"
-msgstr ""
-"Användarnamn får endast innehålla bokstäver (A–Z), siffror (0–9) och punkter "
-"(.)"
+msgstr "Användarnamn får endast innehålla bokstäver (A–Z), siffror (0–9) och punkter (.)"
 
 #: source/php/Customisations/CustomerFeedback.php:162
 msgid "Customer Feedback"
@@ -794,31 +712,40 @@ msgstr "Karta över trafikstörning"
 msgid "Traffic disruption location"
 msgstr "Plats för trafikstörning"
 
-#: source/php/Module/AccButtons.php:26 source/php/Module/AccButtons.php:27
+#: source/php/Module/AccButtons.php:26
+#: source/php/Module/AccButtons.php:27
 msgid "Accessibility buttons"
 msgstr "Tillgänglighetsknappar"
 
 #: source/php/Module/AccButtons.php:28
-msgid ""
-"Listen and print buttons (same as the nav bar). Place in a sidebar for "
-"layout control."
-msgstr ""
-"Lyssna- och skriv ut-knappar (samma som i navigeringsfältet). Placera i en "
-"sidopanel för kontroll över layouten."
+msgid "Listen and print buttons (same as the nav bar). Place in a sidebar for layout control."
+msgstr "Lyssna- och skriv ut-knappar (samma som i navigeringsfältet). Placera i en sidopanel för kontroll över layouten."
 
 #: views/search/hits/hit-eservice.blade.php:23
 msgctxt "E-services"
 msgid "Section"
 msgstr "Avdelning"
 
+#: dist/gutenberg/index.js:1
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:104
 #~ msgid "Select Icon"
 #~ msgstr "Välj ikon"
 
+#: dist/gutenberg/index.js:1
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:127
 #~ msgid "No icons found"
 #~ msgstr "Inga ikoner hittades"
 
+#: dist/gutenberg/index.js:1
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:194
 #~ msgid "Insert Icon"
 #~ msgstr "Infoga ikon"
 
+#: dist/gutenberg/index.js:1
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:213
 #~ msgid "Font Awesome Icon"
 #~ msgstr "Font Awesome-ikon"
+
+#: source/php/Customisations/Config.php:114
+msgid "Content page"
+msgstr "Innehållssida"

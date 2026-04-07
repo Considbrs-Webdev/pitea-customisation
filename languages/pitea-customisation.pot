@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-27T22:12:56+00:00\n"
+"POT-Creation-Date: 2026-04-07T11:35:16+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: pitea-customisation\n"
 
 #. Plugin Name of the plugin
@@ -86,6 +86,8 @@ msgid "No icon selected"
 msgstr ""
 
 #: source/php/AcfFields/FontAwesomeIconField.php:143
+#: dist/gutenberg/index.js:1
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:113
 msgid "Search icons..."
 msgstr ""
 
@@ -560,6 +562,7 @@ msgstr ""
 
 #. translators: %s: path relative to plugin
 #: source/php/Customisations/Admin/PostTemplates.php:806
+#, php-format
 msgid "Dummy image file not found: %s"
 msgstr ""
 
@@ -569,11 +572,13 @@ msgstr ""
 
 #. translators: %s: file name
 #: source/php/Customisations/Admin/PostTemplates.php:854
+#, php-format
 msgid "Could not copy dummy image %s into uploads."
 msgstr ""
 
 #. translators: %s: file name
 #: source/php/Customisations/Admin/PostTemplates.php:866
+#, php-format
 msgid "Unknown file type for dummy image %s."
 msgstr ""
 
@@ -622,6 +627,7 @@ msgstr ""
 
 #: source/php/Customisations/Admin/PostTemplates.php:1442
 #: source/php/Customisations/Admin/PostTemplates.php:1464
+#, php-format
 msgid "(Utan titel) #%d"
 msgstr ""
 
@@ -629,7 +635,11 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
-#: source/php/Customisations/Config.php:198
+#: source/php/Customisations/Config.php:114
+msgid "Content page"
+msgstr ""
+
+#: source/php/Customisations/Config.php:206
 msgid "Username may only contain letters (A–Z), numbers (0–9) and dots (.)"
 msgstr ""
 
@@ -719,4 +729,24 @@ msgstr ""
 #: views/search/hits/hit-eservice.blade.php:23
 msgctxt "E-services"
 msgid "Section"
+msgstr ""
+
+#: dist/gutenberg/index.js:1
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:104
+msgid "Select Icon"
+msgstr ""
+
+#: dist/gutenberg/index.js:1
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:127
+msgid "No icons found"
+msgstr ""
+
+#: dist/gutenberg/index.js:1
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:213
+msgid "Font Awesome Icon"
+msgstr ""
+
+#: dist/gutenberg/index.js:1
+#: source/js/gutenberg/components/fontawesome-icon-picker/index.js:194
+msgid "Insert Icon"
 msgstr ""

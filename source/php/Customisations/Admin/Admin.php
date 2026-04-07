@@ -103,19 +103,15 @@ class Admin
     }
 
     /**
-     * Register custom paragraph block style variants.
-     * Frontend CSS is in general/blocks.scss (loaded via main stylesheet). We keep
-     * inline_style here so the editor gets the style; core does not reliably
-     * enqueue block-style CSS on the frontend in all themes/setups.
+     * Styles live in general/blocks.scss (main stylesheet + admin/editor via add_editor_style).
      *
      * @return void
      */
     public function registerParagraphBlockStyles(): void
     {
         register_block_style('core/paragraph', [
-            'name'         => 'preamble',
-            'label'        => _x('Preamble', 'Paragraph block style', 'pitea-customisation'),
-            'inline_style' => 'p.is-style-preamble { font-size: var(--font-size-lead, 22px); font-weight: 600; letter-spacing: 0.03em; }',
+            'name'  => 'preamble',
+            'label' => _x('Preamble', 'Paragraph block style', 'pitea-customisation'),
         ]);
     }
 

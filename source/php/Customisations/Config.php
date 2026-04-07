@@ -12,6 +12,9 @@ class Config
         // Load plugin textdomain for translations
         add_action('init', [$this, 'loadTextdomain']);
 
+        // Rename the default template to "Page (default template)"
+        add_action('default_page_template_title', [$this, 'renameDefaultTemplate'], 11, 0);
+
         // Specify Font Awesome archive link icon for service information
         add_filter('Modularity/ServiceInformation/Module/ArchiveLink/Icon', [$this, 'setServiceInfoArchiveLinkIcon']);
 
@@ -104,6 +107,11 @@ class Config
             false,
             dirname(dirname(dirname(__DIR__))) . '/languages'
         );
+    }
+
+    public function renameDefaultTemplate(): string
+    {
+        return __('Content page', 'pitea-customisation');
     }
 
     public function setServiceInfoArchiveLinkIcon(): string

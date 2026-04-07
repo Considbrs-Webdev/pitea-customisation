@@ -7,6 +7,10 @@
     --icon-size: 24px;
 
     .c-card {
+      &__paint-container {
+        contain: none;
+      }
+
       &__header {
         background: 0;
         padding: 0;
