@@ -64,3 +64,24 @@ dialog.t-search-modal {
     backdrop-filter: blur(10px);
   }
 }
+
+// Keep keyboard focus indicators visible for search UIs.
+// Municipio's focus styler is rendered outside the field bounds and gets clipped
+// by parent containers that hide overflow.
+dialog.t-search-modal {
+  .c-modal__content,
+  .c-modal__body,
+  form.t-search-modal__form {
+    overflow: visible;
+  }
+}
+
+.site-header {
+  .collapsible-search-form {
+    &.is-open {
+      .collapsible-search-form__form {
+        overflow: visible;
+      }
+    }
+  }
+}

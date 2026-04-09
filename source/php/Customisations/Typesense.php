@@ -15,5 +15,6 @@ class Typesense
     {
         new Typesense\SearchTemplates();
         new Typesense\NestedPagesSync();
+        new Typesense\SchemaLocale();
     }
 }
