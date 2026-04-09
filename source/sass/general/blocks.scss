@@ -2,3 +2,11 @@ p.is-style-preamble {
   font-size: var(--font-size-lead, 22px);
   line-height: 33px;
 }
+
+// Image blocks that sit directly under the article (not inside Group, Columns, etc.)
+#article.c-article {
+  > .wp-block-image,
+  > figure.c-image {
+    margin-top: calc(var(--base, 8px) * 3);
+  }
+}
