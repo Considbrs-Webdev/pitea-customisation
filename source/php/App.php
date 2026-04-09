@@ -44,6 +44,7 @@ class App
             Customisations\Headers::class,
             Customisations\Navigation::class,
             Customisations\News::class,
+            Customisations\NewsTemplate::class,
             Customisations\Pagination::class,
             Customisations\Permissions::class,
             Customisations\Policies::class,

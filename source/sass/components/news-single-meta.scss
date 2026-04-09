@@ -1,0 +1,31 @@
+// Single nyhet: category tags under title
+.single-nyhet,
+.post-type-nyhet {
+  .c-news-single__meta {
+    margin-bottom: calc(var(--base, 8px) * 2);
+  }
+
+  .c-news-single__tags-wrap {
+    min-width: 0;
+  }
+
+  .c-news-single__tags {
+    --tag-background: var(--color-darjnalen-dark-3);
+    --tag-border-radius: var(--border-radius-xsmall, 5px);
+    --tag-color: var(--color-darjnalen-light-4);
+
+    .c-tags__tag {
+      background: var(--tag-background);
+      border-radius: var(--tag-border-radius);
+      color: var(--tag-color);
+      display: inline-block;
+      font-size: var(--font-size-table, 14px);
+      font-weight: 600;
+      padding: 0.2rem 0.65rem;
+
+      &:hover {
+        color: var(--tag-color);
+      }
+    }
+  }
+}
