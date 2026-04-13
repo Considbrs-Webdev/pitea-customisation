@@ -43,6 +43,7 @@
                                         'href' => $dropdownItem['href'] ?? false,
                                         'icon' => $dropdownItem['icon'] ?? null,
                                         'size' => $dropdownItem['iconSize'] ?? 'sm',
+                                        'reversePositions' => $dropdownItem['reversePositions'] ?? false,
                                         'attributeList' => array_merge($dropdownItem['attributeList'] ?? [], [
                                             'onClick' => $dropdownItem['script'] ?? '',
                                             'aria-label' => $dropdownItem['label'] ?? '',
@@ -62,6 +63,7 @@
                             'href' => $item['href'] ?? false,
                             'icon' => $item['icon'] ?? null,
                             'size' => $item['iconSize'] ?? 'sm',
+                            'reversePositions' => $item['reversePositions'] ?? false,
                             'attributeList' => array_merge($item['attributeList'] ?? [], [
                                 'onClick' => $item['script'] ?? '',
                                 'aria-label' => $item['label'] ?? '',

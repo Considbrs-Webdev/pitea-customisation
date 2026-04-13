@@ -11,3 +11,21 @@
   align-items: center;
   gap: 0.5rem;
 }
+
+// Nav-helper and sidebar module: keep icon visually before label (styleguide button label often uses row-reverse).
+.nav-accessibility,
+.mod-acc-buttons {
+  .c-button .c-button__label {
+    flex-direction: row;
+  }
+
+  .c-button .c-button__label-icon,
+  .c-button .c-button__label-icon--reverse {
+    order: 0;
+  }
+
+  .c-button .c-button__label-text,
+  .c-button .c-button__label-text--reverse {
+    order: 1;
+  }
+}
