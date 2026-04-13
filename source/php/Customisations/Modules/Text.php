@@ -6,6 +6,13 @@ class Text
 {
     private const TEXT_MODULE_FIELD_GROUP = 'group_5891b49127038';
 
+    private const TEXT_MODULE_CARD_CONTEXT = 'module.text.box';
+
+    /**
+     * Inline styles for the next Text module box @card, set in viewData and consumed in ComponentLibrary/Component/Data.
+     */
+    private static ?string $pendingCardStyle = null;
+
     /**
      * Field definitions - single source of truth
      */
@@ -51,7 +58,8 @@ class Text
     public function __construct()
     {
         add_action('acf/init', [$this, 'registerFields'], 20);
-        add_action('wp_head', [$this, 'injectModuleSettingsStyles'], 999);
+        add_filter('Modularity/Display/mod-text/viewData', [$this, 'captureTextModuleStyles']);
+        add_filter('ComponentLibrary/Component/Data', [$this, 'applyPendingCardStyles'], 10, 2);
 
         // Hide fields from Gutenberg editor (only show in module editor)
         foreach (array_keys(self::FIELDS) as $fieldName) {
@@ -158,65 +166,98 @@ class Text
     }
 
     /**
-     * Collect all module settings
+     * Prepare inline styles for the boxed Text module card (runs before Blade render).
+     *
+     * @param array<string, mixed> $data
+     * @return array<string, mixed>
      */
-    private function collectAllModuleSettings(): array
+    public function captureTextModuleStyles(array $data): array
     {
-        $settings = [];
+        self::$pendingCardStyle = null;
 
-        if (!class_exists('\Modularity\Editor')) {
-            return $settings;
+        if (empty($data['text_module_enable_styling'])) {
+            return $data;
         }
 
-        $postId = get_the_ID();
-        if (!$postId) {
-            return $settings;
+        // Article / no-frame variant: no @card with module.text.box — styling not applied there.
+        if (!empty($data['hide_box_frame'])) {
+            return $data;
         }
 
-        $allModules = [];
-        $modules = \Modularity\Editor::getPostModules($postId);
+        $bg = isset($data['text_module_background']) ? trim((string) $data['text_module_background']) : '';
+        $borderColor = isset($data['text_module_border_color']) ? trim((string) $data['text_module_border_color']) : '';
+        $borderThickness = $data['text_module_border_thickness'] ?? null;
+        $borderRadius = $data['text_module_border_radius'] ?? null;
 
-        // Singular or archive modules
-        if (is_singular() || is_archive()) {
-            $templateSlug = is_singular()
-                ? \Modularity\Helper\Wp::getSingleSlug()
-                : \Modularity\Helper\Wp::getArchiveSlug();
-            $templateModules = \Modularity\Editor::getPostModules($templateSlug);
-            $modules = array_merge($modules, $templateModules);
+        $hasBorder = $borderColor !== ''
+            || ($borderThickness !== null && $borderThickness !== '' && (string) $borderThickness !== '0');
+
+        $declarations = [];
+
+        if ($hasBorder) {
+            $declarations[] = 'border-style: solid';
         }
 
-        if (is_array($modules)) {
-            foreach ($modules as $item) {
-                if (isset($item['modules']) && is_array($item['modules'])) {
-                    $allModules = array_merge($allModules, $item['modules']);
-                }
-            }
+        if ($bg !== '') {
+            $declarations[] = 'background-color: ' . esc_attr($bg);
+            $declarations[] = 'color: ' . esc_attr($this->getContrastTextColor($bg));
         }
 
-        foreach ($allModules as $module) {
-            if (!is_object($module) || ($module->post_type ?? '') !== 'mod-text' || !isset($module->ID)) {
-                continue;
-            }
-
-            $moduleSettings = [];
-            foreach (self::FIELDS as $name => $definition) {
-                $value = get_field($name, $module->ID);
-                if (!empty($value)) {
-                    $moduleSettings[$name] = [
-                        'value' => $value,
-                        'property' => $definition['css_property'],
-                        'unit' => $definition['unit'],
-                    ];
-                }
-            }
-
-            // Only add if module has at least one setting
-            if (!empty($moduleSettings)) {
-                $settings[$module->ID] = $moduleSettings;
-            }
+        if ($borderColor !== '') {
+            $declarations[] = 'border-color: ' . esc_attr($borderColor);
         }
 
-        return $settings;
+        if ($borderThickness !== null && $borderThickness !== '') {
+            $declarations[] = 'border-width: ' . esc_attr((string) (int) $borderThickness) . 'px';
+        }
+
+        if ($borderRadius !== null && $borderRadius !== '') {
+            $declarations[] = 'border-radius: ' . esc_attr((string) (int) $borderRadius) . 'px';
+        }
+
+        if ($declarations === []) {
+            return $data;
+        }
+
+        self::$pendingCardStyle = implode('; ', $declarations);
+
+        return $data;
+    }
+
+    /**
+     * Merge pending Text module styles onto the Card used by box.blade.php (context module.text.box).
+     *
+     * @param array<string, mixed> $data
+     * @param object $_component Component instance (BaseController); unused but required by the filter signature.
+     * @return array<string, mixed>
+     */
+    public function applyPendingCardStyles(array $data, object $_component): array
+    {
+        if (self::$pendingCardStyle === null || self::$pendingCardStyle === '') {
+            return $data;
+        }
+
+        $context = $data['context'] ?? [];
+        $contextList = is_array($context) ? $context : [$context];
+        if (!in_array(self::TEXT_MODULE_CARD_CONTEXT, $contextList, true)) {
+            return $data;
+        }
+
+        if (!isset($data['attributeList']) || !is_array($data['attributeList'])) {
+            $data['attributeList'] = [];
+        }
+
+        $existing = $data['attributeList']['style'] ?? '';
+        $merged = self::$pendingCardStyle;
+        if ($existing !== '' && $existing !== null) {
+            $data['attributeList']['style'] = $existing . '; ' . $merged;
+        } else {
+            $data['attributeList']['style'] = $merged;
+        }
+
+        self::$pendingCardStyle = null;
+
+        return $data;
     }
 
     /**
@@ -291,61 +332,5 @@ class Text
         }
 
         return null;
-    }
-
-    private function generateCssRule(string $selector, string $property, string $value, string $unit = ''): string
-    {
-        if (empty($value)) {
-            return '';
-        }
-
-        return sprintf(
-            '%s { %s: %s; }',
-            $selector,
-            $property,
-            esc_attr($value) . $unit,
-        );
-    }
-
-    public function injectModuleSettingsStyles(): void
-    {
-        $settings = $this->collectAllModuleSettings();
-
-        if (empty($settings)) {
-            return;
-        }
-
-        $css = '<style id="text-module-settings" type="text/css">';
-
-        foreach ($settings as $moduleId => $moduleSettings) {
-            $moduleSelector = ".modularity-mod-text-{$moduleId}";
-            $paintContainerSelector = ".modularity-mod-text-{$moduleId} .c-card__paint-container";
-
-            // Add border-style if border properties are set
-            $hasBorder = isset($moduleSettings['text_module_border_color'])
-                || isset($moduleSettings['text_module_border_thickness']);
-            if ($hasBorder) {
-                $css .= "{$moduleSelector} { border-style: solid; }";
-            }
-
-            // Add text color if background is set
-            if (isset($moduleSettings['text_module_background'])) {
-                $backgroundColor = $moduleSettings['text_module_background']['value'];
-                $textColor = $this->getContrastTextColor($backgroundColor);
-                $css .= $this->generateCssRule($moduleSelector, 'color', $textColor);
-            }
-
-            foreach ($moduleSettings as $setting) {
-                if ($setting['property'] === null) {
-                    continue;
-                }
-                $selector = $setting['property'] === 'background-color' ? $paintContainerSelector : $moduleSelector;
-                $css .= $this->generateCssRule($selector, $setting['property'], $setting['value'], $setting['unit']);
-            }
-        }
-
-        $css .= '</style>';
-
-        echo $css;
     }
 }
