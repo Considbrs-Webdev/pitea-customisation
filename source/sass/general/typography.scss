@@ -29,3 +29,10 @@ a,
 .page-template-one-page-blade #main-content > .o-container > p {
   margin-top: calc(var(--base, 8px) * 1.5);
 }
+
+article.c-article.s-article {
+  ul li + li,
+  ol li + li {
+    margin-top: calc(var(--base, 8px) * 0.5);
+  }
+}
