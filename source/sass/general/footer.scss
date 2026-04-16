@@ -1,9 +1,16 @@
 .c-footer {
-   .footer-icons {
-        .o-container {
-            display: flex;
-            flex-direction: row;
-            gap: var(--base, 10px);
-        }
+  .footer-icons {
+    .o-container {
+      display: flex;
+      flex-direction: row;
+      gap: var(--base, 10px);
     }
-}   
+  }
+  [class*="s-sidebar-footer-area"] {
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
