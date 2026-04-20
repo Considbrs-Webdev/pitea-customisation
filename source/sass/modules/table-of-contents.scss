@@ -5,5 +5,5 @@
   --toc-track-color: var(--color-darjnalen-light-3);
   --toc-link-decoration: underline;
   --toc-link-font-size: var(--font-size-link);
-  --toc-link-font-weight: 700;
+  --toc-link-font-weight: var(--font-weight-heading, 600);
 }

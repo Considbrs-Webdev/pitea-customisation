@@ -41,7 +41,7 @@
     > .c-nav__item > .c-nav__item-wrapper {
       background-color: var(--c-drawer-nav-top-level-background);
       font-size: 1.1rem;
-      font-weight: 700;
+      font-weight: var(--font-weight-heading, 600);
     }
 
     // Depth 2+ (sub-items)
@@ -74,7 +74,7 @@
     }
 
     .c-nav__item.is-current > .c-nav__item-wrapper .c-nav__text {
-      font-weight: bold;
+      font-weight: var(--font-weight-bold, 700);
       font-family: var(--font-family-base);
     }
   }

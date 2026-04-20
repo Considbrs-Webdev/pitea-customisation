@@ -7,7 +7,7 @@
   --date-color: var(--color-stain-dark-3);
   --date-font-size: var(--font-size-small);
   --title-font-size: var(--font-size-heading-4);
-  --title-font-weight: 700;
+  --title-font-weight: var(--h3-font-weight, var(--font-weight-heading, 600));
   --icon-color: var(--color-darjnalen-dark-3);
 }
 

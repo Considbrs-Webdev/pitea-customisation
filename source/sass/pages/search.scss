@@ -1,7 +1,7 @@
 // Search results page – hit card styling
 body.search {
   .c-card__sub-heading {
-    font-weight: 700;
+    font-weight: var(--font-weight-heading, 600);
   }
 
   .c-badge.c-badge--primary {

@@ -25,6 +25,25 @@
   --transition-duration-slow: 0.5s;
 }
 
+// Typography weight bridge
+//
+// Kirki’s “Rubriker” (Headings) sets --font-weight-heading. Several other controls
+// do not offer 600 in the variant list (e.g. Fetstil, Button), and per-level H1–H6
+// often get stuck at 700. Map those CSS variables to Rubriker so one Customiser
+// choice drives heading, bold, and button weight. Kirki’s dynamic CSS is injected
+// late in wp_head (after this compiled stylesheet), so plain :root would lose the
+// cascade; :root:root bumps specificity without !important.
+:root:root {
+  --font-weight-bold: var(--font-weight-heading, 600);
+  --h1-font-weight: var(--font-weight-heading, 600);
+  --h2-font-weight: var(--font-weight-heading, 600);
+  --h3-font-weight: var(--font-weight-heading, 600);
+  --h4-font-weight: var(--font-weight-heading, 600);
+  --h5-font-weight: var(--font-weight-heading, 500);
+  --h6-font-weight: var(--font-weight-heading, 500);
+  --font-weight-button: var(--font-weight-heading, 600);
+}
+
 // Custom colors
 :root {
   /* Blåbära */
