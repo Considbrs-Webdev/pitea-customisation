@@ -59,7 +59,11 @@ class Text
     {
         add_action('acf/init', [$this, 'registerFields'], 20);
         add_filter('Modularity/Display/mod-text/viewData', [$this, 'captureTextModuleStyles']);
-        add_filter('ComponentLibrary/Component/Data', [$this, 'applyPendingCardStyles'], 10, 2);
+        // Older ComponentLibrary versions (mu-plugins/component-library, used by the legacy
+        // `municipio` theme) fire this filter with 1 argument, while the newer version bundled
+        // in `new_municipio` fires it with 2. Register for 1 arg so we stay compatible with both;
+        // the method itself still accepts an optional component instance when provided.
+        add_filter('ComponentLibrary/Component/Data', [$this, 'applyPendingCardStyles'], 10, 1);
 
         // Hide fields from Gutenberg editor (only show in module editor)
         foreach (array_keys(self::FIELDS) as $fieldName) {
@@ -227,11 +231,15 @@ class Text
     /**
      * Merge pending Text module styles onto the Card used by box.blade.php (context module.text.box).
      *
+     * The ComponentLibrary filter is fired with 1 arg in the legacy (mu-plugins) component-library
+     * and with 2 args in the newer (theme-vendored) one. `$_component` is therefore optional so the
+     * same callback works against either version.
+     *
      * @param array<string, mixed> $data
-     * @param object $_component Component instance (BaseController); unused but required by the filter signature.
+     * @param object|null $_component Component instance (BaseController) when available; not used.
      * @return array<string, mixed>
      */
-    public function applyPendingCardStyles(array $data, object $_component): array
+    public function applyPendingCardStyles(array $data, ?object $_component = null): array
     {
         if (self::$pendingCardStyle === null || self::$pendingCardStyle === '') {
             return $data;
