@@ -3,6 +3,15 @@ body {
   font-family: var(--font-family-base);
 }
 
+s// Swedish line breaking: disable automatic hyphenation — browser dictionaries often split compounds
+// incorrectly (e.g. "ut-" + "omhuspool"). Rely on overflow-wrap for long words/URLs instead.
+html:lang(sv) {
+  word-break: normal;
+  overflow-wrap: break-word;
+  hyphens: none;
+  -webkit-hyphens: none;
+}
+
 a,
 .link {
   color: var(--color-black);

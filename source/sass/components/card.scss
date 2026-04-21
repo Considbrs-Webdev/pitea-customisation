@@ -91,6 +91,14 @@
   }
 }
 
+// Same selector as styleguide — override hyphens: auto (bad Swedish compounds) when our CSS loads after or ties.
+.c-card .c-card__header,
+.c-card .c-card__body,
+.c-card .c-card__content-after {
+  -webkit-hyphens: none !important;
+  hyphens: none !important;
+}
+
 .modularity-mod-manualinput {
   .c-card {
     --c-card-border-radius: var(--border-radius-small);
