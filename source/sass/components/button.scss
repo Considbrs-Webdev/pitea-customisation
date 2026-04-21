@@ -1,3 +1,7 @@
 .c-button.c-button--sm {
-    letter-spacing: unset;
+  letter-spacing: unset;
+
+  &.c-button__outlined.c-button__outlined--primary {
+    background-color: var(--color-darjnalen-light-4);
+  }
 }
