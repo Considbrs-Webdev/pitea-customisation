@@ -1,0 +1,14 @@
+// Pattern layout helpers (`pitea-` prefix avoids Municipio o-/c-/u- namespaces).
+
+.pitea-split-media__text {
+  @media screen and (max-width: 55.99em) {
+    padding-bottom: calc(var(--base, 8px) * 3);
+  }
+
+  // o-grid uses flex; max-width on the column overrides its half-width flex rule — scope width to children.
+  @media screen and (min-width: 56em) {
+    > * {
+      max-width: min(100%, 45ch);
+    }
+  }
+}
