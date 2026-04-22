@@ -63,7 +63,7 @@ class Accessibility
             $customerId,
             $readId
         ) . urlencode($currentUrl);
-        
+
         return $content . '<div id="readspeaker-hidden-btn" class="rsbtn rs_skip" style="display:none;" aria-hidden="true">'
             . '<a rel="nofollow" class="rsbtn_play" href="' . esc_attr($readspeakerUrl) . '">'
             . '<span class="rsbtn_left rsimg rspart"><span class="rsbtn_text"><span>' . esc_html__('Listen to this page', 'pitea-customisation') . '</span></span></span>'
@@ -90,7 +90,7 @@ class Accessibility
             if ($template === 'one-page.blade.php') {
                 // Get read ID from settings
                 $readId = ReadSpeakerTab::getReadId();
-                
+
                 add_filter('Municipio/Hook/innerLoopStart', [$this, 'openArticleWrapper'], 20);
                 add_filter('Municipio/Hook/innerLoopEnd', [$this, 'closeArticleWrapper'], 20);
             }
@@ -100,12 +100,12 @@ class Accessibility
     public function openArticleWrapper($content): string
     {
         $readId = ReadSpeakerTab::getReadId();
-   
+
         return $content . '<article id="' . esc_attr($readId) . '">';
     }
 
     public function closeArticleWrapper($content): string
-    {   
+    {
         return $content . '</article>';
     }
 
@@ -122,7 +122,7 @@ class Accessibility
         }
 
         $customerId = ReadSpeakerTab::getCustomerId();
-        
+
         $scriptUrl = 'https://cdn-eu.readspeaker.com/script/' . $customerId . '/webReader/webReader.js?pids=wr';
         wp_enqueue_script(
             'readspeaker-webreader',
@@ -295,7 +295,7 @@ class Accessibility
     private function getReadSpeakerMenuItem(): array
     {
         return [
-            'icon'   => 'fa-solid fa-headphones',
+            'icon'   => 'fa-solid fa-ear',
             'href'   => '#',
             'script' => 'var btn=document.querySelector("#readspeaker-hidden-btn .rsbtn_play");if(btn){btn.click();}return false;',
             'text'   => __('Listen to this page', 'pitea-customisation'),

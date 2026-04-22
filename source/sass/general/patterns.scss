@@ -12,3 +12,21 @@
     }
   }
 }
+
+// Centered hero / ingress: max-width + heading slightly narrower than paragraph.
+.pitea-hero-centered {
+  box-sizing: border-box;
+  text-align: center;
+  max-width: min(100%, var(--container-width-content, calc(var(--base, 8px) * 87.5)));
+  margin-inline: auto;
+
+  > :is(h1, h2, h3, h4, h5, h6, .wp-block-heading) {
+    max-width: min(100%, 40ch);
+    margin-inline: auto;
+  }
+
+  > :is(p, .wp-block-paragraph) {
+    max-width: min(100%, 62ch);
+    margin-inline: auto;
+  }
+}
