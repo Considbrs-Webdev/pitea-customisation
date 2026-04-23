@@ -53,6 +53,7 @@ class App
             Customisations\Taxonomies::class,
             Customisations\Templates::class,
             Customisations\Typesense::class,
+            Customisations\Matomo::class,
             Customisations\Admin\Admin::class,
             Customisations\Admin\PostTemplates::class,
             Customisations\Modules\InlayList::class,
