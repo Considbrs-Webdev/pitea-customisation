@@ -111,10 +111,15 @@
 
     .c-card__body {
       padding: calc(var(--base, 8px) * 4) 0;
+      gap: 0;
 
       @media screen and (max-width: 499px) {
         padding: calc(var(--base, 8px) * 4);
       }
+    }
+
+    .c-card__content {
+      margin-top: 0;
     }
 
     // Match footer inset to body (styleguide uses 16px on footer; body uses different rhythm)
@@ -128,7 +133,7 @@
 
     &.c-card--has-custom-background {
       .c-card__body {
-        padding: 30px 36px;
+        padding: 22px 36px;
       }
 
       .c-card__footer {
