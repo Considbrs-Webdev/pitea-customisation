@@ -11,8 +11,37 @@ class InlayList
     {
         // Customisations for Inlay List can be added here in the future
         add_filter('Modularity/Display/mod-inlaylist/viewData', [$this, 'modifyInlayListData'], 10, 1);
+
+        // Enqueue script to disable Select2's default escaping of HTML in the ACF post object field
+        add_action('acf/input/admin_footer', [$this, 'enqueueSelect2EscapeMarkupScript']);
     }
 
+    public function enqueueSelect2EscapeMarkupScript(): void
+    {
+        ?>
+        <script type="text/javascript">
+        (function($) {
+            if(typeof acf !== 'undefined') {
+                acf.add_filter('select2_args', function( args, $el, settings, field, type ){
+                    if( field.data('name') === 'link_internal' ) {
+                        args.escapeMarkup = function( markup ) {
+                            return markup;
+                        };
+                    }
+                    return args;
+                });
+            }
+        })(jQuery);
+        </script>
+        <?php
+    }
+
+    /**
+     * Modify Inlay List data to add icons based on link type
+     * 
+     * @param array $data The original view data for the Inlay List module
+     * @return array The modified view data with icons added to list items
+     */
     public function modifyInlayListData(array $data): array
     {
         foreach ($data['items'] as &$item) {
