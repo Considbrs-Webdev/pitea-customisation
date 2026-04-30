@@ -50,8 +50,7 @@ use TypesenseSearch\Indexing\Strategies\AbstractExternalIndexingStrategy;
  *
  * ── Triggering a sync ─────────────────────────────────────────────────────
  *
- * A daily WP-Cron event ('pitea_typesense_sync_eservices') is scheduled on
- * `init` via registerHooks(). You can also run a sync manually with WP-CLI:
+ * Run a sync with WP-CLI:
  *
  *   wp typesense sync-external pitea-eservice
  *
@@ -64,11 +63,6 @@ class EServicesImporter extends AbstractExternalIndexingStrategy
      * Managed via Settings → Piteå Customisation → External Content.
      */
     public const OPTION_SOURCE_URL = 'pitea_customisation_eservices_source_url';
-
-    /**
-     * WP-Cron hook name. Reuse this when clearing the event on plugin uninstall.
-     */
-    public const CRON_HOOK = 'pitea_typesense_sync_eservices';
 
     /**
      * Value written to the Typesense 'type' field for every e-service document.
@@ -84,19 +78,10 @@ class EServicesImporter extends AbstractExternalIndexingStrategy
     }
 
     /**
-     * Schedule a daily cron sync and wire up the action handler.
-     *
      * {@inheritdoc}
      */
     public function registerHooks(): void
     {
-        add_action('init', function (): void {
-            if (!wp_next_scheduled(self::CRON_HOOK)) {
-                wp_schedule_event(time(), 'daily', self::CRON_HOOK);
-            }
-        });
-
-        add_action(self::CRON_HOOK, [$this, 'syncAll']);
     }
 
     // ── syncAll override ──────────────────────────────────────────────────
