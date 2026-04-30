@@ -326,8 +326,8 @@ EOT;
 <!-- wp:acf/spacer {"name":"acf/spacer","data":{"custom_block_title":"","_custom_block_title":"field_block_title","lang":"auto","_lang":"field_636e42408367e","space_amount":"4","_space_amount":"field_611d0016546f1"},"mode":"preview"} /-->
 
 <!-- wp:columns -->
-<div class="wp-block-columns"><!-- wp:column {"verticalAlignment":"center"} -->
-<div class="wp-block-column is-vertically-aligned-center"><!-- wp:heading {"level":1} -->
+<div class="wp-block-columns"><!-- wp:column {"verticalAlignment":"center","className":"pitea-hero-centered"} -->
+<div class="wp-block-column is-vertically-aligned-center pitea-hero-centered"><!-- wp:heading {"level":1} -->
 <h1 class="wp-block-heading">Temasida</h1>
 <!-- /wp:heading -->
 
