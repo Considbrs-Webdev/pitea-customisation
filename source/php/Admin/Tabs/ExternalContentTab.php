@@ -58,7 +58,10 @@ class ExternalContentTab implements SettingsTabInterface
     public function register(): void
     {
         $this->registerServiceInfoGroup();
-        $this->registerSearchGroup();
+
+        if (class_exists(\TypesenseSearch\Indexing\Strategies\AbstractExternalIndexingStrategy::class)) {
+            $this->registerSearchGroup();
+        }
     }
 
     private function registerServiceInfoGroup(): void
