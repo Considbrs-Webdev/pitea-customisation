@@ -10,3 +10,7 @@ p.is-style-preamble {
     margin-top: calc(var(--base, 8px) * 3);
   }
 }
+
+ul.wp-block-list li::marker {
+  color: inherit;
+}

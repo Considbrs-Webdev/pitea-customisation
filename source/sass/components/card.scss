@@ -118,10 +118,6 @@
       }
     }
 
-    .c-card__content {
-      margin-top: 0;
-    }
-
     // Match footer inset to body (styleguide uses 16px on footer; body uses different rhythm)
     .c-card__footer {
       border-top: none;
@@ -133,7 +129,7 @@
 
     &.c-card--has-custom-background {
       .c-card__body {
-        padding: 22px 36px;
+        padding: 22px 28px;
       }
 
       .c-card__footer {
