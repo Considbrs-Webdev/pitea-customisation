@@ -100,6 +100,14 @@
 }
 
 .modularity-mod-manualinput {
+  [data-disable-layout-shift="true"] {
+    @container (min-width: 500px) {
+      .c-card__paint-container {
+        flex-direction: column !important;
+        flex-wrap: nowrap !important;
+      }
+    }
+  }
   .c-card {
     --c-card-border-radius: var(--border-radius-small);
     overflow: hidden;
@@ -154,15 +162,6 @@
 
     &:has(.c-accordion) {
       --c-card-border-radius: 0;
-    }
-
-    &:not([data-observe-resizes]) {
-      @container (min-width: 500px) {
-        .c-card__paint-container {
-          flex-direction: column;
-          flex-wrap: nowrap;
-        }
-      }
     }
   }
 }

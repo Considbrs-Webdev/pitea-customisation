@@ -35,6 +35,7 @@ class ManualInput
         add_action('acf/init', [$this, 'registerFields'], 20);
         add_filter('acf/load_field/key=' . self::MANUAL_INPUTS_REPEATER_KEY, [$this, 'orderEyebrowColorFieldsAfterEyebrow'], 99, 1);
         add_filter('Modularity/Display/mod-manualinput/viewData', [$this, 'applyEyebrowStylesToItems'], 10, 1);
+        add_filter('Modularity/Display/mod-manualinput/viewData', [$this, 'injectDisableLayoutShift'], 5, 1);
     }
 
     public function registerFields(): void
@@ -76,6 +77,51 @@ class ManualInput
 
             acf_add_local_field($field);
         }
+    }
+
+    /**
+     * Inject `disableLayoutShift` into the ManualInput card view data.
+     *
+     * Core removed this in its data() method; we restore it here so our
+     * card.blade.php override can pass `containerAware` to the Card component.
+     *
+     * @param array<string, mixed> $data
+     * @return array<string, mixed>
+     */
+    public function injectDisableLayoutShift(array $data): array
+    {
+        if (empty($data['manualInputs']) || !is_array($data['manualInputs'])) {
+            return $data;
+        }
+
+        // disable_resize_layout_shift is a module-level field, not a per-item field.
+        // $data['ID'] is the module CPT post ID when available, or a uniqid string
+        // for Gutenberg blocks rendered without a resolved post ID. Fall back to
+        // calling get_field() without a post ID so ACF uses its own block context.
+        $postId = $data['ID'] ?? null;
+        $disableLayoutShift = is_numeric($postId)
+            ? (bool) get_field('disable_resize_layout_shift', (int) $postId)
+            : (bool) get_field('disable_resize_layout_shift');
+
+        if (!$disableLayoutShift) {
+            return $data;
+        }
+
+        foreach ($data['manualInputs'] as &$input) {
+            if (is_object($input)) {
+                $input = (array) $input;
+            }
+            if (!is_array($input)) {
+                continue;
+            }
+            if (!isset($input['attributeList']) || !is_array($input['attributeList'])) {
+                $input['attributeList'] = [];
+            }
+            $input['attributeList']['data-disable-layout-shift'] = 'true';
+        }
+        unset($input);
+
+        return $data;
     }
 
     /**
