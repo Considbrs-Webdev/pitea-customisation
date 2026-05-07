@@ -29,11 +29,15 @@
     padding: 0;
 
     &__content {
-      padding: 0 30px 20px 30px;
+      padding: 20px 30px 20px 30px;
     }
 
     &__button-wrapper {
       padding: 20px 30px;
+      --bg: var(--mi-accordion-button-bg, white);
+      background: var(--bg);
+      color: var(--color-base);
+      color: contrast-color(var(--bg));
     }
 
     &__button {

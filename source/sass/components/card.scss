@@ -68,7 +68,8 @@
 
 // Title underline - styleguide already does .c-card:hover .c-card__heading
 // Ensure event card title matches
-.c-event-card:hover .c-event-card__title {
+.c-event-card:hover .c-event-card__link,
+.c-event-card__link:hover {
   text-decoration: underline;
 }
 

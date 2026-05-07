@@ -5,12 +5,15 @@ namespace PiteaCustomisation\Customisations\Modules;
 /**
  * Adds per-card eyebrow color fields to the Manual Input module (Modularity + Gutenberg)
  * and applies them via CSS variables on each item wrapper (stable #id from core).
+ * Adds a module-level accordion header background color (same for all rows when display is accordion).
  */
 class ManualInput
 {
     private const MANUAL_INPUTS_REPEATER_KEY = 'field_64ff22b2d91b7';
 
     private const DISPLAY_AS_FIELD_KEY = 'field_6752f959acfda';
+
+    private const ACCORDION_HEADER_BG_FIELD_KEY = 'field_pitea_mi_accordion_header_bg';
 
     /** Municipio “Eyebrow” text subfield (manual_inputs repeater). */
     private const EYEBROW_TEXT_FIELD_KEY = 'field_6945264b7d66e';
@@ -35,6 +38,7 @@ class ManualInput
         add_action('acf/init', [$this, 'registerFields'], 20);
         add_filter('acf/load_field/key=' . self::MANUAL_INPUTS_REPEATER_KEY, [$this, 'orderEyebrowColorFieldsAfterEyebrow'], 99, 1);
         add_filter('Modularity/Display/mod-manualinput/viewData', [$this, 'applyEyebrowStylesToItems'], 10, 1);
+        add_filter('Modularity/Display/mod-manualinput/viewData', [$this, 'applyAccordionHeaderBgToItems'], 10, 1);
         add_filter('Modularity/Display/mod-manualinput/viewData', [$this, 'injectDisableLayoutShift'], 5, 1);
     }
 
@@ -77,6 +81,47 @@ class ManualInput
 
             acf_add_local_field($field);
         }
+
+        if (!function_exists('acf_add_local_field_group')) {
+            return;
+        }
+
+        acf_add_local_field_group([
+            'key' => 'group_pitea_mi_accordion',
+            'title' => '',
+            'fields' => [
+                [
+                    'key' => self::ACCORDION_HEADER_BG_FIELD_KEY,
+                    'label' => __('Accordion header background', 'pitea-customisation'),
+                    'name' => 'manual_input_accordion_header_bg',
+                    'type' => 'color_picker',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => [
+                        [
+                            [
+                                'field' => self::DISPLAY_AS_FIELD_KEY,
+                                'operator' => '==',
+                                'value' => 'accordion',
+                            ],
+                        ],
+                    ],
+                    'wrapper' => ['width' => '', 'class' => '', 'id' => ''],
+                    'enable_opacity' => 1,
+                    'return_format' => 'string',
+                ],
+            ],
+            'location' => [
+                [
+                    [
+                        'param' => 'post_type',
+                        'operator' => '==',
+                        'value' => 'mod-manualinput',
+                    ],
+                ],
+            ],
+            'menu_order' => 1000,
+        ]);
     }
 
     /**
@@ -229,6 +274,53 @@ class ManualInput
                 $input['attributeList']['style'] = $existingStyle . '; ' . $merged;
             } else {
                 $input['attributeList']['style'] = $merged;
+            }
+        }
+        unset($input);
+
+        return $data;
+    }
+
+    /**
+     * Applies module-level accordion header background as a CSS variable on each item wrapper.
+     *
+     * @param array<string, mixed> $data
+     * @return array<string, mixed>
+     */
+    public function applyAccordionHeaderBgToItems(array $data): array
+    {
+        if (empty($data['manualInputs']) || !is_array($data['manualInputs'])) {
+            return $data;
+        }
+
+        $postId = $data['ID'] ?? null;
+        $color = is_numeric($postId)
+            ? trim((string) get_field('manual_input_accordion_header_bg', (int) $postId))
+            : trim((string) get_field('manual_input_accordion_header_bg'));
+
+        if ($color === '') {
+            return $data;
+        }
+
+        $declaration = '--mi-accordion-button-bg: ' . esc_attr($color);
+
+        foreach ($data['manualInputs'] as &$input) {
+            if (is_object($input)) {
+                $input = (array) $input;
+            }
+            if (!is_array($input)) {
+                continue;
+            }
+
+            if (!isset($input['attributeList']) || !is_array($input['attributeList'])) {
+                $input['attributeList'] = [];
+            }
+
+            $existingStyle = $input['attributeList']['style'] ?? '';
+            if ($existingStyle !== '' && $existingStyle !== null) {
+                $input['attributeList']['style'] = $existingStyle . '; ' . $declaration;
+            } else {
+                $input['attributeList']['style'] = $declaration;
             }
         }
         unset($input);
