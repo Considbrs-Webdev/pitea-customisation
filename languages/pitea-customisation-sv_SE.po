@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-03-27T22:12:56+00:00\n"
-"PO-Revision-Date: 2026-03-27 20:19+0100\n"
+"PO-Revision-Date: 2026-05-07 15:14+0200\n"
 "Language: sv_SE\n"
 "X-Generator: Poedit 3.9\n"
 "X-Domain: pitea-customisation\n"
@@ -85,7 +85,6 @@ msgid "No icon selected"
 msgstr "Ingen ikon vald"
 
 #: source/php/AcfFields/FontAwesomeIconField.php:143
-#: dist/gutenberg/index.js:1
 #: source/js/gutenberg/components/fontawesome-icon-picker/index.js:113
 msgid "Search icons..."
 msgstr "Sök ikon..."
@@ -278,40 +277,40 @@ msgstr "404-sidor"
 msgid "External Content"
 msgstr "Externt innehåll"
 
-#: source/php/Admin/Tabs/ExternalContentTab.php:79
+#: source/php/Admin/Tabs/ExternalContentTab.php:82
 msgid "Traffic Disruptions"
 msgstr "Trafikstörningar"
 
-#: source/php/Admin/Tabs/ExternalContentTab.php:81
+#: source/php/Admin/Tabs/ExternalContentTab.php:84
 msgid "Automatically import traffic disruption data from an ArcGIS FeatureServer and publish it as service information posts. Leave the URL empty to disable importing."
 msgstr "Importera automatiskt data om trafikstörningar från en ArcGIS FeatureServer och publicera dem som inlägg för serviceinformation. Lämna URL:en tom för att inaktivera import."
 
-#: source/php/Admin/Tabs/ExternalContentTab.php:91
-#: source/php/Admin/Tabs/ExternalContentTab.php:129
+#: source/php/Admin/Tabs/ExternalContentTab.php:94
+#: source/php/Admin/Tabs/ExternalContentTab.php:132
 msgid "Source URL"
 msgstr "URL-källa"
 
-#: source/php/Admin/Tabs/ExternalContentTab.php:117
+#: source/php/Admin/Tabs/ExternalContentTab.php:120
 msgid "E-Services"
 msgstr "E-tjänster"
 
-#: source/php/Admin/Tabs/ExternalContentTab.php:119
+#: source/php/Admin/Tabs/ExternalContentTab.php:122
 msgid "Automatically index Piteå's public e-services from the eNämnd API into the Typesense search engine. Leave the URL empty to disable indexing."
 msgstr "Indexera automatiskt Piteås offentliga e-tjänster från eNämnds API i sökmotorn Typesense. Lämna URL:en tom för att inaktivera indexeringen."
 
-#: source/php/Admin/Tabs/ExternalContentTab.php:174
+#: source/php/Admin/Tabs/ExternalContentTab.php:177
 msgid "The eNämnd public-services API URL. Leave empty to disable e-service indexing."
 msgstr "API-URL för eNämnds tjänst för offentliga e-tjänster. Lämna tomt för att inaktivera indexering av e-tjänster."
 
-#: source/php/Admin/Tabs/ExternalContentTab.php:197
+#: source/php/Admin/Tabs/ExternalContentTab.php:200
 msgid "The GeoJSON endpoint URL for the traffic disruption layer. Leave empty to disable importing."
 msgstr "GeoJSON-endpoint-URL för lagret med trafikstörningar. Lämna tomt för att inaktivera import."
 
-#: source/php/Admin/Tabs/ExternalContentTab.php:213
+#: source/php/Admin/Tabs/ExternalContentTab.php:216
 msgid "Service Information"
 msgstr "Driftinformation"
 
-#: source/php/Admin/Tabs/ExternalContentTab.php:218
+#: source/php/Admin/Tabs/ExternalContentTab.php:221
 msgid "Search"
 msgstr "Sök"
 
@@ -538,7 +537,7 @@ msgctxt "Editor font size preset"
 msgid "Larger"
 msgstr "Större"
 
-#: source/php/Customisations/Admin/Admin.php:117
+#: source/php/Customisations/Admin/Admin.php:114
 msgctxt "Paragraph block style"
 msgid "Preamble"
 msgstr "Ingress"
@@ -676,7 +675,7 @@ msgstr "Guider och checklistor för att lägga till och hantera innehåll."
 
 #: source/php/Customisations/Modules/QuickLinks.php:54
 #: source/php/Customisations/Modules/Slider.php:63
-#: source/php/Customisations/Modules/Text.php:99
+#: source/php/Customisations/Modules/Text.php:111
 msgid "Enable"
 msgstr "Aktivera"
 
@@ -696,7 +695,7 @@ msgstr "Kopiera sidadress"
 msgid "Share page"
 msgstr "Dela sidan"
 
-#: source/php/ExternalContent/Search/EServices/EServicesImporter.php:274
+#: source/php/ExternalContent/Search/EServices/EServicesImporter.php:259
 msgid "E-services"
 msgstr "E-tjänster"
 
@@ -721,27 +720,23 @@ msgstr "Tillgänglighetsknappar"
 msgid "Listen and print buttons (same as the nav bar). Place in a sidebar for layout control."
 msgstr "Lyssna- och skriv ut-knappar (samma som i navigeringsfältet). Placera i en sidopanel för kontroll över layouten."
 
-#: views/search/hits/hit-eservice.blade.php:23
+#: views/search/hits/hit-eservice.blade.php:22
 msgctxt "E-services"
 msgid "Section"
 msgstr "Avdelning"
 
-#: dist/gutenberg/index.js:1
 #: source/js/gutenberg/components/fontawesome-icon-picker/index.js:104
 #~ msgid "Select Icon"
 #~ msgstr "Välj ikon"
 
-#: dist/gutenberg/index.js:1
 #: source/js/gutenberg/components/fontawesome-icon-picker/index.js:127
 #~ msgid "No icons found"
 #~ msgstr "Inga ikoner hittades"
 
-#: dist/gutenberg/index.js:1
 #: source/js/gutenberg/components/fontawesome-icon-picker/index.js:194
 #~ msgid "Insert Icon"
 #~ msgstr "Infoga ikon"
 
-#: dist/gutenberg/index.js:1
 #: source/js/gutenberg/components/fontawesome-icon-picker/index.js:213
 #~ msgid "Font Awesome Icon"
 #~ msgstr "Font Awesome-ikon"
@@ -749,3 +744,19 @@ msgstr "Avdelning"
 #: source/php/Customisations/Config.php:114
 msgid "Content page"
 msgstr "Innehållssida"
+
+#: source/php/Customisations/Modules/ManualInput.php:95
+msgid "Accordion header background"
+msgstr "Bakgrundsfärg för accordion"
+
+#: source/php/Customisations/Modules/ManualInput.php:98
+msgid "Optional. Same color for every accordion row when display is Accordion. Text and icon color are adjusted automatically for contrast."
+msgstr "Valfritt. Samma färg för varje rad när visningsläget är dragspel. Text- och ikonfärg anpassas automatiskt för kontrast."
+
+#: source/php/Customisations/News.php:81
+msgid "Du måste välja minst en nyhetskategori innan du publicerar."
+msgstr ""
+
+#: views/partials/news-meta.blade.php:5
+msgid "Nyhetskategori"
+msgstr ""

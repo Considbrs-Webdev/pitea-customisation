@@ -95,7 +95,10 @@ class ManualInput
                     'label' => __('Accordion header background', 'pitea-customisation'),
                     'name' => 'manual_input_accordion_header_bg',
                     'type' => 'color_picker',
-                    'instructions' => '',
+                    'instructions' => __(
+                        'Optional. Same color for every accordion row when display is Accordion. Text and icon color are adjusted automatically for contrast.',
+                        'pitea-customisation'
+                    ),
                     'required' => 0,
                     'conditional_logic' => [
                         [
