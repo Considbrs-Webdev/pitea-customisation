@@ -10,9 +10,10 @@
     z-index: 0;
   }
 
-  // Keep content above overlay for readable text
+  // Keep content above overlay for readable text.
+  // Do not set position/z-index on __title — it traps the stretched link ::after
+  // to the heading box instead of the full card (see modularity-quick-links __link).
   .modularity-quick-links__icon,
-  .modularity-quick-links__title,
   .modularity-quick-links__description {
     position: relative;
     z-index: 1;

@@ -3,6 +3,10 @@
     font-size: var(--font-size-heading-3);
   }
 
+  &__prefooter-wrapper ul {
+    margin-bottom: 0;
+  }
+
   .footer-icons {
     .o-container {
       display: flex;
@@ -10,7 +14,7 @@
       gap: var(--base, 10px);
     }
   }
-  [class*="s-sidebar-footer-area"] {
+  [class*="s-sidebar-footer-area"]:not(.s-sidebar-footer-area-top) {
     ul {
       list-style: none;
       margin: 0;
