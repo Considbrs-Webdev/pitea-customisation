@@ -10,7 +10,7 @@
 
 @if (!empty($items) && is_array($items))
     <nav class="mod-acc-buttons" aria-label="{{ __('Accessibility', 'municipio') }}">
-        <ul class="mod-acc-buttons__list nav-accessibility unlist u-print-display--none" role="menubar">
+        <ul class="mod-acc-buttons__list nav-accessibility unlist u-print-display--none">
             @foreach ($items as $item)
                 @if (!empty($item['dropdown']))
                     @dropdown([
@@ -35,7 +35,7 @@
                         @endlink
                         @slot('list')
                             @foreach ($item['dropdown'] as $dropdownItem)
-                                <li role="menuitem">
+                                <li>
                                     @button([
                                         'text' => $dropdownItem['text'] ?? false,
                                         'style' => $dropdownItem['style'] ?? 'outlined',
@@ -55,7 +55,7 @@
                         @endslot
                     @enddropdown
                 @else
-                    <li role="menuitem">
+                    <li>
                         @button([
                             'text' => $item['text'] ?? false,
                             'style' => $item['style'] ?? 'outlined',
