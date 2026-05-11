@@ -2,6 +2,6 @@
   margin-bottom: calc(var(--base, 8px) * 4) !important;
 }
 
-.s-sidebar.s-sidebar-content-area-bottom {
+.s-sidebar.s-sidebar-content-area-bottom:has(> *) {
   margin-bottom: calc(var(--base, 8px) * 4) !important;
 }
