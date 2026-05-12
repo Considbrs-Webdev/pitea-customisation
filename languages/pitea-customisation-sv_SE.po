@@ -85,6 +85,7 @@ msgid "No icon selected"
 msgstr "Ingen ikon vald"
 
 #: source/php/AcfFields/FontAwesomeIconField.php:143
+#: dist/gutenberg/index.js:1
 #: source/js/gutenberg/components/fontawesome-icon-picker/index.js:113
 msgid "Search icons..."
 msgstr "Sök ikon..."
@@ -725,18 +726,22 @@ msgctxt "E-services"
 msgid "Section"
 msgstr "Avdelning"
 
+#: dist/gutenberg/index.js:1
 #: source/js/gutenberg/components/fontawesome-icon-picker/index.js:104
 #~ msgid "Select Icon"
 #~ msgstr "Välj ikon"
 
+#: dist/gutenberg/index.js:1
 #: source/js/gutenberg/components/fontawesome-icon-picker/index.js:127
 #~ msgid "No icons found"
 #~ msgstr "Inga ikoner hittades"
 
+#: dist/gutenberg/index.js:1
 #: source/js/gutenberg/components/fontawesome-icon-picker/index.js:194
 #~ msgid "Insert Icon"
 #~ msgstr "Infoga ikon"
 
+#: dist/gutenberg/index.js:1
 #: source/js/gutenberg/components/fontawesome-icon-picker/index.js:213
 #~ msgid "Font Awesome Icon"
 #~ msgstr "Font Awesome-ikon"
@@ -760,3 +765,15 @@ msgstr ""
 #: views/partials/news-meta.blade.php:5
 msgid "Nyhetskategori"
 msgstr ""
+
+#: source/php/AcfFields/PageInternalDesignationFields.php:19
+msgid "Page internal designation"
+msgstr "Sidans interna beteckning"
+
+#: source/php/AcfFields/PageInternalDesignationFields.php:23
+msgid "Internal designation"
+msgstr "Intern beteckning"
+
+#: source/php/AcfFields/PageInternalDesignationFields.php:26
+msgid "Optional. Used in the Nested Pages admin view as Internal (Page title); leave empty to use the normal page title."
+msgstr "Valfritt. Visas i vyn för nästlade sidor som Intern (Sidtitel); lämna tomt för att använda sidans ordinarie titel."
