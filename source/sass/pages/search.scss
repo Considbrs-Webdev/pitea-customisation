@@ -39,10 +39,66 @@ body.search {
   }
 }
 
-// Search modal
+// Search modal: wrapper groups field + submit so :focus-within draws one ring around the fused bar (matches styleguide field focus).
+$t-search-modal-row-breakpoint: 601px;
+
 dialog.t-search-modal {
   form.t-search-modal__form {
     padding: 0;
+    grid-template-areas:
+      "label"
+      "composed";
+    grid-template-columns: 1fr;
+
+    @media (min-width: $t-search-modal-row-breakpoint) {
+      grid-template-areas:
+        "label label"
+        "composed composed";
+    }
+  }
+
+  .c-modal__content,
+  .c-modal__body,
+  form.t-search-modal__form {
+    overflow: visible;
+  }
+
+  .t-search-modal__composed-search {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--base, 8px) * 1.5);
+    grid-area: composed;
+    width: 100%;
+
+    @media (min-width: $t-search-modal-row-breakpoint) {
+      flex-direction: row;
+      align-items: stretch;
+      gap: 0;
+      position: relative;
+      border-radius: var(--radius-sm, calc(var(--base, 8px) / 2));
+
+      .t-search-modal__field {
+        flex: 1;
+        min-width: 0;
+      }
+
+      &:focus-within {
+        outline: thick solid var(--color-focus-outline, #4d90fe);
+        outline-offset: calc(var(--base, 8px) * 0.25);
+        box-shadow: 0 0 0 6px var(--color-white, #fff);
+      }
+
+      &:focus-within .t-search-modal__field .c-field__inner {
+        outline: none;
+        box-shadow: none;
+      }
+
+      &:focus-within .t-search-modal__submit:focus,
+      &:focus-within .t-search-modal__submit:focus-visible {
+        outline: none;
+        box-shadow: none;
+      }
+    }
   }
 
   .c-modal__content {
@@ -62,17 +118,6 @@ dialog.t-search-modal {
       transparent 50%
     );
     backdrop-filter: blur(10px);
-  }
-}
-
-// Keep keyboard focus indicators visible for search UIs.
-// Municipio's focus styler is rendered outside the field bounds and gets clipped
-// by parent containers that hide overflow.
-dialog.t-search-modal {
-  .c-modal__content,
-  .c-modal__body,
-  form.t-search-modal__form {
-    overflow: visible;
   }
 }
 

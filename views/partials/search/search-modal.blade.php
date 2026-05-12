@@ -19,6 +19,7 @@
                 @endtypography
             @endif
 
+            <div class="t-search-modal__composed-search">
             @field([
                 'id' => 'modal-search-form__field',
                 'type' => 'search',
@@ -48,6 +49,7 @@
                 'classList' => ['t-search-modal__submit', 's-header-button']
             ])
             @endbutton
+            </div>
 
     @endform
 
