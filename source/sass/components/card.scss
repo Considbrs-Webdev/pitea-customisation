@@ -101,12 +101,20 @@
 }
 
 .modularity-mod-manualinput {
-  [data-disable-layout-shift="true"] {
-    @container (min-width: 500px) {
-      .c-card__paint-container {
-        flex-direction: column !important;
-        flex-wrap: nowrap !important;
-      }
+  [data-disable-layout-shift="true"] .c-card__paint-container {
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+
+    .c-card__image-container {
+      flex-basis: auto !important;
+    }
+
+    .c-card__image-container + .c-card__body {
+      flex-basis: auto !important;
+    }
+
+    .c-card__footer {
+      flex: 0 1 auto !important;
     }
   }
   .c-card {
