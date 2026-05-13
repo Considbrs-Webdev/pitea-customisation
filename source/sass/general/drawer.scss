@@ -21,6 +21,8 @@
   background-repeat: no-repeat;
   background-position: left bottom;
   background-size: auto 200px;
+  background-attachment: local;
+  padding-bottom: 220px;
 
   .c-nav__item-wrapper {
     transition: background-color 0.3s ease-in-out;
