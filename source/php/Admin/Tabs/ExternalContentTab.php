@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PiteaCustomisation\Admin\Tabs;
 
 use PiteaCustomisation\Admin\SettingsTabInterface;
+use PiteaCustomisation\ExternalContent\Noticeboard\NovaPublicationEndpoint;
 use PiteaCustomisation\ExternalContent\Search\EServices\EServicesImporter;
 use PiteaCustomisation\ExternalContent\ServiceInfo\TrafficDisruptionsImporter;
 
@@ -31,6 +32,7 @@ class ExternalContentTab implements SettingsTabInterface
      */
     private const GROUP_SERVICE_INFO = 'pitea_customisation_group_service_info';
     private const GROUP_SEARCH        = 'pitea_customisation_group_search';
+    private const GROUP_NOVA          = 'pitea_customisation_group_nova';
 
     // -------------------------------------------------------------------------
     // SettingsTabInterface
@@ -57,11 +59,44 @@ class ExternalContentTab implements SettingsTabInterface
 
     public function register(): void
     {
+        $this->registerNovaGroup();
         $this->registerServiceInfoGroup();
 
         if (class_exists(\TypesenseSearch\Indexing\Strategies\AbstractExternalIndexingStrategy::class)) {
             $this->registerSearchGroup();
         }
+    }
+
+    private function registerNovaGroup(): void
+    {
+        add_settings_section(
+            'pitea_customisation_nova',
+            __('Building permit notices', 'pitea-customisation'),
+            function (): void {
+                echo '<p class="pitea-settings__section-desc">' . esc_html__(
+                    'Publication endpoint for receiving building permit notices and decisions from Sokigo Nova.',
+                    'pitea-customisation'
+                ) . '</p>';
+
+                echo '<p class="pitea-settings__section-desc">';
+                printf(
+                    /* translators: 1: username constant name, 2: password constant name. */
+                    esc_html__('Define %1$s and %2$s to activate incoming Nova publications.', 'pitea-customisation'),
+                    '<code>' . esc_html(NovaPublicationEndpoint::USERNAME_CONSTANT) . '</code>',
+                    '<code>' . esc_html(NovaPublicationEndpoint::PASSWORD_CONSTANT) . '</code>'
+                );
+                echo '</p>';
+            },
+            self::GROUP_NOVA
+        );
+
+        add_settings_field(
+            'pitea_customisation_nova_endpoint_status',
+            __('Publication endpoint', 'pitea-customisation'),
+            [$this, 'renderNovaEndpointInfoField'],
+            self::GROUP_NOVA,
+            'pitea_customisation_nova'
+        );
     }
 
     private function registerServiceInfoGroup(): void
@@ -206,12 +241,35 @@ class ExternalContentTab implements SettingsTabInterface
         <?php
     }
 
+    public function renderNovaEndpointInfoField(): void
+    {
+        $isConfigured = NovaPublicationEndpoint::isConfigured();
+        $endpointUrl  = NovaPublicationEndpoint::getEndpointUrl();
+        ?>
+        <div class="pitea-settings__field">
+            <p>
+                <strong><?php esc_html_e('Status', 'pitea-customisation'); ?>:</strong>
+                <?php echo esc_html($isConfigured ? __('Activated', 'pitea-customisation') : __('Not activated', 'pitea-customisation')); ?>
+            </p>
+            <p>
+                <strong><?php esc_html_e('Endpoint URL', 'pitea-customisation'); ?>:</strong>
+                <code><?php echo esc_html($endpointUrl); ?></code>
+            </p>
+        </div>
+        <?php
+    }
+
     // -------------------------------------------------------------------------
     // Rendering
     // -------------------------------------------------------------------------
 
     public function render(): void
     {
+        $this->renderGroup(
+            __('Digital noticeboard', 'pitea-customisation'),
+            self::GROUP_NOVA
+        );
+
         $this->renderGroup(
             __('Service Information', 'pitea-customisation'),
             self::GROUP_SERVICE_INFO
