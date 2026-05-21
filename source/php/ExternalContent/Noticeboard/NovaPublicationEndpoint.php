@@ -17,12 +17,11 @@ class NovaPublicationEndpoint
 
     private const NOTICE_POST_TYPE = 'noticeboard_notice';
     private const NOTICE_TAXONOMY = 'noticeboard_notice_type';
-    private const NOTICE_TYPE_NAME = 'Bygglov';
     private const META_NOVA_ID = '_pitea_nova_publication_id';
     private const META_NOVA_TYPE = '_pitea_nova_publication_type';
     private const META_NOVA_PAYLOAD = '_pitea_nova_publication_payload';
-    private const ACF_NOTICE_TYPE_FIELD = 'field_69679b0c8b9bf';
     private const ACF_ARCHIVE_DATE_FIELD = 'field_69679a808b9be';
+    private const ACF_ARCHIVE_TIME_FIELD = 'field_6a0eeddaa1aa7';
 
     public function registerHooks(): void
     {
@@ -123,12 +122,12 @@ class NovaPublicationEndpoint
             );
         }
 
-        $termId = $this->ensureNoticeTypeTerm();
-        if ($termId instanceof WP_Error) {
-            return $termId;
+        $termIds = $this->ensureNoticeTypeTerms((int) $payload['type']);
+        if ($termIds instanceof WP_Error) {
+            return $termIds;
         }
 
-        $postId = $this->upsertNotice($payload, $termId);
+        $postId = $this->upsertNotice($payload, $termIds);
         if ($postId instanceof WP_Error) {
             return $postId;
         }
@@ -200,22 +199,23 @@ class NovaPublicationEndpoint
 
     /**
      * @param array<string, mixed> $payload
+     * @param int[]                $termIds
      */
-    private function upsertNotice(array $payload, int $termId): int|WP_Error
+    private function upsertNotice(array $payload, array $termIds): int|WP_Error
     {
         $novaId = sanitize_text_field((string) $payload['id']);
         $novaType = (int) $payload['type'];
         $existingPostId = $this->findExistingNoticeId($novaId, $novaType);
-        $publishTimestamp = (int) $payload['publishDate'];
-        $archiveDate = $this->getArchiveDate($payload);
+        $publishDate = $this->timestampToLocalDateTime((int) $payload['publishDate']);
+        $archiveDateTime = $this->getArchiveDateTime($payload);
 
         $postData = [
             'post_type' => self::NOTICE_POST_TYPE,
-            'post_status' => $publishTimestamp > time() ? 'future' : 'publish',
+            'post_status' => $publishDate->getTimestamp() > time() ? 'future' : 'publish',
             'post_title' => sanitize_text_field((string) $payload['title']),
             'post_content' => $this->buildPostContent($payload),
-            'post_date' => wp_date('Y-m-d H:i:s', $publishTimestamp),
-            'post_date_gmt' => gmdate('Y-m-d H:i:s', $publishTimestamp),
+            'post_date' => $publishDate->format('Y-m-d H:i:s'),
+            'post_date_gmt' => gmdate('Y-m-d H:i:s', $publishDate->getTimestamp()),
         ];
 
         if ($existingPostId > 0) {
@@ -235,22 +235,31 @@ class NovaPublicationEndpoint
 
         $postId = (int) $postId;
 
-        wp_set_object_terms($postId, [$termId], self::NOTICE_TAXONOMY, false);
+        wp_set_object_terms($postId, $termIds, self::NOTICE_TAXONOMY, false);
 
         update_post_meta($postId, self::META_NOVA_ID, $novaId);
         update_post_meta($postId, self::META_NOVA_TYPE, $novaType);
         update_post_meta($postId, self::META_NOVA_PAYLOAD, wp_json_encode($payload));
-        update_post_meta($postId, 'notice_type', $termId);
 
-        if ($archiveDate !== '') {
-            update_post_meta($postId, 'archive_date', $archiveDate);
+        if ($archiveDateTime !== null) {
+            update_post_meta($postId, 'archive_date', $archiveDateTime->format('Y-m-d'));
+            update_post_meta($postId, 'archive_time', $archiveDateTime->format('H:i'));
         } else {
             delete_post_meta($postId, 'archive_date');
+            delete_post_meta($postId, 'archive_time');
         }
 
         if (function_exists('update_field')) {
-            update_field(self::ACF_NOTICE_TYPE_FIELD, $termId, $postId);
-            update_field(self::ACF_ARCHIVE_DATE_FIELD, $archiveDate, $postId);
+            update_field(
+                self::ACF_ARCHIVE_DATE_FIELD,
+                $archiveDateTime !== null ? $archiveDateTime->format('Y-m-d') : '',
+                $postId
+            );
+            update_field(
+                self::ACF_ARCHIVE_TIME_FIELD,
+                $archiveDateTime !== null ? $archiveDateTime->format('H:i') : '',
+                $postId
+            );
         }
 
         return $postId;
@@ -285,15 +294,47 @@ class NovaPublicationEndpoint
         return isset($posts[0]) ? (int) $posts[0] : 0;
     }
 
-    private function ensureNoticeTypeTerm(): int|WP_Error
+    /**
+     * @return int[]|WP_Error
+     */
+    private function ensureNoticeTypeTerms(int $novaType): array|WP_Error
     {
-        $term = term_exists(self::NOTICE_TYPE_NAME, self::NOTICE_TAXONOMY);
+        $termNames = [];
+
+        if ($novaType === 1) {
+            $termNames[] = 'Kungörelser';
+            $termNames[] = 'Bygglov';
+        } elseif ($novaType === 2) {
+            $termNames[] = 'Beslut';
+            $termNames[] = 'Bygglov';
+        } elseif ($novaType === 3) {
+            $termNames[] = 'Bygglov';
+        }
+
+        $termIds = [];
+
+        foreach ($termNames as $termName) {
+            $termId = $this->ensureNoticeTypeTerm($termName);
+
+            if ($termId instanceof WP_Error) {
+                return $termId;
+            }
+
+            $termIds[] = $termId;
+        }
+
+        return $termIds;
+    }
+
+    private function ensureNoticeTypeTerm(string $termName): int|WP_Error
+    {
+        $term = term_exists($termName, self::NOTICE_TAXONOMY);
 
         if ($term === 0 || $term === null) {
             $term = wp_insert_term(
-                self::NOTICE_TYPE_NAME,
+                $termName,
                 self::NOTICE_TAXONOMY,
-                ['slug' => sanitize_title(self::NOTICE_TYPE_NAME)]
+                ['slug' => sanitize_title($termName)]
             );
         }
 
@@ -316,68 +357,54 @@ class NovaPublicationEndpoint
         $content = wpautop(wp_kses_post((string) $payload['content']));
         $details = [];
 
-        $details[] = $this->buildDetailRow(__('Publication type', 'pitea-customisation'), $this->getPublicationTypeLabel((int) $payload['type']));
-        $details[] = $this->buildDetailRow(__('Case ID', 'pitea-customisation'), sanitize_text_field((string) $payload['id']));
-        $details[] = $this->buildDetailRow(__('Estate', 'pitea-customisation'), $this->getStringValue($payload, 'estate'));
-        $details[] = $this->buildDetailRow(__('Decision', 'pitea-customisation'), $this->getStringValue($payload, 'decision'));
-        $details[] = $this->buildDetailRow(__('Decision number', 'pitea-customisation'), $this->getStringValue($payload, 'decisionNumber'));
-        $details[] = $this->buildDetailRow(__('Decision date', 'pitea-customisation'), $this->formatTimestamp($payload['decisionDate'] ?? null));
-        $details[] = $this->buildDetailRow(__('Response date', 'pitea-customisation'), $this->formatTimestamp($payload['responseDate'] ?? null));
-        $details[] = $this->buildDetailRow(__('Public notification', 'pitea-customisation'), $this->getStringValue($payload, 'publicNotification'));
-
-        $detailsHtml = implode('', array_filter($details));
-
-        if ($detailsHtml !== '') {
-            $content .= '<h2>' . esc_html__('Information', 'pitea-customisation') . '</h2>';
-            $content .= '<dl>' . $detailsHtml . '</dl>';
+        if ((int) $payload['type'] === 1) {
+            $publicNotification = $this->getStringValue($payload, 'publicNotification');
+            if ($publicNotification !== '') {
+                $content .= wpautop(esc_html($publicNotification));
+            }
         }
 
-        $externalUrl = $this->getStringValue($payload, 'externalUrl');
-        if ($externalUrl !== '') {
-            $content .= sprintf(
-                '<p><a href="%s" rel="noopener noreferrer">%s</a></p>',
-                esc_url($externalUrl),
-                esc_html__('Read more', 'pitea-customisation')
-            );
+        $details[] = $this->buildDetailPart(__('Case ID', 'pitea-customisation'), sanitize_text_field((string) $payload['id']));
+        $details[] = $this->buildDetailPart(__('Estate', 'pitea-customisation'), $this->getStringValue($payload, 'estate'));
+        $details[] = $this->buildDetailPart(__('Decision', 'pitea-customisation'), $this->getStringValue($payload, 'decision'));
+        $details[] = $this->buildDetailPart(__('Decision number', 'pitea-customisation'), $this->getStringValue($payload, 'decisionNumber'));
+        $details[] = $this->buildDetailPart(__('Decision date', 'pitea-customisation'), $this->formatTimestamp($payload['decisionDate'] ?? null));
+        $details[] = $this->buildDetailPart(__('Response date', 'pitea-customisation'), $this->formatTimestamp($payload['responseDate'] ?? null));
+
+        $detailsHtml = implode('<br>', array_filter($details));
+
+        if ($detailsHtml !== '') {
+            $content .= '<p>' . $detailsHtml . '</p>';
         }
 
         return $content;
     }
 
-    private function buildDetailRow(string $label, string $value): string
+    private function buildDetailPart(string $label, string $value): string
     {
         if ($value === '') {
             return '';
         }
 
         return sprintf(
-            '<dt>%s</dt><dd>%s</dd>',
+            '<strong>%s:</strong> %s',
             esc_html($label),
             esc_html($value)
         );
     }
 
-    private function getPublicationTypeLabel(int $type): string
-    {
-        return match ($type) {
-            1 => __('Notice', 'pitea-customisation'),
-            2 => __('Decision', 'pitea-customisation'),
-            default => __('Other publication', 'pitea-customisation'),
-        };
-    }
-
     /**
      * @param array<string, mixed> $payload
      */
-    private function getArchiveDate(array $payload): string
+    private function getArchiveDateTime(array $payload): ?\DateTimeImmutable
     {
         $timestamp = $payload['publishEndDate'] ?? null;
 
-        if (($timestamp === null || $timestamp === '') && (int) $payload['type'] === 1) {
-            $timestamp = $payload['responseDate'] ?? null;
+        if (!$this->isUnixTimestamp($timestamp)) {
+            return null;
         }
 
-        return $this->formatTimestamp($timestamp, 'Y-m-d');
+        return $this->timestampToLocalDateTime((int) $timestamp);
     }
 
     private function formatTimestamp(mixed $timestamp, string $format = ''): string
@@ -388,7 +415,12 @@ class NovaPublicationEndpoint
 
         $format = $format !== '' ? $format : (string) get_option('date_format');
 
-        return wp_date($format, (int) $timestamp);
+        return wp_date($format, (int) $timestamp, wp_timezone());
+    }
+
+    private function timestampToLocalDateTime(int $timestamp): \DateTimeImmutable
+    {
+        return (new \DateTimeImmutable('@' . $timestamp))->setTimezone(wp_timezone());
     }
 
     /**
