@@ -11,7 +11,7 @@ class Policies
      * @var array<string, string[]>
      */
     private array $customPolicies = [
-        'connect-src' => ['data:'],
+        'connect-src' => ['data:', 'blob:'],
         'img-src'     => ['data:'],
     ];
 
