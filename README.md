@@ -14,7 +14,7 @@ The plugin is organized as a collection of focused customization classes, each s
 | `ColorPicker`       | Replaces the standard WordPress color picker in all ACF fields with a custom `pitea_color_picker` that shows the design-system palette.                                                                                        |
 | `Config`            | Miscellaneous global configuration: loads the plugin textdomain, sets default icons on ServiceInfo/ContactBanner/Noticeboard components, and strips `@font-face` rules from Kirki inline styles on the frontend.               |
 | `Decorators`        | Decorates `news` post objects so the archive date uses the WordPress `date_format` option rather than a hardcoded format.                                                                                                      |
-| `ExternalContent`   | Registers two importers: traffic disruptions from an ArcGIS FeatureServer (into `modularity-service-info` posts), and e-services from the Piteå eNämnd API (into Typesense).                                                   |
+| `ExternalContent`   | Registers external content integrations: Sokigo Nova publication endpoint for digital noticeboard notices, traffic disruptions from an ArcGIS FeatureServer (into `modularity-service-info` posts), and e-services from the Piteå eNämnd API (into Typesense). |
 | `FontAwesome`       | Full FontAwesome Pro replacement for the theme's Material Symbols icon set. Registers a custom ACF icon picker, converts all `icon` ACF fields to it, and adds FA icon pickers to both TinyMCE and the Gutenberg block editor. |
 | `Headers`           | Extends the `Content-Security-Policy` header to add `blob:` to `script-src` and `worker-src`, required for ReadSpeaker's web worker.                                                                                           |
 | `Navigation`        | Forces tab menu buttons to use the `c-button--md` size class.                                                                                                                                                                  |
@@ -61,7 +61,7 @@ pitea-customisation/
     │   ├── Customisations/          # All site-specific customization classes (see table above)
     │   │   └── Modules/             # Modularity module-specific customizations
     │   ├── Decorators/              # Post object decorator pattern (e.g. NewsDateDecorator)
-    │   ├── ExternalContent/         # TrafficDisruptionsImporter, EServicesImporter
+    │   ├── ExternalContent/         # NovaPublicationEndpoint, TrafficDisruptionsImporter, EServicesImporter
     │   └── Helpers/                 # CacheBust, ScssColorParser, utility functions
     ├── js/
     │   ├── main.js                  # Frontend JS entry
@@ -102,10 +102,37 @@ The plugin adds a **Settings → Piteå kommun** page in the WordPress admin wit
 | Tab              | Settings                                            |
 | ---------------- | --------------------------------------------------- |
 | General          | Overview / introduction only                        |
-| External Content | Traffic disruptions source URL · E-services API URL |
+| External Content | Sokigo Nova endpoint info · Traffic disruptions source URL · E-services API URL |
 | Latest Events    | Visit Piteå API URL · API token                     |
 
 Settings are saved via AJAX with nonce validation.
+
+## External Content
+
+### Sokigo Nova publication endpoint
+
+The plugin exposes a custom WordPress REST endpoint for Sokigo Nova so building permit notices can be published to the digital noticeboard:
+
+```text
+POST /wp-json/nova/v1/publish
+```
+
+The endpoint requires HTTP Basic Authentication and is active when these constants are defined:
+
+```php
+define('SOKIGO_NOVA_PUBLISH_USERNAME', '...');
+define('SOKIGO_NOVA_PUBLISH_PASSWORD', '...');
+```
+
+Incoming publications are saved as `noticeboard_notice` posts. Nova `publishDate` becomes the WordPress post date, so future dates are scheduled by WordPress. Nova `publishEndDate` is saved to the noticeboard `archive_date` and `archive_time` fields.
+
+Notice type terms are assigned on `noticeboard_notice_type`:
+
+| Nova type | Terms |
+| --------- | ----- |
+| `1`       | `Kungörelser`, `Bygglov` |
+| `2`       | `Beslut`, `Bygglov`      |
+| `3`       | `Bygglov`                |
 
 ---
 
