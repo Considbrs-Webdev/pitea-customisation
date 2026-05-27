@@ -9,6 +9,10 @@
   --title-font-size: var(--font-size-heading-4);
   --title-font-weight: var(--h3-font-weight, var(--font-weight-heading, 600));
   --icon-color: var(--color-darjnalen-dark-3);
+
+  .mod-service-info__title {
+    line-height: 0px;
+  }
 }
 
 .s-post-type-service-info-archive .service-info-badge {
