@@ -14,6 +14,11 @@
   opacity: 0 !important;
 }
 
+// Remove styleguide overlay on card image focus
+.c-card.c-card--action:focus {
+  background-color: transparent; // or your token
+}
+
 // Manual input cards WITHOUT link - no hover effects at all (display only)
 .modularity-mod-manualinput .c-card:not(.c-card--action) {
   &:hover {
