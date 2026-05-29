@@ -26,6 +26,14 @@ class Accessibility
 {
     const READSPEAKER_BASE_URL = 'https://app-eu.readspeaker.com/cgi-bin/rsent?customerid=%s&lang=sv_se&readid=%s&url=';
 
+    /**
+     * Components that should be skipped by ReadSpeaker (gets the rs_skip CSS class).
+     * Each entry corresponds to a ComponentLibrary component name.
+     */
+    const READSPEAKER_SKIP_COMPONENTS = [
+        'Slider',
+    ];
+
     const DEFAULT_BUTTON_STYLE = 'filled';
     const DEFAULT_BUTTON_COLOR = 'primary';
 
@@ -39,6 +47,7 @@ class Accessibility
     public function __construct()
     {
         new \PiteaCustomisation\AcfFields\AccessibilityFields();
+
         add_filter('Municipio/Template/viewData', [$this, 'maybeAddPrintMenuToViewData'], 10, 1);
         add_filter('Municipio/Template/viewData', [$this, 'addAccessibilityMenuToViewData'], 20, 1);
         add_filter('Municipio/Template/viewData', [$this, 'stripNavAccessibilityMenuWhenUsingModule'], 30, 1);
@@ -46,6 +55,24 @@ class Accessibility
         add_action('template_redirect', [$this, 'maybeWrapContentInArticle']);
         add_action('wp_enqueue_scripts', [$this, 'enqueueWebReaderScript'], 10);
         add_filter('script_loader_tag', [$this, 'addReadSpeakerScriptId'], 10, 3);
+        
+        foreach (self::READSPEAKER_SKIP_COMPONENTS as $component) {
+            add_filter('ComponentLibrary/Component/' . $component . '/Class', [$this, 'addReadSpeakerSkipClass'], 10, 2);
+        }
+    }
+
+    /**
+     * Adds the rs_skip CSS class to components listed in READSPEAKER_SKIP_COMPONENTS
+     * so that ReadSpeaker ignores them when reading the page.
+     *
+     * @param array<string> $classes Existing CSS classes for the component.
+     * @return array<string> Modified classes array.
+     */
+    public function addReadSpeakerSkipClass(array $classes): array
+    {
+        $classes[] = 'rs_skip';
+
+        return $classes;
     }
 
     public function addReadSpeakerHiddenButton($content): string
