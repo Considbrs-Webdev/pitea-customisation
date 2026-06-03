@@ -51,6 +51,7 @@ class App
             Customisations\Permissions::class,
             Customisations\Policies::class,
             Customisations\PostTypes::class,
+            Customisations\SamlUserProvisioning::class,
             Customisations\Search::class,
             Customisations\ServiceInfo::class,
             Customisations\ShareButton::class,
