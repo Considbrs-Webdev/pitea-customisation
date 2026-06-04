@@ -730,6 +730,7 @@ msgstr ""
 msgid "Optional. Same color for every accordion row when display is Accordion. Text and icon color are adjusted automatically for contrast."
 msgstr ""
 
+#: source/php/Customisations/Modules/InlayList.php:63
 #: source/php/Customisations/Modules/QuickLinks.php:54
 #: source/php/Customisations/Modules/Slider.php:63
 #: source/php/Customisations/Modules/Text.php:111
@@ -858,6 +859,14 @@ msgstr ""
 
 #: source/php/ExternalContent/ServiceInfo/TrafficDisruptionsImporter.php:170
 msgid "Traffic disruption location"
+msgstr ""
+
+#: source/php/Customisations/Modules/InlayList.php:47
+msgid "Open in new tab"
+msgstr ""
+
+#: source/php/Customisations/Modules/InlayList.php:49
+msgid "Opens the external link in a new browser tab when enabled."
 msgstr ""
 
 #: source/php/Module/AccButtons.php:26

@@ -830,6 +830,7 @@ msgstr ""
 "Valfritt. Samma färg för varje rad när visningsläget är dragspel. Text- och "
 "ikonfärg anpassas automatiskt för kontrast."
 
+#: source/php/Customisations/Modules/InlayList.php:63
 #: source/php/Customisations/Modules/QuickLinks.php:54
 #: source/php/Customisations/Modules/Slider.php:63
 #: source/php/Customisations/Modules/Text.php:111
@@ -961,6 +962,14 @@ msgstr "Karta över trafikstörning"
 #: source/php/ExternalContent/ServiceInfo/TrafficDisruptionsImporter.php:170
 msgid "Traffic disruption location"
 msgstr "Plats för trafikstörning"
+
+#: source/php/Customisations/Modules/InlayList.php:47
+msgid "Open in new tab"
+msgstr "Öppna i ny flik"
+
+#: source/php/Customisations/Modules/InlayList.php:49
+msgid "Opens the external link in a new browser tab when enabled."
+msgstr "Öppnar den externa länken i en ny webbläsarflik när alternativet är aktiverat."
 
 #: source/php/Module/AccButtons.php:26 source/php/Module/AccButtons.php:27
 msgid "Accessibility buttons"
