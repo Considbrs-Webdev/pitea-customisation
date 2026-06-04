@@ -45,6 +45,7 @@ add_filter(
     '/Modularity/externalViewPath',
     static function (array $arr): array {
         $arr['mod-acc-buttons'] = PITEA_CUSTOMISATION_PATH . 'source/php/Module/views';
+        $arr['mod-inlaylist'] = PITEA_CUSTOMISATION_PATH . 'views/modularity';
 
         return $arr;
     },

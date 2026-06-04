@@ -7,16 +7,6 @@ namespace PiteaCustomisation\Customisations\Modules;
  */
 class InlayList
 {
-    /**
-     * Hrefs (in list order) that should open in a new tab during the current inlay-list render.
-     *
-     * @var list<string>
-     */
-    private static array $newTabHrefQueue = [];
-
-    /** Remaining collection items while the current inlay list is rendering. */
-    private static int $inlayListItemsRemaining = 0;
-
     private const ITEMS_REPEATER_KEY = 'field_569e0559eb084';
 
     private const TYPE_FIELD_KEY = 'field_569e068b33f31';
@@ -37,7 +27,6 @@ class InlayList
             1
         );
         add_filter('Modularity/Display/mod-inlaylist/viewData', [$this, 'modifyInlayListData'], 10, 1);
-        add_filter('ComponentLibrary/Component/Collection__item/Data', [$this, 'applyNewTabLinkAttributes'], 10, 1);
         add_action('acf/input/admin_footer', [$this, 'enqueueSelect2EscapeMarkupScript']);
     }
 
@@ -127,22 +116,22 @@ class InlayList
 
     public function enqueueSelect2EscapeMarkupScript(): void
     {
-        ?>
+?>
         <script type="text/javascript">
-        (function($) {
-            if(typeof acf !== 'undefined') {
-                acf.add_filter('select2_args', function( args, $el, settings, field, type ){
-                    if( field.data('name') === 'link_internal' ) {
-                        args.escapeMarkup = function( markup ) {
-                            return markup;
-                        };
-                    }
-                    return args;
-                });
-            }
-        })(jQuery);
+            (function($) {
+                if (typeof acf !== 'undefined') {
+                    acf.add_filter('select2_args', function(args, $el, settings, field, type) {
+                        if (field.data('name') === 'link_internal') {
+                            args.escapeMarkup = function(markup) {
+                                return markup;
+                            };
+                        }
+                        return args;
+                    });
+                }
+            })(jQuery);
         </script>
-        <?php
+<?php
     }
 
     /**
@@ -151,53 +140,11 @@ class InlayList
      * @param array<string, mixed> $data
      * @return array<string, mixed>
      */
-    /**
-     * Apply target/rel on collection items while the inlay-list module is rendering (no Blade override).
-     *
-     * @param array<string, mixed> $data
-     * @return array<string, mixed>
-     */
-    public function applyNewTabLinkAttributes(array $data): array
-    {
-        if (self::$inlayListItemsRemaining <= 0 || empty($data['link'])) {
-            return $data;
-        }
-
-        self::$inlayListItemsRemaining--;
-
-        $link = (string) $data['link'];
-        $nextHref = self::$newTabHrefQueue[0] ?? '';
-
-        if ($nextHref !== '' && $this->hrefMatches($link, $nextHref)) {
-            array_shift(self::$newTabHrefQueue);
-
-            $data['attributeList'] = array_merge($data['attributeList'] ?? [], [
-                'target' => '_blank',
-                'rel' => 'noopener noreferrer',
-            ]);
-        }
-
-        if (self::$inlayListItemsRemaining <= 0) {
-            self::$newTabHrefQueue = [];
-        }
-
-        return $data;
-    }
-
-    /**
-     * @param array<string, mixed> $data
-     * @return array<string, mixed>
-     */
     public function modifyInlayListData(array $data): array
     {
-        self::$newTabHrefQueue = [];
-        self::$inlayListItemsRemaining = 0;
-
         if (empty($data['items']) || !is_array($data['items'])) {
             return $data;
         }
-
-        self::$inlayListItemsRemaining = count($data['items']);
 
         $postId = $data['ID'] ?? null;
         $rawItems = is_numeric($postId)
@@ -227,23 +174,16 @@ class InlayList
             if (
                 ($rawRow['type'] ?? '') === 'external'
                 && !empty($rawRow[self::OPEN_IN_NEW_TAB_FIELD_NAME])
-                && !empty($item['href'])
             ) {
-                self::$newTabHrefQueue[] = (string) $item['href'];
+                $item['attributeList'] = array_merge($item['attributeList'] ?? [], [
+                    'target' => '_blank',
+                    'rel' => 'noopener noreferrer',
+                ]);
             }
         }
         unset($item);
 
         return $data;
-    }
-
-    private function hrefMatches(string $link, string $queuedHref): bool
-    {
-        if ($link === $queuedHref) {
-            return true;
-        }
-
-        return rtrim($link, '/') === rtrim($queuedHref, '/');
     }
 
     /**
