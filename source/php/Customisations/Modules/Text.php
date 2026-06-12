@@ -57,6 +57,7 @@ class Text
 
     public function __construct()
     {
+        add_filter('Modularity/Display/mod-text/viewData', [$this, 'ensureTextModulePostContent'], 1);
         add_action('acf/init', [$this, 'registerFields'], 20);
         add_filter('Modularity/Display/mod-text/viewData', [$this, 'captureTextModuleStyles']);
         // Older ComponentLibrary versions (mu-plugins/component-library, used by the legacy
@@ -71,7 +72,27 @@ class Text
         }
     }
 
-
+    /**
+     * Backfill postContent when Municipio Text::data() no longer reads WP editor body from the post object.
+     *
+     * Affected versions: 6.44.0–6.44.1 (PR #1999). Fixed upstream in 6.44.2 (#2021).
+     * 6.27.x uses $this->data['post_content'] and is not affected.
+     */
+    public function ensureTextModulePostContent(array $data): array
+    {
+        if (!empty($data['postContent'])) {
+            return $data;
+        }
+        $raw = $data['post_content'] ?? $data['content'] ?? '';
+        if ($raw === '') {
+            return $data;
+        }
+        foreach (['Modularity/Display/SanitizeContent', 'the_content'] as $filter) {
+            $raw = apply_filters($filter, $raw);
+        }
+        $data['postContent'] = $raw;
+        return $data;
+    }
     /**
      * Register fields
      */
