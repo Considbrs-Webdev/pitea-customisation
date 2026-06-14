@@ -19,8 +19,17 @@ class SamlUserProvisioning
      */
     private ?array $activeLogin = null;
 
+    /**
+     * @var list<array{group_id: string, name: string, role: string, add_to_user_group: bool}>|null
+     */
+    private ?array $allowedGroups = null;
+
     public function __construct()
     {
+        if ($this->getAllowedGroups() === []) {
+            return;
+        }
+
         add_action('init', [$this, 'ensureMiniOrangeAttributeMapping'], 0);
         add_action('init', [$this, 'deleteNonAssignableUserGroupTerms'], 100);
         add_action('mo_saml_user_attributes', [$this, 'validateUserAttributes'], 1);
@@ -345,110 +354,38 @@ class SamlUserProvisioning
      */
     private function getAllowedGroups(): array
     {
-        return [
-            [
-                'name' => 'WEB_ADMIN',
-                'group_id' => '82d935d3-a876-46f3-90a7-a62f710b50f8',
-                'role' => 'administrator',
-                'add_to_user_group' => false,
-            ],
-            [
-                'name' => 'Webbredaktörer Piteå kommun',
-                'group_id' => '2d12ce30-4094-4224-8525-fdd8fab092bd',
-                'role' => 'editor',
-                'add_to_user_group' => false,
-            ],
-            [
-                'name' => 'WEB_BLOGGARE',
-                'group_id' => '09d1a1d4-7902-40dd-8a1d-f385819b0c30',
-                'role' => 'editor',
-                'add_to_user_group' => true,
-            ],
-            [
-                'name' => 'Webb / Lärcentrum',
-                'group_id' => 'f725d815-754c-4b02-ab82-e7adb02dd682',
-                'role' => 'editor',
-                'add_to_user_group' => true,
-            ],
-            [
-                'name' => 'Webb-Konsulter-Consid',
-                'group_id' => 'd5dcfa54-138d-44ff-8b37-8002e9e54bb6',
-                'role' => 'editor',
-                'add_to_user_group' => false,
-            ],
-            [
-                'name' => 'Webb_Redaktör',
-                'group_id' => '9d2e3e41-7346-4348-9441-5aa9f6cb3921',
-                'role' => 'editor',
-                'add_to_user_group' => false,
-            ],
-            [
-                'name' => 'Webb_Skribent',
-                'group_id' => 'bfb8d7d7-9bdf-49d9-8125-3c16cac8304b',
-                'role' => 'editor',
-                'add_to_user_group' => false,
-            ],
-            [
-                'name' => 'Webb_Skribent_FSF',
-                'group_id' => '89f9b42c-2315-4410-aae4-d8f4d30df861',
-                'role' => 'editor',
-                'add_to_user_group' => true,
-            ],
-            [
-                'name' => 'Webb_Skribent_FSK',
-                'group_id' => 'eeb20e0b-844f-4915-9ea5-5bed11280082',
-                'role' => 'editor',
-                'add_to_user_group' => true,
-            ],
-            [
-                'name' => 'Webb_Skribent_Grans',
-                'group_id' => '626ee7eb-4401-4b4c-8e18-eb3ff16d5280',
-                'role' => 'editor',
-                'add_to_user_group' => true,
-            ],
-            [
-                'name' => 'Webb_Skribent_KLF',
-                'group_id' => '261e92ad-d6d0-49bd-bda0-05fc96b80290',
-                'role' => 'editor',
-                'add_to_user_group' => true,
-            ],
-            [
-                'name' => 'Webb_Skribent_KPF',
-                'group_id' => 'eee10992-705c-4442-85e3-90d978a8f8a5',
-                'role' => 'editor',
-                'add_to_user_group' => true,
-            ],
-            [
-                'name' => 'Webb_Skribent_RTJ',
-                'group_id' => '19150f4a-98e5-4610-8aa4-868a64a66933',
-                'role' => 'editor',
-                'add_to_user_group' => true,
-            ],
-            [
-                'name' => 'Webb_Skribent_SAM',
-                'group_id' => '077506ed-9a72-4661-b123-2ec5d4a59222',
-                'role' => 'editor',
-                'add_to_user_group' => true,
-            ],
-            [
-                'name' => 'Webb_Skribent_SOC',
-                'group_id' => '7fdd008d-65a3-4695-a650-40578dba5a10',
-                'role' => 'editor',
-                'add_to_user_group' => true,
-            ],
-            [
-                'name' => 'Webb_Skribent_Strömbacka',
-                'group_id' => '15ce5bbc-9978-4609-96e5-f1f817d3e55a',
-                'role' => 'editor',
-                'add_to_user_group' => true,
-            ],
-            [
-                'name' => 'Webb_Skribent_UBF',
-                'group_id' => 'fbebd62c-4445-406c-96f6-545934867446',
-                'role' => 'editor',
-                'add_to_user_group' => true,
-            ],
-        ];
+        if ($this->allowedGroups !== null) {
+            return $this->allowedGroups;
+        }
+
+        $this->allowedGroups = [];
+
+        if (!defined('PITEA_SAML_GROUPS') || !is_array(PITEA_SAML_GROUPS)) {
+            return $this->allowedGroups;
+        }
+
+        foreach (PITEA_SAML_GROUPS as $group) {
+            if (!is_array($group)) {
+                continue;
+            }
+
+            $groupId = strtolower(trim((string) ($group['group_id'] ?? '')));
+            $name = trim((string) ($group['name'] ?? ''));
+            $role = sanitize_key((string) ($group['role'] ?? ''));
+
+            if ($groupId === '' || $name === '' || $role === '') {
+                continue;
+            }
+
+            $this->allowedGroups[] = [
+                'group_id' => $groupId,
+                'name' => $name,
+                'role' => $role,
+                'add_to_user_group' => (bool) ($group['add_to_user_group'] ?? false),
+            ];
+        }
+
+        return $this->allowedGroups;
     }
 
     private function denyLogin(string $message): void

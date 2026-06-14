@@ -100,6 +100,27 @@ pitea-customisation/
 
 The site uses the **miniOrange SAML 2.0 Single Sign-On** plugin as the SAML service provider. AzureAD is the identity provider. The custom class `PiteaCustomisation\Customisations\SamlUserProvisioning` does not replace miniOrange; it hooks into miniOrange's login flow to make the WordPress user provisioning rules match Piteå's AD group model.
 
+The customization is only enabled when private configuration provides an allowed AD group map through the `PITEA_SAML_GROUPS` constant. If that config is missing or empty, the class does not register its SAML hooks.
+
+Expected config shape:
+
+```php
+define('PITEA_SAML_GROUPS', [
+    [
+        'name' => 'Administrator group label',
+        'group_id' => '00000000-0000-0000-0000-000000000001',
+        'role' => 'administrator',
+        'add_to_user_group' => false,
+    ],
+    [
+        'name' => 'Editor group label',
+        'group_id' => '00000000-0000-0000-0000-000000000002',
+        'role' => 'editor',
+        'add_to_user_group' => true,
+    ],
+]);
+```
+
 ### miniOrange responsibility
 
 miniOrange is still responsible for the SAML protocol work:
@@ -180,7 +201,7 @@ When a user is allowed through:
 
 ### Role and group rules
 
-Access is controlled by the hard-coded AD group list in `SamlUserProvisioning::getAllowedGroups()`.
+Access is controlled by the private AD group list loaded from `PITEA_SAML_GROUPS`.
 
 There are two separate decisions:
 
