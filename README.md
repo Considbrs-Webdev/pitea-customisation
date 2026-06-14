@@ -22,6 +22,7 @@ The plugin is organized as a collection of focused customization classes, each s
 | `Pagination`        | Custom pagination rendering that always pins the first and last page items and adds ellipses for large page counts.                                                                                                            |
 | `Policies`          | Extends the CSP `connect-src` and `img-src` directives with `data:` URIs.                                                                                                                                                      |
 | `PostTypes`         | Loads ACF JSON field group definitions from `post-types/` and saves changes back in development mode.                                                                                                                          |
+| `SamlUserProvisioning` | Extends the miniOrange SAML login flow for AzureAD/AD users: validates required SAML attributes, creates or updates users before miniOrange finishes login, assigns WordPress roles from AD groups, and assigns one optional `user_group` taxonomy term. |
 | `Search`            | Routes all searches to `/sok/` via a rewrite rule, redirects legacy `/?s=` queries with a 301, and patches search form action URLs and the hero module's search link.                                                          |
 | `ShareButton`       | Adds a "Share page" button (copy link to clipboard) after the post signature. Shown by default on all non-page post types; on pages controlled via an ACF toggle.                                                              |
 | `Taxonomies`        | Loads ACF JSON field group definitions from `taxonomies/` and saves changes back in development mode.                                                                                                                          |
@@ -94,6 +95,114 @@ pitea-customisation/
 2. Instantiates every customization class via `registerInstances()`. Each class registers its own WordPress hooks inside its constructor.
 
 ---
+
+## SSO / AD login with miniOrange
+
+The site uses the **miniOrange SAML 2.0 Single Sign-On** plugin as the SAML service provider. AzureAD is the identity provider. The custom class `PiteaCustomisation\Customisations\SamlUserProvisioning` does not replace miniOrange; it hooks into miniOrange's login flow to make the WordPress user provisioning rules match Piteå's AD group model.
+
+### miniOrange responsibility
+
+miniOrange is still responsible for the SAML protocol work:
+
+1. Redirecting the user to AzureAD.
+2. Receiving and validating the SAML response.
+3. Extracting SAML attributes into the `$attrs` array.
+4. Running its internal `mo_saml_check_mapping()` flow.
+5. Firing miniOrange extension hooks such as `mo_saml_user_attributes` and `mo_saml_user_group_name`.
+6. Completing the WordPress login by setting auth cookies and redirecting the user.
+
+The customization class only acts once miniOrange has a trusted SAML attribute array.
+
+### Forced miniOrange attribute mapping
+
+On `init` priority `0`, `SamlUserProvisioning::ensureMiniOrangeAttributeMapping()` makes sure the miniOrange attribute mapping stays aligned with our custom flow:
+
+| miniOrange option | Value |
+| ----------------- | ----- |
+| `saml_am_email` | `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress` |
+| `saml_am_username` | `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress` |
+| `saml_am_first_name` | `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname` |
+| `saml_am_last_name` | `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname` |
+| `saml_am_group_name` | `http://schemas.microsoft.com/ws/2008/06/identity/claims/groups` |
+| `saml_am_account_matcher` | `email` |
+
+This is deliberately strict. miniOrange must find users by email, while our custom code controls the actual WordPress `user_login`.
+
+### Attributes we depend on
+
+The customization class expects these AzureAD/SAML attributes:
+
+| Attribute | Used for |
+| --------- | -------- |
+| `user.onpremisessamaccountname` | Source of the WordPress username. The CN part is extracted from a DN such as `CN=TEST01,OU=...`, resulting in `TEST01`. |
+| `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress` | WordPress email address and miniOrange account matching. Required. |
+| `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname` | WordPress first name. |
+| `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname` | WordPress last name. |
+| `http://schemas.microsoft.com/identity/claims/displayname` | WordPress display name. |
+| `http://schemas.microsoft.com/ws/2008/06/identity/claims/groups` | AD group IDs used for access, role selection, and optional `user_group` assignment. |
+
+`NameID` can still be present in the SAML response and miniOrange flow, but it is not the basis for the WordPress username in our custom provisioning. The username comes from the CN in `user.onpremisessamaccountname`.
+
+### Login flow with our customization
+
+The important sequence is:
+
+1. miniOrange validates the SAML response and builds `$attrs`.
+2. miniOrange fires `do_action('mo_saml_user_attributes', $attrs)`.
+3. Our `validateUserAttributes()` callback runs early on that action.
+4. We validate that a usable CN account name and email exist.
+5. We check the returned AzureAD group IDs against the allowed group list.
+6. If no allowed group is present, login is stopped with `wp_die()` (`403 Access denied`). In WP-CLI context this becomes `WP_CLI::error()`.
+7. If access is allowed, we create or update the WordPress user before miniOrange continues its own user-login handling.
+8. We apply the selected WordPress role and optional `user_group` taxonomy term.
+9. miniOrange continues its normal login flow, finds the user by email, sets cookies, may run its own first/last-name update, and redirects.
+10. Our later hooks reapply role and `user_group` after miniOrange has the final user ID, so miniOrange's remaining flow does not undo our permission decision.
+
+The class hooks the flow in three places:
+
+| Hook | Purpose |
+| ---- | ------- |
+| `mo_saml_user_attributes` | Main validation and provisioning point. This is where we deny access, create/update the user, and store the chosen role/group for the current login. |
+| `mo_saml_user_group_name` | Runs later in miniOrange's flow when miniOrange has a user ID. We reapply the role and `user_group` here. |
+| `set_auth_cookie` | Final safety pass after WordPress auth cookies are set. We reapply the role and `user_group` once more for this login. |
+
+### User creation and updating
+
+When a user is allowed through:
+
+1. The WordPress login name is the extracted CN, for example `CN=TEST01,...` becomes `TEST01`.
+2. The email claim becomes `user_email`.
+3. Given name, surname, and display name update the corresponding WordPress profile fields when present.
+4. Existing users are matched by email first.
+5. If the email belongs to one WordPress user and the CN login belongs to a different WordPress user, login is denied. This prevents accidentally merging two identities.
+6. If the CN login already exists for another account while no matching email user exists, login is denied.
+7. New users receive a generated password because the real authentication is SAML.
+
+### Role and group rules
+
+Access is controlled by the hard-coded AD group list in `SamlUserProvisioning::getAllowedGroups()`.
+
+There are two separate decisions:
+
+1. **WordPress role**: selected from the first matching allowed group in the configured group priority order. The administrator group is listed first, so it wins and grants `administrator` when present. All other allowed groups currently grant `editor`.
+2. **`user_group` taxonomy**: selected from the first incoming SAML group that is marked `add_to_user_group => true`. This preserves the order AzureAD sends in the SAML response. A user is assigned to only one `user_group`.
+
+Groups with `add_to_user_group => false` grant access and a role, but must not create or assign a `user_group` term.
+
+### `user_group` taxonomy behavior
+
+For groups that should be represented in the `user_group` taxonomy:
+
+1. The AD group ID is used as the term slug.
+2. The configured group label is used as the term name when the term is created.
+3. If a term already exists with the correct slug, the existing term is reused.
+4. If an existing term's name is still the raw group ID, the name is repaired to the configured label.
+5. If an editor has renamed the term in WordPress, that name is preserved on future logins.
+6. Before assigning the selected group, all existing `user_group` relationships for the user are removed, ensuring each user has at most one `user_group`.
+
+On `init` priority `100`, and again after access is granted, the class deletes `user_group` terms for allowed AD groups that are marked `add_to_user_group => false`. This prevents role-only AD groups from lingering in the taxonomy when they are only meant to grant WordPress access.
+
+On multisite, all `user_group` taxonomy reads and writes are performed on the main site via `switch_to_blog(get_main_site_id())`.
 
 ## Admin settings
 
