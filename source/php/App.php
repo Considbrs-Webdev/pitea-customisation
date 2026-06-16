@@ -53,6 +53,7 @@ class App
             Customisations\PostTypes::class,
             Customisations\Search::class,
             Customisations\ServiceInfo::class,
+            Customisations\SamlAttributeLogger::class,
             Customisations\ShareButton::class,
             Customisations\Taxonomies::class,
             Customisations\Templates::class,
