@@ -5,7 +5,7 @@ namespace PiteaCustomisation\Customisations;
 class Matomo
 {
     private const CONTAINER_STAGING    = 'container_RoYkVhrI.js';
-    private const CONTAINER_PRODUCTION = 'container_6sfc3f00.js';
+    private const CONTAINER_PRODUCTION = 'container_Kl3v51Wa.js';
     private const MATOMO_BASE_URL      = 'https://beta.pitea.se/js/';
 
     public function __construct()
