@@ -5,19 +5,19 @@ declare(strict_types=1);
 namespace PiteaCustomisation\Customisations;
 
 /**
- * Site-specific behaviour for the Content Ownership plugin.
+ * Site-specific behaviour for the Scheduled Page Reviews plugin.
  */
-class ContentOwnership
+class ScheduledPageReviews
 {
     public function __construct()
     {
-        add_filter('content_ownership/can_view_site_overview', [$this, 'limitOverviewToAdministrators'], 10, 2);
-        add_filter('content_ownership/can_manage_settings', [$this, 'limitOverviewToAdministrators'], 10, 2);
+        add_filter('scheduled_page_reviews/can_view_site_overview', [$this, 'limitOverviewToAdministrators'], 10, 2);
+        add_filter('scheduled_page_reviews/can_manage_settings', [$this, 'limitOverviewToAdministrators'], 10, 2);
     }
 
     /**
      * Only true WP administrators (and super admins) get site-wide review overview
-     * and access to the Content Ownership settings SPA.
+     * and access to the Scheduled Page Reviews settings SPA.
      *
      * Users with manage_options who are not administrators — for example content
      * coordinators — still see pages where they are configured as recipients.

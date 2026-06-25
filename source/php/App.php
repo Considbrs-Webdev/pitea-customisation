@@ -36,6 +36,7 @@ class App
             Customisations\BlockPatternCompatibility::class,
             Customisations\ColorPicker::class,
             Customisations\Config::class,
+            Customisations\ScheduledPageReviews::class,
             Customisations\CustomerFeedback::class,
             Customisations\Dashboard::class,
             Customisations\Decorators::class,
