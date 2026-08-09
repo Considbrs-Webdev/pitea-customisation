@@ -30,11 +30,20 @@ class AccButtons extends Module
 
     public function data(): array
     {
-        $items = Accessibility::getAccessibilityMenuItemsSnapshot();
+        $items  = Accessibility::getAccessibilityMenuItemsSnapshot();
+        $fields = $this->getFields();
 
         return [
             'items'     => $items,
             'hideTitle' => !empty($this->data['hideTitle']),
+            // On mobile, sidebars stack below the main content, pushing this module to
+            // the bottom of the page. When enabled, a duplicate of the buttons is moved
+            // (via JS, see acc-buttons.js) to the top of #main-content on mobile, while
+            // this module keeps its normal sidebar position on desktop.
+            'automaticMobileInsertion' => array_key_exists('automatic_mobile_insertion', $fields)
+                ? !empty($fields['automatic_mobile_insertion'])
+                : true,
+            'mobileId' => uniqid('acc-buttons-mobile-'),
         ];
     }
 

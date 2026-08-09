@@ -47,6 +47,7 @@ class Accessibility
     public function __construct()
     {
         new \PiteaCustomisation\AcfFields\AccessibilityFields();
+        new \PiteaCustomisation\AcfFields\AccButtonsFields();
 
         add_filter('Municipio/Template/viewData', [$this, 'maybeAddPrintMenuToViewData'], 10, 1);
         add_filter('Municipio/Template/viewData', [$this, 'addAccessibilityMenuToViewData'], 20, 1);

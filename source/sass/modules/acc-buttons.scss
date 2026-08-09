@@ -1,0 +1,20 @@
+// Matches the Municipio theme's @lg breakpoint (78em), below which sidebar
+// columns stack below the main content instead of sitting alongside it.
+$acc-buttons-desktop-breakpoint: 78em;
+
+.mod-acc-buttons--hide-mobile {
+  @media (max-width: $acc-buttons-desktop-breakpoint) {
+    display: none;
+  }
+}
+
+.mod-acc-buttons--hide-desktop {
+  @media (min-width: $acc-buttons-desktop-breakpoint) {
+    display: none;
+  }
+}
+
+// Space the clone off from the content it's been prepended above (see acc-buttons.js).
+[data-acc-buttons-mobile-root] {
+  margin-bottom: 1.5rem;
+}

@@ -9,70 +9,18 @@
 @endif
 
 @if (!empty($items) && is_array($items))
-    <nav class="mod-acc-buttons" aria-label="{{ __('Accessibility', 'municipio') }}">
+    <nav class="mod-acc-buttons {{ $automaticMobileInsertion ? 'mod-acc-buttons--hide-mobile' : '' }}" aria-label="{{ __('Accessibility', 'municipio') }}">
         <ul class="mod-acc-buttons__list nav-accessibility unlist u-print-display--none">
-            @foreach ($items as $item)
-                @if (!empty($item['dropdown']))
-                    @dropdown([
-                        'popup' => 'click',
-                        'componentElement' => 'li',
-                    ])
-                        @link([
-                            'href' => null,
-                            'attributeList' => [
-                                'aria-label' => $item['label'] ?? '',
-                            ],
-                            'classList' => [
-                                'js-dropdown-button',
-                            ],
-                        ])
-                            @icon([
-                                'icon' => $item['button']['icon'],
-                                'size' => 'md',
-                            ])
-                            @endicon
-                            {{ $item['button']['text'] ?? __('Expand', 'municipio') }}
-                        @endlink
-                        @slot('list')
-                            @foreach ($item['dropdown'] as $dropdownItem)
-                                <li>
-                                    @button([
-                                        'text' => $dropdownItem['text'] ?? false,
-                                        'style' => $dropdownItem['style'] ?? 'outlined',
-                                        'color' => $dropdownItem['color'] ?? 'primary',
-                                        'href' => $dropdownItem['href'] ?? false,
-                                        'icon' => $dropdownItem['icon'] ?? null,
-                                        'size' => $dropdownItem['iconSize'] ?? 'sm',
-                                        'reversePositions' => $dropdownItem['reversePositions'] ?? false,
-                                        'attributeList' => array_merge($dropdownItem['attributeList'] ?? [], [
-                                            'onClick' => $dropdownItem['script'] ?? '',
-                                            'aria-label' => $dropdownItem['label'] ?? '',
-                                        ])
-                                    ])
-                                    @endbutton
-                                </li>
-                            @endforeach
-                        @endslot
-                    @enddropdown
-                @else
-                    <li>
-                        @button([
-                            'text' => $item['text'] ?? false,
-                            'style' => $item['style'] ?? 'outlined',
-                            'color' => $item['color'] ?? 'primary',
-                            'href' => $item['href'] ?? false,
-                            'icon' => $item['icon'] ?? null,
-                            'size' => $item['iconSize'] ?? 'sm',
-                            'reversePositions' => $item['reversePositions'] ?? false,
-                            'attributeList' => array_merge($item['attributeList'] ?? [], [
-                                'onClick' => $item['script'] ?? '',
-                                'aria-label' => $item['label'] ?? '',
-                            ])
-                        ])
-                        @endbutton
-                    </li>
-                @endif
-            @endforeach
+            @include('acc-buttons-list', ['items' => $items])
         </ul>
     </nav>
+
+    @if ($automaticMobileInsertion)
+        {{-- Moved to the top of #main-content on mobile by acc-buttons.js, since sidebars stack below the main content there. --}}
+        <nav class="mod-acc-buttons mod-acc-buttons--hide-desktop" aria-label="{{ __('Accessibility', 'municipio') }}" data-acc-buttons-mobile-root="{{ $mobileId }}">
+            <ul class="mod-acc-buttons__list nav-accessibility unlist u-print-display--none">
+                @include('acc-buttons-list', ['items' => $items])
+            </ul>
+        </nav>
+    @endif
 @endif
