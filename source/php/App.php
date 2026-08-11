@@ -36,6 +36,7 @@ class App
             Customisations\Breadcrumbs::class,
             Customisations\BlockPatternCompatibility::class,
             Customisations\ColorPicker::class,
+            Customisations\Columns::class,
             Customisations\Config::class,
             Customisations\ScheduledPageReviews::class,
             Customisations\CustomerFeedback::class,
