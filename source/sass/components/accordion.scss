@@ -1,88 +1,94 @@
-.modularity-mod-manualinput {
-  &:has(.c-accordion) {
-    --card-header-padding: 0 0 1rem 0;
-    --card-header-background: transparent;
-    --card-header-color: var(--color-base);
-    --card-header-font-size: 32px;
-    --icon-size: 24px;
+@layer theme {
+  .modularity-mod-manualinput {
+    &:has(.c-accordion) {
+      --card-header-padding: 0 0 1rem 0;
+      --card-header-background: transparent;
+      --card-header-color: var(--color-base);
+      --card-header-font-size: 32px;
+      --icon-size: 24px;
 
-    .c-card {
-      &__paint-container {
-        contain: none;
-      }
+      .c-card {
+        --c-card--border-radius: 0;
 
-      &__header {
-        background: 0;
-        padding: 0;
-        .c-typography {
-          background: var(--card-header-background);
-          color: var(--card-header-color);
-          font-size: var(--card-header-font-size);
-          padding: var(--card-header-padding);
+        &__paint-container {
+          contain: none;
+        }
+
+        &__header {
+          background: 0;
+          padding: 0;
+
+          .c-typography {
+            background: var(--card-header-background);
+            color: var(--card-header-color);
+            font-size: var(--card-header-font-size);
+            padding: var(--card-header-padding);
+          }
         }
       }
     }
-  }
 
-  .c-accordion {
-    border: 1px solid var(--color-stain-light-2);
-    padding: 0;
+    .c-accordion {
+      --c-accordion--color--surface-border: var(--color-stain-light-2);
+      border: 1px solid var(--c-accordion--color--surface-border, var(--color-stain-light-2));
+      padding: 0;
 
-    &__content {
-      padding: 20px 30px 20px 30px;
-    }
+      &__content {
+        padding: 20px 30px 20px 30px;
+      }
 
-    &__button-wrapper {
-      padding: 20px 30px;
-      --bg: var(--mi-accordion-button-bg, white);
-      background: var(--bg);
-      color: var(--color-base);
-      color: contrast-color(var(--bg));
-    }
+      &__button-wrapper {
+        padding: 20px 30px;
+        --bg: var(--mi-accordion-button-bg, white);
+        background: var(--bg);
+        color: contrast-color(var(--bg));
+      }
 
-    &__button {
-      .c-icon {
-        font-family: var(--font-family-font-awesome);
-        font-size: var(--icon-size);
-        position: relative;
-        width: var(--icon-size);
-        height: var(--icon-size);
-
-        &::before,
-        &::after {
+      &__button {
+        .c-icon {
+          font-family: var(--font-family-font-awesome);
           font-size: var(--icon-size);
+          position: relative;
           width: var(--icon-size);
           height: var(--icon-size);
-          position: absolute;
-          top: 0;
-          transition: opacity var(--transition-duration-fast);
-          left: 0;
-        }
 
-        &::before {
-          content: "\+";
-          opacity: 1;
-        }
-
-        &::after {
-          content: "\f068";
-          opacity: 0;
-        }
-      }
-
-      &[aria-expanded="true"] {
-        .c-icon {
           &::before,
           &::after {
-            transition: opacity var(--transition-duration-fast)
-              calc(var(--transition-duration-fast) / 3);
+            font-size: var(--icon-size);
+            width: var(--icon-size);
+            height: var(--icon-size);
+            position: absolute;
+            top: 0;
+            transition: opacity var(--transition-duration-fast);
+            left: 0;
           }
+
           &::before {
-            opacity: 0;
+            content: "\+";
+            opacity: 1;
           }
 
           &::after {
-            opacity: 1;
+            content: "\f068";
+            opacity: 0;
+          }
+        }
+
+        &[aria-expanded="true"] {
+          .c-icon {
+            &::before,
+            &::after {
+              transition: opacity var(--transition-duration-fast)
+                calc(var(--transition-duration-fast) / 3);
+            }
+
+            &::before {
+              opacity: 0;
+            }
+
+            &::after {
+              opacity: 1;
+            }
           }
         }
       }

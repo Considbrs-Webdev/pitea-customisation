@@ -1,9 +1,12 @@
-.modularity-mod-toc .c-toc {
-  --toc-link-color: var(--color-stain-dark-3);
-  --toc-link-color-hover: var(--color-stain-dark-3);
-  --toc-track-indicator: var(--color-darjnalen-dark-1);
-  --toc-track-color: var(--color-darjnalen-light-3);
-  --toc-link-decoration: underline;
-  --toc-link-font-size: var(--font-size-link);
-  --toc-link-font-weight: var(--font-weight-heading, 600);
+// modularity-toc consumes --toc-* locals (not Styleguide --c-toc--*).
+@layer theme {
+  .modularity-mod-toc .c-toc {
+    --toc-link-color: var(--color-stain-dark-3);
+    --toc-link-color-hover: var(--color-stain-dark-3);
+    --toc-track-indicator: var(--color-darjnalen-dark-1);
+    --toc-track-color: var(--color-darjnalen-light-3);
+    --toc-link-decoration: underline;
+    --toc-link-font-size: var(--font-size-link, var(--font-size-100, 1rem));
+    --toc-link-font-weight: var(--font-weight-heading, 600);
+  }
 }

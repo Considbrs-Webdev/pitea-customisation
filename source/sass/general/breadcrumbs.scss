@@ -1,116 +1,117 @@
-.modularity-mod-breadcrumbs {
-  margin-bottom: calc(var(--base, 8px) * 5);
-
-  .nav-helper {
-    border-top: 1px solid var(--color-stain-light-4);
-    background: var(--color-darjnalen-light-4);
-    display: flex;
-    justify-content: center;
-    margin: 0;
-  }
-}
-
-.site-wrapper:has(.modularity-mod-hero, .top-element)
+@layer theme {
   .modularity-mod-breadcrumbs {
-  margin-bottom: 0;
-}
+    margin-bottom: calc(var(--base, 8px) * 5);
 
-.c-breadcrumb {
-  --color-breadcrumb: var(--color-stain-dark-3);
-  --color-breadcrumb-active: var(--color-stain-dark-3);
-
-  flex: 1;
-  max-width: var(--container-width, calc(var(--base, 8px) * 156));
-  padding: 16px calc(var(--base, 8px) * 3);
-
-  .c-icon {
-    transform: rotate(-65deg) scale(1.35);
-  }
-
-  li {
-    gap: 0.15em;
-    padding-right: 0.15em;
-
-    a {
-      text-decoration: underline;
-    }
-  }
-}
-
-// House icon is injected by JS; only show it on mobile
-.c-breadcrumb__home-icon {
-  display: none;
-}
-
-// Expand "…" button
-.c-breadcrumb__expand-btn {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  font-size: inherit;
-  font-family: inherit;
-  color: var(--color-breadcrumb, var(--color-stain-dark-3));
-  text-decoration: underline;
-  line-height: 1;
-  // Enlarge hit area without shifting the element visually
-  position: relative;
-  z-index: 1;
-
-  &::after {
-    content: "";
-    position: absolute;
-    inset: -0.5em -0.75em;
-  }
-
-  &:hover {
-    color: var(--color-breadcrumb-active, var(--color-stain-dark-3));
-  }
-
-  &:focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 0.5em;
-  }
-}
-
-.c-breadcrumb__item--expand {
-  display: flex;
-  align-items: center;
-  gap: 0.15em;
-  padding: 0 calc(var(--base, 8px) * 1) 0 0;
-  // Ensure the expand button sits above neighbouring rotated icons
-  position: relative;
-  z-index: 1;
-
-  // display: flex above overrides the UA stylesheet's [hidden] display: none,
-  // so we need to explicitly re-apply it.
-  &[hidden] {
-    display: none !important;
-  }
-}
-
-@media screen and (max-width: 36em) {
-  .c-breadcrumb--js-controlled {
-    // Override theme's "show only direct parent" rule — our JS handles visibility
-    .c-breadcrumb__item:not(:nth-last-child(2)) {
+    .nav-helper {
+      border-top: 1px solid var(--color-stain-light-4);
+      background: var(--color-darjnalen-light-4);
       display: flex;
+      justify-content: center;
+      margin: 0;
+    }
+  }
+
+  .site-wrapper:has(.modularity-mod-hero, .top-element)
+    .modularity-mod-breadcrumbs {
+    margin-bottom: 0;
+  }
+
+  .c-breadcrumb {
+    --c-breadcrumb--color--background-contrast-muted: var(--color-stain-dark-3);
+    --color-breadcrumb: var(--c-breadcrumb--color--background-contrast-muted);
+    --color-breadcrumb-active: var(--c-breadcrumb--color--background-contrast-muted);
+
+    flex: 1;
+    max-width: var(--container-width, calc(var(--base, 8px) * 156));
+    padding: 16px calc(var(--base, 8px) * 3);
+
+    .c-icon {
+      transform: rotate(-65deg) scale(1.35);
     }
 
-    // Show the house icon, visually hide the "Start" text (screen readers still read it)
-    .c-breadcrumb__home-icon {
-      display: inline;
-    }
+    li {
+      gap: 0.15em;
+      padding-right: 0.15em;
 
-    .c-breadcrumb__home-text {
+      a {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .c-breadcrumb__home-icon {
+    display: none;
+  }
+
+  .c-breadcrumb__expand-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-size: inherit;
+    font-family: inherit;
+    color: var(
+      --c-breadcrumb--color--background-contrast-muted,
+      var(--color-stain-dark-3)
+    );
+    text-decoration: underline;
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+
+    &::after {
+      content: "";
       position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
+      inset: -0.5em -0.75em;
+    }
+
+    &:hover {
+      color: var(
+        --c-breadcrumb--color--background-contrast-muted,
+        var(--color-stain-dark-3)
+      );
+    }
+
+    &:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 0.5em;
+    }
+  }
+
+  .c-breadcrumb__item--expand {
+    display: flex;
+    align-items: center;
+    gap: 0.15em;
+    padding: 0 calc(var(--base, 8px) * 1) 0 0;
+    position: relative;
+    z-index: 1;
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 36em) {
+    .c-breadcrumb--js-controlled {
+      .c-breadcrumb__item:not(:nth-last-child(2)) {
+        display: flex;
+      }
+
+      .c-breadcrumb__home-icon {
+        display: inline;
+      }
+
+      .c-breadcrumb__home-text {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
     }
   }
 }

@@ -1,131 +1,134 @@
 // Search results page – hit card styling
-body.search {
-  .c-card__sub-heading {
-    font-weight: var(--font-weight-heading, 600);
-  }
-
-  .c-badge.c-badge--primary {
-    --ts-badge-radius: 2px;
-  }
-
-  .ts-search-results {
-    --search-hit-gap: 0;
-    gap: var(--search-hit-gap);
-
-    // Service info cards
-    .mod-service-info {
-      --item-background-color: var(--search-hit-service-info-background);
-      --item-background-color-hover: color-mix(
-        in srgb,
-        var(--search-hit-service-info-background),
-        10% black
-      );
-      max-width: 100%;
+@layer theme {
+  body.search {
+    .c-card__sub-heading {
+      font-weight: var(--font-weight-heading, 600);
     }
 
-    // Default / image / noimage cards (fallback templates)
-    .c-card {
-      background-color: var(--search-hit-default-background);
-      border-bottom: 1px solid var(--color-darjnalen-light-2);
-      border-radius: 0;
+    .c-badge.c-badge--primary {
+      --ts-badge-radius: 2px;
+    }
+
+    .ts-search-results {
+      --search-hit-gap: 0;
+      gap: var(--search-hit-gap);
+
+      .mod-service-info {
+        --item-background-color: var(--search-hit-service-info-background);
+        --item-background-color-hover: color-mix(
+          in srgb,
+          var(--search-hit-service-info-background),
+          10% black
+        );
+        max-width: 100%;
+      }
+
+      .c-card {
+        --c-card--color--surface: var(--search-hit-default-background);
+        --c-card--border-radius: 0;
+        background-color: var(--search-hit-default-background);
+        border-bottom: 1px solid var(--color-darjnalen-light-2);
+        border-radius: 0;
+      }
+    }
+
+    p,
+    span {
+      mark {
+        font-weight: 600;
+      }
     }
   }
 
-  p,
-  span {
-    mark {
-      font-weight: 600;
-    }
-  }
-}
+  // Search modal: fused field + submit share one :focus-within ring
+  $t-search-modal-row-breakpoint: 601px;
 
-// Search modal: wrapper groups field + submit so :focus-within draws one ring around the fused bar (matches styleguide field focus).
-$t-search-modal-row-breakpoint: 601px;
-
-dialog.t-search-modal {
-  form.t-search-modal__form {
-    padding: 0;
-    grid-template-areas:
-      "label"
-      "composed";
-    grid-template-columns: 1fr;
-
-    @media (min-width: $t-search-modal-row-breakpoint) {
+  dialog.t-search-modal {
+    form.t-search-modal__form {
+      padding: 0;
       grid-template-areas:
-        "label label"
-        "composed composed";
+        "label"
+        "composed";
+      grid-template-columns: 1fr;
+
+      @media (min-width: $t-search-modal-row-breakpoint) {
+        grid-template-areas:
+          "label label"
+          "composed composed";
+      }
     }
-  }
 
-  .c-modal__content,
-  .c-modal__body,
-  form.t-search-modal__form {
-    overflow: visible;
-  }
+    .c-modal__content,
+    .c-modal__body,
+    form.t-search-modal__form {
+      overflow: visible;
+    }
 
-  .t-search-modal__composed-search {
-    display: flex;
-    flex-direction: column;
-    gap: calc(var(--base, 8px) * 1.5);
-    grid-area: composed;
-    width: 100%;
+    .t-search-modal__composed-search {
+      display: flex;
+      flex-direction: column;
+      gap: calc(var(--base, 8px) * 1.5);
+      grid-area: composed;
+      width: 100%;
 
-    @media (min-width: $t-search-modal-row-breakpoint) {
-      flex-direction: row;
-      align-items: stretch;
-      gap: 0;
+      @media (min-width: $t-search-modal-row-breakpoint) {
+        flex-direction: row;
+        align-items: stretch;
+        gap: 0;
+        position: relative;
+        border-radius: var(--radius-sm, calc(var(--base, 8px) / 2));
+
+        .t-search-modal__field {
+          flex: 1;
+          min-width: 0;
+        }
+
+        &:focus-within {
+          outline: thick solid var(--color--focus, var(--color-focus-outline, #4d90fe));
+          outline-offset: calc(var(--base, 8px) * 0.25);
+          box-shadow: 0 0 0 6px var(--color--white, var(--color-white, #fff));
+        }
+
+        &:focus-within .t-search-modal__field .c-field__inner {
+          outline: none;
+          box-shadow: none;
+        }
+
+        &:focus-within .t-search-modal__submit:focus,
+        &:focus-within .t-search-modal__submit:focus-visible {
+          outline: none;
+          box-shadow: none;
+        }
+      }
+    }
+
+    .c-modal__content {
       position: relative;
-      border-radius: var(--radius-sm, calc(var(--base, 8px) / 2));
+      top: -25%;
+      width: clamp(320px, 80%, 800px);
+    }
 
-      .t-search-modal__field {
-        flex: 1;
-        min-width: 0;
-      }
+    .ts-quick-search {
+      padding: 0;
+    }
 
-      &:focus-within {
-        outline: thick solid var(--color-focus-outline, #4d90fe);
-        outline-offset: calc(var(--base, 8px) * 0.25);
-        box-shadow: 0 0 0 6px var(--color-white, #fff);
-      }
-
-      &:focus-within .t-search-modal__field .c-field__inner {
-        outline: none;
-        box-shadow: none;
-      }
-
-      &:focus-within .t-search-modal__submit:focus,
-      &:focus-within .t-search-modal__submit:focus-visible {
-        outline: none;
-        box-shadow: none;
-      }
+    &::backdrop {
+      --c-modal--color--alpha: color-mix(
+        in srgb,
+        var(--color-darjnalen-dark-3),
+        transparent 50%
+      );
+      background-color: var(--c-modal--color--alpha);
+      backdrop-filter: blur(10px);
     }
   }
 
-  .c-modal__content {
-    position: relative;
-    top: -25%;
-    width: clamp(320px, 80%, 800px);
-  }
-
-  .ts-quick-search {
-    padding: 0;
-  }
-
-  &::backdrop {
-    --c-modal-backdrop-color: color-mix(
-      in srgb,
-      var(--color-darjnalen-dark-3),
-      transparent 50%
-    );
-    backdrop-filter: blur(10px);
-  }
-}
-
-.site-header {
-  .collapsible-search-form {
-    &.is-open {
-      .collapsible-search-form__form {
-        overflow: visible;
+  .site-header {
+    .collapsible-search-form {
+      &.is-open {
+        .collapsible-search-form__form {
+          overflow: visible;
+        }
       }
     }
   }

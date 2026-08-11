@@ -1,16 +1,18 @@
-p.is-style-preamble {
-  font-size: var(--font-size-lead, 22px);
-  line-height: 33px;
-}
-
-// Image blocks that sit directly under the article (not inside Group, Columns, etc.)
-#article.c-article {
-  > .wp-block-image,
-  > figure.c-image {
-    margin-top: calc(var(--base, 8px) * 3);
+@layer theme {
+  p.is-style-preamble {
+    font-size: var(--font-size-lead, var(--font-size-200, 1.375rem));
+    line-height: 33px;
   }
-}
 
-ul.wp-block-list li::marker {
-  color: inherit;
+  // Image blocks that sit directly under the article (not inside Group, Columns, etc.)
+  #article.c-article {
+    > .wp-block-image,
+    > figure.c-image {
+      margin-top: calc(var(--base, 8px) * 3);
+    }
+  }
+
+  ul.wp-block-list li::marker {
+    color: inherit;
+  }
 }

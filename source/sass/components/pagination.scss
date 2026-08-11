@@ -1,126 +1,126 @@
-:root {
-  --pagination-button-background: var(--color-background-card);
-  --pagination-button-text: var(--color-base);
-  --pagination-button-disabled-background: var(--color-background-card);
-  --pagination-button-disabled-text: color-mix(
-    in srgb,
-    var(--color-background-card) 80%,
-    var(--color-base) 20%
-  );
-  --pagination-button-prevnext-background: color-mix(
-    in srgb,
-    var(--color-background-card) 80%,
-    var(--color-base) 20%
-  );
-  --pagination-button-prevnext-text: var(--color-base);
-  --pagination-button-active-background: var(--color-base);
-  --pagination-button-active-text: var(--color-background-card);
-}
-
-.c-pagination {
-  --c-icon-size: calc(var(--font-size-small) * 1.5);
-  --pagination-item-padding: 16px 22px;
-
-  .c-button {
-    background: var(--pagination-button-background);
-    color: var(--pagination-button-text);
-    border-radius: var(--border-radius-xsmall);
-    font-size: var(--font-size-small);
-    min-height: calc(var(--font-size-small) * 3.25);
-    min-width: calc(var(--font-size-small) * 3.25) !important;
-
-    &:is(:disabled) {
-      background: var(--pagination-button-disabled-background);
-      color: var(--pagination-button-disabled-text);
-    }
-
-    &__label {
-      line-height: 1.375;
-      padding: var(--pagination-item-padding);
-    }
+@layer theme {
+  :root {
+    --pagination-button-background: var(--c-card--color--surface, transparent);
+    --pagination-button-text: var(--color-base);
+    --pagination-button-disabled-background: var(--c-card--color--surface, transparent);
+    --pagination-button-disabled-text: color-mix(
+      in srgb,
+      var(--c-card--color--surface, transparent) 80%,
+      var(--color-base) 20%
+    );
+    --pagination-button-prevnext-background: color-mix(
+      in srgb,
+      var(--c-card--color--surface, transparent) 80%,
+      var(--color-base) 20%
+    );
+    --pagination-button-prevnext-text: var(--color-base);
+    --pagination-button-active-background: var(--color-base);
+    --pagination-button-active-text: var(--c-card--color--surface, transparent);
   }
 
-  .c-pagination__item--previous,
-  .c-pagination__item--next {
-    .c-button:not(:disabled) {
-      background: var(--pagination-button-prevnext-background);
-      color: var(--pagination-button-prevnext-text);
-    }
-  }
-
-  .c-pagination__item--is-active {
-    &.c-button {
-      background: var(--pagination-button-active-background);
-      color: var(--pagination-button-active-text);
-    }
-  }
-
-  .c-button__filled--default .c-button__label-text,
-  .c-button__filled--default .c-button__label-icon,
-  .c-button__filled--deafult .c-button__label-text,
-  .c-button__filled--deafult .c-button__label-icon,
-  .c-button:disabled:not(.c-button--no-disabled-color) * {
-    color: inherit;
-  }
-}
-
-.post-type-archive-news,
-.post-type-archive-nyheter,
-.post-type-archive-lediga-jobb {
-  --pagination-button-background: var(--color-darjnalen-light-4);
-  --pagination-button-text: var(--color-darjnalen-dark-3);
-  --pagination-button-disabled-background: var(--color-darjnalen-light-4);
-  --pagination-button-disabled-text: var(--color-darjnalen-light-3);
-  --pagination-button-prevnext-background: var(--color-darjnalen-light-2);
-  --pagination-button-prevnext-text: var(--color-darjnalen-dark-3);
-  --pagination-button-active-background: var(--color-darjnalen-dark-3);
-  --pagination-button-active-text: var(--color-darjnalen-light-4);
-}
-
-.s-municipal_event-archive {
-  --pagination-button-background: var(--color-paren-light-4);
-  --pagination-button-text: var(--color-paren-dark-3);
-  --pagination-button-disabled-background: var(--color-paren-light-4);
-  --pagination-button-disabled-text: var(--color-paren-light-3);
-  --pagination-button-prevnext-background: var(--color-paren-light-3);
-  --pagination-button-prevnext-text: var(--color-paren-dark-3);
-  --pagination-button-active-background: var(--color-paren-dark-3);
-  --pagination-button-active-text: var(--color-paren-light-4);
-}
-
-// Mobile pagination: Show only first, active, last pages with ellipses
-@media (max-width: 767px) {
   .c-pagination {
-    .c-pagination__list > .c-pagination__item.u-display--none\@xs:not(.c-pagination__item--previous):not(.c-pagination__item--next):not(.c-pagination__page-wrapper) {
-      display: flex !important;
-    }
+    --c-icon--size: calc(var(--font-size-small) * 1.5);
+    --pagination-item-padding: 16px 22px;
 
-    // Always show ellipses (override u-display--none@xs)
-    .c-pagination__list > .c-pagination__item:has(.c-icon--more-horiz) {
-      display: flex !important;
-    }
+    .c-button {
+      background: var(--pagination-button-background);
+      color: var(--pagination-button-text);
+      border-radius: var(--border-radius-xsmall);
+      font-size: var(--font-size-small);
+      min-height: calc(var(--font-size-small) * 3.25);
+      min-width: calc(var(--font-size-small) * 3.25);
 
-    // Hide all non-active pages inside the page wrapper
-    .c-pagination__pages .c-pagination__item {
-      display: none;
+      &:is(:disabled) {
+        background: var(--pagination-button-disabled-background);
+        color: var(--pagination-button-disabled-text);
+      }
 
-      // Show only the active page
-      &:has(.c-pagination__item--is-active) {
-        display: flex !important;
+      &__label {
+        line-height: 1.375;
+        padding: var(--pagination-item-padding);
       }
     }
 
-    // Show page 1 when current page is 2 (using data attribute from PHP)
-    &[data-show-page-1="true"] {
-      .c-pagination__pages .c-pagination__item[data-js-pagination-index="1"] {
-        display: flex !important;
+    .c-pagination__item--previous,
+    .c-pagination__item--next {
+      .c-button:not(:disabled) {
+        background: var(--pagination-button-prevnext-background);
+        color: var(--pagination-button-prevnext-text);
       }
     }
 
-    // Show last page when current page is second-to-last (using data attribute from PHP)
-    &[data-show-last-page="true"] {
-      .c-pagination__pages .c-pagination__item:last-child {
-        display: flex !important;
+    .c-pagination__item--is-active {
+      &.c-button {
+        background: var(--pagination-button-active-background);
+        color: var(--pagination-button-active-text);
+      }
+    }
+
+    .c-button__filled--default .c-button__label-text,
+    .c-button__filled--default .c-button__label-icon,
+    .c-button__filled--deafult .c-button__label-text,
+    .c-button__filled--deafult .c-button__label-icon,
+    .c-button:disabled:not(.c-button--no-disabled-color) * {
+      color: inherit;
+    }
+  }
+
+  .post-type-archive-news,
+  .post-type-archive-nyheter,
+  .post-type-archive-lediga-jobb {
+    --pagination-button-background: var(--color-darjnalen-light-4);
+    --pagination-button-text: var(--color-darjnalen-dark-3);
+    --pagination-button-disabled-background: var(--color-darjnalen-light-4);
+    --pagination-button-disabled-text: var(--color-darjnalen-light-3);
+    --pagination-button-prevnext-background: var(--color-darjnalen-light-2);
+    --pagination-button-prevnext-text: var(--color-darjnalen-dark-3);
+    --pagination-button-active-background: var(--color-darjnalen-dark-3);
+    --pagination-button-active-text: var(--color-darjnalen-light-4);
+  }
+
+  .s-municipal_event-archive {
+    --pagination-button-background: var(--color-paren-light-4);
+    --pagination-button-text: var(--color-paren-dark-3);
+    --pagination-button-disabled-background: var(--color-paren-light-4);
+    --pagination-button-disabled-text: var(--color-paren-light-3);
+    --pagination-button-prevnext-background: var(--color-paren-light-3);
+    --pagination-button-prevnext-text: var(--color-paren-dark-3);
+    --pagination-button-active-background: var(--color-paren-dark-3);
+    --pagination-button-active-text: var(--color-paren-light-4);
+  }
+
+  // Mobile pagination: show first, active, last pages with ellipses
+  @media (max-width: 767px) {
+    .c-pagination {
+      .c-pagination__list
+        > .c-pagination__item.u-display--none\@xs:not(.c-pagination__item--previous):not(
+          .c-pagination__item--next
+        ):not(.c-pagination__page-wrapper) {
+        display: flex;
+      }
+
+      .c-pagination__list > .c-pagination__item:has(.c-icon--more-horiz) {
+        display: flex;
+      }
+
+      .c-pagination__pages .c-pagination__item {
+        display: none;
+
+        &:has(.c-pagination__item--is-active) {
+          display: flex;
+        }
+      }
+
+      &[data-show-page-1="true"] {
+        .c-pagination__pages .c-pagination__item[data-js-pagination-index="1"] {
+          display: flex;
+        }
+      }
+
+      &[data-show-last-page="true"] {
+        .c-pagination__pages .c-pagination__item:last-child {
+          display: flex;
+        }
       }
     }
   }

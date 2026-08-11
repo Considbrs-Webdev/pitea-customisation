@@ -1,3 +1,5 @@
-body.single-lediga-jobb {
-  --c-paper-color-background: var(--color-darjnalen-light-4);
+@layer theme {
+  body.single-lediga-jobb {
+    --c-paper--color--surface: var(--color-darjnalen-light-4);
+  }
 }

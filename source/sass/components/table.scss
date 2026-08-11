@@ -1,29 +1,30 @@
-:root {
-  --c-table-background-color-odd: #ddd;
-}
+@layer theme {
+  .c-table {
+    // Odd rows use --c-table--color--surface in Styleguide v3.
+    --c-table--color--surface: #ddd;
 
-.c-table {
-  &__head {
-    .c-table__heading {
-      font-size: var(--font-size-table-heading);
-    }
-  }
-
-  &__body {
-    .c-table__line {
-      .c-table__column {
-        border-right: 0;
+    &__head {
+      .c-table__heading {
+        font-size: var(--font-size-table-heading, var(--font-size-100, 1rem));
       }
     }
 
-    .c-table__column-content {
-      font-size: var(--font-size-table);
+    &__body {
+      .c-table__line {
+        .c-table__column {
+          border-right: 0;
+        }
+      }
+
+      .c-table__column-content {
+        font-size: var(--font-size-table, var(--font-size-90, 0.875rem));
+      }
     }
   }
 
-  table {
-    --color-complementary: var(--color-darjnalen-light-2);
-
+  // Native HTML tables (content): thead brand colors via local vars.
+  // Do not map thead to --c-table--color--surface-alt — that token also paints even rows.
+  table:not(.c-table *) {
     thead {
       th {
         color: var(
@@ -32,7 +33,7 @@
         );
         background-color: var(
           --table-head-background,
-          var(--color-primary, #ae0b05)
+          var(--color-primary, var(--color--primary, #ae0b05))
         );
       }
     }

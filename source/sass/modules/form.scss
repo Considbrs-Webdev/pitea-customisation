@@ -1,51 +1,46 @@
-.modularity-mod-form {
-  // ── Design tokens — Dårjnålen palette, mirrors mod-a-o shade mapping ─────────
-  --mod-form-primary: var(--color-darjnalen-dark-3);
-  --mod-form-primary-dark: var(--color-darjnalen-dark-2);
-  --mod-form-header-bg: var(--color-darjnalen-light-2);
-  --mod-form-surface: var(--color-darjnalen-light-4);
-  --mod-form-border: var(--color-stain-light-2);
-  --mod-form-text: var(--color-stain-dark-3);
+@layer theme {
+  .modularity-mod-form {
+    --mod-form-primary: var(--color-darjnalen-dark-3);
+    --mod-form-primary-dark: var(--color-darjnalen-dark-2);
+    --mod-form-header-bg: var(--color-darjnalen-light-2);
+    --mod-form-surface: var(--color-darjnalen-light-4);
+    --mod-form-border: var(--color-stain-light-2);
+    --mod-form-text: var(--color-stain-dark-3);
 
-  // ── Submit button — override Municipio's primary button tokens ────────────────
-  --c-button-primary-color: var(--mod-form-primary);
-  --c-button-primary-color-contrasting: var(--color-stain-light-4);
+    --c-button--color--primary: var(--mod-form-primary);
+    --c-button--color--primary-contrast: var(--color-stain-light-4);
 
-  // ── Card header: title bar ────────────────────────────────────────────────────
-  .c-card {
-    .c-card__header {
-      background-color: var(--mod-form-header-bg);
-      border-bottom: 1px solid var(--mod-form-border);
+    .c-card {
+      .c-card__header {
+        background-color: var(--mod-form-header-bg);
+        border-bottom: 1px solid var(--mod-form-border);
 
-      * {
-        color: var(--mod-form-primary);
+        * {
+          color: var(--mod-form-primary);
+        }
+      }
+
+      .c-card__body {
+        background-color: var(--mod-form-surface);
       }
     }
 
-    // Card body: subtle branded surface
-    .c-card__body {
-      background-color: var(--mod-form-surface);
+    .c-field__label {
+      color: var(--mod-form-primary);
     }
-  }
 
-  // ── Field labels ──────────────────────────────────────────────────────────────
-  .c-field__label {
-    color: var(--mod-form-primary);
-  }
+    .c-field__inner {
+      border-color: var(--mod-form-border);
 
-  // ── Input / textarea / select: border and focus ring ─────────────────────────
-  .c-field__inner {
-    border-color: var(--mod-form-border);
-
-    &:focus-within {
-      border-color: var(--mod-form-primary);
-      outline-color: var(--mod-form-primary);
+      &:focus-within {
+        border-color: var(--mod-form-primary);
+        outline-color: var(--mod-form-primary);
+      }
     }
-  }
 
-  // ── Radio / checkbox label text ───────────────────────────────────────────────
-  .c-option__radio--label-text,
-  .c-option__checkbox--label-text {
-    color: var(--mod-form-text);
+    .c-option__radio--label-text,
+    .c-option__checkbox--label-text {
+      color: var(--mod-form-text);
+    }
   }
 }

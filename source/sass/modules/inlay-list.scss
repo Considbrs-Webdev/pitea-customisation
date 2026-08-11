@@ -1,63 +1,73 @@
-.modularity-mod-inlaylist {
-  --color-background-card: transparent;
-  --card-header-padding: 0 0 1rem 0;
-  --card-header-background: transparent;
-  --card-header-color: var(--color-base);
-  --card-header-font-size: 32px;
-  --link-background: var(--color-darjnalen-light-4);
-  --link-background-hover: var(--color-darjnalen-light-3);
-  --link-color: var(--color-darjnalen-dark-3);
-  --link-border-radius: 8px;
-  --link-icon-size: 20px;
-  --link-padding: 22px 30px;
-  --link-spacing: 12px;
+@layer theme {
+  .modularity-mod-inlaylist {
+    --inlay-link-background: var(--color-darjnalen-light-4);
+    --inlay-link-background-hover: var(--color-darjnalen-light-3);
+    --inlay-link-color: var(--color-darjnalen-dark-3);
+    --inlay-link-icon-size: 20px;
+    --inlay-link-spacing: 12px;
+    --inlay-card-header-padding: 0 0 1rem 0;
+    --inlay-card-header-font-size: 32px;
 
-  .c-card {
-    .c-card__header {
-      background: var(--card-header-background);
-      color: var(--card-header-color);
-      padding: var(--card-header-padding);
+    .c-card {
+      --c-card--color--surface: transparent;
+      --c-card--color--surface-alt: transparent;
+      --c-card--shadow-amount: 0;
+      --c-card--shadow: none;
+      --c-card--shadow-hover: none;
 
-      .c-typography {
-        font-size: var(--card-header-font-size);
-      }
+      .c-card__header {
+        background: transparent;
+        color: var(--color-base, var(--color--surface-contrast));
+        padding: var(--inlay-card-header-padding);
 
-      * {
-        color: var(--card-header-color);
+        .c-typography {
+          font-size: var(--inlay-card-header-font-size);
+        }
+
+        * {
+          color: inherit;
+        }
       }
     }
 
     .c-collection {
-      .c-collection__item {
-        border-radius: var(--link-border-radius);
-        gap: 22px;
-        padding: var(--link-padding);
-        transition: background-color var(--transition-duration-medium);
+      // Resting action surface is not tokenized upstream — set color tokens + keep bg selector.
+      --c-collection--color--surface-contrast: var(--inlay-link-color);
+      --c-collection--color--surface-border: var(--inlay-link-background-hover);
+      --c-collection--border-radius: 1;
+      --c-collection--padding-x: 30px;
+      --c-collection--padding-y: 22px;
 
-        &:hover {
-          background-color: var(--link-background-hover);
-        }
+      .c-collection__item {
+        gap: 22px;
+        transition: background-color var(--transition-duration-medium, 0.3s);
 
         &--action {
-          background-color: var(--link-background);
-          color: var(--link-color);
+          background-color: var(--inlay-link-background);
+          color: var(--inlay-link-color);
+          border-radius: calc(var(--base, 8px) * var(--c-collection--border-radius, 1));
+        }
+
+        &:hover {
+          background-color: var(--inlay-link-background-hover);
         }
 
         .c-collection__content {
           padding: 0;
+
           .c-typography {
             text-decoration: underline;
           }
         }
 
         .c-collection__icon {
-          font-size: var(--link-icon-size);
+          font-size: var(--inlay-link-icon-size);
           padding: 0;
         }
       }
 
       .c-collection__item + .c-collection__item {
-        margin-top: var(--link-spacing);
+        margin-top: var(--inlay-link-spacing);
       }
     }
   }

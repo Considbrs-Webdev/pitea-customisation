@@ -1,7 +1,11 @@
-.c-button.c-button--sm {
-  letter-spacing: unset;
+@layer theme {
+  // Upstream outlined --sm sets letter-spacing: 0.1rem; Piteå prefers none.
+  // Selector aligned with styleguide: .c-button.c-button__outlined.c-button--sm
+  .c-button.c-button__outlined.c-button--sm {
+    letter-spacing: unset;
 
-  &.c-button__outlined.c-button__outlined--primary {
-    background-color: var(--color-darjnalen-light-4);
+    &[class*="--primary"] {
+      background-color: var(--color-darjnalen-light-4);
+    }
   }
 }

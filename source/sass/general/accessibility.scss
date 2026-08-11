@@ -1,45 +1,47 @@
 // Bootstrap-aligned visually hidden text (audit-friendly class name).
-.visually-hidden,
-.visually-hidden-focusable:not(:focus):not(:focus-within) {
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  padding: 0 !important;
-  margin: -1px !important;
-  overflow: hidden !important;
-  clip: rect(0, 0, 0, 0) !important;
-  white-space: nowrap !important;
-  border: 0 !important;
-}
+@layer theme {
+  .visually-hidden,
+  .visually-hidden-focusable:not(:focus):not(:focus-within) {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
 
-.nav-helper {
-  justify-content: flex-end;
-}
+  .nav-helper {
+    justify-content: flex-end;
+  }
 
-// Modularity “Accessibility buttons” (acc-buttons): row, aligned to end (sidebar).
-.mod-acc-buttons__list {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-// Nav-helper and sidebar module: keep icon visually before label (styleguide button label often uses row-reverse).
-.nav-accessibility,
-.mod-acc-buttons {
-  .c-button .c-button__label {
+  // Modularity “Accessibility buttons” (acc-buttons): row, aligned to end (sidebar).
+  .mod-acc-buttons__list {
+    display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5rem;
   }
 
-  .c-button .c-button__label-icon,
-  .c-button .c-button__label-icon--reverse {
-    order: 0;
-  }
+  // Nav-helper and sidebar module: keep icon visually before label.
+  .nav-accessibility,
+  .mod-acc-buttons {
+    .c-button .c-button__label {
+      flex-direction: row;
+    }
 
-  .c-button .c-button__label-text,
-  .c-button .c-button__label-text--reverse {
-    order: 1;
+    .c-button .c-button__label-icon,
+    .c-button .c-button__label-icon--reverse {
+      order: 0;
+    }
+
+    .c-button .c-button__label-text,
+    .c-button .c-button__label-text--reverse {
+      order: 1;
+    }
   }
 }

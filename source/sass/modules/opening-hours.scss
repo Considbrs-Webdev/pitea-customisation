@@ -1,4 +1,5 @@
-.mod-opening-hours {
-  --color-secondary-light: var(--color-darjnalen-light-4);
-  border-radius: var(--border-radius-small);
+@layer theme {
+  .mod-opening-hours {
+    border-radius: var(--border-radius-small, calc(var(--base, 8px) * 0.625));
+  }
 }

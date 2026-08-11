@@ -1,123 +1,131 @@
 @use "../elements/news-item";
 
 // Default archive page styles
-.post-type-archive {
-  --archive-filter-background: var(--color-background-card);
-  --archive-filter-padding: 36px 30px;
-  --c-field-background-color: white;
-  --c-field-label-color: black;
-  --c-button-primary-color: var(--color-base);
-  --c-button-primary-color-contrasting: white;
+@layer theme {
+  .post-type-archive {
+    --archive-filter-background: var(--c-card--color--surface, transparent);
+    --archive-filter-padding: 36px 30px;
+    --c-field--color--surface: white;
+    --c-field--background-color: white;
+    --c-field--contrast-color: black;
+    --c-button--color--primary: var(--color-base, var(--color--surface-contrast));
+    --c-button--color--primary-contrast: white;
 
-  .s-archive-filter {
-    background-color: var(--archive-filter-background);
-    border-radius: var(--border-radius-small);
-    margin-bottom: calc(var(--base, 8px) * 5);
-    padding: var(--archive-filter-padding);
-
-    .c-field {
-      &__label {
-        color: var(--c-field-label-color);
-        font-size: var(--font-size-label);
-        text-transform: none;
-      }
-      &__inner {
-        border-radius: var(--border-radius-xsmall);
-      }
-    }
-  }
-
-  .c-pagination {
-    justify-content: flex-start !important;
-  }
-
-  .s-archive .c-card:not(.c-simpleview-event-card):not(.c-municipal-event-card) {
-    border: none;
-    box-shadow: none;
-    filter: none;
-    &:hover {
-      filter: none;
-      background-color: inherit;
-      color: inherit;
-      transform: none;
-      transition: none;
-    }
-  }
-
-  .s-archive .c-card:not(.c-simpleview-event-card):not(.c-municipal-event-card) .c-card__body {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .s-news-archive,
-  .s-nyheter-archive,
-  .s-nyhet-archive {
-    --archive-filter-background: var(--color-darjnalen-light-3);
-    --c-button-primary-color: var(--color-darjnalen-dark-3);
-    --c-button-primary-color-contrasting: var(--color-darjnalen-light-4);
-
-    @include news-item.base();
-
-    .c-newsitem {
-      &:last-child {
-        border-bottom: 0;
-        padding-bottom: 0;
-      }
-    }
-
-    & > .c-element > .c-element:has(.c-pagination) {
-      border-top: news-item.item-border();
-      margin-top: calc(var(--base, 8px) * 2);
-    }
-  }
-  .s-forskola-archive {
-    --archive-filter-background: var(--color-darjnalen-light-3);
-    --c-button-primary-color: var(--color-darjnalen-dark-3);
-    --c-button-primary-color-contrasting: var(--color-darjnalen-light-4);
-    --c-button-primary-color: var(--color-darjnalen-dark-3);
-    --c-button-primary-color-contrasting: var(--color-white);
-  }
-  .s-lediga-jobb-archive {
-    --archive-filter-background: var(--color-darjnalen-light-3);
-    --c-button-primary-color: var(--color-darjnalen-dark-3);
-    --c-button-primary-color-contrasting: var(--color-darjnalen-light-4);
-    --c-table-background-color-odd: color-mix(
-      in srgb,
-      var(--color-darjnalen-light-4) 40%,
-      white 60%
-    );
-    --c-table-background-color-even: var(--color-darjnalen-light-3);
-  }
-
-  .s-noticeboard_notice-archive {
-    --archive-filter-background: var(--color-paren-light-3);
-    --c-button-primary-color: var(--color-paren-dark-3);
-    --c-button-primary-color-contrasting: var(--color-paren-light-4);
-
-    @include news-item.base();
-
-    .c-newsitem {
-      border: 1px solid var(--color-stain-light-3);
+    .s-archive-filter {
+      background-color: var(--archive-filter-background);
       border-radius: var(--border-radius-small);
-      padding: 28px;
+      margin-bottom: calc(var(--base, 8px) * 5);
+      padding: var(--archive-filter-padding);
+
+      .c-field {
+        &__label {
+          color: var(--c-field--contrast-color);
+          font-size: var(--font-size-label);
+          text-transform: none;
+        }
+
+        &__inner {
+          border-radius: var(--border-radius-xsmall);
+        }
+      }
     }
-  }
 
-  .s-municipal_event-archive {
-    --archive-filter-background: var(--color-paren-light-3);
-    --c-button-primary-color: var(--color-paren-dark-3);
-    --c-button-primary-color-contrasting: var(--color-paren-light-4);
-  }
+    .c-pagination {
+      justify-content: flex-start;
+    }
 
-  &.archive-simpleview {
-    --archive-filter-background: var(--color-darjnalen-light-3);
-    --archive-simpleview-card-background: var(--color-darjnalen-light-4);
-    --c-button-primary-color: var(--color-paren-dark-3);
-    --c-button-primary-color-contrasting: var(--color-paren-light-4);
+    .s-archive .c-card:not(.c-simpleview-event-card):not(.c-municipal-event-card) {
+      --c-card--shadow-amount: 0;
+      --c-card--shadow: none;
+      --c-card--shadow-hover: none;
+      --c-card--color--surface-alt: var(--c-card--color--surface);
+      border: none;
+      box-shadow: none;
+      filter: none;
 
-    // Card list background: change --archive-simpleview-card-background above to tune
-    .c-simpleview-event-card {
-      background-color: var(--archive-simpleview-card-background);
+      &:hover {
+        filter: none;
+        background-color: inherit;
+        color: inherit;
+        transform: none;
+        transition: none;
+      }
+    }
+
+    .s-archive .c-card:not(.c-simpleview-event-card):not(.c-municipal-event-card) .c-card__body {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .s-news-archive,
+    .s-nyheter-archive,
+    .s-nyhet-archive {
+      --archive-filter-background: var(--color-darjnalen-light-3);
+      --c-button--color--primary: var(--color-darjnalen-dark-3);
+      --c-button--color--primary-contrast: var(--color-darjnalen-light-4);
+
+      @include news-item.base();
+
+      .c-newsitem {
+        &:last-child {
+          border-bottom: 0;
+          padding-bottom: 0;
+        }
+      }
+
+      & > .c-element > .c-element:has(.c-pagination) {
+        border-top: news-item.item-border();
+        margin-top: calc(var(--base, 8px) * 2);
+      }
+    }
+
+    .s-forskola-archive {
+      --archive-filter-background: var(--color-darjnalen-light-3);
+      --c-button--color--primary: var(--color-darjnalen-dark-3);
+      --c-button--color--primary-contrast: var(--color-white, #fff);
+    }
+
+    .s-lediga-jobb-archive {
+      --archive-filter-background: var(--color-darjnalen-light-3);
+      --c-button--color--primary: var(--color-darjnalen-dark-3);
+      --c-button--color--primary-contrast: var(--color-darjnalen-light-4);
+      --c-table--color--surface: color-mix(
+        in srgb,
+        var(--color-darjnalen-light-4) 40%,
+        white 60%
+      );
+      --c-table--color--surface-alt: var(--color-darjnalen-light-3);
+    }
+
+    .s-noticeboard_notice-archive {
+      --archive-filter-background: var(--color-paren-light-3);
+      --c-button--color--primary: var(--color-paren-dark-3);
+      --c-button--color--primary-contrast: var(--color-paren-light-4);
+
+      @include news-item.base();
+
+      .c-newsitem {
+        border: 1px solid var(--color-stain-light-3);
+        border-radius: var(--border-radius-small);
+        padding: 28px;
+      }
+    }
+
+    .s-municipal_event-archive {
+      --archive-filter-background: var(--color-paren-light-3);
+      --c-button--color--primary: var(--color-paren-dark-3);
+      --c-button--color--primary-contrast: var(--color-paren-light-4);
+    }
+
+    &.archive-simpleview {
+      --archive-filter-background: var(--color-darjnalen-light-3);
+      --archive-simpleview-card-background: var(--color-darjnalen-light-4);
+      --c-button--color--primary: var(--color-paren-dark-3);
+      --c-button--color--primary-contrast: var(--color-paren-light-4);
+
+      .c-simpleview-event-card {
+        background-color: var(--archive-simpleview-card-background);
+      }
     }
   }
 }
