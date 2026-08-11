@@ -32,6 +32,7 @@ class App
         $classes = [
             Admin\Settings::class,
             Customisations\Accessibility::class,
+            Customisations\BrandTokens::class,
             Customisations\Breadcrumbs::class,
             Customisations\BlockPatternCompatibility::class,
             Customisations\ColorPicker::class,

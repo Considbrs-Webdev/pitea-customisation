@@ -1,12 +1,20 @@
 // Custom variables
+//
+// Brand typography / radius / primary palette: owned by
+// source/tokens/pitea-brand.tokens.json (Design Builder @layer theme).
+// Do not reintroduce --font-family-base, --base-font-size, --font-weight-*,
+// --border-radius, or --color--* here — unlayered :root fights @layer theme.
 :root {
   --border-radius-xsmall: 5px;
   --border-radius-small: 8px;
 
-  --font-family-base: "Work Sans", sans-serif;
   --font-family-bold: var(--font-family-base);
   --wa-font-family-body: var(--font-family-base);
   --font-family-font-awesome: var(--fa-family-classic);
+
+  // Legacy size aliases still referenced by module/component SCSS (Agent B).
+  // Prefer --font-size-100…/--font-size-400 when those call sites are migrated.
+  // Front h1–h6 sizes are owned by --font-size-700…200 via pitea-brand.tokens.json.
   --font-size-body: 18px;
   --font-size-small: 16px;
   --font-size-lead: 22px;
@@ -23,25 +31,6 @@
   --transition-duration-fast: 0.2s;
   --transition-duration-medium: 0.3s;
   --transition-duration-slow: 0.5s;
-}
-
-// Typography weight bridge
-//
-// Kirki’s “Rubriker” (Headings) sets --font-weight-heading. Several other controls
-// do not offer 600 in the variant list (e.g. Fetstil, Button), and per-level H1–H6
-// often get stuck at 700. Map those CSS variables to Rubriker so one Customiser
-// choice drives heading, bold, and button weight. Kirki’s dynamic CSS is injected
-// late in wp_head (after this compiled stylesheet), so plain :root would lose the
-// cascade; :root:root bumps specificity without !important.
-:root:root {
-  --font-weight-bold: var(--font-weight-heading, 600);
-  --h1-font-weight: var(--font-weight-heading, 600);
-  --h2-font-weight: var(--font-weight-heading, 600);
-  --h3-font-weight: var(--font-weight-heading, 600);
-  --h4-font-weight: var(--font-weight-heading, 600);
-  --h5-font-weight: var(--font-weight-heading, 500);
-  --h6-font-weight: var(--font-weight-heading, 500);
-  --font-weight-button: var(--font-weight-heading, 600);
 }
 
 // Custom colors
