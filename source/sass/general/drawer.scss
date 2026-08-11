@@ -1,126 +1,137 @@
-// Drawer navigation – Pitea overrides (Figma spec)
-:root {
-  --c-drawer-background-color: var(--color-paren-light-4),
-    var(--drawer-background-color);
-  --c-drawer-text-color: var(--color-white);
-  --c-drawer-bottom-background-color: var(--color-darjnalen-light-4);
-  --c-drawer-bottom-text-color: var(--c-text-color);
+// Drawer navigation – Piteå overrides (Figma spec) → Styleguide v3 tokens
 
-  // Primary nav: dark green header, light green top-level, white sub-items
-  --c-drawer-nav-primary-background-color: var(--color-darjnalen-dark-3);
-  --c-drawer-nav-secondary-background-color: var(--color-darjnalen-light-4);
-  --c-drawer-nav-top-level-background: var(--color-darjnalen-light-4);
-  --c-drawer-nav-subitem-background: var(--color-white);
-}
+@layer theme {
+  :root {
+    // Official drawer surface/contrast (feeds --drawer-background / --drawer-color)
+    --c-drawer--color--surface: var(--color-paren-light-4);
+    --c-drawer--color--surface-contrast: var(--color-white, #fff);
 
-.c-drawer {
-  --drawer-duotone-background: var(--color-darjnalen-light-4) !important;
-  font-family: var(--font-family-base);
-
-  background-image: url("../../assets/svg/Trad-hav-hus.svg");
-  background-repeat: no-repeat;
-  background-position: left bottom;
-  background-size: auto 200px;
-  background-attachment: local;
-  padding-bottom: 220px;
-
-  .c-nav__item-wrapper {
-    transition: background-color 0.3s ease-in-out;
+    // Piteå-local nav palette (not in upstream token list)
+    --c-drawer--nav-primary-background: var(--color-darjnalen-dark-3);
+    --c-drawer--nav-secondary-background: var(--color-darjnalen-light-4);
+    --c-drawer--nav-top-level-background: var(--color-darjnalen-light-4);
+    --c-drawer--nav-subitem-background: var(--color-white, #fff);
+    --c-drawer--bottom-background: var(--color-darjnalen-light-4);
+    --c-drawer--bottom-text: var(--c-text-color, inherit);
   }
 
-  .s-nav-drawer-primary {
-    background-color: var(--c-drawer-nav-primary-background-color);
-    margin-bottom: 20px;
+  .c-drawer {
+    --drawer-duotone-background: var(--color-darjnalen-light-4);
+    --c-drawer--color--surface: var(--color-paren-light-4);
+    font-family: var(--font-family-base);
 
-    .c-nav__toggle {
-      border-radius: 0;
-    }
+    background-image: url("../../assets/svg/Trad-hav-hus.svg");
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    // Stretch tree illustration across M7 drawer width (was auto → right-side gaps)
+    background-size: 100% 200px;
+    background-attachment: local;
+    padding-bottom: 220px;
 
     .c-nav__item-wrapper {
+      transition: background-color 0.3s ease-in-out;
     }
 
-    // Depth 1 (top-level items)
-    > .c-nav__item > .c-nav__item-wrapper {
-      background-color: var(--c-drawer-nav-top-level-background);
-      font-size: 1.1rem;
-      font-weight: var(--font-weight-heading, 600);
+    .s-nav-drawer-primary {
+      background-color: var(--c-drawer--nav-primary-background);
+      margin-bottom: 20px;
+
+      // Light primary rows: dark expand/+ (upstream duotone paints toggles with --drawer-color
+      // from --c-drawer--color--surface-contrast, which stays white for header/secondary)
+      --c-drawer--color--surface-contrast: var(--color-stain-dark-3);
+      --drawer-color: var(--color-stain-dark-3);
+      --c-nav--color--surface-contrast: var(--color-stain-dark-3);
+      --c-nav--item-color: var(--color-stain-dark-3);
+
+      .c-nav__toggle {
+        border-radius: 0;
+      }
+
+      // Depth 1 (top-level items)
+      > .c-nav__item > .c-nav__item-wrapper {
+        background-color: var(--c-drawer--nav-top-level-background);
+        font-size: 1.1rem;
+        font-weight: var(--font-weight-heading, 600);
+      }
+
+      // Depth 2+ (sub-items)
+      .c-nav__child-container > .c-nav > .c-nav__item > .c-nav__item-wrapper,
+      .c-nav__child-container
+        > .c-nav
+        .c-nav__child-container
+        > .c-nav
+        > .c-nav__item
+        > .c-nav__item-wrapper,
+      .c-nav__child-container
+        > .c-nav
+        .c-nav__child-container
+        > .c-nav
+        .c-nav__child-container
+        > .c-nav
+        > .c-nav__item
+        > .c-nav__item-wrapper,
+      .c-nav__child-container
+        > .c-nav
+        .c-nav__child-container
+        > .c-nav
+        .c-nav__child-container
+        > .c-nav
+        .c-nav__child-container
+        > .c-nav
+        > .c-nav__item
+        > .c-nav__item-wrapper {
+        background-color: var(--c-drawer--nav-subitem-background);
+      }
+
+      .c-nav__item.is-current > .c-nav__item-wrapper .c-nav__text {
+        font-weight: var(--font-weight-bold, 700);
+        font-family: var(--font-family-base);
+      }
     }
 
-    // Depth 2+ (sub-items)
-    .c-nav__child-container > .c-nav > .c-nav__item > .c-nav__item-wrapper,
-    .c-nav__child-container
-      > .c-nav
-      .c-nav__child-container
-      > .c-nav
-      > .c-nav__item
-      > .c-nav__item-wrapper,
-    .c-nav__child-container
-      > .c-nav
-      .c-nav__child-container
-      > .c-nav
-      .c-nav__child-container
-      > .c-nav
-      > .c-nav__item
-      > .c-nav__item-wrapper,
-    .c-nav__child-container
-      > .c-nav
-      .c-nav__child-container
-      > .c-nav
-      .c-nav__child-container
-      > .c-nav
-      .c-nav__child-container
-      > .c-nav
-      > .c-nav__item
-      > .c-nav__item-wrapper {
-      background-color: var(--c-drawer-nav-subitem-background);
+    .s-nav-drawer-secondary {
+      background-color: var(--c-drawer--nav-secondary-background);
+      padding-top: 20px;
+      position: relative;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        height: 1px;
+        background-color: var(--color-stain-dark-3);
+      }
+
+      .c-nav__link {
+        margin: 0 20px;
+        color: var(--c-drawer--color--surface-contrast);
+      }
+
+      .service-info-badge {
+        left: 20px;
+      }
     }
 
-    .c-nav__item.is-current > .c-nav__item-wrapper .c-nav__text {
-      font-weight: var(--font-weight-bold, 700);
-      font-family: var(--font-family-base);
+    &.c-drawer--duotone {
+      .c-drawer__header * {
+        color: white;
+      }
+
+      .site-nav-mobile__secondary > .c-nav__item {
+        --drawer-duotone-background: transparent;
+      }
     }
   }
 
-  .s-nav-drawer-secondary {
-    background-color: var(--c-drawer-nav-secondary-background-color);
-    padding-top: 20px;
-    position: relative;
-
-    &::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80%;
-      height: 1px;
-      background-color: var(--color-stain-dark-3);
-    }
-
-    .c-nav__link {
-      margin: 0 20px;
-      color: var(--c-drawer-text-color);
-    }
-    .service-info-badge {
-      left: 20px !important;
-    }
+  body .c-drawer.c-drawer--duotone .c-drawer__header,
+  .body-primary
+    .c-drawer.c-drawer--duotone
+    .site-nav-mobile__primary
+    > .c-nav__item {
+    --drawer-background: var(--c-drawer--nav-primary-background);
+    --c-drawer--color--primary: var(--c-drawer--nav-primary-background);
   }
-
-  &.c-drawer--duotone {
-    .c-drawer__header * {
-      color: white !important;
-    }
-
-    .site-nav-mobile__secondary > .c-nav__item {
-      --drawer-duotone-background: transparent !important;
-    }
-  }
-}
-
-body .c-drawer.c-drawer--duotone .c-drawer__header,
-.body-primary
-  .c-drawer.c-drawer--duotone
-  .site-nav-mobile__primary
-  > .c-nav__item {
-  --drawer-background: var(--c-drawer-nav-primary-background-color);
 }

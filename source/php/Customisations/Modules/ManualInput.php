@@ -257,10 +257,10 @@ class ManualInput
 
             $declarations = [];
             if ($bg !== '') {
-                $declarations[] = '--c-card-eyebrow-background-color: ' . esc_attr($bg);
+                $declarations[] = '--c-card--eyebrow-background-color: ' . esc_attr($bg);
             }
             if ($fg !== '') {
-                $declarations[] = '--c-card-eyebrow-color: ' . esc_attr($fg);
+                $declarations[] = '--c-card--eyebrow-color: ' . esc_attr($fg);
             }
 
             $merged = implode('; ', $declarations);

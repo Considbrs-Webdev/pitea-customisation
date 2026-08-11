@@ -1,30 +1,60 @@
-.c-footer {
-  h2 {
-    font-size: var(--font-size-heading-3);
-  }
-
-  &__prefooter-wrapper ul {
-    margin-bottom: 0;
-  }
-
-  .footer-icons {
-    .o-container {
-      display: flex;
-      flex-direction: row;
-      gap: var(--base, 10px);
+@layer theme {
+  .c-footer {
+    h2 {
+      font-size: var(--font-size-heading-3);
     }
-  }
-  [class*="s-sidebar-footer-area"]:not(.s-sidebar-footer-area-top) {
-    ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
 
-      li {
+    &__prefooter-wrapper ul {
+      margin-bottom: 0;
+    }
+
+    .footer-icons {
+      .o-container {
+        display: flex;
+        flex-direction: row;
+        gap: var(--base, 10px);
+      }
+    }
+
+    [class*="s-sidebar-footer-area"]:not(.s-sidebar-footer-area-top) {
+      ul {
+        list-style: none;
         margin: 0;
         padding: 0;
-        list-style: none;
+
+        li {
+          margin: 0;
+          padding: 0;
+          list-style: none;
+        }
       }
     }
   }
+}
+
+// Sidfotslänkar (prefooter quick-links): modularity-quick-links paints cards via
+// unlayered --quick-links-* defaults (#fff / dark icons). On M7, module appearance
+// CSS is emitted inside @layer theme, so those DB greens lose the cascade — same
+// pattern as modules/service-info.scss (unlayered + more specific wrapper).
+.c-footer__prefooter-wrapper .modularity-quick-links {
+  --quick-links-background-color: var(--color-darjnalen-dark-3); // #233b1f
+  --quick-links-icon-color: var(--color-darjnalen-light-4); // #edf1e9
+  --quick-links-title-color: var(--color-darjnalen-light-4);
+  --quick-links-description-color: var(--color-darjnalen-light-4);
+  --quick-links-border-color: color-mix(
+    in srgb,
+    var(--color-darjnalen-light-3) 30%,
+    transparent
+  );
+  --quick-links-border-width: 0;
+  --quick-links-hover-color: rgba(
+    255,
+    255,
+    255,
+    var(--quick-links-hover-amount)
+  );
+  --quick-links-icon-size-large: 2rem;
+  border-left: 1px solid var(--quick-links-border-color);
+  border-right: 1px solid var(--quick-links-border-color);
+  font-size: 16px;
 }

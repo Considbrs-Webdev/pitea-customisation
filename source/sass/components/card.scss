@@ -1,262 +1,249 @@
 // =============================================================================
-// Card overrides - remove styleguide float-up, add image zoom
+// Card overrides — Styleguide v3 tokens (@layer theme)
 // Applies to: .c-card (manual input, etc) and .c-event-card (latest-events)
 // =============================================================================
 
-// Remove float-up animation on hover - only for cards that are links
-.c-card.c-card--action:hover,
-.c-event-card:hover {
-  transform: none !important;
-}
+@layer theme {
+  // ---------------------------------------------------------------------------
+  // Hover: prefer tokens; keep minimal selectors for non-tokenized behaviors
+  // (translateY + image ::before overlay are hardcoded in styleguide card SCSS)
+  // ---------------------------------------------------------------------------
 
-// Remove styleguide overlay on card image hover (a.c-card:hover .c-card__image:before)
-.c-card.c-card--action:hover .c-card__image::before {
-  opacity: 0 !important;
-}
-
-// Remove styleguide overlay on card image focus
-.c-card.c-card--action:focus {
-  background-color: transparent; // or your token
-}
-
-// Manual input cards WITHOUT link - no hover effects at all (display only)
-.modularity-mod-manualinput .c-card:not(.c-card--action) {
-  &:hover {
-    transform: none !important;
-    filter: none !important;
-
-    .c-card__heading {
-      text-decoration: none !important;
-    }
-
-    .c-card__image::before {
-      opacity: 0 !important;
-    }
-  }
-}
-
-// Image zoom on hover - only for cards WITH link
-.modularity-mod-manualinput .c-card.c-card--has-image.c-card--action {
-  .c-card__image-container {
-    overflow: hidden;
+  .c-card.c-card--action,
+  .c-event-card {
+    --c-card--shadow-hover: var(--c-card--shadow);
+    --c-card--shadow-amount: 0;
+    --c-card--color--surface-alt: var(--c-card--color--surface);
   }
 
-  .c-card__image {
-    overflow: hidden;
+  .c-card.c-card--action:hover,
+  .c-event-card:hover {
+    transform: none;
   }
 
-  // Scale only the wrapper - it contains both background-image and imgs, so both zoom together
-  // Scaling img directly causes srcset images to shift (positioning/transform-origin conflict)
-  .c-card__image .c-image__image-wrapper {
-    transition: transform var(--transition-duration-medium, 0.3s) ease;
-    transform-origin: center center;
+  .c-card.c-card--action:hover .c-card__image::before {
+    opacity: 0;
   }
 
-  &:hover .c-card__image .c-image__image-wrapper {
-    transform: scale(1.05) !important;
-  }
-}
-
-.c-event-card {
-  .c-event-card__image-wrapper {
-    overflow: hidden;
+  .c-card.c-card--action:focus {
+    background-color: transparent;
   }
 
-  .c-event-card__image {
-    transition: transform var(--transition-duration-medium, 0.3s) ease;
-  }
-
-  &:hover .c-event-card__image {
-    transform: scale(1.05);
-  }
-}
-
-// Title underline - styleguide already does .c-card:hover .c-card__heading
-// Ensure event card title matches
-.c-event-card:hover .c-event-card__link,
-.c-event-card__link:hover {
-  text-decoration: underline;
-}
-
-// =============================================================================
-
-// Eyebrow colors: defaults use var() fallbacks so ancestors (e.g. manual input item wrapper)
-// can set --c-card-eyebrow-* via inline style without being overridden by .c-card.
-.c-card {
-  --c-card-eyebrow-border-radius: var(--border-radius-small);
-
-  .c-card__eyebrow {
-    background-color: var(
-      --c-card-eyebrow-background-color,
-      var(--color-primary)
-    );
-    border-radius: var(--c-card-eyebrow-border-radius);
-    color: var(--c-card-eyebrow-color, var(--color-white));
-    width: fit-content;
-    padding: 5px 8px;
-  }
-}
-
-// Same selector as styleguide — override hyphens: auto (bad Swedish compounds) when our CSS loads after or ties.
-.c-card .c-card__header,
-.c-card .c-card__body,
-.c-card .c-card__content-after {
-  -webkit-hyphens: none !important;
-  hyphens: none !important;
-}
-
-.modularity-mod-manualinput {
-  [data-disable-layout-shift="true"] .c-card__paint-container {
-    flex-direction: column !important;
-    flex-wrap: nowrap !important;
-
-    .c-card__image-container {
-      flex-basis: auto !important;
-    }
-
-    .c-card__image-container + .c-card__body {
-      flex-basis: auto !important;
-    }
-
-    .c-card__footer {
-      flex: 0 1 auto !important;
-    }
-  }
-  .c-card {
-    --c-card-border-radius: var(--border-radius-small);
-    overflow: hidden;
-    --color-background-card: transparent;
+  .modularity-mod-manualinput .c-card:not(.c-card--action) {
+    --c-card--shadow-hover: var(--c-card--shadow);
+    --c-card--shadow-amount: 0;
+    --c-card--color--surface-alt: var(--c-card--color--surface);
 
     &:hover {
-      background-color: transparent !important;
+      transform: none;
+      filter: none;
+
+      .c-card__heading {
+        text-decoration: none;
+      }
+
+      .c-card__image::before {
+        opacity: 0;
+      }
+    }
+  }
+
+  // Image zoom on hover — Piteå enhancement (not a styleguide fight)
+  .modularity-mod-manualinput .c-card.c-card--has-image.c-card--action {
+    .c-card__image-container,
+    .c-card__image {
+      overflow: hidden;
     }
 
-    .c-card__body {
-      padding: calc(var(--base, 8px) * 4) 0;
-      gap: 0;
+    .c-card__image .c-image__image-wrapper {
+      transition: transform var(--transition-duration-medium, 0.3s) ease;
+      transform-origin: center center;
+    }
+
+    &:hover .c-card__image .c-image__image-wrapper {
+      transform: scale(1.05);
+    }
+  }
+
+  .c-event-card {
+    .c-event-card__image-wrapper {
+      overflow: hidden;
+    }
+
+    .c-event-card__image {
+      transition: transform var(--transition-duration-medium, 0.3s) ease;
+    }
+
+    &:hover .c-event-card__image {
+      transform: scale(1.05);
+    }
+  }
+
+  .c-event-card:hover .c-event-card__link,
+  .c-event-card__link:hover {
+    text-decoration: underline;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Eyebrow — Piteå custom tokens (set from ManualInput.php inline styles)
+  // ---------------------------------------------------------------------------
+
+  .c-card {
+    --c-card--eyebrow-border-radius: var(--border-radius-small, 8px);
+
+    .c-card__eyebrow {
+      background-color: var(
+        --c-card--eyebrow-background-color,
+        var(
+          --color--primary,
+          var(--color-primary, var(--color-darjnalen-dark-2, #2b512b))
+        )
+      );
+      border-radius: var(--c-card--eyebrow-border-radius);
+      color: var(--c-card--eyebrow-color, var(--color--white, #fff));
+      width: fit-content;
+      padding: 5px 8px;
+    }
+  }
+
+  // M6 mapped u-rounded--4 → --radius-sm (8px). M7 scales it as
+  // calc(--border-radius * --base * 4) (~40px with brand 1.25). Match baseline.
+  .t-block-container.u-rounded--4 {
+    border-radius: var(--border-radius-small, 8px);
+  }
+
+  // Swedish compounds — hyphens not tokenized
+  .c-card .c-card__header,
+  .c-card .c-card__body,
+  .c-card .c-card__content-after {
+    -webkit-hyphens: none;
+    hyphens: none;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Manual input cards
+  // ---------------------------------------------------------------------------
+
+  .modularity-mod-manualinput {
+    [data-disable-layout-shift="true"] .c-card__paint-container {
+      flex-direction: column;
+      flex-wrap: nowrap;
+
+      .c-card__image-container {
+        flex-basis: auto;
+      }
+
+      .c-card__image-container + .c-card__body {
+        flex-basis: auto;
+      }
+
+      .c-card__footer {
+        flex: 0 1 auto;
+      }
+    }
+
+    .c-card {
+      // Theme ManualInput blade still emits --c-card-color-background (legacy).
+      // Bridge it onto the v3 surface token when present.
+      --c-card--border-radius: 1;
+      --c-card--color--surface: var(--c-card-color-background, transparent);
+      --c-card--color--surface-alt: var(--c-card--color--surface);
+      overflow: hidden;
+
+      .c-card__body {
+        padding: calc(var(--base, 8px) * 4) 0;
+        gap: 0;
+
+        @media screen and (max-width: 499px) {
+          padding: calc(var(--base, 8px) * 4);
+        }
+      }
+
+      .c-card__footer {
+        border-top: none;
+        margin-top: 0;
+        padding-top: 0;
+        padding-bottom: calc(var(--base, 8px) * 2);
+        padding-inline: 0;
+      }
+
+      &.c-card--has-custom-background {
+        .c-card__body {
+          padding: 22px 28px;
+        }
+
+        .c-card__footer {
+          padding-inline: 36px;
+          padding-bottom: 30px;
+        }
+      }
 
       @media screen and (max-width: 499px) {
-        padding: calc(var(--base, 8px) * 4);
-      }
-    }
+        .c-card__footer {
+          padding-inline: calc(var(--base, 8px) * 4);
+        }
 
-    // Match footer inset to body (styleguide uses 16px on footer; body uses different rhythm)
-    .c-card__footer {
-      border-top: none;
-      margin-top: 0;
-      padding-top: 0;
-      padding-bottom: calc(var(--base, 8px) * 2);
-      padding-inline: 0;
-    }
-
-    &.c-card--has-custom-background {
-      .c-card__body {
-        padding: 22px 28px;
+        &.c-card--has-custom-background .c-card__footer {
+          padding-inline: 36px;
+        }
       }
 
-      .c-card__footer {
-        padding-inline: 36px;
-        padding-bottom: 30px;
+      &:has(.c-accordion) {
+        --c-card--border-radius: 0;
       }
-
-      &:hover {
-        background-color: var(--c-card-color-background) !important;
-      }
-    }
-
-    @media screen and (max-width: 499px) {
-      .c-card__footer {
-        padding-inline: calc(var(--base, 8px) * 4);
-      }
-
-      &.c-card--has-custom-background .c-card__footer {
-        padding-inline: 36px;
-      }
-    }
-
-    &:has(.c-accordion) {
-      --c-card-border-radius: 0;
-    }
-  }
-}
-// Disable all hover effects for cards inside column blocks
-.o-grid-column-block
-  .modularity-mod-manualinput:not(:has(.c-accordion))
-  .c-card {
-  filter: none !important;
-  opacity: 1 !important;
-  box-shadow: none !important;
-  scale: 1 !important;
-
-  .c-card__explicit-link {
-    background-color: var(--color-primary) !important;
-    color: var(--color-white) !important;
-    width: fit-content !important;
-    border-radius: calc(var(--base, 8px) * 4) !important;
-    padding: 0px 20px !important;
-    height: calc(var(--base, 8px) * 6.5) !important;
-    min-width: calc(var(--base, 8px) * 9);
-    font-size: 0.95rem;
-    align-items: center;
-    justify-content: center;
-  }
-
-  &,
-  &::before,
-  &::after,
-  * {
-    filter: none !important;
-  }
-
-  &:hover {
-    background-color: inherit !important;
-    filter: none !important;
-    opacity: 1 !important;
-    box-shadow: none !important;
-    scale: 1 !important;
-
-    &,
-    &::before,
-    &::after,
-    * {
-      filter: none !important;
     }
   }
 
-  &.c-card--has-custom-background {
-    filter: none !important;
-    opacity: 1 !important;
-    box-shadow: none !important;
-    scale: 1 !important;
+  // ---------------------------------------------------------------------------
+  // Column blocks — no hover chrome; style CTA via button tokens
+  // ---------------------------------------------------------------------------
 
-    &,
-    &::before,
-    &::after,
-    * {
-      filter: none !important;
+  .o-grid-column-block
+    .modularity-mod-manualinput:not(:has(.c-accordion))
+    .c-card {
+    --c-card--shadow: none;
+    --c-card--shadow-hover: none;
+    --c-card--shadow-amount: 0;
+    --c-card--color--surface-alt: var(--c-card--color--surface);
+
+    [data-component="button"],
+    .c-button {
+      --c-button--border-radius: 4;
+      --c-button--color--primary: var(--color--primary, var(--color-primary));
+      --c-button--color--primary-contrast: var(
+        --color--white,
+        var(--color-white, #fff)
+      );
+      width: fit-content;
+      min-width: calc(var(--base, 8px) * 9);
+      height: calc(var(--base, 8px) * 6.5);
+      padding-inline: 20px;
+      font-size: 0.95rem;
+      align-items: center;
+      justify-content: center;
     }
 
     &:hover {
-      background-color: var(--c-card-color-background) !important;
-      filter: none !important;
-      opacity: 1 !important;
-      box-shadow: none !important;
-      scale: 1 !important;
+      transform: none;
+    }
+  }
 
-      &,
-      &::before,
-      &::after,
-      * {
-        filter: none !important;
+  .c-card {
+    &__content {
+      p {
+        margin-top: 0;
       }
     }
   }
 }
 
-.c-card {
-  &__content {
-    p {
-      margin-top: 0;
-    }
+// Styleguide zeros child border-radius in @layer components with !important.
+// Unlayered !important loses to layered !important; join components + out-specify.
+@layer components {
+  .c-card .c-group:not(.c-group--skip-child-normalization) > .c-card__eyebrow {
+    border-radius: var(
+      --c-card--eyebrow-border-radius,
+      var(--border-radius-small, 8px)
+    ) !important;
   }
 }
