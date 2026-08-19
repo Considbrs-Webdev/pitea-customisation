@@ -19,6 +19,7 @@ class Archive
     public function __construct()
     {
         add_action('pre_get_posts', [$this, 'restoreEmptyMountedArchivePostType'], 31);
+        add_action('wp', [$this, 'ensureArchiveHasPostForModules'], 9);
         add_filter('Municipio/Helper/CurrentPostId', [$this, 'resolveArchivePageId'], 10, 1);
     }
 
@@ -44,6 +45,39 @@ class Archive
 
         $query->set('post_type', $originalPostType);
         $query->set('child_of', null);
+    }
+
+    /**
+     * Give Modularity a post object on empty archives so archive modules still initialize.
+     *
+     * Modularity Display::init() returns early when global $post is empty. An empty CPT
+     * archive has no posts, so that guard skips modules stored as archive-{postType}.
+     * The seeded object keeps the CPT as post_type so get_post_type() does not resolve to page.
+     */
+    public function ensureArchiveHasPostForModules(): void
+    {
+        if (is_admin() || !is_post_type_archive()) {
+            return;
+        }
+
+        global $post;
+        if ($post instanceof \WP_Post) {
+            return;
+        }
+
+        $archivePage = $this->getMountedArchivePage();
+        if (!$archivePage instanceof \WP_Post) {
+            return;
+        }
+
+        $postType = $this->getArchivePostType();
+        if ($postType === null) {
+            return;
+        }
+
+        $seed = clone $archivePage;
+        $seed->post_type = $postType;
+        $post = $seed;
     }
 
     /**
@@ -95,6 +129,31 @@ class Archive
         }
 
         return $postType;
+    }
+
+    /**
+     * Get the page a CPT archive is mounted on, if any.
+     *
+     * @return \WP_Post|null
+     */
+    private function getMountedArchivePage(): ?\WP_Post
+    {
+        $postType = $this->getArchivePostType();
+        if ($postType === null) {
+            return null;
+        }
+
+        $archivePageId = (int) get_option('page_for_' . $postType);
+        if ($archivePageId <= 0) {
+            return null;
+        }
+
+        $archivePage = get_post($archivePageId);
+        if (!$archivePage instanceof \WP_Post) {
+            return null;
+        }
+
+        return $archivePage;
     }
 
     /**
