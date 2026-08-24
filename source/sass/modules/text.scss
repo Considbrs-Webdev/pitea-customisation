@@ -1,0 +1,7 @@
+@layer theme {
+  // Boxed Text module uses @card. M6 defaulted card border to 0px; v3 is ~1px.
+  // Enable Styling still wins via inline border-width / border-color / radius / background.
+  .modularity-mod-text .c-card {
+    --c-card--border-width: 0;
+  }
+}
