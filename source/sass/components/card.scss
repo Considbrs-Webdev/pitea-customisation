@@ -103,6 +103,14 @@
       color: var(--c-card--eyebrow-color, var(--color--white, #fff));
       width: fit-content;
       padding: 5px 8px;
+      // v3 card sets uppercase + 0.1em tracking; M6 had neither.
+      text-transform: none;
+      --inherit-letter-spacing: normal;
+    }
+
+    // v3 .c-group zeros child margin; restore M6 u-margin__bottom--2 via gap.
+    .c-group--vertical:has(> .c-card__eyebrow) {
+      gap: calc(var(--space, 1) * var(--base, 8px) * 2);
     }
   }
 
@@ -226,6 +234,21 @@
     &:hover {
       transform: none;
     }
+  }
+
+  // Split pattern only (image beside a text-only manual input card).
+  // v3 default card border is 1px; M6 was 0 so custom-bg blended into the container.
+  .o-grid-column-block:has(> figure.c-image)
+    + .o-grid-column-block
+    .modularity-mod-manualinput:not(:has(.c-accordion))
+    .c-card,
+  .o-grid-column-block:has(.modularity-mod-manualinput):has(
+      + .o-grid-column-block > figure.c-image
+    )
+    .modularity-mod-manualinput:not(:has(.c-accordion))
+    .c-card {
+    --c-card--border-width: 0;
+    --c-card--color--surface-border: transparent;
   }
 
   .c-card {

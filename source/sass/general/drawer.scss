@@ -20,13 +20,25 @@
     --c-drawer--color--surface: var(--color-paren-light-4);
     font-family: var(--font-family-base);
 
-    background-image: url("../../assets/svg/Trad-hav-hus.svg");
-    background-repeat: no-repeat;
-    background-position: left bottom;
-    // Stretch tree illustration across M7 drawer width (was auto → right-side gaps)
-    background-size: 100% 200px;
-    background-attachment: local;
-    padding-bottom: 220px;
+    // Illustration lives in ::after so width and height track the panel
+    // (M7 max-width is 512px vs M6 320px). Do not stretch to a fixed 200px.
+    padding-bottom: 0;
+
+    &::after {
+      content: "";
+      box-sizing: content-box;
+      display: block;
+      flex-shrink: 0;
+      width: 100%;
+      aspect-ratio: 374.832 / 200.635;
+      margin-top: auto;
+      padding-top: 1.25rem;
+      background-image: url("../../assets/svg/Trad-hav-hus.svg");
+      background-repeat: no-repeat;
+      background-position: left bottom;
+      background-size: 100% auto;
+      pointer-events: none;
+    }
 
     .c-nav__item-wrapper {
       transition: background-color 0.3s ease-in-out;
