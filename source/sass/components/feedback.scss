@@ -1,123 +1,129 @@
-// Customer Feedback Component Styles
-@layer theme {
-  :root {
-    --c-paper--color--surface: var(--color-darjnalen-dark-3);
-    --c-paper--color--surface-contrast: var(--color-darjnalen-light-4);
-    --c-paper--border-radius: 1;
-    --c-paper--color--surface-border: var(--color-darjnalen-light-4);
+// Customer Feedback — Piteå dark-green bar with Ja/Nej pills.
+// Unlayered: plugin CSS (`#customer-feedback …`) and Styleguide v3 `.c-paper`
+// token defaults live outside `@layer theme` / in a later layer, so themed
+// tokens on `:root` never reach this instance. Scope to `.c-paper--feedback`.
+.c-paper--feedback {
+  container-type: inline-size;
 
-    // Feedback-local extras (not in upstream paper token list)
-    --c-paper--feedback-padding: var(--base, 20px);
-    --c-paper--feedback-font-size-body: var(--font-size-body, 18px);
-    --c-paper--feedback-line-height-body: var(--line-height-body, 27px);
-    --c-paper--feedback-color-button: var(--color-darjnalen-dark-3);
+  --c-paper--color--surface: var(--color-darjnalen-dark-3);
+  --c-paper--color--surface-contrast: var(--color-darjnalen-light-4);
+  --c-paper--border-radius: 1;
+  --c-paper--color--surface-border: var(--color-darjnalen-light-4);
+  --c-paper--feedback-padding: var(--base, 20px);
+  --c-paper--feedback-font-size-body: var(--font-size-body, 18px);
+  --c-paper--feedback-line-height-body: var(--line-height-body, 27px);
+  --c-paper--feedback-color-button: var(--color-darjnalen-dark-3);
+
+  color: var(--c-paper--color--surface-contrast);
+  background-color: var(--c-paper--color--surface);
+  padding: var(--c-paper--feedback-padding);
+  max-width: var(--container-width-content);
+  font-size: var(--c-paper--feedback-font-size-body);
+
+  > .c-paper__content {
+    padding: 0;
   }
 
-  .c-paper--feedback {
-    container-type: inline-size;
+  #customer-feedback-form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--base, 30px);
+    flex-wrap: wrap;
 
-    --c-paper--color--surface: var(--color-darjnalen-dark-3);
-    --c-paper--color--surface-contrast: var(--color-darjnalen-light-4);
-    color: var(--c-paper--color--surface-contrast);
-    background-color: var(--c-paper--color--surface);
-    padding: var(--c-paper--feedback-padding);
-    max-width: var(--container-width-content);
-    font-size: var(--c-paper--feedback-font-size-body);
+    @container (max-width: 450px) {
+      justify-content: center;
 
-    #customer-feedback-form {
+      h2 {
+        text-align: center;
+      }
+    }
+
+    .customer-feedback-section-icon {
+      display: none;
+    }
+
+    .customer-feedback-section-heading {
+      flex: 1;
+      min-width: min-content;
+      max-width: 100%;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: var(--base, 30px);
-      flex-wrap: wrap;
-
-      @container (max-width: 450px) {
-        justify-content: center;
-
-        h2 {
-          text-align: center;
-        }
-      }
-
-      .customer-feedback-section-icon {
-        display: none;
-      }
-
-      .customer-feedback-section-heading {
-        flex: 1;
-        min-width: min-content;
-        max-width: 100%;
-        display: flex;
-        align-items: center;
-
-        .customer-feedback-section-content {
-          padding: 0;
-          width: 100%;
-          display: flex;
-          align-items: center;
-
-          h2 {
-            font-size: var(--c-paper--feedback-font-size-body);
-            word-break: normal;
-            overflow-wrap: break-word;
-            word-wrap: break-word;
-            white-space: normal;
-            margin: 0;
-            width: 100%;
-            max-width: 100%;
-            box-sizing: border-box;
-          }
-        }
-      }
-
-      .customer-feedback-section-buttons {
-        flex-shrink: 0;
-        flex-grow: 0;
-        min-width: fit-content;
-      }
-
-      .customer-feedback-section-topics,
-      .customer-feedback-section-comment,
-      .customer-feedback-section-gdpr {
-        flex-basis: 100%;
-        width: 100%;
-      }
 
       .customer-feedback-section-content {
         padding: 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
 
-        .c-option {
-          &__radio {
-            &--label-text {
-              color: var(--color-white, #fff);
-            }
+        h2 {
+          font-size: var(--c-paper--feedback-font-size-body);
+          word-break: normal;
+          overflow-wrap: break-word;
+          word-wrap: break-word;
+          white-space: normal;
+          margin: 0;
+          width: 100%;
+          max-width: 100%;
+          box-sizing: border-box;
+        }
+      }
+    }
+
+    .customer-feedback-section-buttons {
+      flex-shrink: 0;
+      flex-grow: 0;
+      min-width: fit-content;
+    }
+
+    .customer-feedback-section-topics,
+    .customer-feedback-section-comment,
+    .customer-feedback-section-gdpr {
+      flex-basis: 100%;
+      width: 100%;
+    }
+
+    .customer-feedback-section-content {
+      padding: 0;
+
+      .c-option {
+        &__radio {
+          &--label-text {
+            color: var(--color-white, #fff);
           }
         }
-
-        .c-field__label {
-          color: var(--color-white, #fff);
-        }
       }
 
-      .customer-feedback-response-yes,
-      .customer-feedback-response-no {
+      .c-field__label {
+        color: var(--color-white, #fff);
+      }
+    }
+
+    .customer-feedback-response-yes,
+    .customer-feedback-response-no {
+      --c-button-background: var(--c-paper--color--surface-contrast);
+      --c-button-contrast: var(--c-paper--feedback-color-button);
+      --inherit-color-background: var(--c-paper--color--surface-contrast);
+      --inherit-color-contrast: var(--c-paper--feedback-color-button);
+
+      font-size: var(--c-paper--feedback-font-size-body);
+      font-style: normal;
+      font-weight: 400;
+      line-height: var(--c-paper--feedback-line-height-body);
+      color: var(--c-paper--feedback-color-button);
+
+      .c-button__label,
+      .c-button__label-text {
+        color: var(--c-paper--feedback-color-button);
         font-size: var(--c-paper--feedback-font-size-body);
-        font-style: normal;
         font-weight: 400;
         line-height: var(--c-paper--feedback-line-height-body);
-
-        .c-button__label-text {
-          color: var(--c-paper--feedback-color-button);
-          font-size: var(--c-paper--feedback-font-size-body);
-          font-weight: 400;
-          line-height: var(--c-paper--feedback-line-height-body);
-        }
       }
+    }
 
-      .customer-feedback-already-submitted {
-        color: var(--c-paper--feedback-color-button);
-        background-color: var(--c-paper--color--surface-contrast);
-      }
+    .customer-feedback-already-submitted {
+      color: var(--c-paper--feedback-color-button);
+      background-color: var(--c-paper--color--surface-contrast);
     }
   }
 }

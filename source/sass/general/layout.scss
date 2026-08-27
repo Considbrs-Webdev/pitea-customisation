@@ -3,11 +3,11 @@
     margin-bottom: calc(var(--base, 8px) * 4) !important;
   }
 
-  .s-sidebar.s-sidebar-content-area-bottom:has(> *) {
+  #sidebar-content-area-bottom:has(> *) {
     margin-bottom: calc(var(--base, 8px) * 4) !important;
   }
 
-  .s-sidebar.s-sidebar-content-area-bottom:not(:has(> *)) {
+  #sidebar-content-area-bottom:not(:has(> *)) {
     margin-bottom: 0 !important;
     margin-top: 0 !important;
   }
