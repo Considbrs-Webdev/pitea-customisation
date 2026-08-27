@@ -8,6 +8,11 @@
       margin-bottom: 0;
     }
 
+    &__main-wrapper {
+      overflow: hidden;
+      padding-top: 0;
+    }
+
     .footer-icons {
       .o-container {
         display: flex;
@@ -15,19 +20,34 @@
         gap: var(--base, 10px);
       }
     }
+  }
 
-    [class*="s-sidebar-footer-area"]:not(.s-sidebar-footer-area-top) {
-      ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
+  #sidebar-footer-area-top p {
+    display: none;
+  }
+}
 
-        li {
-          margin: 0;
-          padding: 0;
-          list-style: none;
-        }
-      }
+// Kirki painted this strip on `.c-footer`; Design Builder has color tokens only.
+// Unlayered so `background-image` is not dropped by a later component layer.
+.c-footer {
+  background-image: url("../../assets/svg/bg-trad-hav-hus.svg");
+  background-repeat: repeat-x;
+  background-position: center bottom;
+  background-size: auto;
+}
+
+// WP block lists are unlayered. `@layer theme` list-style:none therefore loses,
+// and M7 moved `s-sidebar-footer-area*` from class to data-scope.
+.c-footer__widget-area {
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
     }
   }
 }
