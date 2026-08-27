@@ -1,97 +1,60 @@
 @layer theme {
-  .modularity-mod-manualinput {
-    &:has(.c-accordion) {
-      --card-header-padding: 0 0 1rem 0;
-      --card-header-background: transparent;
-      --card-header-color: var(--color-base);
-      --card-header-font-size: 32px;
-      --icon-size: 24px;
+  // Manual Input accordion (v3): markup is details/summary, not
+  // .c-accordion__button-wrapper. Theme wraps glued accordions in
+  // .c-card--panel; flatten the panel chrome so the card owns the outline
+  // and --divided rows keep separators. Direct-child paint-container
+  // :has() avoids restyling cards nested in accordion content.
+  .modularity-mod-manualinput .c-card:has(> .c-card__paint-container > .c-accordion) {
+    --c-card--border-radius: 1;
+    --c-card--border-width: 1;
+    --c-card--color--surface-border: var(--color--surface-border);
+    --c-card--shadow-amount: 0;
+    --c-card--color--surface: var(--color--white, #fff);
+    --c-card--color--surface-alt: var(--c-card--color--surface);
+    --c-card--color--primary: var(--c-card--color--surface);
+    --c-card--color--primary-contrast: var(
+      --c-card--color--surface-contrast,
+      var(--color--black, #1a1a1a)
+    );
 
-      .c-card {
-        --c-card--border-radius: 0;
-
-        &__paint-container {
-          contain: none;
-        }
-
-        &__header {
-          background: 0;
-          padding: 0;
-
-          .c-typography {
-            background: var(--card-header-background);
-            color: var(--card-header-color);
-            font-size: var(--card-header-font-size);
-            padding: var(--card-header-padding);
-          }
-        }
-      }
+    .c-card__paint-container {
+      contain: none;
     }
 
     .c-accordion {
-      --c-accordion--color--surface-border: var(--color-stain-light-2);
-      border: 1px solid var(--c-accordion--color--surface-border, var(--color-stain-light-2));
-      padding: 0;
+      --c-accordion--shadow-amount: 0;
+      --c-accordion--color--surface: transparent;
+      --c-accordion--color--surface-border: var(--color--surface-border);
+      --c-accordion--border-radius: 0;
+    }
+  }
 
-      &__content {
-        padding: 20px 30px 20px 30px;
-      }
+  // Optional module-level header fill from ManualInput.php (inline on .c-accordion).
+  .modularity-mod-manualinput .c-accordion__item {
+    --c-accordion--color--surface-alt: var(
+      --mi-accordion-button-bg,
+      var(--color--surface-alt)
+    );
 
-      &__button-wrapper {
-        padding: 20px 30px;
-        --bg: var(--mi-accordion-button-bg, white);
-        background: var(--bg);
-        color: contrast-color(var(--bg));
-      }
+    summary {
+      background-color: var(--mi-accordion-button-bg, transparent);
+      color: var(--mi-accordion-button-fg, unset);
 
-      &__button {
-        .c-icon {
-          font-family: var(--font-family-font-awesome);
-          font-size: var(--icon-size);
-          position: relative;
-          width: var(--icon-size);
-          height: var(--icon-size);
-
-          &::before,
-          &::after {
-            font-size: var(--icon-size);
-            width: var(--icon-size);
-            height: var(--icon-size);
-            position: absolute;
-            top: 0;
-            transition: opacity var(--transition-duration-fast);
-            left: 0;
-          }
-
-          &::before {
-            content: "\+";
-            opacity: 1;
-          }
-
-          &::after {
-            content: "\f068";
-            opacity: 0;
-          }
-        }
-
-        &[aria-expanded="true"] {
-          .c-icon {
-            &::before,
-            &::after {
-              transition: opacity var(--transition-duration-fast)
-                calc(var(--transition-duration-fast) / 3);
-            }
-
-            &::before {
-              opacity: 0;
-            }
-
-            &::after {
-              opacity: 1;
-            }
-          }
-        }
+      .c-accordion__item__heading-item,
+      .c-accordion__item__icon {
+        color: inherit;
       }
     }
+
+    // v3 underlines all headings inside item content; not tokenized.
+    .c-accordion__item__content :is(h1, h2, h3, h4, h5, h6) {
+      text-decoration: none;
+    }
+  }
+
+  // Schema preschool/school accordion: keep v3 --bordered default, drop shadow.
+  [data-scope*="single-schema-preschool"] .c-accordion,
+  [data-scope*="single-schema-elementary-school"] .c-accordion {
+    --c-accordion--shadow-amount: 0;
   }
 }

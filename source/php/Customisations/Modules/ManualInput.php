@@ -18,6 +18,14 @@ class ManualInput
     /** Municipio “Eyebrow” text subfield (manual_inputs repeater). */
     private const EYEBROW_TEXT_FIELD_KEY = 'field_6945264b7d66e';
 
+    private const ACCORDION_CARD_CONTEXT = 'module.manual-input.accordion';
+
+    /**
+     * CSS declarations for the current Manual Input accordion, applied to the
+     * wrapping Card and Accordion components (item init() overwrites style).
+     */
+    private static ?string $pendingAccordionStyle = null;
+
     private const FIELDS = [
         'manual_input_eyebrow_background' => [
             'key' => 'field_pitea_mi_eyebrow_bg',
@@ -40,6 +48,8 @@ class ManualInput
         add_filter('Modularity/Display/mod-manualinput/viewData', [$this, 'applyEyebrowStylesToItems'], 10, 1);
         add_filter('Modularity/Display/mod-manualinput/viewData', [$this, 'applyAccordionHeaderBgToItems'], 10, 1);
         add_filter('Modularity/Display/mod-manualinput/viewData', [$this, 'injectDisableLayoutShift'], 5, 1);
+        add_filter('ComponentLibrary/Component/Data', [$this, 'applyPendingAccordionCardStyles'], 10, 1);
+        add_filter('ComponentLibrary/Component/Accordion/Attribute', [$this, 'mergePendingAccordionAttributes']);
     }
 
     public function registerFields(): void
@@ -285,27 +295,38 @@ class ManualInput
     }
 
     /**
-     * Applies module-level accordion header background as a CSS variable on each item wrapper.
+     * Applies module-level accordion header background as CSS variables.
+     *
+     * Gutenberg blocks store the field on the block, not post meta, so this
+     * reads `$data` / `$data['blockData']` first. Item `style` is overwritten
+     * by Accordion__item::init(); the vars are therefore also stashed for the
+     * wrapping Card and Accordion components.
      *
      * @param array<string, mixed> $data
      * @return array<string, mixed>
      */
     public function applyAccordionHeaderBgToItems(array $data): array
     {
+        self::$pendingAccordionStyle = null;
+
         if (empty($data['manualInputs']) || !is_array($data['manualInputs'])) {
             return $data;
         }
 
-        $postId = $data['ID'] ?? null;
-        $color = is_numeric($postId)
-            ? trim((string) get_field('manual_input_accordion_header_bg', (int) $postId))
-            : trim((string) get_field('manual_input_accordion_header_bg'));
-
+        $color = $this->resolveAccordionHeaderBg($data);
         if ($color === '') {
             return $data;
         }
 
-        $declaration = '--mi-accordion-button-bg: ' . esc_attr($color);
+        $fg = $this->getContrastTextColor($color);
+        $declaration = implode('; ', [
+            '--mi-accordion-button-bg: ' . esc_attr($color),
+            '--mi-accordion-button-fg: ' . esc_attr($fg),
+            '--c-accordion--color--surface-alt: ' . esc_attr($color),
+            '--c-accordion--color--surface-contrast: ' . esc_attr($fg),
+        ]);
+
+        self::$pendingAccordionStyle = $declaration;
 
         foreach ($data['manualInputs'] as &$input) {
             if (is_object($input)) {
@@ -329,5 +350,187 @@ class ManualInput
         unset($input);
 
         return $data;
+    }
+
+    /**
+     * Merge pending accordion header colours onto the wrapping @card.
+     *
+     * @param array<string, mixed> $data
+     * @param object|null $_component
+     * @return array<string, mixed>
+     */
+    public function applyPendingAccordionCardStyles(array $data, ?object $_component = null): array
+    {
+        if (self::$pendingAccordionStyle === null || self::$pendingAccordionStyle === '') {
+            return $data;
+        }
+
+        $context = $data['context'] ?? [];
+        $contextList = is_array($context) ? $context : [$context];
+        if (!in_array(self::ACCORDION_CARD_CONTEXT, $contextList, true)) {
+            return $data;
+        }
+
+        if (!isset($data['attributeList']) || !is_array($data['attributeList'])) {
+            $data['attributeList'] = [];
+        }
+
+        $data['attributeList']['style'] = $this->appendInlineStyle(
+            $data['attributeList']['style'] ?? '',
+            self::$pendingAccordionStyle
+        );
+
+        return $data;
+    }
+
+    /**
+     * Merge pending accordion header colours onto the Accordion wrapper.
+     *
+     * Accordion::init() replaces `style` with heading-count; this filter runs
+     * afterwards in getAttribute().
+     *
+     * @param mixed $attribute Attribute list (array) or compiled attribute string.
+     * @return mixed
+     */
+    public function mergePendingAccordionAttributes(mixed $attribute): mixed
+    {
+        if (!is_array($attribute)) {
+            return $attribute;
+        }
+
+        if (self::$pendingAccordionStyle === null || self::$pendingAccordionStyle === '') {
+            return $attribute;
+        }
+
+        $attribute['style'] = $this->appendInlineStyle(
+            $attribute['style'] ?? '',
+            self::$pendingAccordionStyle
+        );
+        self::$pendingAccordionStyle = null;
+
+        return $attribute;
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    private function resolveAccordionHeaderBg(array $data): string
+    {
+        $blockData = [];
+        if (isset($data['blockData']['data']) && is_array($data['blockData']['data'])) {
+            $blockData = $data['blockData']['data'];
+        }
+
+        $candidates = [
+            $data['manualInputAccordionHeaderBg'] ?? null,
+            $data['manual_input_accordion_header_bg'] ?? null,
+            $blockData['manual_input_accordion_header_bg'] ?? null,
+            $blockData[self::ACCORDION_HEADER_BG_FIELD_KEY] ?? null,
+        ];
+
+        $postId = $data['ID'] ?? null;
+        if (is_numeric($postId) && function_exists('get_field')) {
+            $candidates[] = get_field('manual_input_accordion_header_bg', (int) $postId);
+            $candidates[] = get_field(self::ACCORDION_HEADER_BG_FIELD_KEY, (int) $postId);
+        }
+
+        if (function_exists('get_field')) {
+            $candidates[] = get_field('manual_input_accordion_header_bg');
+        }
+
+        foreach ($candidates as $value) {
+            $color = $this->normalizeCssColor($value);
+            if ($color !== '') {
+                return $color;
+            }
+        }
+
+        return '';
+    }
+
+    /**
+     * @param mixed $value
+     */
+    private function normalizeCssColor(mixed $value): string
+    {
+        if (!is_string($value) && !is_numeric($value)) {
+            return '';
+        }
+
+        $value = trim((string) $value);
+        if ($value === '' || strcasecmp($value, 'null') === 0) {
+            return '';
+        }
+
+        if (preg_match('/#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})\b/', $value, $matches)) {
+            return $matches[0];
+        }
+
+        return $value;
+    }
+
+    private function appendInlineStyle(mixed $existing, string $declaration): string
+    {
+        $existing = is_string($existing) ? trim($existing) : '';
+        if ($existing === '') {
+            return $declaration;
+        }
+
+        return rtrim($existing, ';') . '; ' . $declaration;
+    }
+
+    /**
+     * Pick black or white text for a given background (WCAG relative luminance).
+     *
+     * @param string $backgroundColor Hex, rgb(), or rgba()
+     * @return string
+     */
+    private function getContrastTextColor(string $backgroundColor): string
+    {
+        $rgb = $this->parseColorToRgb($backgroundColor);
+        if ($rgb === null) {
+            return 'black';
+        }
+
+        $channel = static function (int $value): float {
+            $c = $value / 255;
+            return $c <= 0.03928 ? $c / 12.92 : pow(($c + 0.055) / 1.055, 2.4);
+        };
+
+        $luminance = 0.2126 * $channel($rgb['r']) + 0.7152 * $channel($rgb['g']) + 0.0722 * $channel($rgb['b']);
+
+        return $luminance > 0.5 ? 'black' : 'white';
+    }
+
+    /**
+     * @param string $color
+     * @return array{r: int, g: int, b: int}|null
+     */
+    private function parseColorToRgb(string $color): ?array
+    {
+        $color = trim($color);
+
+        if (preg_match('/^#([a-f0-9]{3}|[a-f0-9]{6})$/i', $color, $matches)) {
+            $hex = $matches[1];
+            if (strlen($hex) === 3) {
+                $hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
+            }
+
+            return [
+                'r' => hexdec(substr($hex, 0, 2)),
+                'g' => hexdec(substr($hex, 2, 2)),
+                'b' => hexdec(substr($hex, 4, 2)),
+            ];
+        }
+
+        if (preg_match('/rgba?\((\d+),\s*(\d+),\s*(\d+)/i', $color, $matches)) {
+            return [
+                'r' => (int) $matches[1],
+                'g' => (int) $matches[2],
+                'b' => (int) $matches[3],
+            ];
+        }
+
+        return null;
     }
 }
