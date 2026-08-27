@@ -1,0 +1,22 @@
+// Plugin stylesheet is unlayered and sets
+// `--link-card-background-color: var(--color-white)`. M7 Design Builder emits
+// `--color--white` (`#ffffff` at :root), not `--color-white`, so the card fill
+// was invalid/transparent and a tinted `.t-block-container` showed through.
+// Alias must be unlayered so it actually participates in that var().
+.mod-link-cards {
+  --color-white: var(--color--white, #fff);
+  --link-card-background-color: var(--color-white, #fff);
+}
+
+.mod-link-cards__card {
+  background-color: var(--link-card-background-color, #fff);
+}
+
+@layer theme {
+  .mod-link-cards {
+    &__card {
+      border: none;
+      list-style: none;
+    }
+  }
+}

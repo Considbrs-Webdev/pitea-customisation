@@ -196,8 +196,21 @@
         }
       }
 
-      &:has(.c-accordion) {
-        --c-card--border-radius: 0;
+      // Accordion-wrapping cards: outline/radius owned in accordion.scss.
+
+      // 4-up image cards (förskola hub etc). v3 default border ~1px; M6 was 0.
+      &.c-card--has-image {
+        --c-card--border-width: 0;
+        --c-card--color--surface-border: transparent;
+      }
+
+      // v3 .c-card__heading forces --inherit-font-size: font-size-200 (18px).
+      // Manual input uses variant h3 (~22px / --font-size-500).
+      .c-card__heading.c-typography__variant--h3 {
+        --inherit-font-size: var(
+          --font-size-500,
+          var(--font-size-heading-3, 22px)
+        );
       }
     }
   }

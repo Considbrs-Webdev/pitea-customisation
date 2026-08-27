@@ -14,6 +14,9 @@
       --c-card--shadow-amount: 0;
       --c-card--shadow: none;
       --c-card--shadow-hover: none;
+      // v3 panel card is ~1px; M6 defaulted to 0 so the sage rows were the only chrome.
+      --c-card--border-width: 0;
+      --c-card--color--surface-border: transparent;
 
       .c-card__header {
         background: transparent;
@@ -38,9 +41,13 @@
       --c-collection--padding-x: 30px;
       --c-collection--padding-y: 22px;
 
+      --c-collection--inset-padding-x: var(--c-collection--padding-x);
+      --c-collection--inset-padding-y: var(--c-collection--padding-y);
+
       .c-collection__item {
         gap: 22px;
         transition: background-color var(--transition-duration-medium, 0.3s);
+        padding: var(--c-collection--padding-y) var(--c-collection--padding-x);
 
         &--action {
           background-color: var(--inlay-link-background);
@@ -50,6 +57,11 @@
 
         &:hover {
           background-color: var(--inlay-link-background-hover);
+
+          .c-collection__content,
+          .c-collection__icon {
+            transform: none;
+          }
         }
 
         .c-collection__content {
