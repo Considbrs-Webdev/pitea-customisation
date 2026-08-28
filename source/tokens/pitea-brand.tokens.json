@@ -4,7 +4,7 @@
     "--font-family-heading": "\"Work Sans\", sans-serif",
     "--base-font-size": "18px",
     "--font-size-scale-ratio": 1.2,
-    "--font-size-700": "50px",
+    "--font-size-700": "40px",
     "--font-size-600": "32px",
     "--font-size-500": "22px",
     "--font-size-400": "18px",
@@ -15,7 +15,7 @@
     "--font-weight-bold": "600",
     "--font-weight-heading": "600",
     "--line-height-base": "1.625",
-    "--line-height-heading": "1.33",
+    "--line-height-heading": "1.3",
     "--letter-spacing-base": "0",
     "--letter-spacing-heading": "0",
     "--border-radius": 1.25,
@@ -29,6 +29,14 @@
     "--container-width": "1280px"
   },
   "component": {
-    "__general__": {}
+    "__general__": {
+      "newsitem": {
+        "--c-newsitem--font-size-400": "22px"
+      },
+      "button": {
+        "--c-button--font-size-100": "16px",
+        "--c-button--font-size-90": "12.4px"
+      }
+    }
   }
 }
