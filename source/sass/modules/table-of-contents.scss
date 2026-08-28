@@ -10,3 +10,31 @@
     --toc-link-font-weight: var(--font-weight-heading, 600);
   }
 }
+
+// Unlayered: plugin CSS is unlayered, so @layer theme cannot win.
+// modularity-toc hides the whole `.modularity-mod-toc` with
+// `:has(.c-toc-root--hide-desktop)` / `:has(.c-toc-root--hide-mobile)`.
+// Automatic mobile insertion puts BOTH roots in one wrapper, so the module
+// matches both selectors and is `display: none` at every breakpoint.
+// Only undo the wrapper hide when both roots are still siblings; hide the
+// individual roots instead. (If JS later moves the mobile root into its own
+// wrapper, the plugin :has() rules apply as intended.)
+@media (min-width: 78em) {
+  .modularity-mod-toc:has(.c-toc-root--hide-desktop):has(.c-toc-root--hide-mobile) {
+    display: revert;
+  }
+
+  .modularity-mod-toc .c-toc-root--hide-desktop {
+    display: none;
+  }
+}
+
+@media (max-width: 78em) {
+  .modularity-mod-toc:has(.c-toc-root--hide-desktop):has(.c-toc-root--hide-mobile) {
+    display: revert;
+  }
+
+  .modularity-mod-toc .c-toc-root--hide-mobile {
+    display: none;
+  }
+}
