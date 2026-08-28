@@ -4,6 +4,21 @@
     font-family: var(--font-family-base);
   }
 
+  h1#page-title.c-typography {
+    color: var(--page-title-color, var(--color-stain-dark-3, #000));
+  }
+
+  /* M6 sized this h2 by tag; M7 sizes by variant h4 */
+  .module-title.c-typography__variant--h4 {
+    --inherit-font-size: var(--font-size-600); /* 32px */
+  }
+
+  /* Header nav: M6 ~15.2px / 600 */
+  .c-header .c-nav {
+    --c-nav--font-size: 16px;
+    --c-button-font-size: 16px;
+  }
+
   // Swedish line breaking: disable automatic hyphenation — browser dictionaries often
   // split compounds incorrectly. Rely on overflow-wrap for long words/URLs instead.
   html:lang(sv) {

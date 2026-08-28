@@ -12,7 +12,7 @@ class BrandTokens
 {
     private const OPTION_VERSION = 'pitea_brand_tokens_version';
 
-    private const FILE_VERSION = 2;
+    private const FILE_VERSION = 3;
 
     private const TOKENS_RELATIVE_PATH = 'source/tokens/pitea-brand.tokens.json';
 
