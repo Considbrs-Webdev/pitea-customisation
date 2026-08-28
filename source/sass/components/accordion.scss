@@ -1,11 +1,11 @@
 @layer theme {
   // Manual Input accordion (v3): markup is details/summary, not
   // .c-accordion__button-wrapper. Theme wraps glued accordions in
-  // .c-card--panel. v3 cards always paint a border; M6 wrapping cards
-  // did not. Keep --divided row separators on the accordion itself.
-  // Direct-child paint-container :has() avoids restyling nested cards.
+  // .c-card--panel. Match M6: 1px square outline on the accordion
+  // (not the wrapping card). Direct-child paint-container :has()
+  // avoids restyling nested cards.
   .modularity-mod-manualinput .c-card:has(> .c-card__paint-container > .c-accordion) {
-    --c-card--border-radius: 1;
+    --c-card--border-radius: 0;
     --c-card--border-width: 0;
     --c-card--shadow-amount: 0;
     --c-card--color--surface: var(--color--white, #fff);
@@ -15,16 +15,28 @@
       --c-card--color--surface-contrast,
       var(--color--black, #1a1a1a)
     );
+    overflow: visible;
+    corner-shape: square;
 
     .c-card__paint-container {
       contain: none;
     }
 
+    // M6 painted 1px --color-stain-light-2 on .c-accordion, square corners.
+    // v3 --divided has no outer border; wrapping card radius was clipping the last row.
     .c-accordion {
       --c-accordion--shadow-amount: 0;
       --c-accordion--color--surface: transparent;
-      --c-accordion--color--surface-border: var(--color--surface-border);
+      --c-accordion--color--surface-border: var(
+        --color-stain-light-2,
+        var(--color--surface-border)
+      );
       --c-accordion--border-radius: 0;
+      --c-accordion--border-width: 0.125;
+      --c-accordion--outline-width-value: 0.125;
+      border: var(--c-accordion--outline-border);
+      border-radius: 0;
+      corner-shape: square;
     }
   }
 
