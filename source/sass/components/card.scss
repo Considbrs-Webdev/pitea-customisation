@@ -25,8 +25,14 @@
     opacity: 0;
   }
 
-  .c-card.c-card--action:focus {
-    background-color: transparent;
+  .c-card.c-card--action:focus,
+  .c-card.c-card--action:focus-visible,
+  .c-card.c-card--action:active {
+    background-color: var(--c-card--color--surface, #fff);
+    color: var(
+      --c-card--color--surface-contrast,
+      var(--c-card--surface-contrast-color, #1a1a1a)
+    );
   }
 
   .modularity-mod-manualinput .c-card:not(.c-card--action) {
@@ -271,6 +277,18 @@
       }
     }
   }
+}
+
+// :visited cannot reliably use custom properties (browser privacy). After
+// clicking a linked card and coming back, background became transparent and
+// the teal section showed through. Hex so visited/focus keep a white surface.
+a.c-card.c-card--action:link,
+a.c-card.c-card--action:visited,
+a.c-card.c-card--action:focus,
+a.c-card.c-card--action:focus-visible,
+a.c-card.c-card--action:active {
+  background-color: #fff;
+  color: #1a1a1a;
 }
 
 // Styleguide zeros child border-radius in @layer components with !important.
