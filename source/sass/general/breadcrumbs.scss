@@ -25,7 +25,8 @@
     max-width: var(--container-width, calc(var(--base, 8px) * 156));
     padding: 16px calc(var(--base, 8px) * 3);
 
-    .c-icon {
+    // Slash separators only — house icon is fa-house, not .c-icon
+    li > .c-icon {
       transform: rotate(-65deg) scale(1.35);
     }
 
@@ -40,7 +41,10 @@
   }
 
   .c-breadcrumb__home-icon {
-    display: none;
+    display: inline-block;
+    margin-inline-end: calc(
+      var(--c-breadcrumb--space, var(--space, 1)) * var(--base, 8px)
+    );
   }
 
   .c-breadcrumb__expand-btn {
@@ -95,10 +99,6 @@
     .c-breadcrumb--js-controlled {
       .c-breadcrumb__item:not(:nth-last-child(2)) {
         display: flex;
-      }
-
-      .c-breadcrumb__home-icon {
-        display: inline;
       }
 
       .c-breadcrumb__home-text {
