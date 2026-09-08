@@ -79,25 +79,42 @@
       }
     }
 
-    .s-forskola-archive {
+    .s-forskola-archive,
+    .s-grundskola-archive,
+    &.post-type-archive-forskola,
+    &.post-type-archive-grundskola {
       --archive-filter-background: var(--color-darjnalen-light-3);
       --c-button--color--primary: var(--color-darjnalen-dark-3);
       --c-button--color--primary-contrast: var(--color-white, #fff);
     }
 
-    .s-lediga-jobb-archive {
+    .s-lediga-jobb-archive,
+    &.post-type-archive-lediga-jobb {
       --archive-filter-background: var(--color-darjnalen-light-3);
       --c-button--color--primary: var(--color-darjnalen-dark-3);
       --c-button--color--primary-contrast: var(--color-darjnalen-light-4);
-      --c-table--color--surface: color-mix(
-        in srgb,
-        var(--color-darjnalen-light-4) 40%,
-        white 60%
-      );
-      --c-table--color--surface-alt: var(--color-darjnalen-light-3);
+      --table-head-background: var(--color-primary, var(--color--primary));
+      --table-head-color: var(--color-white, #fff);
+
+      // Must sit on .c-table: table.scss sets --c-table--color--surface: #ddd
+      // on the component, which beats body-level archive tokens.
+      .c-table {
+        --c-table--color--surface: color-mix(
+          in srgb,
+          var(--color-darjnalen-light-4) 40%,
+          white 60%
+        );
+        --c-table--color--surface-alt: var(--color-darjnalen-light-3);
+      }
+
+      .c-table__head {
+        --c-table--color--surface-alt: var(--table-head-background);
+        --c-table--color--surface-contrast-muted: var(--table-head-color);
+      }
     }
 
-    .s-noticeboard_notice-archive {
+    .s-noticeboard_notice-archive,
+    &.post-type-archive-noticeboard_notice {
       --archive-filter-background: var(--color-paren-light-3);
       --c-button--color--primary: var(--color-paren-dark-3);
       --c-button--color--primary-contrast: var(--color-paren-light-4);
@@ -111,7 +128,8 @@
       }
     }
 
-    .s-municipal_event-archive {
+    .s-municipal_event-archive,
+    &.post-type-archive-municipal_event {
       --archive-filter-background: var(--color-paren-light-3);
       --c-button--color--primary: var(--color-paren-dark-3);
       --c-button--color--primary-contrast: var(--color-paren-light-4);
