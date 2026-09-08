@@ -12,7 +12,68 @@
     }
   }
 
-  ul.wp-block-list li::marker {
-    color: inherit;
+}
+
+// WP / styleguide list markers are unlayered and default to Helsingborg red
+// (#ae0b05). @layer theme cannot override them. Text-module cards use a plain
+// <ul>, not .wp-block-list.
+.c-article ul li::marker,
+.c-article ol li::marker,
+.s-article ul li::marker,
+.s-article ol li::marker,
+.c-card ul li::marker,
+.c-card ol li::marker,
+.modularity-mod-text ul li::marker,
+.modularity-mod-text ol li::marker,
+ul.wp-block-list li::marker,
+ol.wp-block-list li::marker {
+  color: var(--color--black, var(--color-stain-dark-3, #2d2d2d));
+}
+
+// Municipio wp.scss is unlayered: `[class*="wp-image-"] { width: auto; border-radius: 2px }`.
+// @layer theme cannot override that, so keep these unlayered. Hero `.c-image--cover`
+// already uses --c-image--border-radius (~10px) and is out of this scope.
+#article.c-article,
+.o-grid-column-block {
+  figure.c-image,
+  .wp-block-image {
+    overflow: hidden;
+    border-radius: var(
+      --c-image--border-radius,
+      calc(var(--border-radius, 1.25) * var(--base, 8px))
+    );
+  }
+
+  .wp-block-image {
+    --c-image--border-radius: calc(
+      var(--border-radius, 1.25) * var(--base, 8px)
+    );
+  }
+
+  figure.c-image:not(.is-resized) .c-image__image,
+  figure.c-image:not(.is-resized) [class*="wp-image-"],
+  .wp-block-image:not(.is-resized) img,
+  .wp-block-image:not(.is-resized) [class*="wp-image-"] {
+    border-radius: inherit;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+}
+
+// Column images: fill the grid cell without stretching (cover + crop).
+.o-grid-column-block {
+  figure.c-image,
+  .wp-block-image {
+    height: 100%;
+  }
+
+  figure.c-image:not(.is-resized) .c-image__image,
+  figure.c-image:not(.is-resized) [class*="wp-image-"],
+  .wp-block-image:not(.is-resized) img,
+  .wp-block-image:not(.is-resized) [class*="wp-image-"] {
+    height: 100%;
+    object-position: 50% 50%;
   }
 }
