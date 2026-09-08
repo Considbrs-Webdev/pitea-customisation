@@ -106,12 +106,18 @@ class Dashboard
             return;
         }
 
-        // Human-readable labels (keyed by filename)
+        // Human-readable labels (keyed by filename); listed order also sets display order.
         $labels = [
-            'mediabiblioteket-och-bilder.pdf' => __('Media library & images guide', 'pitea-customisation'),
             'redaktorens-checklista.pdf' => __('Before you publish: Editor checklist', 'pitea-customisation'),
+            'mediabiblioteket-och-bilder.pdf' => __('Media library & images guide', 'pitea-customisation'),
             'modulnamn-kontra-utseende.pdf' => __('Module names vs appearance', 'pitea-customisation'),
+            'globala-notiser.pdf' => __('Add a global notice / VMA', 'pitea-customisation'),
         ];
+
+        $labelOrder = array_flip(array_keys($labels));
+        usort($files, static function ($a, $b) use ($labelOrder) {
+            return ($labelOrder[$a] ?? PHP_INT_MAX) <=> ($labelOrder[$b] ?? PHP_INT_MAX);
+        });
 
         echo '<p class="description" style="margin-bottom: 14px;">';
         echo esc_html__('Guides and checklists to help you add and manage content.', 'pitea-customisation');

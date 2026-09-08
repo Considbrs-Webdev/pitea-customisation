@@ -718,7 +718,11 @@ msgstr ""
 msgid "Module names vs appearance"
 msgstr ""
 
-#: source/php/Customisations/Dashboard.php:117
+#: source/php/Customisations/Dashboard.php:114
+msgid "Add a global notice / VMA"
+msgstr ""
+
+#: source/php/Customisations/Dashboard.php:118
 msgid "Guides and checklists to help you add and manage content."
 msgstr ""
 

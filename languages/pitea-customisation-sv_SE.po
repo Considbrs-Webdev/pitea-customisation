@@ -814,7 +814,11 @@ msgstr "Innan du publicerar: Redaktörens checklista"
 msgid "Module names vs appearance"
 msgstr "Modulnamn kontra utseende"
 
-#: source/php/Customisations/Dashboard.php:117
+#: source/php/Customisations/Dashboard.php:114
+msgid "Add a global notice / VMA"
+msgstr "Lägg till en global notis / VMA"
+
+#: source/php/Customisations/Dashboard.php:118
 msgid "Guides and checklists to help you add and manage content."
 msgstr "Guider och checklistor för att lägga till och hantera innehåll."
 
