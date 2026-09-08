@@ -77,4 +77,15 @@
   border-left: 1px solid var(--quick-links-border-color);
   border-right: 1px solid var(--quick-links-border-color);
   font-size: 16px;
+  position: relative;
+
+  &::after {
+    content: "";
+    display: block;
+    width: 100vw;
+    left: 50%;
+    margin-left: -50vw;
+    border-bottom: 1px solid var(--quick-links-border-color);
+    position: absolute;
+  }
 }
