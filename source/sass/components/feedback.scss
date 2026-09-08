@@ -17,8 +17,25 @@
   color: var(--c-paper--color--surface-contrast);
   background-color: var(--c-paper--color--surface);
   padding: var(--c-paper--feedback-padding);
-  max-width: var(--container-width-content);
+  box-sizing: border-box;
+  // --container-width-content is undefined on M7, so max-width was ignored and
+  // the bar bled to the full 12-col. Match .c-article--readable-width (80ch).
+  max-width: var(
+    --c-article--readable-width,
+    var(--container-width-content, 80ch)
+  );
   font-size: var(--c-paper--feedback-font-size-body);
+
+  // Beside a right sidebar (o-grid-4@lg) the article/accordion column is auto,
+  // not 80ch. Cap to that column so the paper lines up with the FAQ.
+  @media screen and (min-width: 78em) {
+    body:has(#sidebar-right-sidebar) & {
+      max-width: min(
+        var(--c-article--readable-width, 80ch),
+        calc((8 / 12) * 100% - var(--grid-gap, 32px) / 3)
+      );
+    }
+  }
 
   > .c-paper__content {
     padding: 0;
