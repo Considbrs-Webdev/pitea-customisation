@@ -35,7 +35,10 @@
       },
       "button": {
         "--c-button--font-size-100": "16px",
-        "--c-button--font-size-90": "12.4px"
+        "--c-button--font-size-90": "12.4px",
+        "--c-button--color--secondary": "#edf1e9",
+        "--c-button--color--secondary-contrast": "#233b1f",
+        "--c-button--color--secondary-border": "#d1dbc8"
       }
     }
   }

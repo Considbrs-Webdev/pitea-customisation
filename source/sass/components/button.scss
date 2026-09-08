@@ -1,4 +1,13 @@
 @layer theme {
+  // Editor still emits M6 names; prefer those, else inherit Design Builder tokens.
+  .c-button {
+    --c-button--color--secondary: var(--c-button-secondary-color, inherit);
+    --c-button--color--secondary-contrast: var(
+      --c-button-secondary-color-contrasting,
+      inherit
+    );
+  }
+
   // Upstream outlined --sm sets letter-spacing: 0.1rem; Piteå prefers none.
   // Selector aligned with styleguide: .c-button.c-button__outlined.c-button--sm
   .c-button.c-button__outlined.c-button--sm {
