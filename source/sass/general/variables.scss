@@ -110,6 +110,7 @@
 :root {
   --page-title-color: var(--color-stain-dark-3);
   --sticky-sidebar-top: calc(104px + var(--wp-admin--admin-bar--height, 0px));
+  --notice-border-radius: 0;
 }
 
 // Search hit card backgrounds (used on search results page)

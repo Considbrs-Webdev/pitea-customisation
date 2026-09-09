@@ -56,6 +56,25 @@
 // unlayered --quick-links-* defaults (#fff / dark icons). On M7, module appearance
 // CSS is emitted inside @layer theme, so those DB greens lose the cascade — same
 // pattern as modules/service-info.scss (unlayered + more specific wrapper).
+//
+// The full-bleed rule lives on the *module* wrapper, not `.modularity-quick-links`.
+// The nav sets `overflow: hidden` (rounded-card clip), which crops a 100vw ::after.
+// Do not target `.modularity-mod-quick-links-{id}` — that ID is per-site ACF CSS.
+.c-footer__prefooter-wrapper .modularity-mod-quick-links {
+  position: relative;
+
+  &::after {
+    content: "";
+    display: block;
+    width: 100vw;
+    left: 50%;
+    margin-left: -50vw;
+    border-bottom: 1px solid
+      color-mix(in srgb, var(--color-darjnalen-light-3) 30%, transparent);
+    position: absolute;
+  }
+}
+
 .c-footer__prefooter-wrapper .modularity-quick-links {
   --quick-links-background-color: var(--color-darjnalen-dark-3); // #233b1f
   --quick-links-icon-color: var(--color-darjnalen-light-4); // #edf1e9
@@ -73,19 +92,9 @@
     255,
     var(--quick-links-hover-amount)
   );
+  --h4-font-size: 12px;
   --quick-links-icon-size-large: 2rem;
   border-left: 1px solid var(--quick-links-border-color);
   border-right: 1px solid var(--quick-links-border-color);
   font-size: 16px;
-  position: relative;
-
-  &::after {
-    content: "";
-    display: block;
-    width: 100vw;
-    left: 50%;
-    margin-left: -50vw;
-    border-bottom: 1px solid var(--quick-links-border-color);
-    position: absolute;
-  }
 }
