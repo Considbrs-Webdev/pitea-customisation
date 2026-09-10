@@ -6,6 +6,7 @@
     &__head {
       .c-table__heading {
         font-size: var(--font-size-table-heading, var(--font-size-100, 1rem));
+        text-overflow: unset;
       }
     }
 
