@@ -2,6 +2,13 @@
 
 // Default archive page styles
 @layer theme {
+  // Text modules wrap in .c-card--panel. Unboxed ones inherit card inset,
+  // so titles/leads sit inward of the listing. Flush those to the column;
+  // styled modules keep inset so inner text stays padded inside the box.
+  .archive .modularity-mod-text .c-card:not([style*="background"]) .c-card__paint-container {
+    --c-card--inset-padding-x: 0;
+  }
+
   .post-type-archive {
     --archive-filter-background: var(--c-card--color--surface, transparent);
     --archive-filter-padding: 36px 30px;
