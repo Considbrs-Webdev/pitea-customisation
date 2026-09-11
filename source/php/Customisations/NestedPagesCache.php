@@ -3,16 +3,9 @@
 namespace PiteaCustomisation\Customisations;
 
 /**
- * Flush the WordPress object cache after Nested Pages changes a page parent.
- *
- * Nested Pages writes menu_order and post_parent with raw SQL. That path
- * never fires save_post, so Redis-backed object cache keeps stale post and
- * navigation data. Breadcrumbs keep the old ancestor trail until the
- * object cache is flushed.
- *
- * Nested Pages posts the whole visible tree on every sort, so
- * nestedpages_post_order_updated runs for every row. Capture post_parent
- * before the SQL write and flush once, only when a parent actually changed.
+ * Nested Pages writes post_parent with raw SQL and never fires save_post
+ * or clean_post_cache. nestedpages_post_order_updated also runs for every
+ * row in the posted tree, not only the page that moved.
  */
 class NestedPagesCache
 {
@@ -29,9 +22,6 @@ class NestedPagesCache
         add_action('nestedpages_post_order_updated', [$this, 'onPostOrderUpdated'], 10, 2);
     }
 
-    /**
-     * Snapshot post_parent for every post in the sort payload.
-     */
     public function capturePreSortState(): void
     {
         $list = $_POST['list'] ?? null;
@@ -47,12 +37,6 @@ class NestedPagesCache
         }
     }
 
-    /**
-     * Flush the object cache when this post's parent changed.
-     *
-     * @param int|string $postId    The post Nested Pages just wrote.
-     * @param int        $newParent The new post_parent value.
-     */
     public function onPostOrderUpdated(int|string $postId, int $newParent): void
     {
         if ($this->flushed) {
