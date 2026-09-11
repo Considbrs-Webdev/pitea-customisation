@@ -46,6 +46,7 @@ class App
             Customisations\Headers::class,
             Customisations\Matomo::class,
             Customisations\Navigation::class,
+            Customisations\NestedPagesCache::class,
             Customisations\NestedPagesTitle::class,
             Customisations\News::class,
             Customisations\NewsTemplate::class,
