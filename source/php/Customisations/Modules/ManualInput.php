@@ -302,6 +302,10 @@ class ManualInput
      * by Accordion__item::init(); the vars are therefore also stashed for the
      * wrapping Card and Accordion components.
      *
+     * Header contrast is `--mi-accordion-button-fg` (used on `summary` in CSS).
+     * Do not set `--c-accordion--color--surface-contrast` here: v3 uses that
+     * token for the whole accordion, including expanded content.
+     *
      * @param array<string, mixed> $data
      * @return array<string, mixed>
      */
@@ -323,7 +327,6 @@ class ManualInput
             '--mi-accordion-button-bg: ' . esc_attr($color),
             '--mi-accordion-button-fg: ' . esc_attr($fg),
             '--c-accordion--color--surface-alt: ' . esc_attr($color),
-            '--c-accordion--color--surface-contrast: ' . esc_attr($fg),
         ]);
 
         self::$pendingAccordionStyle = $declaration;

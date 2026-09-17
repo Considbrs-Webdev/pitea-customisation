@@ -8,25 +8,35 @@
     --c-card--border-radius: 0;
     --c-card--border-width: 0;
     --c-card--shadow-amount: 0;
-    --c-card--color--surface: var(--color--white, #fff);
-    --c-card--color--surface-alt: var(--c-card--color--surface);
-    --c-card--color--primary: var(--c-card--color--surface);
+    --c-card--color--surface: transparent;
+    --c-card--color--surface-alt: transparent;
+    --c-card--color--primary: transparent;
     --c-card--color--primary-contrast: var(
       --c-card--color--surface-contrast,
       var(--color--black, #1a1a1a)
     );
     overflow: visible;
     corner-shape: square;
+    background-color: transparent;
 
     .c-card__paint-container {
       contain: none;
+    }
+
+    .c-card__header {
+      background-color: transparent;
+      color: inherit;
     }
 
     // M6 painted 1px --color-stain-light-2 on .c-accordion, square corners.
     // v3 --divided has no outer border; wrapping card radius was clipping the last row.
     .c-accordion {
       --c-accordion--shadow-amount: 0;
-      --c-accordion--color--surface: transparent;
+      --c-accordion--color--surface: var(--color--white, #fff);
+      --c-accordion--color--surface-contrast: var(
+        --color--surface-contrast,
+        var(--color--black, #1a1a1a)
+      );
       --c-accordion--color--surface-border: var(
         --color-stain-light-2,
         var(--color--surface-border)
@@ -37,15 +47,19 @@
       border: var(--c-accordion--outline-border);
       border-radius: 0;
       corner-shape: square;
+      background-color: var(--c-accordion--color--surface);
     }
   }
 
   // Optional module-level header fill from ManualInput.php (inline on .c-accordion).
+  // Contrast colour belongs on summary only — the v3 accordion token
+  // --c-accordion--color--surface-contrast also colours expanded content.
   .modularity-mod-manualinput .c-accordion__item {
     --c-accordion--color--surface-alt: var(
       --mi-accordion-button-bg,
       var(--color--surface-alt)
     );
+    --icon-size: 24px;
 
     summary {
       background-color: var(--mi-accordion-button-bg, transparent);
@@ -54,6 +68,68 @@
       .c-accordion__item__heading-item,
       .c-accordion__item__icon {
         color: inherit;
+      }
+    }
+
+    .c-accordion__item__content {
+      color: var(
+        --color--surface-contrast,
+        var(--color--black, #1a1a1a)
+      );
+    }
+
+    .c-accordion__item__icon {
+      font-family: var(--font-family-font-awesome);
+      font-size: var(--icon-size);
+      width: var(--icon-size);
+      height: var(--icon-size);
+      transform: translateY(-50%);
+
+      &::before,
+      &::after {
+        font-family: var(--font-family-font-awesome);
+        font-size: var(--icon-size);
+        font-weight: inherit;
+        font-style: normal;
+        width: var(--icon-size);
+        height: var(--icon-size);
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        color: inherit;
+        transition: opacity var(--transition-duration-fast, 0.2s);
+      }
+
+      &::before {
+        content: "+";
+        opacity: 1;
+      }
+
+      &::after {
+        content: "\f068";
+        opacity: 0;
+      }
+    }
+
+    &[open] .c-accordion__item__icon {
+      transform: translateY(-50%);
+
+      &::before,
+      &::after {
+        transition: opacity var(--transition-duration-fast, 0.2s)
+          calc(var(--transition-duration-fast, 0.2s) / 3);
+      }
+
+      &::before {
+        opacity: 0;
+      }
+
+      &::after {
+        opacity: 1;
       }
     }
 
