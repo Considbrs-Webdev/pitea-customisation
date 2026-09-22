@@ -20,6 +20,7 @@ class Admin
         add_action('admin_init', [$this, 'removeEditorBlockDirectoryAssets']);
         add_filter('theme_page_templates', [$this, 'removePageCenteredTemplate'], 100, 1);
         add_filter('register_block_type_args', [$this, 'removeParagraphColorAndBackground'], 10, 2);
+        add_filter('style_loader_tag', [$this, 'keepTinyMceEditorStylesUnlayered'], 20, 3);
     }
 
     /**
@@ -113,6 +114,30 @@ class Admin
             'name'  => 'preamble',
             'label' => _x('Preamble', 'Paragraph block style', 'pitea-customisation'),
         ]);
+    }
+
+    /**
+     * Print TinyMCE's editor stylesheet outside Municipio's cascade layer.
+     *
+     * Municipio wraps wp-includes styles in @layer(wordpress) in the block editor.
+     * TinyMCE's skin is unlayered, so it overrides the link popover position.
+     *
+     * @param string $tag
+     * @param string $handle
+     * @param string $href Already escaped by WP_Styles.
+     * @return string
+     */
+    public function keepTinyMceEditorStylesUnlayered(string $tag, string $handle, string $href): string
+    {
+        if ($handle !== 'editor-buttons' || !str_contains($tag, 'layer(')) {
+            return $tag;
+        }
+
+        return sprintf(
+            "<link rel='stylesheet' id='%s-css' href='%s' media='all' />\n",
+            esc_attr($handle),
+            $href
+        );
     }
 
     /**
