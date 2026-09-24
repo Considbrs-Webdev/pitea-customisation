@@ -21,6 +21,15 @@
         font-size: var(--font-size-table, var(--font-size-90, 0.875rem));
       }
     }
+
+    // The track lives in the footer after the rows. Sticky on the footer
+    // keeps it at the viewport bottom while the table is on screen.
+    &__footer:has(.c-table__scroll-indicator-wrapper:not(.u-display--none)) {
+      position: sticky;
+      bottom: env(safe-area-inset-bottom, 0px);
+      z-index: 2;
+      background-color: var(--color--background, #fff);
+    }
   }
 
   // Native HTML tables (content): thead brand colors via local vars.
