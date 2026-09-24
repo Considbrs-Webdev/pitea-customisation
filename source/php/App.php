@@ -32,10 +32,12 @@ class App
         $classes = [
             Admin\Settings::class,
             Customisations\Accessibility::class,
+            Customisations\BrandTokens::class,
             Customisations\Archive::class,
             Customisations\Breadcrumbs::class,
             Customisations\BlockPatternCompatibility::class,
             Customisations\ColorPicker::class,
+            Customisations\Columns::class,
             Customisations\Config::class,
             Customisations\ScheduledPageReviews::class,
             Customisations\CustomerFeedback::class,

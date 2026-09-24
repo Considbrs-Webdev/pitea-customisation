@@ -1,6 +1,17 @@
 @mixin base() {
-  --tag-background: var(--c-button-primary-color, #333);
-  --tag-color: var(--c-button-primary-color-contrasting, #fff);
+  // M7: --c-button-primary-color is gone (was falling back to #333 charcoal).
+  // Brand primary / darjnalen green; set v3 --c-tags--* and keep --tag-* for the chip paint.
+  --c-tags--color--surface: var(
+    --color--primary,
+    var(--color-primary, var(--color-darjnalen-dark-2, #2b512b))
+  );
+  --c-tags--color--surface-contrast: var(
+    --color--primary-contrast,
+    var(--color-primary-contrasting, var(--color--white, #fff))
+  );
+  --c-tags--color--surface-border: var(--c-tags--color--surface);
+  --tag-background: var(--c-tags--color--surface);
+  --tag-color: var(--c-tags--color--surface-contrast);
   --tag-border-radius: var(--radius-sm, 0.25rem);
 
   .c-newsitem {

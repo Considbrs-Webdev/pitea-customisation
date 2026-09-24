@@ -1,26 +1,45 @@
-// Customer Feedback Component Styles
-:root {
-  --c-paper-background: var(--color-darjnalen-dark-3);
-  --c-paper-color: var(--color-darjnalen-light-4);
-  --c-paper-padding: var(--base, 20px);
-  --c-paper-border-radius: var(--border-radius-small);
-  --c-paper-border: var(--color-darjnalen-light-4);
-  --c-paper-shadow: var(--shadow-base);
-  --c-paper-shadow-hover: var(--shadow-hover);
-  --c-paper-font-size-body: var(--font-size-body, 18px);
-  --c-paper-line-height-body: var(--line-height-body, 27px);
-  --c-paper-color-button: var(--color-darjnalen-dark-3);
-  --c-paper-breakpoint: var(--breakpoint-sm);
-}
-
+// Customer Feedback — Piteå dark-green bar with Ja/Nej pills.
+// Unlayered: plugin CSS (`#customer-feedback …`) and Styleguide v3 `.c-paper`
+// token defaults live outside `@layer theme` / in a later layer, so themed
+// tokens on `:root` never reach this instance. Scope to `.c-paper--feedback`.
 .c-paper--feedback {
-  container-type: inline-size; // Enable container queries
+  container-type: inline-size;
 
-  color: var(--c-paper-color);
-  background-color: var(--c-paper-background);
-  padding: var(--c-paper-padding);
-  max-width: var(--container-width-content);
-  font-size: var(--c-paper-font-size-body);
+  --c-paper--color--surface: var(--color-darjnalen-dark-3);
+  --c-paper--color--surface-contrast: var(--color-darjnalen-light-4);
+  --c-paper--border-radius: 1;
+  --c-paper--color--surface-border: var(--color-darjnalen-light-4);
+  --c-paper--feedback-padding: var(--base, 20px);
+  --c-paper--feedback-font-size-body: var(--font-size-body, 18px);
+  --c-paper--feedback-line-height-body: var(--line-height-body, 27px);
+  --c-paper--feedback-color-button: var(--color-darjnalen-dark-3);
+
+  color: var(--c-paper--color--surface-contrast);
+  background-color: var(--c-paper--color--surface);
+  padding: var(--c-paper--feedback-padding);
+  box-sizing: border-box;
+  // --container-width-content is undefined on M7, so max-width was ignored and
+  // the bar bled to the full 12-col. Match .c-article--readable-width (80ch).
+  max-width: var(
+    --c-article--readable-width,
+    var(--container-width-content, 80ch)
+  );
+  font-size: var(--c-paper--feedback-font-size-body);
+
+  // Beside a right sidebar (o-grid-4@lg) the article/accordion column is auto,
+  // not 80ch. Cap to that column so the paper lines up with the FAQ.
+  @media screen and (min-width: 78em) {
+    body:has(#sidebar-right-sidebar) & {
+      max-width: min(
+        var(--c-article--readable-width, 80ch),
+        calc((8 / 12) * 100% - var(--grid-gap, 32px) / 3)
+      );
+    }
+  }
+
+  > .c-paper__content {
+    padding: 0;
+  }
 
   #customer-feedback-form {
     display: flex;
@@ -29,7 +48,6 @@
     gap: var(--base, 30px);
     flex-wrap: wrap;
 
-    // When container is narrow (items wrap), center the content
     @container (max-width: 450px) {
       justify-content: center;
 
@@ -38,27 +56,25 @@
       }
     }
 
-    // Hide section icons
     .customer-feedback-section-icon {
       display: none;
     }
 
-    // Heading section - allow text to wrap first, but keep whole words intact
     .customer-feedback-section-heading {
       flex: 1;
       min-width: min-content;
       max-width: 100%;
       display: flex;
-      align-items: center; // Vertically center the heading content
+      align-items: center;
 
       .customer-feedback-section-content {
-        padding: 0 !important;
+        padding: 0;
         width: 100%;
         display: flex;
-        align-items: center; // Vertically center the h2
+        align-items: center;
 
         h2 {
-          font-size: var(--c-paper-font-size-body);
+          font-size: var(--c-paper--feedback-font-size-body);
           word-break: normal;
           overflow-wrap: break-word;
           word-wrap: break-word;
@@ -85,7 +101,7 @@
     }
 
     .customer-feedback-section-content {
-      padding: 0 !important;
+      padding: 0;
 
       .c-option {
         &__radio {
@@ -100,25 +116,31 @@
       }
     }
 
-    // Feedback button styles
     .customer-feedback-response-yes,
     .customer-feedback-response-no {
-      font-size: var(--c-paper-font-size-body);
+      --c-button-background: var(--c-paper--color--surface-contrast);
+      --c-button-contrast: var(--c-paper--feedback-color-button);
+      --inherit-color-background: var(--c-paper--color--surface-contrast);
+      --inherit-color-contrast: var(--c-paper--feedback-color-button);
+
+      font-size: var(--c-paper--feedback-font-size-body);
       font-style: normal;
       font-weight: 400;
-      line-height: var(--c-paper-line-height-body);
+      line-height: var(--c-paper--feedback-line-height-body);
+      color: var(--c-paper--feedback-color-button);
 
+      .c-button__label,
       .c-button__label-text {
-        color: var(--c-paper-color-button);
-        font-size: var(--c-paper-font-size-body);
+        color: var(--c-paper--feedback-color-button);
+        font-size: var(--c-paper--feedback-font-size-body);
         font-weight: 400;
-        line-height: var(--c-paper-line-height-body);
+        line-height: var(--c-paper--feedback-line-height-body);
       }
     }
 
     .customer-feedback-already-submitted {
-      color: var(--c-paper-color-button);
-      background-color: var(--c-paper-color);
+      color: var(--c-paper--feedback-color-button);
+      background-color: var(--c-paper--color--surface-contrast);
     }
   }
 }

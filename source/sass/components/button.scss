@@ -1,7 +1,20 @@
-.c-button.c-button--sm {
-  letter-spacing: unset;
+@layer theme {
+  // Editor still emits M6 names; prefer those, else inherit Design Builder tokens.
+  .c-button {
+    --c-button--color--secondary: var(--c-button-secondary-color, inherit);
+    --c-button--color--secondary-contrast: var(
+      --c-button-secondary-color-contrasting,
+      inherit
+    );
+  }
 
-  &.c-button__outlined.c-button__outlined--primary {
-    background-color: var(--color-darjnalen-light-4);
+  // Upstream outlined --sm sets letter-spacing: 0.1rem; Piteå prefers none.
+  // Selector aligned with styleguide: .c-button.c-button__outlined.c-button--sm
+  .c-button.c-button__outlined.c-button--sm {
+    letter-spacing: unset;
+
+    &[class*="--primary"] {
+      background-color: var(--color-darjnalen-light-4);
+    }
   }
 }

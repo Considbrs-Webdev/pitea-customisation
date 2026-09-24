@@ -1,91 +1,147 @@
-.modularity-mod-manualinput {
-  &:has(.c-accordion) {
-    --card-header-padding: 0 0 1rem 0;
-    --card-header-background: transparent;
-    --card-header-color: var(--color-base);
-    --card-header-font-size: 32px;
-    --icon-size: 24px;
+@layer theme {
+  // Manual Input accordion (v3): markup is details/summary, not
+  // .c-accordion__button-wrapper. Theme wraps glued accordions in
+  // .c-card--panel. Match M6: 1px square outline on the accordion
+  // (not the wrapping card). Direct-child paint-container :has()
+  // avoids restyling nested cards.
+  .modularity-mod-manualinput .c-card:has(> .c-card__paint-container > .c-accordion) {
+    --c-card--border-radius: 0;
+    --c-card--border-width: 0;
+    --c-card--shadow-amount: 0;
+    --c-card--color--surface: transparent;
+    --c-card--color--surface-alt: transparent;
+    --c-card--color--primary: transparent;
+    --c-card--color--primary-contrast: var(
+      --c-card--color--surface-contrast,
+      var(--color--black, #1a1a1a)
+    );
+    overflow: visible;
+    corner-shape: square;
+    background-color: transparent;
 
-    .c-card {
-      &__paint-container {
-        contain: none;
-      }
+    .c-card__paint-container {
+      contain: none;
+    }
 
-      &__header {
-        background: 0;
-        padding: 0;
-        .c-typography {
-          background: var(--card-header-background);
-          color: var(--card-header-color);
-          font-size: var(--card-header-font-size);
-          padding: var(--card-header-padding);
-        }
-      }
+    .c-card__header {
+      background-color: transparent;
+      color: inherit;
+    }
+
+    // M6 painted 1px --color-stain-light-2 on .c-accordion, square corners.
+    // v3 --divided has no outer border; wrapping card radius was clipping the last row.
+    .c-accordion {
+      --c-accordion--shadow-amount: 0;
+      --c-accordion--color--surface: var(--color--white, #fff);
+      --c-accordion--color--surface-contrast: var(
+        --color--surface-contrast,
+        var(--color--black, #1a1a1a)
+      );
+      --c-accordion--color--surface-border: var(
+        --color-stain-light-2,
+        var(--color--surface-border)
+      );
+      --c-accordion--border-radius: 0;
+      --c-accordion--border-width: 0.125;
+      --c-accordion--outline-width-value: 0.125;
+      border: var(--c-accordion--outline-border);
+      border-radius: 0;
+      corner-shape: square;
+      background-color: var(--c-accordion--color--surface);
     }
   }
 
-  .c-accordion {
-    border: 1px solid var(--color-stain-light-2);
-    padding: 0;
+  // Optional module-level header fill from ManualInput.php (inline on .c-accordion).
+  // Contrast colour belongs on summary only — the v3 accordion token
+  // --c-accordion--color--surface-contrast also colours expanded content.
+  .modularity-mod-manualinput .c-accordion__item {
+    --c-accordion--color--surface-alt: var(
+      --mi-accordion-button-bg,
+      var(--color--surface-alt)
+    );
+    --icon-size: 24px;
 
-    &__content {
-      padding: 20px 30px 20px 30px;
+    summary {
+      background-color: var(--mi-accordion-button-bg, transparent);
+      color: var(--mi-accordion-button-fg, unset);
+
+      .c-accordion__item__heading-item,
+      .c-accordion__item__icon {
+        color: inherit;
+      }
     }
 
-    &__button-wrapper {
-      padding: 20px 30px;
-      --bg: var(--mi-accordion-button-bg, white);
-      background: var(--bg);
-      color: var(--color-base);
-      color: contrast-color(var(--bg));
+    .c-accordion__item__content {
+      color: var(
+        --color--surface-contrast,
+        var(--color--black, #1a1a1a)
+      );
     }
 
-    &__button {
-      .c-icon {
+    .c-accordion__item__icon {
+      font-family: var(--font-family-font-awesome);
+      font-size: var(--icon-size);
+      width: var(--icon-size);
+      height: var(--icon-size);
+      transform: translateY(-50%);
+
+      &::before,
+      &::after {
         font-family: var(--font-family-font-awesome);
         font-size: var(--icon-size);
-        position: relative;
+        font-weight: inherit;
+        font-style: normal;
         width: var(--icon-size);
         height: var(--icon-size);
-
-        &::before,
-        &::after {
-          font-size: var(--icon-size);
-          width: var(--icon-size);
-          height: var(--icon-size);
-          position: absolute;
-          top: 0;
-          transition: opacity var(--transition-duration-fast);
-          left: 0;
-        }
-
-        &::before {
-          content: "\+";
-          opacity: 1;
-        }
-
-        &::after {
-          content: "\f068";
-          opacity: 0;
-        }
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        color: inherit;
+        transition: opacity var(--transition-duration-fast, 0.2s);
       }
 
-      &[aria-expanded="true"] {
-        .c-icon {
-          &::before,
-          &::after {
-            transition: opacity var(--transition-duration-fast)
-              calc(var(--transition-duration-fast) / 3);
-          }
-          &::before {
-            opacity: 0;
-          }
+      &::before {
+        content: "+";
+        opacity: 1;
+      }
 
-          &::after {
-            opacity: 1;
-          }
-        }
+      &::after {
+        content: "\f068";
+        opacity: 0;
       }
     }
+
+    &[open] .c-accordion__item__icon {
+      transform: translateY(-50%);
+
+      &::before,
+      &::after {
+        transition: opacity var(--transition-duration-fast, 0.2s)
+          calc(var(--transition-duration-fast, 0.2s) / 3);
+      }
+
+      &::before {
+        opacity: 0;
+      }
+
+      &::after {
+        opacity: 1;
+      }
+    }
+
+    // v3 underlines all headings inside item content; not tokenized.
+    .c-accordion__item__content :is(h1, h2, h3, h4, h5, h6) {
+      text-decoration: none;
+    }
+  }
+
+  // Schema preschool/school accordion: keep v3 --bordered default, drop shadow.
+  [data-scope*="single-schema-preschool"] .c-accordion,
+  [data-scope*="single-schema-elementary-school"] .c-accordion {
+    --c-accordion--shadow-amount: 0;
   }
 }

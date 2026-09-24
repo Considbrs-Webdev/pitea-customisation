@@ -1,21 +1,18 @@
-.modularity-quick-links .modularity-quick-links__card {
-  // --quick-links-hover-amount: 0.2; // Slightly stronger for visibility on light backgrounds
-  // --quick-links-hover-color: color-mix(
-  //   in srgb,
-  //   var(--color-darjnalen-light-2) calc(var(--quick-links-hover-amount) * 100%),
-  //   transparent
-  // );
+// Quick-links: stacking fix only (hover tokens live in modularity-quick-links).
+// Overlay ::before is module-owned — not a Styleguide c-* token fight.
+@layer theme {
+  .modularity-quick-links .modularity-quick-links__card {
+    &::before {
+      z-index: 0;
+    }
 
-  &::before {
-    z-index: 0;
-  }
-
-  // Keep content above overlay for readable text.
-  // Do not set position/z-index on __title — it traps the stretched link ::after
-  // to the heading box instead of the full card (see modularity-quick-links __link).
-  .modularity-quick-links__icon,
-  .modularity-quick-links__description {
-    position: relative;
-    z-index: 1;
+    // Keep content above overlay for readable text.
+    // Do not set position/z-index on __title — it traps the stretched link ::after
+    // to the heading box instead of the full card (see modularity-quick-links __link).
+    .modularity-quick-links__icon,
+    .modularity-quick-links__description {
+      position: relative;
+      z-index: 1;
+    }
   }
 }

@@ -1,33 +1,56 @@
-.c-footer {
-  h2 {
-    font-size: var(--font-size-heading-3);
-  }
-
-  &__prefooter-wrapper ul {
-    margin-bottom: 0;
-  }
-
-  .footer-icons {
-    .o-container {
-      display: flex;
-      flex-direction: row;
-      gap: var(--base, 10px);
+@layer theme {
+  .c-footer {
+    h2 {
+      font-size: var(--font-size-heading-3);
     }
-  }
 
-  [class*="s-sidebar-footer-area"]:not(.s-sidebar-footer-area-top) {
-    ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
+    &__prefooter-wrapper ul {
+      margin-bottom: 0;
+    }
 
-      li {
-        margin: 0;
-        padding: 0;
-        list-style: none;
+    &__main-wrapper {
+      overflow: hidden;
+      padding-top: 0;
+    }
+
+    .footer-icons {
+      .o-container {
+        display: flex;
+        flex-direction: row;
+        gap: var(--base, 10px);
       }
     }
   }
+
+  #sidebar-footer-area-top p {
+    display: none;
+  }
+}
+
+// Kirki painted this strip on `.c-footer`; Design Builder has color tokens only.
+// Unlayered so `background-image` is not dropped by a later component layer.
+.c-footer {
+  background-image: url("../../assets/svg/bg-trad-hav-hus.svg");
+  background-repeat: repeat-x;
+  background-position: center bottom;
+  background-size: auto;
+}
+
+// WP block lists are unlayered. `@layer theme` list-style:none therefore loses,
+// and M7 moved `s-sidebar-footer-area*` from class to data-scope.
+.c-footer__widget-area {
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+  }
+}
 
   &__main-wrapper {
     overflow: hidden;
@@ -67,4 +90,50 @@
       position: absolute;
     }
   }
+
+// Sidfotslänkar (prefooter quick-links): modularity-quick-links paints cards via
+// unlayered --quick-links-* defaults (#fff / dark icons). On M7, module appearance
+// CSS is emitted inside @layer theme, so those DB greens lose the cascade — same
+// pattern as modules/service-info.scss (unlayered + more specific wrapper).
+//
+// The full-bleed rule lives on the *module* wrapper, not `.modularity-quick-links`.
+// The nav sets `overflow: hidden` (rounded-card clip), which crops a 100vw ::after.
+// Do not target `.modularity-mod-quick-links-{id}` — that ID is per-site ACF CSS.
+.c-footer__prefooter-wrapper .modularity-mod-quick-links {
+  position: relative;
+
+  &::after {
+    content: "";
+    display: block;
+    width: 100vw;
+    left: 50%;
+    margin-left: -50vw;
+    border-bottom: 1px solid
+      color-mix(in srgb, var(--color-darjnalen-light-3) 30%, transparent);
+    position: absolute;
+  }
+}
+
+.c-footer__prefooter-wrapper .modularity-quick-links {
+  --quick-links-background-color: var(--color-darjnalen-dark-3); // #233b1f
+  --quick-links-icon-color: var(--color-darjnalen-light-4); // #edf1e9
+  --quick-links-title-color: var(--color-darjnalen-light-4);
+  --quick-links-description-color: var(--color-darjnalen-light-4);
+  --quick-links-border-color: color-mix(
+    in srgb,
+    var(--color-darjnalen-light-3) 30%,
+    transparent
+  );
+  --quick-links-border-width: 0;
+  --quick-links-hover-color: rgba(
+    255,
+    255,
+    255,
+    var(--quick-links-hover-amount)
+  );
+  --h4-font-size: 12px;
+  --quick-links-icon-size-large: 2rem;
+  border-left: 1px solid var(--quick-links-border-color);
+  border-right: 1px solid var(--quick-links-border-color);
+  font-size: 16px;
 }

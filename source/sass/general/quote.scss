@@ -1,21 +1,24 @@
-blockquote {
-  background-color: var(--color-darjnalen-light-4);
-  color: black;
-  font-size: 1.5rem;
-  font-weight: 600;
-  &::before {
-    content: "\f10d";
-    font-family: var(--font-family-font-awesome);
-    font-size: 2rem;
-    font-weight: 900;
-    color: var(--color-darjnalen-dark-1);
-  }
+@layer theme {
+  blockquote {
+    background-color: var(--color-darjnalen-light-4);
+    color: black;
+    font-size: 1.5rem;
+    font-weight: 600;
 
-  &::after {
-    content: "\f10e";
-    font-family: var(--font-family-font-awesome);
-    font-size: 2rem;
-    font-weight: 900;
-    color: var(--color-darjnalen-dark-1);
+    &::before {
+      content: "\f10d";
+      font-family: var(--font-family-font-awesome);
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--color-darjnalen-dark-1);
+    }
+
+    &::after {
+      content: "\f10e";
+      font-family: var(--font-family-font-awesome);
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--color-darjnalen-dark-1);
+    }
   }
 }

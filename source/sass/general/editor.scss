@@ -1,25 +1,23 @@
-// Classic editor (TinyMCE)
-#editor {
-  p {
-    max-width: var(--container-width);
+// Editor chrome (block + classic). Keep !important where core uses it.
+@layer theme {
+  // Classic editor (TinyMCE)
+  #editor {
+    p {
+      max-width: var(--container-width);
+    }
   }
-}
 
-// Block editor: paragraph block spacing to match frontend (typography.scss uses same value).
-// Core injects :where(.editor-styles-wrapper) .wp-block { margin: 0 !important }, so we need
-// !important and a more specific selector (.wp-block-paragraph) to override.
-.editor-styles-wrapper .wp-block-paragraph {
-  margin-bottom: calc(var(--base, 8px) * 3) !important;
-}
+  // Block editor: paragraph block spacing to match frontend.
+  .editor-styles-wrapper .wp-block-paragraph {
+    margin-bottom: calc(var(--base, 8px) * 3) !important;
+  }
 
-// List block: theme blockeditor.scss puts padding on html :where(.wp-block). For ul/ol that is
-// the list itself, so outside markers sit in that padded strip while text follows — looks broken.
-// Use margin for the block gutter; keep ~core list indent for markers + text (not padding: 0 alone).
-// Core sets .editor-styles-wrapper .wp-block { margin: 0 !important }, so gutter margin must win.
-.editor-styles-wrapper :is(ul, ol).wp-block-list {
-  padding-inline-start: 2.5em;
-}
+  // List block: use margin for the block gutter; keep core list indent for markers.
+  .editor-styles-wrapper :is(ul, ol).wp-block-list {
+    padding-inline-start: 2.5em;
+  }
 
-.editor-styles-wrapper li :is(ul, ol).wp-block-list {
-  margin-inline-start: 0 !important;
+  .editor-styles-wrapper li :is(ul, ol).wp-block-list {
+    margin-inline-start: 0 !important;
+  }
 }

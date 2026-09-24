@@ -1,13 +1,15 @@
 @use "../elements/news-item";
 
-.modularity-mod-posts {
-  @include news-item.base();
+@layer theme {
+  .modularity-mod-posts {
+    @include news-item.base();
 
-  .t-read-more-section {
-    justify-content: flex-start;
+    .t-read-more-section {
+      justify-content: flex-start;
 
-    .c-button {
-      margin-left: 0 !important;
+      .c-button {
+        margin-left: 0;
+      }
     }
   }
 }

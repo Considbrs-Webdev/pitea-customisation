@@ -1,47 +1,65 @@
-html,
-body {
-  font-family: var(--font-family-base);
-}
-
-s// Swedish line breaking: disable automatic hyphenation — browser dictionaries often split compounds
-// incorrectly (e.g. "ut-" + "omhuspool"). Rely on overflow-wrap for long words/URLs instead.
-html:lang(sv) {
-  word-break: normal;
-  overflow-wrap: break-word;
-  hyphens: none;
-  -webkit-hyphens: none;
-}
-
-a,
-.link {
-  color: var(--color-black);
-  &:hover {
-    color: var(--color-black);
+@layer theme {
+  html,
+  body {
+    font-family: var(--font-family-base);
   }
-  &:visited {
-    color: var(--color-black);
+
+  h1#page-title.c-typography {
+    color: var(--page-title-color, var(--color-stain-dark-3, #000));
+  }
+
+  /* M6 sized this h2 by tag; M7 sizes by variant h4 */
+  .module-title.c-typography__variant--h4 {
+    --inherit-font-size: var(--font-size-600); /* 32px */
+  }
+
+  /* Header nav: M6 ~15.2px / 600 */
+  .c-header .c-nav {
+    --c-nav--font-size: 16px;
+    --c-button-font-size: 16px;
+  }
+
+  // Swedish line breaking: disable automatic hyphenation — browser dictionaries often
+  // split compounds incorrectly. Rely on overflow-wrap for long words/URLs instead.
+  html:lang(sv) {
+    word-break: normal;
+    overflow-wrap: break-word;
+    hyphens: none;
+    -webkit-hyphens: none;
+  }
+
+  a,
+  .link {
+    color: var(--color--black, var(--color-black));
 
     &:hover {
-      color: var(--color-black);
+      color: var(--color--black, var(--color-black));
+    }
+
+    &:visited {
+      color: var(--color--black, var(--color-black));
+
+      &:hover {
+        color: var(--color--black, var(--color-black));
+      }
     }
   }
-}
 
-// Global p margin (applies on all templates including onepage where .c-article is absent)
-.c-article p,
-.c-article ul,
-.c-article ol,
-.c-article blockquote,
-.c-article img,
-.c-article table,
-.c-article > div,
-.page-template-one-page-blade #main-content > .o-container > p {
-  margin-top: calc(var(--base, 8px) * 1.5);
-}
+  .c-article p,
+  .c-article ul,
+  .c-article ol,
+  .c-article blockquote,
+  .c-article img,
+  .c-article table,
+  .c-article > div,
+  .page-template-one-page-blade #main-content > .o-container > p {
+    margin-top: calc(var(--base, 8px) * 1.5);
+  }
 
-article.c-article.s-article {
-  ul li + li,
-  ol li + li {
-    margin-top: calc(var(--base, 8px) * 0.5);
+  article.c-article.s-article {
+    ul li + li,
+    ol li + li {
+      margin-top: calc(var(--base, 8px) * 0.5);
+    }
   }
 }

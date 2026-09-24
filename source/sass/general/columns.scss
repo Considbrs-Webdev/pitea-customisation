@@ -1,13 +1,23 @@
-@media screen and (min-width: 56em) {
-  .o-grid:has(.o-grid-column-block.has-custom-width) {
-    gap: 0;
-
-    .o-grid-column-block:first-child {
-      padding-right: calc(var(--grid-gap, 16px));
+@layer theme {
+  // M7 removed theme stacking for .o-grid-column-block; keep mobile full-width
+  // so restored flex-basis % widths (Columns.php) only apply from md up.
+  @media screen and (max-width: 55.999em) {
+    .o-grid-column-block {
+      flex-basis: 100% !important;
     }
+  }
 
-    .o-grid-column-block:last-child {
-      padding-left: calc(var(--grid-gap, 16px));
+  @media screen and (min-width: 56em) {
+    .o-grid:has(.o-grid-column-block.has-custom-width) {
+      gap: 0;
+
+      .o-grid-column-block:first-child {
+        padding-right: calc(var(--grid-gap, 16px));
+      }
+
+      .o-grid-column-block:last-child {
+        padding-left: calc(var(--grid-gap, 16px));
+      }
     }
   }
 }

@@ -1,17 +1,21 @@
+// modularity-service-info still consumes --item-* / --title-* / --icon-* locals
+// (see modularity-service-info-general.scss). Those defaults are unlayered on
+// .mod-service-info, so @layer theme cannot override them — keep Piteå locals
+// unlayered with a more specific wrapper selector.
 .modularity-mod-service-info .mod-service-info {
   --item-background-color: var(--color-darjnalen-light-4);
   --item-background-color-hover: var(--color-darjnalen-light-3);
-  --item-border-radius: var(--border-radius-small);
-  --icon-border-radius: var(--border-radius-small);
-  --item-color: var(--color-stain-dark-3);
+  --item-border-radius: var(--border-radius-small, calc(var(--base, 8px) * 0.625));
+  --icon-border-radius: var(--border-radius-small, calc(var(--base, 8px) * 0.625));
+  --item-text-color: var(--color-stain-dark-3);
   --date-color: var(--color-stain-dark-3);
-  --date-font-size: var(--font-size-small);
-  --title-font-size: var(--font-size-heading-4);
+  --date-font-size: var(--font-size-small, var(--font-size-90, 0.875rem));
+  --title-font-size: var(--font-size-heading-4, var(--font-size-100, 1.125rem));
   --title-font-weight: var(--h3-font-weight, var(--font-weight-heading, 600));
   --icon-color: var(--color-darjnalen-dark-3);
 
   .mod-service-info__title {
-    line-height: 0px;
+    line-height: 0;
   }
 }
 
