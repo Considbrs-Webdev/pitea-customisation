@@ -39,6 +39,9 @@
         "--c-button--color--secondary": "#edf1e9",
         "--c-button--color--secondary-contrast": "#233b1f",
         "--c-button--color--secondary-border": "#d1dbc8"
+      },
+      "header": {
+        "--c-header--padding-y-enabled": "0"
       }
     }
   }
