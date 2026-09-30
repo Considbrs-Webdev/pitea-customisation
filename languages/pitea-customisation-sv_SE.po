@@ -892,10 +892,6 @@ msgstr "Inställningar för snabbutgång"
 msgid "Display"
 msgstr "Visning"
 
-#: source/php/AcfFields/QuickExitFields.php:35
-msgid "Sticky stays in the corner while the page scrolls. Inline sits where the module is placed."
-msgstr "Klistrad stannar i hörnet när sidan scrollas. Inline visas där modulen är placerad."
-
 #: source/php/AcfFields/QuickExitFields.php:38
 msgid "Sticky (follows the page)"
 msgstr "Klistrad (följer med sidan)"
@@ -908,87 +904,130 @@ msgstr "Inline (där den placeras)"
 msgid "Both"
 msgstr "Båda"
 
-#: source/php/AcfFields/QuickExitFields.php:50
+#: source/php/Admin/Tabs/QuickExitTab.php:93
 msgid "Button text"
 msgstr "Knapptext"
 
-#: source/php/AcfFields/QuickExitFields.php:53
-msgid "Leave empty to use the default from Settings → Piteå kommun → Quick exit."
-msgstr "Lämna tomt för att använda standardvärdet från Inställningar → Piteå kommun → Snabbutgång."
-
-#: source/php/AcfFields/QuickExitFields.php:58
+#: source/php/Admin/Tabs/QuickExitTab.php:92
 msgid "Destination"
 msgstr "Destination"
 
-#: source/php/AcfFields/QuickExitFields.php:61
-msgid "Leave empty to use the default destination."
-msgstr "Lämna tomt för att använda standarddestinationen."
-
-#: source/php/AcfFields/QuickExitFields.php:66
-msgid "Escape shortcut"
-msgstr "Escape-genväg"
-
-#: source/php/AcfFields/QuickExitFields.php:69
-msgid "Also leave when Esc is pressed three times quickly."
-msgstr "Lämna även sidan när Esc trycks tre gånger i snabb följd."
-
-#: source/php/AcfFields/QuickExitFields.php:76
-msgid "Info link"
-msgstr "Informationslänk"
-
-#: source/php/AcfFields/QuickExitFields.php:79
-msgid "Optional link shown under the inline button, for example a page that explains the button."
-msgstr "Valfri länk under den inline-placerade knappen, till exempel en sida som förklarar knappen."
-
-#: source/php/AcfFields/QuickExitFields.php:84
-msgid "Info link text"
-msgstr "Text för informationslänk"
-
-#: source/php/AcfFields/QuickExitFields.php:87
-msgid "Leave empty to use “Läs om Lämna sidan snabbt”."
-msgstr "Lämna tomt för att använda ”Läs om Lämna sidan snabbt”."
-
-#: source/php/Admin/Tabs/QuickExitTab.php:34
-#: source/php/Admin/Tabs/QuickExitTab.php:75
-#: source/php/Admin/Tabs/QuickExitTab.php:107
-#: source/php/Module/QuickExit.php:25
-#: source/php/Module/QuickExit.php:26
+#: source/php/Admin/Tabs/QuickExitTab.php:43
+#: source/php/Admin/Tabs/QuickExitTab.php:81
+#: source/php/Admin/Tabs/QuickExitTab.php:111
+#: source/php/Module/QuickExit.php:28
+#: source/php/Module/QuickExit.php:29
 msgid "Quick exit"
 msgstr "Snabbutgång"
 
-#: source/php/Admin/Tabs/QuickExitTab.php:77
-msgid "Default destination and label for the quick-exit module. Individual modules can override both."
-msgstr "Standarddestination och standardtext för modulen Snabbutgång. Enskilda moduler kan åsidosätta båda."
-
-#: source/php/Admin/Tabs/QuickExitTab.php:87
-msgid "Default destination"
-msgstr "Standarddestination"
-
-#: source/php/Admin/Tabs/QuickExitTab.php:95
-msgid "Default button text"
-msgstr "Standardtext för knappen"
-
-#: source/php/Admin/Tabs/QuickExitTab.php:129
-msgid "Where the quick-exit button sends visitors. Choose a neutral, everyday site. Can be overridden per module."
-msgstr "Dit knappen skickar besökaren. Välj en neutral, vardaglig webbplats. Kan åsidosättas per modul."
-
-#: source/php/Admin/Tabs/QuickExitTab.php:145
-#: source/php/Admin/Tabs/QuickExitTab.php:202
+#: source/php/Admin/Tabs/QuickExitTab.php:302
 msgid "Leave the page quickly"
 msgstr "Lämna sidan snabbt"
 
-#: source/php/Admin/Tabs/QuickExitTab.php:148
-msgid "Button text. Leave empty to use “Lämna sidan snabbt”."
-msgstr "Knapptext. Lämna tomt för att använda ”Lämna sidan snabbt”."
-
-#: source/php/Admin/Tabs/QuickExitTab.php:168
+#: source/php/Admin/Tabs/QuickExitTab.php:219
 msgid "Enter a valid http(s) URL."
 msgstr "Ange en giltig http(s)-adress."
 
-#: source/php/Module/QuickExit.php:27
-msgid "A red button that lets visitors leave the page immediately. Sticky or inline, with a configurable destination."
-msgstr "En röd knapp som låter besökaren lämna sidan direkt. Klistrad eller inline, med valbar destination."
+#: source/php/AcfFields/QuickExitFields.php:35
+msgid "Sticky stays at the edge of the screen under the header while the page scrolls. Inline sits where the module is placed."
+msgstr "Klistrad ligger kvar vid skärmkanten under sidhuvudet när sidan scrollas. Inline visas där modulen är placerad."
 
-#: source/php/Module/QuickExit.php:48
-msgid "Read about Leave the page quickly"
-msgstr "Läs om Lämna sidan snabbt"
+#: source/php/AcfFields/QuickExitFields.php:50
+msgid "Show read-more link"
+msgstr "Visa länk till mer information"
+
+#: source/php/AcfFields/QuickExitFields.php:53
+msgid "Shows the link to the page that explains the button. The page is set under Settings → Piteå kommun → Quick exit."
+msgstr "Visar länken till sidan som förklarar knappen. Sidan anges under Inställningar → Piteå kommun → Snabbutgång."
+
+#: source/php/Admin/Tabs/QuickExitTab.php:83
+msgid "Applies to every quick-exit module on the site. Modules only choose where the button is shown and whether the read-more link appears."
+msgstr "Gäller alla snabbutgångsmoduler på webbplatsen. Modulerna väljer bara var knappen visas och om länken till mer information visas."
+
+#: source/php/Admin/Tabs/QuickExitTab.php:94
+msgid "Accordion heading"
+msgstr "Rubrik för dragspelet"
+
+#: source/php/Admin/Tabs/QuickExitTab.php:95
+msgid "Explanation"
+msgstr "Förklaring"
+
+#: source/php/Admin/Tabs/QuickExitTab.php:96
+msgid "Read-more page"
+msgstr "Sida med mer information"
+
+#: source/php/Admin/Tabs/QuickExitTab.php:97
+msgid "Read-more link text"
+msgstr "Text för länk till mer information"
+
+#: source/php/Admin/Tabs/QuickExitTab.php:98
+msgid "Keyboard shortcut"
+msgstr "Kortkommando"
+
+#: source/php/Admin/Tabs/QuickExitTab.php:126
+msgid "Where the button sends visitors. Choose a plain, neutral site that does not show personalised or recently visited content."
+msgstr "Dit knappen skickar besökaren. Välj en enkel, neutral webbplats som inte visar personligt anpassat eller nyligen besökt innehåll."
+
+#: source/php/Admin/Tabs/QuickExitTab.php:136
+msgid "Text on the button. Leave empty for the default."
+msgstr "Text på knappen. Lämna tomt för standardtexten."
+
+#: source/php/Admin/Tabs/QuickExitTab.php:146
+msgid "Heading of the accordion that explains the button. Leave empty for the default."
+msgstr "Rubrik på dragspelet som förklarar knappen. Lämna tomt för standardtexten."
+
+#: source/php/Admin/Tabs/QuickExitTab.php:162
+msgid "Shown when the accordion is open. Use {site} for the address of the destination. Leave empty for the default."
+msgstr "Visas när dragspelet är öppet. Använd {site} för adressen till destinationen. Lämna tomt för standardtexten."
+
+#: source/php/Admin/Tabs/QuickExitTab.php:174
+msgid "Page that explains the quick-exit button. Modules can show or hide the link; with no page here the link is never shown."
+msgstr "Sida som förklarar snabbutgångsknappen. Moduler kan visa eller dölja länken; utan sida här visas länken aldrig."
+
+#: source/php/Admin/Tabs/QuickExitTab.php:184
+msgid "Leave empty for the default."
+msgstr "Lämna tomt för standardtexten."
+
+#: source/php/Admin/Tabs/QuickExitTab.php:200
+msgid "Leave the page when Shift is pressed three times"
+msgstr "Lämna sidan när Skift trycks tre gånger"
+
+#: source/php/Admin/Tabs/QuickExitTab.php:203
+msgid "Screen readers announce the progress. The explanation mentions the shortcut when this is on."
+msgstr "Skärmläsare meddelar hur många tryckningar som återstår. Förklaringen nämner kortkommandot när det är aktiverat."
+
+#: source/php/Admin/Tabs/QuickExitTab.php:307
+msgid "About the quick exit button"
+msgstr "Om lämna-knappen"
+
+#: source/php/Admin/Tabs/QuickExitTab.php:312
+msgid "Click the button if you need to leave the page quickly. You will end up on {site} instead."
+msgstr "Klicka på knappen om du behöver lämna sidan snabbt. Då hamnar du på {site} i stället."
+
+#: source/php/Admin/Tabs/QuickExitTab.php:317
+msgid "Read more about the quick exit button"
+msgstr "Läs mer om lämna-knappen"
+
+#: source/php/Module/QuickExit.php:30
+msgid "A panel with a button that lets visitors leave the page immediately. Destination and texts are set under Settings → Piteå kommun → Quick exit."
+msgstr "En panel med en knapp som låter besökaren lämna sidan direkt. Destination och texter anges under Inställningar → Piteå kommun → Snabbutgång."
+
+#: source/php/Module/QuickExit.php:54
+msgid "You can also press the Shift key three times."
+msgstr "Du kan också trycka på Skift-tangenten tre gånger."
+
+#: source/php/Module/QuickExit.php:68
+msgid "Shift, press 2 more times to leave the page."
+msgstr "Skift, tryck 2 gånger till för att lämna sidan."
+
+#: source/php/Module/QuickExit.php:69
+msgid "Shift, press 1 more time to leave the page."
+msgstr "Skift, tryck 1 gång till för att lämna sidan."
+
+#: source/php/Module/QuickExit.php:70
+msgid "The leave-page shortcut has expired."
+msgstr "Kortkommandot för att lämna sidan har gått ut."
+
+#: source/php/Module/QuickExit.php:71
+msgid "Leaving the page."
+msgstr "Lämnar sidan."

@@ -1,59 +1,316 @@
-$quick-exit-red: #c8102e;
-$quick-exit-red-hover: #9a0c23;
+// Piteå brand palette (defined in general/variables.scss).
+// Button uses Snåttren (brand red-orange); surface uses Dårjnålen (light green).
+$quick-exit-red: var(--color-snattren-base);
+$quick-exit-red-hover: var(--color-snattren-dark-1);
+$quick-exit-surface: var(--color-darjnalen-light-4);
+$quick-exit-border: var(--color-darjnalen-light-2);
+$quick-exit-link: var(--color-darjnalen-dark-2);
+$quick-exit-text: var(--color-darjnalen-dark-3);
+$quick-exit-desktop: 78em;
 
-@layer theme {
-  .mod-quick-exit--inline {
+.mod-quick-exit {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: $quick-exit-surface;
+  color: $quick-exit-text;
+  box-sizing: border-box;
+
+  // Inline: no card. A plain button with a small text disclosure beneath it.
+  &--inline {
+    align-items: flex-start;
+    gap: 0.5rem;
+    max-width: 40rem;
     margin-block: 1rem;
+    padding: 0;
+    background: none;
+
+    .mod-quick-exit__button.c-button.c-button__filled--primary {
+      order: 1;
+      width: auto;
+      padding-inline: 1.5rem;
+    }
+
+    .mod-quick-exit__details {
+      order: 2;
+    }
+
+    .mod-quick-exit__dots {
+      order: 3;
+    }
+
+    .mod-quick-exit__summary {
+      justify-content: flex-start;
+      gap: 0.5rem;
+      min-height: 0;
+      padding: 0.25rem 0;
+      border: 0;
+      border-radius: 0;
+      background: none;
+      color: $quick-exit-link;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      text-decoration: underline;
+      text-underline-offset: 0.15em;
+    }
+
+    .mod-quick-exit__body {
+      padding: 0.5rem 0 0;
+    }
   }
 
-  .mod-quick-exit__info {
-    margin-block: 0.5rem 0;
-  }
+  &__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-height: 2.75rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid $quick-exit-border;
+    border-radius: 999px;
+    background: #fff;
+    font-weight: 500;
+    line-height: 1.3;
+    cursor: pointer;
+    list-style: none;
 
-  @media print {
-    .mod-quick-exit {
+    &::-webkit-details-marker {
       display: none;
+    }
+
+    &::after {
+      content: "";
+      flex: none;
+      width: 0.5rem;
+      height: 0.5rem;
+      margin-top: -0.25rem;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      transform: rotate(45deg);
+    }
+
+    &:focus-visible {
+      outline: 3px solid $quick-exit-text;
+      outline-offset: 2px;
+    }
+  }
+
+  &__details[open] &__summary::after {
+    margin-top: 0.25rem;
+    transform: rotate(-135deg);
+  }
+
+  &__body {
+    padding: 0.75rem 0.25rem 0;
+  }
+
+  &__text {
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  &__more {
+    display: inline-block;
+    margin-top: 0.5rem;
+    color: $quick-exit-link;
+    font-size: 0.9375rem;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+
+    &:hover {
+      color: $quick-exit-text;
+    }
+  }
+
+  &__dots {
+    display: none;
+    justify-content: center;
+    gap: 0.5rem;
+
+    i {
+      width: 0.6rem;
+      height: 0.6rem;
+      border: 2px solid $quick-exit-red;
+      border-radius: 50%;
+      box-sizing: border-box;
+
+      &.is-filled {
+        background: $quick-exit-red;
+      }
+    }
+  }
+
+  &.is-counting &__dots {
+    display: flex;
+  }
+
+  &__skip:focus {
+    position: fixed !important;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 2147483000;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0.75rem 1rem !important;
+    clip: auto !important;
+    background: $quick-exit-red;
+    color: #fff;
+    font-weight: 600;
+    outline: 3px solid $quick-exit-text;
+  }
+
+  .c-button.c-button__filled--primary {
+    --c-button--color--primary: #{$quick-exit-red};
+    --c-button--color--primary-contrast: #fff;
+    --c-button--color--primary-border: #{$quick-exit-red-hover};
+    --c-button-background: #{$quick-exit-red};
+    --c-button-contrast: #fff;
+    --c-button-border: #{$quick-exit-red-hover};
+    --c-button-hover: #{$quick-exit-red-hover};
+    width: 100%;
+    min-height: 3rem;
+    border-radius: 999px;
+    background-color: $quick-exit-red;
+    color: #fff;
+    font-weight: 600;
+    filter: none;
+
+    .c-button__label-text {
+      color: #fff;
+    }
+
+    &:hover,
+    &:focus-visible {
+      background-color: $quick-exit-red-hover;
     }
   }
 }
 
-// Unlayered: Styleguide sets button color and position outside @layer theme,
-// which beats a layered token override.
-.mod-quick-exit .c-button.c-button__filled--primary {
-  --c-button--color--primary: #{$quick-exit-red};
-  --c-button--color--primary-contrast: #fff;
-  --c-button--color--primary-border: #{$quick-exit-red-hover};
-  --c-button-background: #{$quick-exit-red};
-  --c-button-contrast: #fff;
-  --c-button-border: #{$quick-exit-red-hover};
-  --c-button-hover: #{$quick-exit-red-hover};
-  background-color: $quick-exit-red;
-  color: #fff;
-  min-height: 2.75rem;
+// Deliberately not named "mod-*": the theme sets `position: relative` on [class*="mod-"].
+.quick-exit-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  background: #fff;
+  color: transparent;
+  font-size: 0;
+}
 
-  .c-button__label {
-    flex-direction: row-reverse;
+// Fixed straight from the stylesheet, even before JS moves the panel to <body>,
+// so it never takes space in the content flow (no layout shift on load).
+// Doubled class beats the theme's [class*="mod-"] { position: relative }.
+.mod-quick-exit.mod-quick-exit--sticky {
+  position: fixed;
+  z-index: 8;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  width: min(20rem, calc(100vw - 1.5rem));
+  border: 1px solid $quick-exit-border;
+  border-radius: 1rem;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 20%);
+
+  @media (min-width: $quick-exit-desktop) {
+    top: var(--quick-exit-top, 9rem);
+    right: 0;
+    bottom: auto;
+    border-right: 0;
+    border-radius: 1rem 0 0 1rem;
+
+    // Wait for JS to compute --quick-exit-top so the panel does not jump.
+    // Without JS the animation reveals it after a moment at the fallback position.
+    visibility: hidden;
+    animation: quick-exit-reveal 0s linear 1.2s forwards;
+
+    &[data-quick-exit-ready] {
+      visibility: visible;
+      animation: none;
+    }
   }
 
-  .c-button__label-text,
-  .c-button__label-icon {
-    color: #fff;
-  }
+  @media (max-width: calc(#{$quick-exit-desktop} - 0.01em)) {
+    flex-direction: column-reverse;
+    width: auto;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    align-items: flex-end;
 
-  &:hover,
-  &:focus-visible {
-    background-color: $quick-exit-red-hover;
+    .mod-quick-exit__details {
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: flex-end;
+      gap: 0.5rem;
+    }
+
+    .mod-quick-exit__summary {
+      width: 2.75rem;
+      height: 2.75rem;
+      min-height: 0;
+      padding: 0;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 25%);
+    }
+
+    .mod-quick-exit__summary-text {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+    }
+
+    .mod-quick-exit__summary::after {
+      content: "?";
+      width: auto;
+      height: auto;
+      margin: 0;
+      border: 0;
+      font-size: 1.25rem;
+      font-weight: 700;
+      transform: none;
+    }
+
+    .mod-quick-exit__details[open] .mod-quick-exit__summary::after {
+      margin: 0;
+      transform: none;
+    }
+
+    .mod-quick-exit__body {
+      width: min(18rem, calc(100vw - 1.5rem));
+      padding: 1rem;
+      border: 1px solid $quick-exit-border;
+      border-radius: 1rem;
+      background: $quick-exit-surface;
+      box-shadow: 0 4px 16px rgb(0 0 0 / 20%);
+    }
+
+    .c-button.c-button__filled--primary {
+      width: auto;
+      min-height: 2.75rem;
+      padding-inline: 1.25rem;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 30%);
+    }
   }
 }
 
-body > .mod-quick-exit--sticky {
-  position: fixed;
-  inset-inline-end: 1rem;
-  bottom: 1rem;
-  z-index: 900;
-  max-width: calc(100vw - 2rem);
+@keyframes quick-exit-reveal {
+  to {
+    visibility: visible;
+  }
+}
 
-  .c-button {
-    box-shadow: 0 2px 8px rgb(0 0 0 / 35%);
+@media (prefers-reduced-motion: no-preference) {
+  .mod-quick-exit__summary::after {
+    transition: transform 0.15s ease;
+  }
+}
+
+@media print {
+  .mod-quick-exit {
+    display: none;
   }
 }

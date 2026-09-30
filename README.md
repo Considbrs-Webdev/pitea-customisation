@@ -39,11 +39,13 @@ The plugin is organized as a collection of focused customization classes, each s
 
 ## Quick exit module
 
-The **Quick exit** Modularity module (`mod-quick-exit`) renders a red “Lämna sidan snabbt” button for pages where a visitor may need to leave the site immediately, for example *Våld i nära relationer*.
+The **Quick exit** Modularity module (`mod-quick-exit`) renders a panel with a red “Lämna sidan snabbt” button and a collapsible explanation, for pages where a visitor may need to leave the site immediately, for example *Våld i nära relationer*.
 
-- **Default destination and label:** Settings → Piteå kommun → Quick exit. If the destination is empty, the button uses `https://www.aftonbladet.se`.
-- **Per module:** display (`sticky`, `inline`, or both), optional label, destination, Esc×3 shortcut, and an info link under the inline button.
-- **Click:** the button is a normal link. With JavaScript it uses `location.replace()`, so the browser Back button does not return to the page.
+- **Site-wide content:** Settings → Piteå kommun → Quick exit holds the destination (empty falls back to `https://www.aftonbladet.se`), button label, accordion heading and text (`{site}` is replaced by the destination host), the read-more link URL and text, and the Shift×3 shortcut toggle.
+- **Per module:** only the display mode (`sticky`, `inline`, or both) and whether to show the read-more link.
+- **Sticky panel:** on desktop (≥78em) it sits fixed on the right edge just below the header and follows it when the header sticks. Below that it is a compact corner button; the `?` toggle opens the explanation.
+- **Click:** the button is a normal link. With JavaScript it blanks the page with a white overlay and uses `location.replace()`, so the browser Back button does not return to the page.
+- **Keyboard:** pressing Shift three times within 5 seconds leaves the page, with progress dots and screen-reader announcements. A visually hidden “leave” link is also added early in the tab order.
 - **Enable it** under Modularity → Modules, then place it on the page.
 
 The button cannot clear browser history or hide the visit from the network. The info text on the page should tell visitors that private browsing helps.

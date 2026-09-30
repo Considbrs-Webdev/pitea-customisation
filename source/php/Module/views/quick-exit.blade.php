@@ -4,16 +4,9 @@
 @endphp
 
 @if ($showInline)
-    <div class="mod-quick-exit mod-quick-exit--inline u-print-display--none">
-        @include('quick-exit-button')
-        @if (!empty($infoUrl))
-            <p class="mod-quick-exit__info"><a class="c-link" href="{{ $infoUrl }}">{{ $infoText }}</a></p>
-        @endif
-    </div>
+    @include('quick-exit-panel', ['variant' => 'inline'])
 @endif
 
 @if ($showSticky)
-    <div class="mod-quick-exit mod-quick-exit--sticky u-print-display--none" data-quick-exit-sticky>
-        @include('quick-exit-button')
-    </div>
+    @include('quick-exit-panel', ['variant' => 'sticky'])
 @endif

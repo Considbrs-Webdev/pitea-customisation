@@ -8,7 +8,10 @@ use Modularity\Module;
 use PiteaCustomisation\Admin\Tabs\QuickExitTab;
 
 /**
- * Modularity module: a button that sends the visitor to a neutral site immediately.
+ * Modularity module: a panel with a button that sends the visitor to a neutral site immediately.
+ *
+ * Destination, texts and the keyboard shortcut are site-wide settings; the module chooses placement
+ * and whether the read-more link is shown.
  */
 class QuickExit extends Module
 {
@@ -24,7 +27,7 @@ class QuickExit extends Module
     {
         $this->nameSingular = __('Quick exit', 'pitea-customisation');
         $this->namePlural   = __('Quick exit', 'pitea-customisation');
-        $this->description  = __('A red button that lets visitors leave the page immediately. Sticky or inline, with a configurable destination.', 'pitea-customisation');
+        $this->description  = __('A panel with a button that lets visitors leave the page immediately. Destination and texts are set under Settings → Piteå kommun → Quick exit.', 'pitea-customisation');
     }
 
     /**
@@ -38,43 +41,41 @@ class QuickExit extends Module
             $display = 'sticky';
         }
 
-        $label = trim((string) ($fields['quick_exit_label'] ?? ''));
-        if ($label === '') {
-            $label = QuickExitTab::getDefaultLabel();
-        }
+        $isPreview   = is_admin();
+        $url         = QuickExitTab::getDefaultUrl();
+        $readMoreUrl = QuickExitTab::getReadMoreUrl();
+        $wantsLink   = array_key_exists('quick_exit_show_read_more', $fields)
+            ? !empty($fields['quick_exit_show_read_more'])
+            : true;
+        $shortcut    = QuickExitTab::isShortcutEnabled();
 
-        $infoText = trim((string) ($fields['quick_exit_info_text'] ?? ''));
-        if ($infoText === '') {
-            $infoText = __('Read about Leave the page quickly', 'pitea-customisation');
+        $text = QuickExitTab::getText($url);
+        if ($shortcut) {
+            $text .= ' ' . __('You can also press the Shift key three times.', 'pitea-customisation');
         }
-
-        $isPreview = is_admin();
 
         return [
-            'url'            => $this->resolveUrl((string) ($fields['quick_exit_url'] ?? '')),
-            'label'          => $label,
-            'display'        => $isPreview ? 'inline' : $display,
-            'isPreview'      => $isPreview,
-            'escapeEnabled'  => array_key_exists('quick_exit_escape', $fields)
-                ? !empty($fields['quick_exit_escape'])
-                : true,
-            'infoUrl'        => QuickExitTab::sanitizeUrl((string) ($fields['quick_exit_info_url'] ?? '')),
-            'infoText'       => $infoText,
+            'url'          => $url,
+            'label'        => QuickExitTab::getLabel(),
+            'heading'      => QuickExitTab::getHeading(),
+            'text'         => $text,
+            'readMoreUrl'  => $wantsLink ? $readMoreUrl : '',
+            'readMoreText' => QuickExitTab::getReadMoreText(),
+            'display'      => $isPreview ? 'inline' : $display,
+            'isPreview'    => $isPreview,
+            'shortcut'     => $shortcut,
+            'messages'     => [
+                'pressTwo' => __('Shift, press 2 more times to leave the page.', 'pitea-customisation'),
+                'pressOne' => __('Shift, press 1 more time to leave the page.', 'pitea-customisation'),
+                'timedOut' => __('The leave-page shortcut has expired.', 'pitea-customisation'),
+                'leaving'  => __('Leaving the page.', 'pitea-customisation'),
+            ],
+            'panelId'      => uniqid('quick-exit-'),
         ];
     }
 
     public function template(): string
     {
         return 'quick-exit.blade.php';
-    }
-
-    /**
-     * Module URL, or the site-wide default when the module field is empty or invalid.
-     */
-    private function resolveUrl(string $candidate): string
-    {
-        $url = QuickExitTab::sanitizeUrl($candidate);
-
-        return $url !== '' ? $url : QuickExitTab::getDefaultUrl();
     }
 }
