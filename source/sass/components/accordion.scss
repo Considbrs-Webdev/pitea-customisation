@@ -26,6 +26,9 @@
     .c-card__header {
       background-color: transparent;
       color: inherit;
+      // v3 card header inset (32px at desktop) indents the module title.
+      // Page headings are flush; inlay already zeros the same padding.
+      padding-inline: 0;
     }
 
     // M6 painted 1px --color-stain-light-2 on .c-accordion, square corners.

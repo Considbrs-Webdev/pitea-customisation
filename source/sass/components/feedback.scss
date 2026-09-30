@@ -9,7 +9,8 @@
   --c-paper--color--surface-contrast: var(--color-darjnalen-light-4);
   --c-paper--border-radius: 1;
   --c-paper--color--surface-border: var(--color-darjnalen-light-4);
-  --c-paper--feedback-padding: var(--base, 20px);
+  // v3 --base is 0.5rem, so var(--base, 20px) collapsed to 8px.
+  --c-paper--feedback-padding: 1.25rem;
   --c-paper--feedback-font-size-body: var(--font-size-body, 18px);
   --c-paper--feedback-line-height-body: var(--line-height-body, 27px);
   --c-paper--feedback-color-button: var(--color-darjnalen-dark-3);

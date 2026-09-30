@@ -100,24 +100,6 @@
       --archive-filter-background: var(--color-darjnalen-light-3);
       --c-button--color--primary: var(--color-darjnalen-dark-3);
       --c-button--color--primary-contrast: var(--color-darjnalen-light-4);
-      --table-head-background: var(--color-primary, var(--color--primary));
-      --table-head-color: var(--color-white, #fff);
-
-      // Must sit on .c-table: table.scss sets --c-table--color--surface: #ddd
-      // on the component, which beats body-level archive tokens.
-      .c-table {
-        --c-table--color--surface: color-mix(
-          in srgb,
-          var(--color-darjnalen-light-4) 40%,
-          white 60%
-        );
-        --c-table--color--surface-alt: var(--color-darjnalen-light-3);
-      }
-
-      .c-table__head {
-        --c-table--color--surface-alt: var(--table-head-background);
-        --c-table--color--surface-contrast-muted: var(--table-head-color);
-      }
     }
 
     .s-noticeboard_notice-archive,
