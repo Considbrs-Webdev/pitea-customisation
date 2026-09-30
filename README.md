@@ -37,6 +37,19 @@ The plugin is organized as a collection of focused customization classes, each s
 
 ---
 
+## Quick exit module
+
+The **Quick exit** Modularity module (`mod-quick-exit`) renders a red “Lämna sidan snabbt” button for pages where a visitor may need to leave the site immediately, for example *Våld i nära relationer*.
+
+- **Default destination and label:** Settings → Piteå kommun → Quick exit. If the destination is empty, the button uses `https://www.aftonbladet.se`.
+- **Per module:** display (`sticky`, `inline`, or both), optional label, destination, Esc×3 shortcut, and an info link under the inline button.
+- **Click:** the button is a normal link. With JavaScript it uses `location.replace()`, so the browser Back button does not return to the page.
+- **Enable it** under Modularity → Modules, then place it on the page.
+
+The button cannot clear browser history or hide the visit from the network. The info text on the page should tell visitors that private browsing helps.
+
+---
+
 ## Directory structure
 
 ```

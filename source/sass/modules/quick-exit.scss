@@ -1,0 +1,59 @@
+$quick-exit-red: #c8102e;
+$quick-exit-red-hover: #9a0c23;
+
+@layer theme {
+  .mod-quick-exit--inline {
+    margin-block: 1rem;
+  }
+
+  .mod-quick-exit__info {
+    margin-block: 0.5rem 0;
+  }
+
+  @media print {
+    .mod-quick-exit {
+      display: none;
+    }
+  }
+}
+
+// Unlayered: Styleguide sets button color and position outside @layer theme,
+// which beats a layered token override.
+.mod-quick-exit .c-button.c-button__filled--primary {
+  --c-button--color--primary: #{$quick-exit-red};
+  --c-button--color--primary-contrast: #fff;
+  --c-button--color--primary-border: #{$quick-exit-red-hover};
+  --c-button-background: #{$quick-exit-red};
+  --c-button-contrast: #fff;
+  --c-button-border: #{$quick-exit-red-hover};
+  --c-button-hover: #{$quick-exit-red-hover};
+  background-color: $quick-exit-red;
+  color: #fff;
+  min-height: 2.75rem;
+
+  .c-button__label {
+    flex-direction: row-reverse;
+  }
+
+  .c-button__label-text,
+  .c-button__label-icon {
+    color: #fff;
+  }
+
+  &:hover,
+  &:focus-visible {
+    background-color: $quick-exit-red-hover;
+  }
+}
+
+body > .mod-quick-exit--sticky {
+  position: fixed;
+  inset-inline-end: 1rem;
+  bottom: 1rem;
+  z-index: 900;
+  max-width: calc(100vw - 2rem);
+
+  .c-button {
+    box-shadow: 0 2px 8px rgb(0 0 0 / 35%);
+  }
+}
