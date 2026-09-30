@@ -3,4 +3,33 @@
     padding-left: 0;
     padding-right: 0;
   }
+
+  // Split image + manual input. Pad the text column's outer edge only.
+  // An image in the first column stays flush with the container; the same
+  // inset is applied on the left only when that column is text.
+  .t-block-container:not(.t-block-align-full):has(
+      > .o-container .o-grid-column-block > figure
+    ):has(> .o-container .modularity-mod-manualinput)
+    > .o-container.o-container--remove-spacing {
+    .o-grid-column-block:first-child:has(> figure):not(
+        :has(.modularity-mod-manualinput)
+      )
+      + .o-grid-column-block:has(.modularity-mod-manualinput) {
+      padding-right: clamp(1rem, 4vw, 2rem);
+
+      @media screen and (min-width: 32.5em) {
+        padding-right: calc(var(--base, 8px) * 3);
+      }
+    }
+
+    .o-grid-column-block:first-child:has(.modularity-mod-manualinput):not(
+        :has(> figure)
+      ) {
+      padding-left: clamp(1rem, 4vw, 2rem);
+
+      @media screen and (min-width: 32.5em) {
+        padding-left: calc(var(--base, 8px) * 3);
+      }
+    }
+  }
 }
