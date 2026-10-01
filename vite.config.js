@@ -79,6 +79,16 @@ export default defineConfig({
     },
     plugins: [
         {
+            name: 'wrap-frontend-script',
+            renderChunk(code, chunk) {
+                if (!chunk.isEntry || chunk.name !== 'main') {
+                    return null;
+                }
+
+                return `(function(){\n${code}\n})();\n`;
+            },
+        },
+        {
             name: 'clean-dist-except-gutenberg',
             buildStart() {
                 // Configure folders to preserve in dist directory
