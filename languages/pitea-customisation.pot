@@ -341,12 +341,6 @@ msgstr ""
 msgid "Publication endpoint for receiving building permit notices and decisions from Sokigo Nova."
 msgstr ""
 
-#. translators: 1: username constant name, 2: password constant name.
-#: source/php/Admin/Tabs/ExternalContentTab.php:84
-#, php-format
-msgid "Define %1$s and %2$s to activate incoming Nova publications."
-msgstr ""
-
 #: source/php/Admin/Tabs/ExternalContentTab.php:95
 msgid "Publication endpoint"
 msgstr ""
@@ -910,71 +904,6 @@ msgstr ""
 msgid "Share page"
 msgstr ""
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:59
-msgid "Sokigo Nova publication endpoint is not configured."
-msgstr ""
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:69
-msgid "Missing Authorization header."
-msgstr ""
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:79
-msgid "Invalid Authorization header."
-msgstr ""
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:92
-msgid "Invalid credentials."
-msgstr ""
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:107
-msgid "Request body must be valid JSON."
-msgstr ""
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:120
-msgid "The digital noticeboard post type or taxonomy is not available."
-msgstr ""
-
-#. translators: %s: field name.
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:154
-#, php-format
-msgid "Missing required field: %s."
-msgstr ""
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:165
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:174
-msgid "The type field must be 1, 2, or 3."
-msgstr ""
-
-#. translators: %s: field name.
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:189
-#, php-format
-msgid "The %s field must be a Unix timestamp."
-msgstr ""
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:367
-msgid "Case ID"
-msgstr ""
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:368
-msgid "Estate"
-msgstr ""
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:369
-msgid "Decision"
-msgstr ""
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:370
-msgid "Decision number"
-msgstr ""
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:371
-msgid "Decision date"
-msgstr ""
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:372
-msgid "Response date"
-msgstr ""
-
 #: source/php/ExternalContent/Search/EServices/EServicesImporter.php:259
 msgid "E-services"
 msgstr ""
@@ -1031,4 +960,17 @@ msgstr ""
 #: views/search/hits/hit-eservice.blade.php:22
 msgctxt "E-services"
 msgid "Section"
+msgstr ""
+
+
+#: source/php/Admin/Tabs/ExternalContentTab.php
+msgid "Configuration is managed by modularity-noticeboard (version 1.1.0 or later)."
+msgstr ""
+
+#: source/php/Admin/Tabs/ExternalContentTab.php
+msgid "Install and activate modularity-noticeboard version 1.1.0 or later to manage Nova publications."
+msgstr ""
+
+#: source/php/Admin/Tabs/ExternalContentTab.php
+msgid "Manage noticeboard integrations"
 msgstr ""

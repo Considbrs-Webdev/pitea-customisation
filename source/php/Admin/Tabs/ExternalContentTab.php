@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace PiteaCustomisation\Admin\Tabs;
 
 use PiteaCustomisation\Admin\SettingsTabInterface;
-use PiteaCustomisation\ExternalContent\Noticeboard\NovaPublicationEndpoint;
+use ModularityNoticeboard\Integration\Admin as NoticeboardIntegrationAdmin;
+use ModularityNoticeboard\Integration\NovaPublicationEndpoint;
 use PiteaCustomisation\ExternalContent\Search\EServices\EServicesImporter;
 use PiteaCustomisation\ExternalContent\ServiceInfo\TrafficDisruptionsImporter;
 
@@ -78,14 +79,10 @@ class ExternalContentTab implements SettingsTabInterface
                     'pitea-customisation'
                 ) . '</p>';
 
-                echo '<p class="pitea-settings__section-desc">';
-                printf(
-                    /* translators: 1: username constant name, 2: password constant name. */
-                    esc_html__('Define %1$s and %2$s to activate incoming Nova publications.', 'pitea-customisation'),
-                    '<code>' . esc_html(NovaPublicationEndpoint::USERNAME_CONSTANT) . '</code>',
-                    '<code>' . esc_html(NovaPublicationEndpoint::PASSWORD_CONSTANT) . '</code>'
-                );
-                echo '</p>';
+                echo '<p class="pitea-settings__section-desc">' . esc_html__(
+                    'Configuration is managed by modularity-noticeboard (version 1.1.0 or later).',
+                    'pitea-customisation'
+                ) . '</p>';
             },
             self::GROUP_NOVA
         );
@@ -243,17 +240,32 @@ class ExternalContentTab implements SettingsTabInterface
 
     public function renderNovaEndpointInfoField(): void
     {
-        $isConfigured = NovaPublicationEndpoint::isConfigured();
-        $endpointUrl  = NovaPublicationEndpoint::getEndpointUrl();
+        if (!class_exists(NovaPublicationEndpoint::class)
+            || !method_exists(NovaPublicationEndpoint::class, 'getStatus')
+            || !class_exists(NoticeboardIntegrationAdmin::class)
+            || !method_exists(NoticeboardIntegrationAdmin::class, 'url')) {
+            echo '<p class="pitea-settings__field-desc">' . esc_html__(
+                'Install and activate modularity-noticeboard version 1.1.0 or later to manage Nova publications.',
+                'pitea-customisation'
+            ) . '</p>';
+            return;
+        }
+
+        $status = NovaPublicationEndpoint::getStatus();
         ?>
         <div class="pitea-settings__field">
             <p>
                 <strong><?php esc_html_e('Status', 'pitea-customisation'); ?>:</strong>
-                <?php echo esc_html($isConfigured ? __('Activated', 'pitea-customisation') : __('Not activated', 'pitea-customisation')); ?>
+                <?php echo esc_html($status['active'] ? __('Activated', 'pitea-customisation') : __('Not activated', 'pitea-customisation')); ?>
             </p>
             <p>
                 <strong><?php esc_html_e('Endpoint URL', 'pitea-customisation'); ?>:</strong>
-                <code><?php echo esc_html($endpointUrl); ?></code>
+                <code><?php echo esc_html($status['endpoint_url']); ?></code>
+            </p>
+            <p>
+                <a href="<?php echo esc_url(NoticeboardIntegrationAdmin::url()); ?>">
+                    <?php esc_html_e('Manage noticeboard integrations', 'pitea-customisation'); ?>
+                </a>
             </p>
         </div>
         <?php
