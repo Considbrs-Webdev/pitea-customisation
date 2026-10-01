@@ -1,16 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pitea-"
-"customisation\n"
-"POT-Creation-Date: 2026-05-21T09:54:52+00:00\n"
-"PO-Revision-Date: 2026-05-21 11:55+0200\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pitea-customisation\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: sv_SE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-05-21T09:54:52+00:00\n"
+"PO-Revision-Date: 2026-05-21 11:55+0200\n"
+"Language: sv_SE\n"
 "X-Generator: Poedit 3.9\n"
 "X-Domain: pitea-customisation\n"
 
@@ -21,10 +20,8 @@ msgstr "Anpassning för Piteå"
 
 #. Description of the plugin
 #: pitea-customisation.php
-msgid ""
-"Custom functionality and modifications for the Piteå WordPress installation"
-msgstr ""
-"Anpassade funktioner och modifieringar för Piteås WordPress-installation"
+msgid "Custom functionality and modifications for the Piteå WordPress installation"
+msgstr "Anpassade funktioner och modifieringar för Piteås WordPress-installation"
 
 #. Author of the plugin
 #: pitea-customisation.php
@@ -100,12 +97,8 @@ msgid "Internal designation"
 msgstr "Intern beteckning"
 
 #: source/php/AcfFields/PageInternalDesignationFields.php:26
-msgid ""
-"Optional. Used in the Nested Pages admin view as Internal (Page title); "
-"leave empty to use the normal page title."
-msgstr ""
-"Valfritt. Visas i vyn för nästlade sidor som Intern (Sidtitel); lämna tomt "
-"för att använda sidans ordinarie titel."
+msgid "Optional. Used in the Nested Pages admin view as Internal (Page title); leave empty to use the normal page title."
+msgstr "Valfritt. Visas i vyn för nästlade sidor som Intern (Sidtitel); lämna tomt för att använda sidans ordinarie titel."
 
 #: source/php/AcfFields/ShareButtonFields.php:19
 msgid "Share Button Settings"
@@ -127,43 +120,44 @@ msgstr "Ingen"
 msgid "Bottom of content"
 msgstr "Botten av innehållet"
 
-#: source/php/Admin/Settings.php:59 source/php/Admin/Settings.php:60
+#: source/php/Admin/Settings.php:61
+#: source/php/Admin/Settings.php:62
 msgid "Piteå kommun"
 msgstr "Piteå kommun"
 
-#: source/php/Admin/Settings.php:93
+#: source/php/Admin/Settings.php:95
 msgid "Saving…"
 msgstr "Sparar…"
 
-#: source/php/Admin/Settings.php:94
+#: source/php/Admin/Settings.php:96
 msgid "Changes saved"
 msgstr "Ändringar sparade"
 
-#: source/php/Admin/Settings.php:95
+#: source/php/Admin/Settings.php:97
 msgid "Could not save settings"
 msgstr "Kunde inte spara inställningar"
 
-#: source/php/Admin/Settings.php:108
+#: source/php/Admin/Settings.php:110
 msgid "Insufficient permissions."
 msgstr "Otillräckliga rättigheter."
 
-#: source/php/Admin/Settings.php:114
+#: source/php/Admin/Settings.php:116
 msgid "Security check failed."
 msgstr "Säkerhetskontroll misslyckades."
 
-#: source/php/Admin/Settings.php:128
+#: source/php/Admin/Settings.php:130
 msgid "Unknown tab."
 msgstr "Okänd flik."
 
-#: source/php/Admin/Settings.php:137
+#: source/php/Admin/Settings.php:139
 msgid "Settings saved."
 msgstr "Inställningarna sparades."
 
-#: source/php/Admin/Settings.php:194
+#: source/php/Admin/Settings.php:196
 msgid "Save Changes"
 msgstr "Spara"
 
-#: source/php/Admin/Settings.php:203
+#: source/php/Admin/Settings.php:205
 msgid "Settings sections"
 msgstr "Inställningssektioner"
 
@@ -172,30 +166,16 @@ msgid "Color picker"
 msgstr "Färgväljare"
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:71
-msgid ""
-"Limit which palette groups each user group may use in the design system "
-"color picker, and whether they may enter a custom hex color. Users without a "
-"matching rule here keep full access. Users in several groups get the union "
-"of allowed palette groups; custom color is allowed if any matching rule "
-"allows it."
-msgstr ""
-"Begränsa vilka palettgrupper varje användargrupp får använda i "
-"designsystemets färgväljare, och om de får ange en egen hex-färg. Användare "
-"utan matchande regel här behåller full åtkomst. Användare som tillhör flera "
-"grupper får sammanslagning av tillåtna palettgrupper; egen hex-färg tillåts "
-"om någon matchande regel tillåter det."
+msgid "Limit which palette groups each user group may use in the design system color picker, and whether they may enter a custom hex color. Users without a matching rule here keep full access. Users in several groups get the union of allowed palette groups; custom color is allowed if any matching rule allows it."
+msgstr "Begränsa vilka palettgrupper varje användargrupp får använda i designsystemets färgväljare, och om de får ange en egen hex-färg. Användare utan matchande regel här behåller full åtkomst. Användare som tillhör flera grupper får sammanslagning av tillåtna palettgrupper; egen hex-färg tillåts om någon matchande regel tillåter det."
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:129
 msgid "Color picker permissions"
 msgstr "Behörigheter för färgväljare"
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:158
-msgid ""
-"No design system palette groups were found. Check that variables.scss is "
-"available or Municipio color helpers are loaded."
-msgstr ""
-"Inga palettgrupper i designsystemet hittades. Kontrollera att variables.scss "
-"finns eller att Municipios färghjälpare är inlästa."
+msgid "No design system palette groups were found. Check that variables.scss is available or Municipio color helpers are loaded."
+msgstr "Inga palettgrupper i designsystemet hittades. Kontrollera att variables.scss finns eller att Municipios färghjälpare är inlästa."
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:203
 #: source/php/Admin/Tabs/PagePermissionsTab.php:369
@@ -208,12 +188,8 @@ msgid "Palette group preview"
 msgstr "Förhandsvisning av palettgrupper"
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:226
-msgid ""
-"Each name below is a palette group in the editor color picker. Hover a "
-"square to see the color label and hex code."
-msgstr ""
-"Varje namn nedan är en palettgrupp i redaktörens färgväljare. Hovra över en "
-"ruta för att se färgets namn och hex-kod."
+msgid "Each name below is a palette group in the editor color picker. Hover a square to see the color label and hex code."
+msgstr "Varje namn nedan är en palettgrupp i redaktörens färgväljare. Hovra över en ruta för att se färgets namn och hex-kod."
 
 #: source/php/Admin/Tabs/ColorPickerPermissionsTab.php:274
 #: source/php/Admin/Tabs/PagePermissionsTab.php:440
@@ -249,12 +225,8 @@ msgid "Visibility"
 msgstr "Synlighet"
 
 #: source/php/Admin/Tabs/CustomerFeedbackTab.php:70
-msgid ""
-"Control where the customer feedback form should be hidden. Front page and "
-"individually excluded singular posts/pages are already handled separately."
-msgstr ""
-"Styr var formuläret för kundfeedback ska döljas. Startsidan och individuellt "
-"exkluderade enskilda inlägg/sidor hanteras redan separat."
+msgid "Control where the customer feedback form should be hidden. Front page and individually excluded singular posts/pages are already handled separately."
+msgstr "Styr var formuläret för kundfeedback ska döljas. Startsidan och individuellt exkluderade enskilda inlägg/sidor hanteras redan separat."
 
 #: source/php/Admin/Tabs/CustomerFeedbackTab.php:80
 msgid "Exclude on post type archives"
@@ -273,20 +245,12 @@ msgid "No public post types with archives were found."
 msgstr "Inga publika inläggstyper med arkivsidor hittades."
 
 #: source/php/Admin/Tabs/CustomerFeedbackTab.php:167
-msgid ""
-"When checked, the feedback form is hidden on archive pages for the selected "
-"post types."
-msgstr ""
-"När den är markerad döljs feedbackformuläret på arkivsidor för valda "
-"inläggstyper."
+msgid "When checked, the feedback form is hidden on archive pages for the selected post types."
+msgstr "När den är markerad döljs feedbackformuläret på arkivsidor för valda inläggstyper."
 
 #: source/php/Admin/Tabs/CustomerFeedbackTab.php:193
-msgid ""
-"Use these toggles to hide feedback on common non-singular or utility page "
-"types."
-msgstr ""
-"Använd dessa reglage för att dölja feedback på vanliga icke-enskilda eller "
-"tekniska sidtyper."
+msgid "Use these toggles to hide feedback on common non-singular or utility page types."
+msgstr "Använd dessa reglage för att dölja feedback på vanliga icke-enskilda eller tekniska sidtyper."
 
 #: source/php/Admin/Tabs/CustomerFeedbackTab.php:290
 msgid "Posts page (blog index)"
@@ -329,18 +293,14 @@ msgid "Building permit notices"
 msgstr "Bygglovsanslag"
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:76
-msgid ""
-"Publication endpoint for receiving building permit notices and decisions "
-"from Sokigo Nova."
-msgstr ""
-"Publicerings-endpoint för att ta emot bygglovsanslag och beslut från Sokigo "
-"Nova."
+msgid "Publication endpoint for receiving building permit notices and decisions from Sokigo Nova."
+msgstr "Publicerings-endpoint för att ta emot bygglovsanslag och beslut från Sokigo Nova."
 
 #. translators: 1: username constant name, 2: password constant name.
 #: source/php/Admin/Tabs/ExternalContentTab.php:84
+#, php-format
 msgid "Define %1$s and %2$s to activate incoming Nova publications."
-msgstr ""
-"Definiera %1$s och %2$s för att aktivera inkommande Nova-publiceringar."
+msgstr "Definiera %1$s och %2$s för att aktivera inkommande Nova-publiceringar."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:95
 msgid "Publication endpoint"
@@ -351,14 +311,8 @@ msgid "Traffic Disruptions"
 msgstr "Trafikstörningar"
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:119
-msgid ""
-"Automatically import traffic disruption data from an ArcGIS FeatureServer "
-"and publish it as service information posts. Leave the URL empty to disable "
-"importing."
-msgstr ""
-"Importera automatiskt data om trafikstörningar från en ArcGIS FeatureServer "
-"och publicera dem som inlägg för serviceinformation. Lämna URL:en tom för "
-"att inaktivera import."
+msgid "Automatically import traffic disruption data from an ArcGIS FeatureServer and publish it as service information posts. Leave the URL empty to disable importing."
+msgstr "Importera automatiskt data om trafikstörningar från en ArcGIS FeatureServer och publicera dem som inlägg för serviceinformation. Lämna URL:en tom för att inaktivera import."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:129
 #: source/php/Admin/Tabs/ExternalContentTab.php:167
@@ -370,28 +324,16 @@ msgid "E-Services"
 msgstr "E-tjänster"
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:157
-msgid ""
-"Automatically index Piteå's public e-services from the eNämnd API into the "
-"Typesense search engine. Leave the URL empty to disable indexing."
-msgstr ""
-"Indexera automatiskt Piteås offentliga e-tjänster från eNämnds API i "
-"sökmotorn Typesense. Lämna URL:en tom för att inaktivera indexeringen."
+msgid "Automatically index Piteå's public e-services from the eNämnd API into the Typesense search engine. Leave the URL empty to disable indexing."
+msgstr "Indexera automatiskt Piteås offentliga e-tjänster från eNämnds API i sökmotorn Typesense. Lämna URL:en tom för att inaktivera indexeringen."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:212
-msgid ""
-"The eNämnd public-services API URL. Leave empty to disable e-service "
-"indexing."
-msgstr ""
-"API-URL för eNämnds tjänst för offentliga e-tjänster. Lämna tomt för att "
-"inaktivera indexering av e-tjänster."
+msgid "The eNämnd public-services API URL. Leave empty to disable e-service indexing."
+msgstr "API-URL för eNämnds tjänst för offentliga e-tjänster. Lämna tomt för att inaktivera indexering av e-tjänster."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:235
-msgid ""
-"The GeoJSON endpoint URL for the traffic disruption layer. Leave empty to "
-"disable importing."
-msgstr ""
-"GeoJSON-endpoint-URL för lagret med trafikstörningar. Lämna tomt för att "
-"inaktivera import."
+msgid "The GeoJSON endpoint URL for the traffic disruption layer. Leave empty to disable importing."
+msgstr "GeoJSON-endpoint-URL för lagret med trafikstörningar. Lämna tomt för att inaktivera import."
 
 #: source/php/Admin/Tabs/ExternalContentTab.php:251
 msgid "Status"
@@ -443,13 +385,8 @@ msgid "API Configuration"
 msgstr "API-konfiguration"
 
 #: source/php/Admin/Tabs/LatestEventsTab.php:82
-msgid ""
-"Configure the API credentials for the Latest Events module. These settings "
-"allow the module to fetch event data from the Visit Piteå API."
-msgstr ""
-"Konfigurera API-uppgifterna för modulen Senaste evenemang. Dessa "
-"inställningar gör det möjligt för modulen att hämta evenemangsdata från "
-"Visit Piteå-API:t."
+msgid "Configure the API credentials for the Latest Events module. These settings allow the module to fetch event data from the Visit Piteå API."
+msgstr "Konfigurera API-uppgifterna för modulen Senaste evenemang. Dessa inställningar gör det möjligt för modulen att hämta evenemangsdata från Visit Piteå-API:t."
 
 #: source/php/Admin/Tabs/LatestEventsTab.php:92
 msgid "API URL"
@@ -460,10 +397,8 @@ msgid "API Token"
 msgstr "API-token"
 
 #: source/php/Admin/Tabs/LatestEventsTab.php:146
-msgid ""
-"The Visit Piteå API base URL. Include the full path up to the API version."
-msgstr ""
-"Bas-URL för Visit Piteå-API:t. Ange hela sökvägen fram till API-versionen."
+msgid "The Visit Piteå API base URL. Include the full path up to the API version."
+msgstr "Bas-URL för Visit Piteå-API:t. Ange hela sökvägen fram till API-versionen."
 
 #: source/php/Admin/Tabs/LatestEventsTab.php:170
 msgid "The API Bearer token for authenticating with the Visit Piteå API."
@@ -478,38 +413,24 @@ msgid "Page permissions"
 msgstr "Sidrättigheter"
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:75
-msgid ""
-"These pages cannot be edited, moved or deleted by other roles than "
-"administrators."
-msgstr ""
-"Dessa sidor kan inte redigeras, flyttas eller raderas av andra roller än "
-"administratörer."
+msgid "These pages cannot be edited, moved or deleted by other roles than administrators."
+msgstr "Dessa sidor kan inte redigeras, flyttas eller raderas av andra roller än administratörer."
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:85
 msgid "Protected pages"
 msgstr "Skyddade sidor"
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:108
-msgid ""
-"Define which user groups and/or user roles own and manage particular parts "
-"of the page tree. Users who do not match an owning rule cannot see those "
-"pages or their descendants in the admin."
-msgstr ""
-"Definiera vilka användargrupper och/eller användarroller som äger och styr "
-"specifika delar av sidträdet. Användare som inte matchar någon sådan regel "
-"kan inte se dessa sidor eller deras underordnade sidor i admin."
+msgid "Define which user groups and/or user roles own and manage particular parts of the page tree. Users who do not match an owning rule cannot see those pages or their descendants in the admin."
+msgstr "Definiera vilka användargrupper och/eller användarroller som äger och styr specifika delar av sidträdet. Användare som inte matchar någon sådan regel kan inte se dessa sidor eller deras underordnade sidor i admin."
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:118
 msgid "Ownership rules"
 msgstr "Regler för ägarskap"
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:141
-msgid ""
-"Control which user groups can use each post template in the Page menu. "
-"Administrators always have access to all templates."
-msgstr ""
-"Styr vilka användargrupper som kan använda varje postmall i menyn Sidor. "
-"Administratörer har alltid tillgång till alla mallar."
+msgid "Control which user groups can use each post template in the Page menu. Administrators always have access to all templates."
+msgstr "Styr vilka användargrupper som kan använda varje postmall i menyn Sidor. Administratörer har alltid tillgång till alla mallar."
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:151
 msgid "Template rules"
@@ -552,12 +473,8 @@ msgid "Include all subpages"
 msgstr "Inkludera alla undersidor"
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:522
-msgid ""
-"A rule matches when the user belongs to the selected user group or has the "
-"selected user role."
-msgstr ""
-"En regel matchar när användaren tillhör den valda gruppen eller har den "
-"valda rollen."
+msgid "A rule matches when the user belongs to the selected user group or has the selected user role."
+msgstr "En regel matchar när användaren tillhör den valda gruppen eller har den valda rollen."
 
 #: source/php/Admin/Tabs/PagePermissionsTab.php:551
 msgid "— Select a page —"
@@ -632,51 +549,44 @@ msgid "Hide nav bar buttons; use Modularity module only"
 msgstr "Dölj knappar i navigeringsfältet; använd endast Modularity-modulen"
 
 #: source/php/Admin/Tabs/ReadSpeakerTab.php:205
-msgid ""
-"When enabled, Listen and Print are removed from the top nav-helper area. Add "
-"the “Accessibility buttons” module (mod-acc-buttons) in the sidebar on each "
-"template where you want them. Enable that module under Modularity → Modules."
-msgstr ""
-"När detta är aktiverat tas Lyssna och Skriv ut bort från det övre "
-"navigeringshjälpsområdet. Lägg till modulen «Tillgänglighetsknappar» (mod-"
-"acc-buttons) i sidopanelen på varje mall där du vill ha dem. Aktivera "
-"modulen under Modularity → Moduler."
+msgid "When enabled, Listen and Print are removed from the top nav-helper area. Add the “Accessibility buttons” module (mod-acc-buttons) in the sidebar on each template where you want them. Enable that module under Modularity → Modules."
+msgstr "När detta är aktiverat tas Lyssna och Skriv ut bort från det övre navigeringshjälpsområdet. Lägg till modulen «Tillgänglighetsknappar» (mod-acc-buttons) i sidopanelen på varje mall där du vill ha dem. Aktivera modulen under Modularity → Moduler."
 
-#: source/php/Customisations/Accessibility.php:69
-#: source/php/Customisations/Accessibility.php:301
+#: source/php/Customisations/Accessibility.php:97
+#: source/php/Customisations/Accessibility.php:329
 msgid "Listen to this page"
 msgstr "Lyssna på sidan"
 
-#: source/php/Customisations/Accessibility.php:302
+#: source/php/Customisations/Accessibility.php:330
 msgid "Listen to this page with ReadSpeaker"
 msgstr "Lyssna på sidan med ReadSpeaker"
 
-#: source/php/Customisations/Admin/Admin.php:78
+#: source/php/Customisations/Admin/Admin.php:79
 msgctxt "Editor font size preset"
 msgid "Small"
 msgstr "Liten"
 
-#: source/php/Customisations/Admin/Admin.php:83
+#: source/php/Customisations/Admin/Admin.php:84
 msgctxt "Editor font size preset"
 msgid "Medium"
 msgstr "Normal"
 
-#: source/php/Customisations/Admin/Admin.php:88
+#: source/php/Customisations/Admin/Admin.php:89
 msgctxt "Editor font size preset"
 msgid "Large"
 msgstr "Stor"
 
-#: source/php/Customisations/Admin/Admin.php:93
+#: source/php/Customisations/Admin/Admin.php:94
 msgctxt "Editor font size preset"
 msgid "Extra large"
 msgstr "Extra stor"
 
-#: source/php/Customisations/Admin/Admin.php:98
+#: source/php/Customisations/Admin/Admin.php:99
 msgctxt "Editor font size preset"
 msgid "Larger"
 msgstr "Större"
 
-#: source/php/Customisations/Admin/Admin.php:114
+#: source/php/Customisations/Admin/Admin.php:115
 msgctxt "Paragraph block style"
 msgid "Preamble"
 msgstr "Ingress"
@@ -699,6 +609,7 @@ msgstr "Du har inte tillgång till den valda föräldrasidan."
 
 #. translators: %s: path relative to plugin
 #: source/php/Customisations/Admin/PostTemplates.php:806
+#, php-format
 msgid "Dummy image file not found: %s"
 msgstr "Dummybild hittades inte: %s"
 
@@ -708,11 +619,13 @@ msgstr "Kunde inte skapa uppladdningskatalog för dummybilder."
 
 #. translators: %s: file name
 #: source/php/Customisations/Admin/PostTemplates.php:854
+#, php-format
 msgid "Could not copy dummy image %s into uploads."
 msgstr "Kunde inte kopiera dummybild %s till uppladdningar."
 
 #. translators: %s: file name
 #: source/php/Customisations/Admin/PostTemplates.php:866
+#, php-format
 msgid "Unknown file type for dummy image %s."
 msgstr "Okänd filtyp för dummybild %s."
 
@@ -752,12 +665,8 @@ msgid "Skapa sida"
 msgstr "Skapa sida"
 
 #: source/php/Customisations/Admin/PostTemplates.php:1320
-msgid ""
-"Välj under vilken sida den nya sidan ska skapas. Normalt visas detta som en "
-"modal ovanpå sidlistan."
-msgstr ""
-"Välj under vilken sida den nya sidan ska skapas. Normalt visas detta som en "
-"modal ovanpå sidlistan."
+msgid "Välj under vilken sida den nya sidan ska skapas. Normalt visas detta som en modal ovanpå sidlistan."
+msgstr "Välj under vilken sida den nya sidan ska skapas. Normalt visas detta som en modal ovanpå sidlistan."
 
 #: source/php/Customisations/Admin/PostTemplates.php:1349
 msgid "— Toppnivå (ingen föräldrasida) —"
@@ -765,6 +674,7 @@ msgstr "— Toppnivå (ingen föräldrasida) —"
 
 #: source/php/Customisations/Admin/PostTemplates.php:1442
 #: source/php/Customisations/Admin/PostTemplates.php:1464
+#, php-format
 msgid "(Utan titel) #%d"
 msgstr "(Utan titel) #%d"
 
@@ -778,9 +688,7 @@ msgstr "Innehållssida"
 
 #: source/php/Customisations/Config.php:206
 msgid "Username may only contain letters (A–Z), numbers (0–9) and dots (.)"
-msgstr ""
-"Användarnamn får endast innehålla bokstäver (A–Z), siffror (0–9) och punkter "
-"(.)"
+msgstr "Användarnamn får endast innehålla bokstäver (A–Z), siffror (0–9) och punkter (.)"
 
 #: source/php/Customisations/CustomerFeedback.php:162
 msgid "Customer Feedback"
@@ -802,11 +710,11 @@ msgstr "Mappen för material hittades inte."
 msgid "No PDF materials available yet."
 msgstr "Inga PDF-material tillgängliga ännu."
 
-#: source/php/Customisations/Dashboard.php:111
+#: source/php/Customisations/Dashboard.php:112
 msgid "Media library & images guide"
 msgstr "Guide för mediabibliotek och bilder"
 
-#: source/php/Customisations/Dashboard.php:112
+#: source/php/Customisations/Dashboard.php:111
 msgid "Before you publish: Editor checklist"
 msgstr "Innan du publicerar: Redaktörens checklista"
 
@@ -818,26 +726,22 @@ msgstr "Modulnamn kontra utseende"
 msgid "Add a global notice / VMA"
 msgstr "Lägg till en global notis / VMA"
 
-#: source/php/Customisations/Dashboard.php:118
+#: source/php/Customisations/Dashboard.php:123
 msgid "Guides and checklists to help you add and manage content."
 msgstr "Guider och checklistor för att lägga till och hantera innehåll."
 
-#: source/php/Customisations/Modules/ManualInput.php:95
+#: source/php/Customisations/Modules/ManualInput.php:105
 msgid "Accordion header background"
 msgstr "Bakgrundsfärg för accordion"
 
-#: source/php/Customisations/Modules/ManualInput.php:98
-msgid ""
-"Optional. Same color for every accordion row when display is Accordion. Text "
-"and icon color are adjusted automatically for contrast."
-msgstr ""
-"Valfritt. Samma färg för varje rad när visningsläget är dragspel. Text- och "
-"ikonfärg anpassas automatiskt för kontrast."
+#: source/php/Customisations/Modules/ManualInput.php:108
+msgid "Optional. Same color for every accordion row when display is Accordion. Text and icon color are adjusted automatically for contrast."
+msgstr "Valfritt. Samma färg för varje rad när visningsläget är dragspel. Text- och ikonfärg anpassas automatiskt för kontrast."
 
-#: source/php/Customisations/Modules/InlayList.php:63
+#: source/php/Customisations/Modules/InlayList.php:59
 #: source/php/Customisations/Modules/QuickLinks.php:54
 #: source/php/Customisations/Modules/Slider.php:63
-#: source/php/Customisations/Modules/Text.php:111
+#: source/php/Customisations/Modules/Text.php:132
 msgid "Enable"
 msgstr "Aktivera"
 
@@ -861,95 +765,70 @@ msgstr "Kopiera sidadress"
 msgid "Share page"
 msgstr "Dela sidan"
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:60
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:59
 msgid "Sokigo Nova publication endpoint is not configured."
 msgstr "Sokigo Novas publicerings-endpoint är inte konfigurerad."
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:70
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:69
 msgid "Missing Authorization header."
 msgstr "Authorization-header saknas."
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:80
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:79
 msgid "Invalid Authorization header."
 msgstr "Ogiltig Authorization-header."
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:93
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:92
 msgid "Invalid credentials."
 msgstr "Ogiltiga inloggningsuppgifter."
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:108
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:107
 msgid "Request body must be valid JSON."
 msgstr "Förfrågans innehåll måste vara giltig JSON."
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:121
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:120
 msgid "The digital noticeboard post type or taxonomy is not available."
-msgstr ""
-"Inläggstypen eller taxonomin för den digitala anslagstavlan är inte "
-"tillgänglig."
+msgstr "Inläggstypen eller taxonomin för den digitala anslagstavlan är inte tillgänglig."
 
 #. translators: %s: field name.
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:155
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:154
+#, php-format
 msgid "Missing required field: %s."
 msgstr "Obligatoriskt fält saknas: %s."
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:166
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:175
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:165
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:174
 msgid "The type field must be 1, 2, or 3."
 msgstr "Fältet type måste vara 1, 2 eller 3."
 
 #. translators: %s: field name.
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:190
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:189
+#, php-format
 msgid "The %s field must be a Unix timestamp."
 msgstr "Fältet %s måste vara en Unix-tidsstämpel."
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:319
-msgid "Publication type"
-msgstr "Publikationstyp"
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:320
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:367
 msgid "Case ID"
 msgstr "Ärende-ID"
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:321
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:368
 msgid "Estate"
 msgstr "Fastighet"
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:322
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:364
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:369
 msgid "Decision"
 msgstr "Beslut"
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:323
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:370
 msgid "Decision number"
 msgstr "Beslutsnummer"
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:324
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:371
 msgid "Decision date"
 msgstr "Beslutsdatum"
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:325
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:372
 msgid "Response date"
 msgstr "Svarsdatum"
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:326
-msgid "Public notification"
-msgstr "Kungörelse"
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:331
-msgid "Information"
-msgstr "Information"
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:340
-msgid "Read more"
-msgstr "Läs mer"
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:363
-msgid "Notice"
-msgstr "Kungörelse"
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:365
-msgid "Other publication"
-msgstr "Annan publicering"
 
 #: source/php/ExternalContent/Search/EServices/EServicesImporter.php:259
 msgid "E-services"
@@ -967,25 +846,22 @@ msgstr "Karta över trafikstörning"
 msgid "Traffic disruption location"
 msgstr "Plats för trafikstörning"
 
-#: source/php/Customisations/Modules/InlayList.php:47
+#: source/php/Customisations/Modules/InlayList.php:41
 msgid "Open in new tab"
 msgstr "Öppna i ny flik"
 
-#: source/php/Customisations/Modules/InlayList.php:49
+#: source/php/Customisations/Modules/InlayList.php:44
 msgid "Opens the external link in a new browser tab when enabled."
 msgstr "Öppnar den externa länken i en ny webbläsarflik när alternativet är aktiverat."
 
-#: source/php/Module/AccButtons.php:26 source/php/Module/AccButtons.php:27
+#: source/php/Module/AccButtons.php:26
+#: source/php/Module/AccButtons.php:27
 msgid "Accessibility buttons"
 msgstr "Tillgänglighetsknappar"
 
 #: source/php/Module/AccButtons.php:28
-msgid ""
-"Listen and print buttons (same as the nav bar). Place in a sidebar for "
-"layout control."
-msgstr ""
-"Lyssna- och skriv ut-knappar (samma som i navigeringsfältet). Placera i en "
-"sidopanel för kontroll över layouten."
+msgid "Listen and print buttons (same as the nav bar). Place in a sidebar for layout control."
+msgstr "Lyssna- och skriv ut-knappar (samma som i navigeringsfältet). Placera i en sidopanel för kontroll över layouten."
 
 #: views/partials/news-meta.blade.php:5
 msgid "News category"
@@ -996,14 +872,162 @@ msgctxt "E-services"
 msgid "Section"
 msgstr "Avdelning"
 
-#~ msgid "Select Icon"
-#~ msgstr "Välj ikon"
+#: source/php/AcfFields/AccButtonsFields.php:19
+msgid "Accessibility Buttons Module Settings"
+msgstr "Inställningar för tillgänglighetsknappar"
 
-#~ msgid "No icons found"
-#~ msgstr "Inga ikoner hittades"
+#: source/php/AcfFields/AccButtonsFields.php:23
+msgid "Show at top of page on mobile"
+msgstr "Visa högst upp på sidan på mobil"
 
-#~ msgid "Insert Icon"
-#~ msgstr "Infoga ikon"
+#: source/php/AcfFields/AccButtonsFields.php:26
+msgid "On narrow screens, sidebars stack below the main content, which pushes this module to the bottom of the page. When enabled, a duplicate of the buttons is moved to the top of the main content area on mobile, while this module keeps its normal sidebar position on desktop."
+msgstr "På smala skärmar hamnar sidopaneler under huvudinnehållet, vilket flyttar modulen längst ner på sidan. När alternativet är aktiverat flyttas en kopia av knapparna till toppen av huvudinnehållet på mobil, medan modulen behåller sin plats i sidopanelen på dator."
 
-#~ msgid "Font Awesome Icon"
-#~ msgstr "Font Awesome-ikon"
+#: source/php/AcfFields/QuickExitFields.php:28
+msgid "Quick exit module settings"
+msgstr "Inställningar för snabbutgång"
+
+#: source/php/AcfFields/QuickExitFields.php:32
+msgid "Display"
+msgstr "Visning"
+
+#: source/php/AcfFields/QuickExitFields.php:38
+msgid "Sticky (follows the page)"
+msgstr "Klistrad (följer med sidan)"
+
+#: source/php/AcfFields/QuickExitFields.php:39
+msgid "Inline (where placed)"
+msgstr "Inline (där den placeras)"
+
+#: source/php/AcfFields/QuickExitFields.php:40
+msgid "Both"
+msgstr "Båda"
+
+#: source/php/Admin/Tabs/QuickExitTab.php:93
+msgid "Button text"
+msgstr "Knapptext"
+
+#: source/php/Admin/Tabs/QuickExitTab.php:92
+msgid "Destination"
+msgstr "Destination"
+
+#: source/php/Admin/Tabs/QuickExitTab.php:43
+#: source/php/Admin/Tabs/QuickExitTab.php:81
+#: source/php/Admin/Tabs/QuickExitTab.php:111
+#: source/php/Module/QuickExit.php:28
+#: source/php/Module/QuickExit.php:29
+msgid "Quick exit"
+msgstr "Snabbutgång"
+
+#: source/php/Admin/Tabs/QuickExitTab.php:302
+msgid "Leave the page quickly"
+msgstr "Lämna sidan snabbt"
+
+#: source/php/Admin/Tabs/QuickExitTab.php:219
+msgid "Enter a valid http(s) URL."
+msgstr "Ange en giltig http(s)-adress."
+
+#: source/php/AcfFields/QuickExitFields.php:35
+msgid "Sticky stays at the edge of the screen under the header while the page scrolls. Inline sits where the module is placed."
+msgstr "Klistrad ligger kvar vid skärmkanten under sidhuvudet när sidan scrollas. Inline visas där modulen är placerad."
+
+#: source/php/AcfFields/QuickExitFields.php:50
+msgid "Show read-more link"
+msgstr "Visa länk till mer information"
+
+#: source/php/AcfFields/QuickExitFields.php:53
+msgid "Shows the link to the page that explains the button. The page is set under Settings → Piteå kommun → Quick exit."
+msgstr "Visar länken till sidan som förklarar knappen. Sidan anges under Inställningar → Piteå kommun → Snabbutgång."
+
+#: source/php/Admin/Tabs/QuickExitTab.php:83
+msgid "Applies to every quick-exit module on the site. Modules only choose where the button is shown and whether the read-more link appears."
+msgstr "Gäller alla snabbutgångsmoduler på webbplatsen. Modulerna väljer bara var knappen visas och om länken till mer information visas."
+
+#: source/php/Admin/Tabs/QuickExitTab.php:94
+msgid "Accordion heading"
+msgstr "Rubrik för dragspelet"
+
+#: source/php/Admin/Tabs/QuickExitTab.php:95
+msgid "Explanation"
+msgstr "Förklaring"
+
+#: source/php/Admin/Tabs/QuickExitTab.php:96
+msgid "Read-more page"
+msgstr "Sida med mer information"
+
+#: source/php/Admin/Tabs/QuickExitTab.php:97
+msgid "Read-more link text"
+msgstr "Text för länk till mer information"
+
+#: source/php/Admin/Tabs/QuickExitTab.php:98
+msgid "Keyboard shortcut"
+msgstr "Kortkommando"
+
+#: source/php/Admin/Tabs/QuickExitTab.php:126
+msgid "Where the button sends visitors. Choose a plain, neutral site that does not show personalised or recently visited content."
+msgstr "Dit knappen skickar besökaren. Välj en enkel, neutral webbplats som inte visar personligt anpassat eller nyligen besökt innehåll."
+
+#: source/php/Admin/Tabs/QuickExitTab.php:136
+msgid "Text on the button. Leave empty for the default."
+msgstr "Text på knappen. Lämna tomt för standardtexten."
+
+#: source/php/Admin/Tabs/QuickExitTab.php:146
+msgid "Heading of the accordion that explains the button. Leave empty for the default."
+msgstr "Rubrik på dragspelet som förklarar knappen. Lämna tomt för standardtexten."
+
+#: source/php/Admin/Tabs/QuickExitTab.php:162
+msgid "Shown when the accordion is open. Use {site} for the address of the destination. Leave empty for the default."
+msgstr "Visas när dragspelet är öppet. Använd {site} för adressen till destinationen. Lämna tomt för standardtexten."
+
+#: source/php/Admin/Tabs/QuickExitTab.php:174
+msgid "Page that explains the quick-exit button. Modules can show or hide the link; with no page here the link is never shown."
+msgstr "Sida som förklarar snabbutgångsknappen. Moduler kan visa eller dölja länken; utan sida här visas länken aldrig."
+
+#: source/php/Admin/Tabs/QuickExitTab.php:184
+msgid "Leave empty for the default."
+msgstr "Lämna tomt för standardtexten."
+
+#: source/php/Admin/Tabs/QuickExitTab.php:200
+msgid "Leave the page when Shift is pressed three times"
+msgstr "Lämna sidan när Skift trycks tre gånger"
+
+#: source/php/Admin/Tabs/QuickExitTab.php:203
+msgid "Screen readers announce the progress. The explanation mentions the shortcut when this is on."
+msgstr "Skärmläsare meddelar hur många tryckningar som återstår. Förklaringen nämner kortkommandot när det är aktiverat."
+
+#: source/php/Admin/Tabs/QuickExitTab.php:307
+msgid "About the quick exit button"
+msgstr "Om lämna-knappen"
+
+#: source/php/Admin/Tabs/QuickExitTab.php:312
+msgid "Click the button if you need to leave the page quickly. You will end up on {site} instead."
+msgstr "Klicka på knappen om du behöver lämna sidan snabbt. Då hamnar du på {site} i stället."
+
+#: source/php/Admin/Tabs/QuickExitTab.php:317
+msgid "Read more about the quick exit button"
+msgstr "Läs mer om lämna-knappen"
+
+#: source/php/Module/QuickExit.php:30
+msgid "A panel with a button that lets visitors leave the page immediately. Destination and texts are set under Settings → Piteå kommun → Quick exit."
+msgstr "En panel med en knapp som låter besökaren lämna sidan direkt. Destination och texter anges under Inställningar → Piteå kommun → Snabbutgång."
+
+#: source/php/Module/QuickExit.php:54
+msgid "You can also press the Shift key three times."
+msgstr "Du kan också trycka på Skift-tangenten tre gånger."
+
+#: source/php/Module/QuickExit.php:68
+msgid "Shift, press 2 more times to leave the page."
+msgstr "Skift, tryck 2 gånger till för att lämna sidan."
+
+#: source/php/Module/QuickExit.php:69
+msgid "Shift, press 1 more time to leave the page."
+msgstr "Skift, tryck 1 gång till för att lämna sidan."
+
+#: source/php/Module/QuickExit.php:70
+msgid "The leave-page shortcut has expired."
+msgstr "Kortkommandot för att lämna sidan har gått ut."
+
+#: source/php/Module/QuickExit.php:71
+msgid "Leaving the page."
+msgstr "Lämnar sidan."

@@ -10,6 +10,7 @@ use PiteaCustomisation\Admin\Tabs\ExternalContentTab;
 use PiteaCustomisation\Admin\Tabs\GeneralTab;
 use PiteaCustomisation\Admin\Tabs\LatestEventsTab;
 use PiteaCustomisation\Admin\Tabs\PagePermissionsTab;
+use PiteaCustomisation\Admin\Tabs\QuickExitTab;
 use PiteaCustomisation\Admin\Tabs\ReadSpeakerTab;
 
 /**
@@ -39,6 +40,7 @@ class Settings
             new ColorPickerPermissionsTab(),
             new CustomerFeedbackTab(),
             new ReadSpeakerTab(),
+            new QuickExitTab(),
             new LatestEventsTab(),
             new PagePermissionsTab(),
         ];

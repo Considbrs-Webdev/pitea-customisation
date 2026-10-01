@@ -59,6 +59,7 @@ class App
             Customisations\Search::class,
             Customisations\ServiceInfo::class,
             Customisations\ShareButton::class,
+            Customisations\QuickExit::class,
             Customisations\Taxonomies::class,
             Customisations\Templates::class,
             Customisations\Typesense::class,

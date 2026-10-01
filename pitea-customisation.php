@@ -37,6 +37,7 @@ add_action(
             return;
         }
         modularity_register_module(PITEA_CUSTOMISATION_PATH . 'source/php/Module/', 'AccButtons');
+        modularity_register_module(PITEA_CUSTOMISATION_PATH . 'source/php/Module/', 'QuickExit');
     },
     5
 );
@@ -45,6 +46,7 @@ add_filter(
     '/Modularity/externalViewPath',
     static function (array $arr): array {
         $arr['mod-acc-buttons'] = PITEA_CUSTOMISATION_PATH . 'source/php/Module/views';
+        $arr['mod-quick-exit'] = PITEA_CUSTOMISATION_PATH . 'source/php/Module/views';
         $arr['mod-inlaylist'] = PITEA_CUSTOMISATION_PATH . 'views/modularity';
 
         return $arr;

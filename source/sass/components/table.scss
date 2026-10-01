@@ -1,9 +1,25 @@
 @layer theme {
   .c-table {
-    // Odd rows use --c-table--color--surface in Styleguide v3.
-    --c-table--color--surface: #ddd;
+    // Content tables are .c-table after the Municipio update, so the old
+    // thead colours have to live on the component tokens. surface-alt also
+    // paints even rows, so the header resets it locally.
+    --c-table--color--surface: color-mix(
+      in srgb,
+      var(--color-darjnalen-light-4) 40%,
+      white 60%
+    );
+    --c-table--color--surface-alt: var(--color-darjnalen-light-3);
 
     &__head {
+      --c-table--color--surface-alt: var(
+        --table-head-background,
+        var(--color-primary, var(--color--primary, #2b512b))
+      );
+      --c-table--color--surface-contrast-muted: var(
+        --table-head-color,
+        var(--color-primary-contrasting, var(--color-white, #ffffff))
+      );
+
       .c-table__heading {
         font-size: var(--font-size-table-heading, var(--font-size-100, 1rem));
         text-overflow: unset;
@@ -22,8 +38,22 @@
       }
     }
 
+    // Article copy adds margin-top to table. Inside the component that
+    // margin is a gap above the header.
+    .c-article &__table,
+    .c-article & table {
+      margin-top: 0;
+    }
+
     // The track lives in the footer after the rows. Sticky on the footer
     // keeps it at the viewport bottom while the table is on screen.
+    // Styleguide hides the track when nothing overflows, but the footer
+    // still keeps its padding and border. Drop the footer until the track
+    // is shown again.
+    &__footer:not(:has(> :not(.u-display--none))) {
+      display: none;
+    }
+
     &__footer:has(.c-table__scroll-indicator-wrapper:not(.u-display--none)) {
       position: sticky;
       bottom: env(safe-area-inset-bottom, 0px);
@@ -32,10 +62,25 @@
     }
   }
 
-  // Native HTML tables (content): thead brand colors via local vars.
-  // Do not map thead to --c-table--color--surface-alt — that token also paints even rows.
+  // Plain HTML tables that are not wrapped in the component.
   table:not(.c-table *) {
+    --c-table--color--surface: color-mix(
+      in srgb,
+      var(--color-darjnalen-light-4) 40%,
+      white 60%
+    );
+    --c-table--color--surface-alt: var(--color-darjnalen-light-3);
+
     thead {
+      --c-table--color--surface-alt: var(
+        --table-head-background,
+        var(--color-primary, var(--color--primary, #2b512b))
+      );
+      --c-table--color--surface-contrast-muted: var(
+        --table-head-color,
+        var(--color-primary-contrasting, var(--color-white, #ffffff))
+      );
+
       th {
         color: var(
           --table-head-color,
@@ -43,7 +88,7 @@
         );
         background-color: var(
           --table-head-background,
-          var(--color-primary, var(--color--primary, #ae0b05))
+          var(--color-primary, var(--color--primary, #2b512b))
         );
       }
     }

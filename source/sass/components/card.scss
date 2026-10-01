@@ -279,16 +279,30 @@
   }
 }
 
-// :visited cannot reliably use custom properties (browser privacy). After
-// clicking a linked card and coming back, background became transparent and
-// the teal section showed through. Hex so visited/focus keep a white surface.
-a.c-card.c-card--action:link,
-a.c-card.c-card--action:visited,
-a.c-card.c-card--action:focus,
-a.c-card.c-card--action:focus-visible,
-a.c-card.c-card--action:active {
+// :visited cannot reliably use custom properties (browser privacy). Linked
+// cards that are meant to stay opaque keep a literal white surface.
+// Manual input with "Use custom card color" off must stay transparent so the
+// section background shows through — the surface token above is not enough,
+// because this unlayered :link rule would otherwise paint those cards white.
+a.c-card.c-card--action:not(.c-card--has-custom-background):link,
+a.c-card.c-card--action:not(.c-card--has-custom-background):visited,
+a.c-card.c-card--action:not(.c-card--has-custom-background):focus,
+a.c-card.c-card--action:not(.c-card--has-custom-background):focus-visible,
+a.c-card.c-card--action:not(.c-card--has-custom-background):active {
   background-color: #fff;
   color: #1a1a1a;
+}
+
+.modularity-mod-manualinput
+  a.c-card.c-card--action:not(.c-card--has-custom-background):is(
+    :link,
+    :visited,
+    :focus,
+    :focus-visible,
+    :active
+  ) {
+  background-color: transparent;
+  color: inherit;
 }
 
 // Styleguide zeros child border-radius in @layer components with !important.

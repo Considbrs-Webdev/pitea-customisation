@@ -63,7 +63,18 @@ ol.wp-block-list li::marker {
 }
 
 // Column images: fill the grid cell without stretching (cover + crop).
+// .c-article img adds margin-top for body copy; inside a column that gap
+// shows as a strip above the picture while the sides stay flush.
 .o-grid-column-block {
+  figure.c-image,
+  .wp-block-image,
+  figure.c-image .c-image__image,
+  figure.c-image [class*="wp-image-"],
+  .wp-block-image img,
+  .wp-block-image [class*="wp-image-"] {
+    margin-top: 0;
+  }
+
   figure.c-image,
   .wp-block-image {
     height: 100%;

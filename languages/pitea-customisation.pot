@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-05-21T09:54:52+00:00\n"
+"POT-Creation-Date: 2026-09-30T14:11:48+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: pitea-customisation\n"
 
 #. Plugin Name of the plugin
@@ -27,6 +27,18 @@ msgstr ""
 #. Author of the plugin
 #: pitea-customisation.php
 msgid "Consid Borås AB"
+msgstr ""
+
+#: source/php/AcfFields/AccButtonsFields.php:19
+msgid "Accessibility Buttons Module Settings"
+msgstr ""
+
+#: source/php/AcfFields/AccButtonsFields.php:23
+msgid "Show at top of page on mobile"
+msgstr ""
+
+#: source/php/AcfFields/AccButtonsFields.php:26
+msgid "On narrow screens, sidebars stack below the main content, which pushes this module to the bottom of the page. When enabled, a duplicate of the buttons is moved to the top of the main content area on mobile, while this module keeps its normal sidebar position on desktop."
 msgstr ""
 
 #: source/php/AcfFields/AccessibilityFields.php:19
@@ -101,6 +113,38 @@ msgstr ""
 msgid "Optional. Used in the Nested Pages admin view as Internal (Page title); leave empty to use the normal page title."
 msgstr ""
 
+#: source/php/AcfFields/QuickExitFields.php:28
+msgid "Quick exit module settings"
+msgstr ""
+
+#: source/php/AcfFields/QuickExitFields.php:32
+msgid "Display"
+msgstr ""
+
+#: source/php/AcfFields/QuickExitFields.php:35
+msgid "Sticky stays at the edge of the screen under the header while the page scrolls. Inline sits where the module is placed."
+msgstr ""
+
+#: source/php/AcfFields/QuickExitFields.php:38
+msgid "Sticky (follows the page)"
+msgstr ""
+
+#: source/php/AcfFields/QuickExitFields.php:39
+msgid "Inline (where placed)"
+msgstr ""
+
+#: source/php/AcfFields/QuickExitFields.php:40
+msgid "Both"
+msgstr ""
+
+#: source/php/AcfFields/QuickExitFields.php:50
+msgid "Show read-more link"
+msgstr ""
+
+#: source/php/AcfFields/QuickExitFields.php:53
+msgid "Shows the link to the page that explains the button. The page is set under Settings → Piteå kommun → Quick exit."
+msgstr ""
+
 #: source/php/AcfFields/ShareButtonFields.php:19
 msgid "Share Button Settings"
 msgstr ""
@@ -121,44 +165,44 @@ msgstr ""
 msgid "Bottom of content"
 msgstr ""
 
-#: source/php/Admin/Settings.php:59
-#: source/php/Admin/Settings.php:60
+#: source/php/Admin/Settings.php:61
+#: source/php/Admin/Settings.php:62
 msgid "Piteå kommun"
 msgstr ""
 
-#: source/php/Admin/Settings.php:93
+#: source/php/Admin/Settings.php:95
 msgid "Saving…"
 msgstr ""
 
-#: source/php/Admin/Settings.php:94
+#: source/php/Admin/Settings.php:96
 msgid "Changes saved"
 msgstr ""
 
-#: source/php/Admin/Settings.php:95
+#: source/php/Admin/Settings.php:97
 msgid "Could not save settings"
 msgstr ""
 
-#: source/php/Admin/Settings.php:108
+#: source/php/Admin/Settings.php:110
 msgid "Insufficient permissions."
 msgstr ""
 
-#: source/php/Admin/Settings.php:114
+#: source/php/Admin/Settings.php:116
 msgid "Security check failed."
 msgstr ""
 
-#: source/php/Admin/Settings.php:128
+#: source/php/Admin/Settings.php:130
 msgid "Unknown tab."
 msgstr ""
 
-#: source/php/Admin/Settings.php:137
+#: source/php/Admin/Settings.php:139
 msgid "Settings saved."
 msgstr ""
 
-#: source/php/Admin/Settings.php:194
+#: source/php/Admin/Settings.php:196
 msgid "Save Changes"
 msgstr ""
 
-#: source/php/Admin/Settings.php:203
+#: source/php/Admin/Settings.php:205
 msgid "Settings sections"
 msgstr ""
 
@@ -299,6 +343,7 @@ msgstr ""
 
 #. translators: 1: username constant name, 2: password constant name.
 #: source/php/Admin/Tabs/ExternalContentTab.php:84
+#, php-format
 msgid "Define %1$s and %2$s to activate incoming Nova publications."
 msgstr ""
 
@@ -508,6 +553,98 @@ msgstr ""
 msgid "New content page"
 msgstr ""
 
+#: source/php/Admin/Tabs/QuickExitTab.php:43
+#: source/php/Admin/Tabs/QuickExitTab.php:81
+#: source/php/Admin/Tabs/QuickExitTab.php:111
+#: source/php/Module/QuickExit.php:28
+#: source/php/Module/QuickExit.php:29
+msgid "Quick exit"
+msgstr ""
+
+#: source/php/Admin/Tabs/QuickExitTab.php:83
+msgid "Applies to every quick-exit module on the site. Modules only choose where the button is shown and whether the read-more link appears."
+msgstr ""
+
+#: source/php/Admin/Tabs/QuickExitTab.php:92
+msgid "Destination"
+msgstr ""
+
+#: source/php/Admin/Tabs/QuickExitTab.php:93
+msgid "Button text"
+msgstr ""
+
+#: source/php/Admin/Tabs/QuickExitTab.php:94
+msgid "Accordion heading"
+msgstr ""
+
+#: source/php/Admin/Tabs/QuickExitTab.php:95
+msgid "Explanation"
+msgstr ""
+
+#: source/php/Admin/Tabs/QuickExitTab.php:96
+msgid "Read-more page"
+msgstr ""
+
+#: source/php/Admin/Tabs/QuickExitTab.php:97
+msgid "Read-more link text"
+msgstr ""
+
+#: source/php/Admin/Tabs/QuickExitTab.php:98
+msgid "Keyboard shortcut"
+msgstr ""
+
+#: source/php/Admin/Tabs/QuickExitTab.php:126
+msgid "Where the button sends visitors. Choose a plain, neutral site that does not show personalised or recently visited content."
+msgstr ""
+
+#: source/php/Admin/Tabs/QuickExitTab.php:136
+msgid "Text on the button. Leave empty for the default."
+msgstr ""
+
+#: source/php/Admin/Tabs/QuickExitTab.php:146
+msgid "Heading of the accordion that explains the button. Leave empty for the default."
+msgstr ""
+
+#: source/php/Admin/Tabs/QuickExitTab.php:162
+msgid "Shown when the accordion is open. Use {site} for the address of the destination. Leave empty for the default."
+msgstr ""
+
+#: source/php/Admin/Tabs/QuickExitTab.php:174
+msgid "Page that explains the quick-exit button. Modules can show or hide the link; with no page here the link is never shown."
+msgstr ""
+
+#: source/php/Admin/Tabs/QuickExitTab.php:184
+msgid "Leave empty for the default."
+msgstr ""
+
+#: source/php/Admin/Tabs/QuickExitTab.php:200
+msgid "Leave the page when Shift is pressed three times"
+msgstr ""
+
+#: source/php/Admin/Tabs/QuickExitTab.php:203
+msgid "Screen readers announce the progress. The explanation mentions the shortcut when this is on."
+msgstr ""
+
+#: source/php/Admin/Tabs/QuickExitTab.php:219
+msgid "Enter a valid http(s) URL."
+msgstr ""
+
+#: source/php/Admin/Tabs/QuickExitTab.php:302
+msgid "Leave the page quickly"
+msgstr ""
+
+#: source/php/Admin/Tabs/QuickExitTab.php:307
+msgid "About the quick exit button"
+msgstr ""
+
+#: source/php/Admin/Tabs/QuickExitTab.php:312
+msgid "Click the button if you need to leave the page quickly. You will end up on {site} instead."
+msgstr ""
+
+#: source/php/Admin/Tabs/QuickExitTab.php:317
+msgid "Read more about the quick exit button"
+msgstr ""
+
 #: source/php/Admin/Tabs/ReadSpeakerTab.php:42
 msgid "ReadSpeaker"
 msgstr ""
@@ -552,41 +689,41 @@ msgstr ""
 msgid "When enabled, Listen and Print are removed from the top nav-helper area. Add the “Accessibility buttons” module (mod-acc-buttons) in the sidebar on each template where you want them. Enable that module under Modularity → Modules."
 msgstr ""
 
-#: source/php/Customisations/Accessibility.php:69
-#: source/php/Customisations/Accessibility.php:301
+#: source/php/Customisations/Accessibility.php:97
+#: source/php/Customisations/Accessibility.php:329
 msgid "Listen to this page"
 msgstr ""
 
-#: source/php/Customisations/Accessibility.php:302
+#: source/php/Customisations/Accessibility.php:330
 msgid "Listen to this page with ReadSpeaker"
 msgstr ""
 
-#: source/php/Customisations/Admin/Admin.php:78
+#: source/php/Customisations/Admin/Admin.php:79
 msgctxt "Editor font size preset"
 msgid "Small"
 msgstr ""
 
-#: source/php/Customisations/Admin/Admin.php:83
+#: source/php/Customisations/Admin/Admin.php:84
 msgctxt "Editor font size preset"
 msgid "Medium"
 msgstr ""
 
-#: source/php/Customisations/Admin/Admin.php:88
+#: source/php/Customisations/Admin/Admin.php:89
 msgctxt "Editor font size preset"
 msgid "Large"
 msgstr ""
 
-#: source/php/Customisations/Admin/Admin.php:93
+#: source/php/Customisations/Admin/Admin.php:94
 msgctxt "Editor font size preset"
 msgid "Extra large"
 msgstr ""
 
-#: source/php/Customisations/Admin/Admin.php:98
+#: source/php/Customisations/Admin/Admin.php:99
 msgctxt "Editor font size preset"
 msgid "Larger"
 msgstr ""
 
-#: source/php/Customisations/Admin/Admin.php:114
+#: source/php/Customisations/Admin/Admin.php:115
 msgctxt "Paragraph block style"
 msgid "Preamble"
 msgstr ""
@@ -609,6 +746,7 @@ msgstr ""
 
 #. translators: %s: path relative to plugin
 #: source/php/Customisations/Admin/PostTemplates.php:806
+#, php-format
 msgid "Dummy image file not found: %s"
 msgstr ""
 
@@ -618,11 +756,13 @@ msgstr ""
 
 #. translators: %s: file name
 #: source/php/Customisations/Admin/PostTemplates.php:854
+#, php-format
 msgid "Could not copy dummy image %s into uploads."
 msgstr ""
 
 #. translators: %s: file name
 #: source/php/Customisations/Admin/PostTemplates.php:866
+#, php-format
 msgid "Unknown file type for dummy image %s."
 msgstr ""
 
@@ -671,6 +811,7 @@ msgstr ""
 
 #: source/php/Customisations/Admin/PostTemplates.php:1442
 #: source/php/Customisations/Admin/PostTemplates.php:1464
+#, php-format
 msgid "(Utan titel) #%d"
 msgstr ""
 
@@ -707,11 +848,11 @@ msgid "No PDF materials available yet."
 msgstr ""
 
 #: source/php/Customisations/Dashboard.php:111
-msgid "Media library & images guide"
+msgid "Before you publish: Editor checklist"
 msgstr ""
 
 #: source/php/Customisations/Dashboard.php:112
-msgid "Before you publish: Editor checklist"
+msgid "Media library & images guide"
 msgstr ""
 
 #: source/php/Customisations/Dashboard.php:113
@@ -722,23 +863,31 @@ msgstr ""
 msgid "Add a global notice / VMA"
 msgstr ""
 
-#: source/php/Customisations/Dashboard.php:118
+#: source/php/Customisations/Dashboard.php:123
 msgid "Guides and checklists to help you add and manage content."
 msgstr ""
 
-#: source/php/Customisations/Modules/ManualInput.php:95
+#: source/php/Customisations/Modules/InlayList.php:41
+msgid "Open in new tab"
+msgstr ""
+
+#: source/php/Customisations/Modules/InlayList.php:44
+msgid "Opens the external link in a new browser tab when enabled."
+msgstr ""
+
+#: source/php/Customisations/Modules/InlayList.php:59
+#: source/php/Customisations/Modules/QuickLinks.php:54
+#: source/php/Customisations/Modules/Slider.php:63
+#: source/php/Customisations/Modules/Text.php:132
+msgid "Enable"
+msgstr ""
+
+#: source/php/Customisations/Modules/ManualInput.php:105
 msgid "Accordion header background"
 msgstr ""
 
-#: source/php/Customisations/Modules/ManualInput.php:98
+#: source/php/Customisations/Modules/ManualInput.php:108
 msgid "Optional. Same color for every accordion row when display is Accordion. Text and icon color are adjusted automatically for contrast."
-msgstr ""
-
-#: source/php/Customisations/Modules/InlayList.php:63
-#: source/php/Customisations/Modules/QuickLinks.php:54
-#: source/php/Customisations/Modules/Slider.php:63
-#: source/php/Customisations/Modules/Text.php:111
-msgid "Enable"
 msgstr ""
 
 #: source/php/Customisations/News.php:81
@@ -761,92 +910,69 @@ msgstr ""
 msgid "Share page"
 msgstr ""
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:60
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:59
 msgid "Sokigo Nova publication endpoint is not configured."
 msgstr ""
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:70
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:69
 msgid "Missing Authorization header."
 msgstr ""
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:80
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:79
 msgid "Invalid Authorization header."
 msgstr ""
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:93
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:92
 msgid "Invalid credentials."
 msgstr ""
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:108
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:107
 msgid "Request body must be valid JSON."
 msgstr ""
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:121
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:120
 msgid "The digital noticeboard post type or taxonomy is not available."
 msgstr ""
 
 #. translators: %s: field name.
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:155
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:154
+#, php-format
 msgid "Missing required field: %s."
 msgstr ""
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:166
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:175
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:165
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:174
 msgid "The type field must be 1, 2, or 3."
 msgstr ""
 
 #. translators: %s: field name.
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:190
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:189
+#, php-format
 msgid "The %s field must be a Unix timestamp."
 msgstr ""
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:319
-msgid "Publication type"
-msgstr ""
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:320
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:367
 msgid "Case ID"
 msgstr ""
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:321
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:368
 msgid "Estate"
 msgstr ""
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:322
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:364
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:369
 msgid "Decision"
 msgstr ""
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:323
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:370
 msgid "Decision number"
 msgstr ""
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:324
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:371
 msgid "Decision date"
 msgstr ""
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:325
+#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:372
 msgid "Response date"
-msgstr ""
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:326
-msgid "Public notification"
-msgstr ""
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:331
-msgid "Information"
-msgstr ""
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:340
-msgid "Read more"
-msgstr ""
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:363
-msgid "Notice"
-msgstr ""
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:365
-msgid "Other publication"
 msgstr ""
 
 #: source/php/ExternalContent/Search/EServices/EServicesImporter.php:259
@@ -865,14 +991,6 @@ msgstr ""
 msgid "Traffic disruption location"
 msgstr ""
 
-#: source/php/Customisations/Modules/InlayList.php:47
-msgid "Open in new tab"
-msgstr ""
-
-#: source/php/Customisations/Modules/InlayList.php:49
-msgid "Opens the external link in a new browser tab when enabled."
-msgstr ""
-
 #: source/php/Module/AccButtons.php:26
 #: source/php/Module/AccButtons.php:27
 msgid "Accessibility buttons"
@@ -880,6 +998,30 @@ msgstr ""
 
 #: source/php/Module/AccButtons.php:28
 msgid "Listen and print buttons (same as the nav bar). Place in a sidebar for layout control."
+msgstr ""
+
+#: source/php/Module/QuickExit.php:30
+msgid "A panel with a button that lets visitors leave the page immediately. Destination and texts are set under Settings → Piteå kommun → Quick exit."
+msgstr ""
+
+#: source/php/Module/QuickExit.php:54
+msgid "You can also press the Shift key three times."
+msgstr ""
+
+#: source/php/Module/QuickExit.php:68
+msgid "Shift, press 2 more times to leave the page."
+msgstr ""
+
+#: source/php/Module/QuickExit.php:69
+msgid "Shift, press 1 more time to leave the page."
+msgstr ""
+
+#: source/php/Module/QuickExit.php:70
+msgid "The leave-page shortcut has expired."
+msgstr ""
+
+#: source/php/Module/QuickExit.php:71
+msgid "Leaving the page."
 msgstr ""
 
 #: views/partials/news-meta.blade.php:5
