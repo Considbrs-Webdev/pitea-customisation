@@ -21,5 +21,12 @@
         gap: var(--c-header--upper-right-gap);
       }
     }
+
+    // Inline-flex trigger sits on the line box baseline, which leaves a gap
+    // under the button and pushes it above the other header items.
+    .c-header__item--language .site-language-menu {
+      display: flex;
+      align-items: center;
+    }
   }
 }
