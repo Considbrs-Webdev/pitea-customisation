@@ -14,7 +14,10 @@
     }
 
     .footer-icons {
-      .o-container {
+      // ACF 6.8.9+ wraps InnerBlocks in .acf-innerblocks-container. Flex both
+      // so the icons stay in a row with and without that wrapper.
+      .o-container,
+      .acf-innerblocks-container {
         display: flex;
         flex-direction: row;
         gap: var(--base, 10px);
