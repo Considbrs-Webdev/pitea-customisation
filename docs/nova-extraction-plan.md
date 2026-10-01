@@ -1,17 +1,17 @@
 # Extract Nova integration to modularity-noticeboard
 
-Status: planned; this branch initially contains documentation only. Based on the
-latest origin/dev when created. Do not remove the working endpoint until the shared
-integration is implemented and available.
+Status: cleanup implemented against the modularity-noticeboard 1.1.0 public
+interface. Paired staging/deployment checks below remain required before rollout.
+The local endpoint is removed; the guarded status/settings panel is preserved.
 
 ## Dependency
 
-Implement the shared writer, optional Nova adapter, configuration/status interface,
+The shared plugin implements the writer, optional Nova adapter, configuration/status interface,
 and migration compatibility in modularity-noticeboard branch
-codex/feature-noticeboard-integrations first. Its initial plan is at
+codex/feature-noticeboard-integrations. Its initial plan is at
 docs/noticeboard-integrations-plan.md.
 
-## Planned changes
+## Extraction scope
 
 1. Replace direct construction of
    ExternalContent/Noticeboard/NovaPublicationEndpoint in

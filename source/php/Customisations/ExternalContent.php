@@ -5,14 +5,11 @@ namespace PiteaCustomisation\Customisations;
 use PiteaCustomisation\ExternalContent\Search\EServices\EServicesImporter;
 use PiteaCustomisation\ExternalContent\ServiceInfo\TrafficDisruptionsImporter;
 use PiteaCustomisation\ExternalContent\ServiceInfo\PirevaDisruptionsImporter;
-use PiteaCustomisation\ExternalContent\Noticeboard\NovaPublicationEndpoint;
 
 class ExternalContent
 {
     public function __construct()
     {
-        (new NovaPublicationEndpoint())->registerHooks();
-
         $this->registerServiceInfoImporters();
         $this->registerTypesenseStrategies();
     }

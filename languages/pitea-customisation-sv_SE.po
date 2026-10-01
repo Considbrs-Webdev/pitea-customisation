@@ -296,12 +296,6 @@ msgstr "Bygglovsanslag"
 msgid "Publication endpoint for receiving building permit notices and decisions from Sokigo Nova."
 msgstr "Publicerings-endpoint för att ta emot bygglovsanslag och beslut från Sokigo Nova."
 
-#. translators: 1: username constant name, 2: password constant name.
-#: source/php/Admin/Tabs/ExternalContentTab.php:84
-#, php-format
-msgid "Define %1$s and %2$s to activate incoming Nova publications."
-msgstr "Definiera %1$s och %2$s för att aktivera inkommande Nova-publiceringar."
-
 #: source/php/Admin/Tabs/ExternalContentTab.php:95
 msgid "Publication endpoint"
 msgstr "Publicerings-endpoint"
@@ -765,71 +759,6 @@ msgstr "Kopiera sidadress"
 msgid "Share page"
 msgstr "Dela sidan"
 
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:59
-msgid "Sokigo Nova publication endpoint is not configured."
-msgstr "Sokigo Novas publicerings-endpoint är inte konfigurerad."
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:69
-msgid "Missing Authorization header."
-msgstr "Authorization-header saknas."
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:79
-msgid "Invalid Authorization header."
-msgstr "Ogiltig Authorization-header."
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:92
-msgid "Invalid credentials."
-msgstr "Ogiltiga inloggningsuppgifter."
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:107
-msgid "Request body must be valid JSON."
-msgstr "Förfrågans innehåll måste vara giltig JSON."
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:120
-msgid "The digital noticeboard post type or taxonomy is not available."
-msgstr "Inläggstypen eller taxonomin för den digitala anslagstavlan är inte tillgänglig."
-
-#. translators: %s: field name.
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:154
-#, php-format
-msgid "Missing required field: %s."
-msgstr "Obligatoriskt fält saknas: %s."
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:165
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:174
-msgid "The type field must be 1, 2, or 3."
-msgstr "Fältet type måste vara 1, 2 eller 3."
-
-#. translators: %s: field name.
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:189
-#, php-format
-msgid "The %s field must be a Unix timestamp."
-msgstr "Fältet %s måste vara en Unix-tidsstämpel."
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:367
-msgid "Case ID"
-msgstr "Ärende-ID"
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:368
-msgid "Estate"
-msgstr "Fastighet"
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:369
-msgid "Decision"
-msgstr "Beslut"
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:370
-msgid "Decision number"
-msgstr "Beslutsnummer"
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:371
-msgid "Decision date"
-msgstr "Beslutsdatum"
-
-#: source/php/ExternalContent/Noticeboard/NovaPublicationEndpoint.php:372
-msgid "Response date"
-msgstr "Svarsdatum"
-
 #: source/php/ExternalContent/Search/EServices/EServicesImporter.php:259
 msgid "E-services"
 msgstr "E-tjänster"
@@ -1031,3 +960,16 @@ msgstr "Kortkommandot för att lämna sidan har gått ut."
 #: source/php/Module/QuickExit.php:71
 msgid "Leaving the page."
 msgstr "Lämnar sidan."
+
+
+#: source/php/Admin/Tabs/ExternalContentTab.php
+msgid "Configuration is managed by modularity-noticeboard (version 1.1.0 or later)."
+msgstr "Konfigurationen hanteras av modularity-noticeboard (version 1.1.0 eller senare)."
+
+#: source/php/Admin/Tabs/ExternalContentTab.php
+msgid "Install and activate modularity-noticeboard version 1.1.0 or later to manage Nova publications."
+msgstr "Installera och aktivera modularity-noticeboard version 1.1.0 eller senare för att hantera Nova-publiceringar."
+
+#: source/php/Admin/Tabs/ExternalContentTab.php
+msgid "Manage noticeboard integrations"
+msgstr "Hantera integrationer för anslagstavlan"
