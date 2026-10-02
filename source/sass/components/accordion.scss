@@ -34,8 +34,8 @@
       // (see general/typography.scss — --c-typography--h4-font-size, not inherit).
       .module-title.c-typography__variant--h4 {
         --c-typography--h4-font-size: var(
-          --c-typography--h2-font-size,
-          var(--c-typography--h2-font-size-default, var(--font-size-600, 32px))
+          --c-typography--h2-font-size-default,
+          var(--c-typography--h2-font-size, var(--font-size-600, 32px))
         );
       }
     }
