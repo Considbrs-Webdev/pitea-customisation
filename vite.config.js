@@ -17,6 +17,7 @@ export default defineConfig({
                 'tinymce-fontawesome-plugin': resolve(__dirname, 'source/js/editor-plugins/tinymce-fontawesome-plugin.js'),
                 'quicktags-fontawesome-plugin': resolve(__dirname, 'source/js/editor-plugins/quicktags-fontawesome-plugin.js'),
                 'acf-pitea-color-picker-field': resolve(__dirname, 'source/js/editor-plugins/acf-pitea-color-picker-field.js'),
+                'focuspoint-editor': resolve(__dirname, 'source/js/editor-plugins/acf-focuspoint-editor.js'),
                 style: resolve(__dirname, 'source/sass/style.scss'),
                 'font-awesome': resolve(__dirname, 'source/sass/font-awesome.scss'),
                 'admin-style': resolve(__dirname, 'source/sass/admin.scss'),
