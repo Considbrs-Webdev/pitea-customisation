@@ -30,13 +30,12 @@
       // Page headings are flush; inlay already zeros the same padding.
       padding-inline: 0;
 
-      // Upstream accordion.blade.php uses post-title variant h4 (same scale as row
-      // headings). general/typography.scss sets module titles to --font-size-600,
-      // but card-header typography context can still resolve to h4 — re-assert here.
+      // Accordion row headings are also variant h4; module title must use h2 scale
+      // (see general/typography.scss — --c-typography--h4-font-size, not inherit).
       .module-title.c-typography__variant--h4 {
-        --inherit-font-size: var(
-          --font-size-600,
-          var(--font-size-heading-2, 32px)
+        --c-typography--h4-font-size: var(
+          --c-typography--h2-font-size,
+          var(--c-typography--h2-font-size-default, var(--font-size-600, 32px))
         );
       }
     }
