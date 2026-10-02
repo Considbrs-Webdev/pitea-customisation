@@ -30,3 +30,11 @@
     }
   }
 }
+
+// Unlayered so it beats Municipio's `#site-header-flexible-upper { position: relative }`.
+// That rule exists so z-index applies, but it also cancels `.c-header--sticky`.
+// Sticky is already a positioned value, so the stacking stays and the admin-bar
+// `top: 32px` is a sticky inset instead of a layout shift.
+.c-header.c-header--flexible#site-header-flexible-upper.c-header--sticky {
+  position: sticky;
+}

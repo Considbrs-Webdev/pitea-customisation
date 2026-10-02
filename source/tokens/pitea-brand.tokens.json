@@ -43,10 +43,9 @@
       "header": {
         "--c-header--padding-y-enabled": "0",
         "--c-header--logotype-height-min-multiplier": "6.5",
-        "--c-header--logotype-height-max-multiplier": "9.5",
+        "--c-header--logotype-height-max-multiplier": "7.5",
         "--c-header--brand-height-min-multiplier": "5",
-        "--c-header--brand-height-max-multiplier": "6.5"
-      }
-    }
+        "--c-header--brand-height-max-multiplier": "7.5"
+          }
   }
 }
