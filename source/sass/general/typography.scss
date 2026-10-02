@@ -8,9 +8,16 @@
     color: var(--page-title-color, var(--color-stain-dark-3, #000));
   }
 
-  /* M6 sized this h2 by tag; M7 sizes by variant h4 */
+  /* M6 sized module titles as h2; M7 markup uses variant h4. Typography resolves
+   * h4 via --c-typography--h4-font-size before --inherit-font-size. Inside cards,
+   * .c-card > * publishes --c-typography--h4-font-size for descendants, so
+   * --inherit-font-size alone never wins — remap h4 to h2 tokens; prefer
+   * -default over scaled --c-typography--h2-font-size from .c-card > *. */
   .module-title.c-typography__variant--h4 {
-    --inherit-font-size: var(--font-size-600); /* 32px */
+    --c-typography--h4-font-size: var(
+      --c-typography--h2-font-size-default,
+      var(--c-typography--h2-font-size, var(--font-size-600, 32px))
+    );
   }
 
   /* Header nav: M6 ~15.2px / 600 */
