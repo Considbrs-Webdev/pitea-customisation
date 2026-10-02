@@ -29,6 +29,16 @@
       // v3 card header inset (32px at desktop) indents the module title.
       // Page headings are flush; inlay already zeros the same padding.
       padding-inline: 0;
+
+      // Upstream accordion.blade.php uses post-title variant h4 (same scale as row
+      // headings). general/typography.scss sets module titles to --font-size-600,
+      // but card-header typography context can still resolve to h4 — re-assert here.
+      .module-title.c-typography__variant--h4 {
+        --inherit-font-size: var(
+          --font-size-600,
+          var(--font-size-heading-2, 32px)
+        );
+      }
     }
 
     // M6 painted 1px --color-stain-light-2 on .c-accordion, square corners.
