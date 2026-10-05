@@ -12,7 +12,7 @@
     --c-drawer--nav-top-level-background: var(--color-darjnalen-light-4);
     --c-drawer--nav-subitem-background: var(--color-white, #fff);
     --c-drawer--bottom-background: var(--color-darjnalen-light-4);
-    --c-drawer--bottom-text: var(--c-text-color, inherit);
+    --c-drawer--bottom-text: var(--color-stain-dark-3);
   }
 
   .c-drawer {
@@ -49,7 +49,7 @@
       margin-bottom: 20px;
 
       // Light primary rows: dark expand/+ (upstream duotone paints toggles with --drawer-color
-      // from --c-drawer--color--surface-contrast, which stays white for header/secondary)
+      // from --c-drawer--color--surface-contrast, which stays white on the header)
       --c-drawer--color--surface-contrast: var(--color-stain-dark-3);
       --drawer-color: var(--color-stain-dark-3);
       --c-nav--color--surface-contrast: var(--color-stain-dark-3);
@@ -105,6 +105,10 @@
       background-color: var(--c-drawer--nav-secondary-background);
       padding-top: 20px;
       position: relative;
+      --c-nav--color--surface-contrast: var(--c-drawer--bottom-text);
+      --c-nav--item-color: var(--c-drawer--bottom-text);
+      --c-nav--item-color-hover: var(--c-drawer--bottom-text);
+      --drawer-duotone-color: var(--c-drawer--bottom-text);
 
       &::before {
         content: "";
@@ -119,7 +123,7 @@
 
       .c-nav__link {
         margin: 0 20px;
-        color: var(--c-drawer--color--surface-contrast);
+        color: var(--c-drawer--bottom-text);
       }
     }
 
