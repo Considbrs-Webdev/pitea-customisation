@@ -75,3 +75,4 @@ No per-module editor bundle in this pattern.
 | Link cards | `modularity-link-cards` | A | Blade already renders cards from block fields. The iframe was missing `modularity-link-cards.css`. |
 | Quick links (Startsida snabb-länkar) | `modularity-quick-links` | A | Same gap: CSS was on `enqueue_block_editor_assets`. |
 | Latest events | `modularity-latest-events` | B | Public markup is a JS skeleton. Editor reads the cached event list (or one short request) and renders card rows. No editor JS. |
+| A-Ö links | `modularity-a-o` | A | The index is a local page tree plus manual rows. The editor renders that same Blade. The iframe was missing `modularity-a-o.css`. |

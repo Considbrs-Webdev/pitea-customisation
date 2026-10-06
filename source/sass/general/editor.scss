@@ -19,7 +19,7 @@
   max-width: none;
 }
 
-.editor-styles-wrapper :is(.mod-link-cards, .modularity-quick-links, .mod-latest-events) a[href] {
+.editor-styles-wrapper :is(.mod-link-cards, .modularity-quick-links, .mod-latest-events, .mod-a-o) a[href] {
   pointer-events: none;
 }
 
