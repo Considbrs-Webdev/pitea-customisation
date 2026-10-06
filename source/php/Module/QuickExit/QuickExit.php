@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PiteaCustomisation\Module;
+namespace PiteaCustomisation\Module\QuickExit;
 
 use Modularity\Module;
 use PiteaCustomisation\Admin\Tabs\QuickExitTab;
@@ -25,6 +25,7 @@ class QuickExit extends Module
 
     public function init(): void
     {
+        $this->templateDir = PITEA_CUSTOMISATION_PATH . 'source/php/Module/views/';
         $this->nameSingular = __('Quick exit', 'pitea-customisation');
         $this->namePlural   = __('Quick exit', 'pitea-customisation');
         $this->description  = __('A panel with a button that lets visitors leave the page immediately. Destination and texts are set under Settings → Piteå kommun → Quick exit.', 'pitea-customisation');
