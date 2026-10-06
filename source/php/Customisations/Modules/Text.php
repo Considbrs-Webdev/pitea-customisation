@@ -57,7 +57,6 @@ class Text
 
     public function __construct()
     {
-        add_filter('Modularity/Display/mod-text/viewData', [$this, 'ensureTextModulePostContent'], 1);
         add_action('acf/init', [$this, 'registerFields'], 20);
         add_filter('Modularity/Display/mod-text/viewData', [$this, 'captureTextModuleStyles']);
         add_filter('ComponentLibrary/Component/Data', [$this, 'applyPendingCardStyles'], 10, 1);
@@ -68,32 +67,6 @@ class Text
         }
     }
 
-    /**
-     * Backfill postContent when Municipio Text::data() no longer reads WP editor body from the post object.
-     *
-     * @upstream-shim id=municipio-text-post-content-644
-     * @upstream-repo municipio (Text module)
-     * @upstream-broken Municipio 6.44.0–6.44.1 regression: postContent missing from mod-text view data (PR #1999).
-     * @upstream-fix-needed Restored in Municipio 6.44.2 (PR #2021). 6.27.x unaffected.
-     * @upstream-fixed-in municipio@6.44.2
-     * @remove-when Deployed theme is >= 6.44.2 and Text module body renders without this filter.
-     * @verify-removal Remove filter; front-end and preview still show Text module body content.
-     */
-    public function ensureTextModulePostContent(array $data): array
-    {
-        if (!empty($data['postContent'])) {
-            return $data;
-        }
-        $raw = $data['post_content'] ?? $data['content'] ?? '';
-        if ($raw === '') {
-            return $data;
-        }
-        foreach (['Modularity/Display/SanitizeContent', 'the_content'] as $filter) {
-            $raw = apply_filters($filter, $raw);
-        }
-        $data['postContent'] = $raw;
-        return $data;
-    }
     /**
      * Register fields
      */
