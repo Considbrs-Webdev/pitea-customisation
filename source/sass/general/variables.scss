@@ -111,8 +111,16 @@
 // Municipio overrides
 :root {
   --page-title-color: var(--color-stain-dark-3);
-  --sticky-sidebar-top: calc(104px + var(--wp-admin--admin-bar--height, 0px));
+  // Flexible header is 24px padding + 76px logo + 24px padding. The gap keeps
+  // the sticky TOC title clear of that bar. Logged in, the header also sticks
+  // 32px down to clear the admin bar.
+  --sticky-sidebar-gap: calc(var(--base, 8px) * 2);
+  --sticky-sidebar-top: calc(124px + var(--sticky-sidebar-gap));
   --notice-border-radius: 0;
+}
+
+body.admin-bar {
+  --sticky-sidebar-top: calc(32px + 124px + var(--sticky-sidebar-gap));
 }
 
 // Search hit card backgrounds (used on search results page)
