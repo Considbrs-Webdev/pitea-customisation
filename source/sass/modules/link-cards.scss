@@ -12,6 +12,16 @@
   background-color: var(--link-card-background-color, #fff);
 }
 
+// Plugin title rule is unlayered (font-weight: 700). Image-card puff headings
+// use the h3 heading weight (600). Stay unlayered so this wins, and stay on
+// the module title so other h4s are untouched.
+.modularity-mod-link-cards .mod-link-cards__title {
+  font-weight: var(
+    --c-typography--h3-font-weight,
+    var(--font-weight-heading, 600)
+  );
+}
+
 @layer theme {
   .mod-link-cards {
     &__card {
