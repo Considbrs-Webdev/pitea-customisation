@@ -3,9 +3,14 @@
 namespace PiteaCustomisation\Customisations;
 
 /**
- * Nested Pages writes post_parent with raw SQL and never fires save_post
- * or clean_post_cache. nestedpages_post_order_updated also runs for every
- * row in the posted tree, not only the page that moved.
+ * Flushes object cache when Nested Pages reorders the tree via raw SQL.
+ *
+ * @upstream-shim id=nested-pages-cache-invalidation
+ * @upstream-repo wp-nested-pages (third-party)
+ * @upstream-broken Sort updates post_parent without save_post or clean_post_cache; nestedpages_post_order_updated fires per row.
+ * @upstream-fix-needed Use WP APIs or fire cache invalidation after reorder.
+ * @remove-when Nested Pages release invalidates caches on sort (verify on upgrade).
+ * @verify-removal Reorder in Nested Pages; parent/permalink correct without this class.
  */
 class NestedPagesCache
 {

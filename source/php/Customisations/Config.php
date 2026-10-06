@@ -38,6 +38,16 @@ class Config
         add_filter('block_editor_settings_all', [$this, 'maybeRemoveBlockEditorTemplateSelector'], 10, 2);
     }
 
+    /**
+     * Hide Gutenberg's template picker when Better Post UI already renders one.
+     *
+     * @upstream-shim id=better-post-ui-template-dup
+     * @upstream-repo better-post-ui + Gutenberg (classic page editor)
+     * @upstream-broken Two page template controls appear for the same post.
+     * @upstream-fix-needed Single supported template UI (plugin or core).
+     * @remove-when Only one template selector remains with Better Post UI active.
+     * @verify-removal Page edit screen shows one template control; saving template still works.
+     */
     public function maybeRemoveBlockEditorTemplateSelector(array $settings, $blockEditorContext): array
     {
         if (!$this->isBetterPostUiActive()) {

@@ -10,6 +10,13 @@ if (!defined('ABSPATH')) {
 
 /**
  * Keeps empty mounted CPT archives from falling back to page queries.
+ *
+ * @upstream-shim id=municipio-empty-mounted-archive
+ * @upstream-repo municipio (archive mount / query)
+ * @upstream-broken Empty CPT archives rewrite to page queries; archive Modularity areas do not load.
+ * @upstream-fix-needed Preserve mounted archive post type and seed context for module loading when post count is zero.
+ * @remove-when Empty mounted CPT archive URLs render archive template and modules without these hooks.
+ * @verify-removal Hit an empty mounted CPT archive; modules from mount page still render.
  */
 class Archive
 {
