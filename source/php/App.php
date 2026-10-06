@@ -49,6 +49,7 @@ class App
             Customisations\Headers::class,
             Customisations\Matomo::class,
             Customisations\Navigation::class,
+            Customisations\ModuleUsageMetabox::class,
             Customisations\NestedPagesCache::class,
             Customisations\NestedPagesTitle::class,
             Customisations\News::class,
