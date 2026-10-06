@@ -219,6 +219,33 @@
         );
       }
     }
+
+    // Highlighted overlay puff (c-block, variant h2) shares this grid with
+    // image cards (c-card, variant h3). The block sets --inherit-font-size to
+    // font-size-400, so the h2 alias resolves smaller than the card heading,
+    // which uses the card's compressed h3 step (0.5). Pin every heading alias
+    // to that step so a different variant on the overlay still matches.
+    .c-block__heading {
+      --pitea-manualinput-puff-heading-size: calc(
+        var(--font-size-base, var(--base-font-size, 1rem)) *
+          pow(var(--font-size-scale-ratio, 1.2), 0.5)
+      );
+      --inherit-font-size: var(--pitea-manualinput-puff-heading-size);
+      --c-typography--h1-font-size: var(--pitea-manualinput-puff-heading-size);
+      --c-typography--h2-font-size: var(--pitea-manualinput-puff-heading-size);
+      --c-typography--h3-font-size: var(--pitea-manualinput-puff-heading-size);
+      --c-typography--h4-font-size: var(--pitea-manualinput-puff-heading-size);
+      --c-typography--h5-font-size: var(--pitea-manualinput-puff-heading-size);
+      --c-typography--h6-font-size: var(--pitea-manualinput-puff-heading-size);
+      font-weight: var(
+        --c-typography--h3-font-weight,
+        var(--font-weight-heading, 600)
+      );
+      line-height: var(
+        --c-typography--h3-line-height,
+        var(--line-height-heading, 1.3)
+      );
+    }
   }
 
   // ---------------------------------------------------------------------------
