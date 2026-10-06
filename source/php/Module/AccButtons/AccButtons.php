@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PiteaCustomisation\Module;
+namespace PiteaCustomisation\Module\AccButtons;
 
 use Modularity\Module;
 use PiteaCustomisation\Customisations\Accessibility;
@@ -23,6 +23,7 @@ class AccButtons extends Module
 
     public function init(): void
     {
+        $this->templateDir = PITEA_CUSTOMISATION_PATH . 'source/php/Module/views/';
         $this->nameSingular = __('Accessibility buttons', 'pitea-customisation');
         $this->namePlural   = __('Accessibility buttons', 'pitea-customisation');
         $this->description  = __('Listen and print buttons (same as the nav bar). Place in a sidebar for layout control.', 'pitea-customisation');

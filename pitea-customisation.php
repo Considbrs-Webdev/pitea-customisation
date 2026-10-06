@@ -29,15 +29,16 @@ if (file_exists(PITEA_CUSTOMISATION_PATH . 'vendor/autoload.php')) {
 // Initialize the plugin
 new App();
 
-// Modularity: Accessibility buttons module (sidebar placement; pair with ReadSpeaker → “Module placement”)
+// Each module class lives in its own directory. Modularity indexes modules by that
+// path, so two classes registered from the same folder overwrite each other.
 add_action(
     'init',
     static function (): void {
         if (!function_exists('modularity_register_module')) {
             return;
         }
-        modularity_register_module(PITEA_CUSTOMISATION_PATH . 'source/php/Module/', 'AccButtons');
-        modularity_register_module(PITEA_CUSTOMISATION_PATH . 'source/php/Module/', 'QuickExit');
+        modularity_register_module(PITEA_CUSTOMISATION_PATH . 'source/php/Module/AccButtons/', 'AccButtons');
+        modularity_register_module(PITEA_CUSTOMISATION_PATH . 'source/php/Module/QuickExit/', 'QuickExit');
     },
     5
 );
