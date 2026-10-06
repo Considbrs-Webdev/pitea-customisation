@@ -55,14 +55,17 @@ class QuickExit extends Module
         }
 
         return [
-            'url'          => $url,
-            'label'        => QuickExitTab::getLabel(),
-            'heading'      => QuickExitTab::getHeading(),
-            'text'         => $text,
-            'readMoreUrl'  => $wantsLink ? $readMoreUrl : '',
-            'readMoreText' => QuickExitTab::getReadMoreText(),
-            'display'      => $isPreview ? 'inline' : $display,
-            'isPreview'    => $isPreview,
+            'url'            => $url,
+            'label'          => QuickExitTab::getLabel(),
+            'heading'        => QuickExitTab::getHeading(),
+            'text'           => $text,
+            'readMoreUrl'    => $wantsLink ? $readMoreUrl : '',
+            'readMoreText'   => QuickExitTab::getReadMoreText(),
+            'display'        => $isPreview ? 'inline' : $display,
+            'isPreview'      => $isPreview,
+            'settingsUrl'    => $isPreview ? QuickExitTab::settingsUrl() : '',
+            'editorHelp'     => __('Button text, destination and the explanation apply to the whole site. This module only chooses where the button is shown.', 'pitea-customisation'),
+            'editorLinkText' => __('Edit button text and destination', 'pitea-customisation'),
             'shortcut'     => $shortcut,
             'messages'     => [
                 'pressTwo' => __('Shift, press 2 more times to leave the page.', 'pitea-customisation'),

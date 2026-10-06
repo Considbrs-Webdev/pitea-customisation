@@ -27,29 +27,20 @@ $quick-exit-desktop: 78em;
     background: none;
 
     .mod-quick-exit__button.c-button.c-button__filled--primary {
-      order: 1;
       width: auto;
       padding-inline: 1.5rem;
-    }
-
-    .mod-quick-exit__details {
-      order: 2;
-    }
-
-    .mod-quick-exit__dots {
-      order: 3;
     }
 
     .mod-quick-exit__summary {
       justify-content: flex-start;
       gap: 0.5rem;
-      min-height: 0;
-      padding: 0.25rem 0;
+      min-height: 2.75rem;
+      padding: 0.5rem 0;
       border: 0;
       border-radius: 0;
       background: none;
       color: $quick-exit-link;
-      font-size: 0.9375rem;
+      font-size: 0.8125rem;
       font-weight: 500;
       text-decoration: underline;
       text-underline-offset: 0.15em;
@@ -70,6 +61,7 @@ $quick-exit-desktop: 78em;
     border: 1px solid $quick-exit-border;
     border-radius: 999px;
     background: #fff;
+    font-size: 0.8125rem;
     font-weight: 500;
     line-height: 1.3;
     cursor: pointer;
@@ -175,16 +167,43 @@ $quick-exit-desktop: 78em;
     border-radius: 999px;
     background-color: $quick-exit-red;
     color: #fff;
-    font-weight: 600;
+    font-size: 1.25rem;
+    font-weight: 700;
     filter: none;
 
     .c-button__label-text {
       color: #fff;
+      font-size: 1.25rem;
+      font-weight: 700;
+      white-space: normal;
     }
 
     &:hover,
     &:focus-visible {
       background-color: $quick-exit-red-hover;
+    }
+
+    &:focus-visible {
+      outline: 3px solid $quick-exit-text;
+      outline-offset: 3px;
+    }
+  }
+
+  &--preview {
+    .mod-quick-exit__button,
+    .mod-quick-exit__details,
+    .mod-quick-exit__dots {
+      pointer-events: none;
+    }
+  }
+
+  &__editor-note {
+    margin: 0 0 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.4;
+
+    a {
+      font-weight: 600;
     }
   }
 }
@@ -205,81 +224,70 @@ $quick-exit-desktop: 78em;
 .mod-quick-exit.mod-quick-exit--sticky {
   position: fixed;
   z-index: 8;
+  top: var(--quick-exit-top, 4.5rem);
   right: 0.75rem;
-  bottom: 0.75rem;
-  width: min(20rem, calc(100vw - 1.5rem));
-  border: 1px solid $quick-exit-border;
-  border-radius: 1rem;
-  box-shadow: 0 4px 16px rgb(0 0 0 / 20%);
+  bottom: auto;
+  width: auto;
+  max-width: calc(100vw - 1.5rem);
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+
+  // Wait for JS to compute --quick-exit-top so the panel does not cover the header.
+  // Without JS the animation reveals it after a moment at the fallback position.
+  visibility: hidden;
+  animation: quick-exit-reveal 0s linear 1.2s forwards;
+
+  &[data-quick-exit-ready] {
+    visibility: visible;
+    animation: none;
+  }
 
   @media (min-width: $quick-exit-desktop) {
-    top: var(--quick-exit-top, 9rem);
     right: 0;
-    bottom: auto;
+    width: min(20rem, calc(100vw - 1.5rem));
+    padding: 1rem;
+    background: $quick-exit-surface;
+    border: 1px solid $quick-exit-border;
     border-right: 0;
     border-radius: 1rem 0 0 1rem;
-
-    // Wait for JS to compute --quick-exit-top so the panel does not jump.
-    // Without JS the animation reveals it after a moment at the fallback position.
-    visibility: hidden;
-    animation: quick-exit-reveal 0s linear 1.2s forwards;
-
-    &[data-quick-exit-ready] {
-      visibility: visible;
-      animation: none;
-    }
+    box-shadow: 0 4px 16px rgb(0 0 0 / 20%);
   }
 
   @media (max-width: calc(#{$quick-exit-desktop} - 0.01em)) {
-    flex-direction: column-reverse;
-    width: auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
     padding: 0;
-    background: transparent;
-    border: 0;
-    box-shadow: none;
-    align-items: flex-end;
 
     .mod-quick-exit__details {
+      position: relative;
       display: flex;
-      flex-direction: column-reverse;
+      flex-direction: column;
       align-items: flex-end;
-      gap: 0.5rem;
     }
 
     .mod-quick-exit__summary {
-      width: 2.75rem;
-      height: 2.75rem;
-      min-height: 0;
-      padding: 0;
-      justify-content: center;
-      box-shadow: 0 2px 8px rgb(0 0 0 / 25%);
-    }
-
-    .mod-quick-exit__summary-text {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-    }
-
-    .mod-quick-exit__summary::after {
-      content: "?";
       width: auto;
       height: auto;
-      margin: 0;
-      border: 0;
-      font-size: 1.25rem;
-      font-weight: 700;
-      transform: none;
+      min-height: 2.75rem;
+      padding: 0.35rem 0.75rem;
+      justify-content: center;
+      background: #fff;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 25%);
+      font-size: 0.8125rem;
     }
 
+    .mod-quick-exit__summary::after,
     .mod-quick-exit__details[open] .mod-quick-exit__summary::after {
-      margin: 0;
-      transform: none;
+      display: none;
     }
 
     .mod-quick-exit__body {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      right: 0;
       width: min(18rem, calc(100vw - 1.5rem));
       padding: 1rem;
       border: 1px solid $quick-exit-border;
@@ -293,6 +301,10 @@ $quick-exit-desktop: 78em;
       min-height: 2.75rem;
       padding-inline: 1.25rem;
       box-shadow: 0 2px 8px rgb(0 0 0 / 30%);
+
+      .c-button__label-text {
+        white-space: nowrap;
+      }
     }
   }
 }

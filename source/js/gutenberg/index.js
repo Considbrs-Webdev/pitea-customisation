@@ -6,3 +6,4 @@
 
 // Font Awesome Icon Picker
 import './components/fontawesome-icon-picker/index.js';
+import './quick-exit-settings.js';
