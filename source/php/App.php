@@ -44,6 +44,7 @@ class App
             Customisations\Dashboard::class,
             Customisations\Decorators::class,
             Customisations\ExternalContent::class,
+            Customisations\EditorModuleStyles::class,
             Customisations\FocusPointEditor::class,
             Customisations\FontAwesome::class,
             Customisations\Headers::class,

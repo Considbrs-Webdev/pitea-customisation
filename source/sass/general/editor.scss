@@ -1,4 +1,33 @@
 // Editor chrome (block + classic). Keep !important where core uses it.
+// Unlayered: Municipio sets `html :where(.wp-block) { max-width: 100% }` unlayered,
+// which stretches the canvas. A layered max-width cannot override that.
+.editor-styles-wrapper .is-root-container > .wp-block:not([data-align="wide"]):not([data-align="full"]):not(.alignwide):not(.alignfull) {
+  max-width: var(--container-width, 1280px);
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.editor-styles-wrapper .is-root-container > .wp-block[data-align="wide"],
+.editor-styles-wrapper .is-root-container > .wp-block.alignwide {
+  max-width: calc(var(--container-width, 1280px) + 8rem);
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.editor-styles-wrapper .is-root-container > .wp-block[data-align="full"],
+.editor-styles-wrapper .is-root-container > .wp-block.alignfull {
+  max-width: none;
+}
+
+.editor-styles-wrapper :is(.mod-link-cards, .modularity-quick-links, .mod-latest-events) a[href] {
+  pointer-events: none;
+}
+
+.editor-styles-wrapper .mod-link-cards__grid,
+.editor-styles-wrapper .mod-link-cards__grid > li {
+  list-style: none;
+}
+
 @layer theme {
   // Classic editor (TinyMCE)
   #editor {
