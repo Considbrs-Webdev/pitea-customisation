@@ -18,6 +18,8 @@ Everything in this plugin exists to extend or override behavior of [helsingborg-
 
 When behavior seems to originate outside this plugin (e.g. default markup, base query args, core view data), it's almost always Municipio, Modularity, or ComponentLibrary — check the theme/plugin source (or the guidelines repo) rather than assuming this plugin owns it.
 
+**Temporary upstream workarounds:** see `docs/upstream-shims.md` and tag shims with `@upstream-shim` in docblocks. Run `./scripts/list-upstream-shims.sh` after add/remove.
+
 **Filters/actions actually used in this codebase** (grep for these to find the integration points; `grep -rn "'Municipio/\|'Modularity/" source/php views` finds all of them):
 
 - `Municipio/DecoratePostObject` — wrap a `Municipio\PostObject\PostObjectInterface` to alter presentation without touching the underlying post (used by `Decorators.php` / `NewsDateDecorator`).

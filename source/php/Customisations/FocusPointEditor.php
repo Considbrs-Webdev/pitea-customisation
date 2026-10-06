@@ -7,10 +7,12 @@ use PiteaCustomisation\Helpers\CacheBust;
 /**
  * Restores hero Bakgrundsbild focus clicks in the iframed block editor.
  *
- * acf-focuspoint's stylesheet and click script are enqueued on the editor
- * shell. Hero blocks stored in edit mode render that field inside the
- * editor canvas iframe, where the selection layer otherwise has no height
- * and no click handler.
+ * @upstream-shim id=acf-focuspoint-hero-iframe
+ * @upstream-repo acf-focuspoint (+ Gutenberg iframe)
+ * @upstream-broken Focus point assets load on editor shell only; hero field in canvas iframe lacks click handler and sizing.
+ * @upstream-fix-needed Enqueue focuspoint styles/script for block editor iframe assets.
+ * @remove-when acf-focuspoint supports iframe canvas; hero background focus works without this class.
+ * @verify-removal Edit hero block; click background image to set focus point in iframe.
  */
 class FocusPointEditor
 {

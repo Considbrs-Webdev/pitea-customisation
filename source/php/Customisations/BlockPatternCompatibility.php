@@ -7,6 +7,13 @@ use WP_Post;
 
 /**
  * Ensures reusable patterns (wp_block) remain visible when block allow-lists are active.
+ *
+ * @upstream-shim id=municipio-block-pattern-allowlist
+ * @upstream-repo municipio (block editor allow-list)
+ * @upstream-broken Municipio restricts allowed_block_types; blocks inside published wp_block patterns may be treated as disallowed.
+ * @upstream-fix-needed Include pattern dependency block types in the allow-list or expose a supported extension point.
+ * @remove-when Page editor shows all intended reusable patterns without merging block types from wp_block posts.
+ * @verify-removal Disable this class; confirm pattern inserter still lists Piteå patterns on a page edit screen.
  */
 class BlockPatternCompatibility
 {

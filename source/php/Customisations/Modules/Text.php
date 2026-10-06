@@ -60,10 +60,6 @@ class Text
         add_filter('Modularity/Display/mod-text/viewData', [$this, 'ensureTextModulePostContent'], 1);
         add_action('acf/init', [$this, 'registerFields'], 20);
         add_filter('Modularity/Display/mod-text/viewData', [$this, 'captureTextModuleStyles']);
-        // Older ComponentLibrary versions (mu-plugins/component-library, used by the legacy
-        // `municipio` theme) fire this filter with 1 argument, while the newer version bundled
-        // in `new_municipio` fires it with 2. Register for 1 arg so we stay compatible with both;
-        // the method itself still accepts an optional component instance when provided.
         add_filter('ComponentLibrary/Component/Data', [$this, 'applyPendingCardStyles'], 10, 1);
 
         // Hide fields from Gutenberg editor (only show in module editor)
@@ -75,8 +71,13 @@ class Text
     /**
      * Backfill postContent when Municipio Text::data() no longer reads WP editor body from the post object.
      *
-     * Affected versions: 6.44.0–6.44.1 (PR #1999). Fixed upstream in 6.44.2 (#2021).
-     * 6.27.x uses $this->data['post_content'] and is not affected.
+     * @upstream-shim id=municipio-text-post-content-644
+     * @upstream-repo municipio (Text module)
+     * @upstream-broken Municipio 6.44.0–6.44.1 regression: postContent missing from mod-text view data (PR #1999).
+     * @upstream-fix-needed Restored in Municipio 6.44.2 (PR #2021). 6.27.x unaffected.
+     * @upstream-fixed-in municipio@6.44.2
+     * @remove-when Deployed theme is >= 6.44.2 and Text module body renders without this filter.
+     * @verify-removal Remove filter; front-end and preview still show Text module body content.
      */
     public function ensureTextModulePostContent(array $data): array
     {
@@ -252,12 +253,15 @@ class Text
     /**
      * Merge pending Text module styles onto the Card used by box.blade.php (context module.text.box).
      *
-     * The ComponentLibrary filter is fired with 1 arg in the legacy (mu-plugins) component-library
-     * and with 2 args in the newer (theme-vendored) one. `$_component` is therefore optional so the
-     * same callback works against either version.
+     * @upstream-shim id=component-library-filter-arity
+     * @upstream-repo component-library (mu-plugin vs theme bundle)
+     * @upstream-broken ComponentLibrary/Component/Data is invoked with one or two arguments depending on deployment.
+     * @upstream-fix-needed Stable filter signature; constructor registers accepted_args=1 for legacy stacks.
+     * @remove-when Single ComponentLibrary version everywhere; optional second argument always passed if required.
+     * @verify-removal Text module card custom styles still apply; no PHP argument count warnings.
      *
      * @param array<string, mixed> $data
-     * @param object|null $_component Component instance (BaseController) when available; not used.
+     * @param object|null $_component Component instance when the filter passes it; unused.
      * @return array<string, mixed>
      */
     public function applyPendingCardStyles(array $data, ?object $_component = null): array
