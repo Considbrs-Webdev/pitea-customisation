@@ -90,3 +90,7 @@ Blade templates in `views/` are registered as a template path via `Customisation
 
 - The `README.md` customization table can drift from `App::registerInstances()` — when in doubt about what's actually active, treat the `$classes` array in `App.php` as ground truth, not the README.
 - Sokigo Nova is owned by `modularity-noticeboard` 1.1.0+. The external-content panel reads its guarded public `NovaPublicationEndpoint::getStatus()` and `Admin::url()` interfaces. Keep transport/authentication/persistence there; see README.md for paired rollout and rollback. Credential constants and legacy identity metadata remain compatible.
+
+## Agent skills
+
+Project skills are stored in `.agents/skills/<name>/SKILL.md` (read by Codex and Cursor) and exposed to Claude Code through a relative symlink in `.claude/skills/<name>`. Create new skills the same way. See `AGENTS.md` for the full steps. Do not copy skills between directories.
