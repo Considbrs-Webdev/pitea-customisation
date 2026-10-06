@@ -62,7 +62,7 @@ If the front end fills itself with JS, or the data source is a remote API, do no
 
 Empty data must not look like a broken list. “Inga evenemang” means the source returned nothing. “Förhandsvisning otillgänglig” means the editor could not build a preview.
 
-Latest events is this case. The public template is a skeleton list replaced by `simpleview-events.ts`. The editor does not load that script. It prints up to three cached events, or the status line plus styled skeletons.
+Latest events is this case. The public template is a skeleton list replaced by `simpleview-events.ts`. The editor does not load that script. It prints the same four events the public script requests, or the status line plus styled skeletons.
 
 ### C. Do not rebuild the front end in React
 
