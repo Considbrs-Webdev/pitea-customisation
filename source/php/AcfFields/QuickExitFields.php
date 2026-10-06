@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PiteaCustomisation\AcfFields;
 
+use PiteaCustomisation\Admin\Tabs\QuickExitTab;
+
 /**
  * ACF fields for the quick-exit Modularity module. Content is configured site-wide in Settings.
  */
@@ -27,6 +29,19 @@ class QuickExitFields
             'key' => 'group_pitea_quick_exit',
             'title' => __('Quick exit module settings', 'pitea-customisation'),
             'fields' => [
+                [
+                    'key' => 'field_quick_exit_settings_notice',
+                    'label' => __('Button text and destination', 'pitea-customisation'),
+                    'name' => '',
+                    'type' => 'message',
+                    'message' => sprintf(
+                        /* translators: %s: URL of the Quick exit settings tab */
+                        __('Button text, destination and the explanation apply to the whole site. Edit them on the <a href="%s">Quick exit settings page</a>. This module only chooses where the button is shown.', 'pitea-customisation'),
+                        esc_url(QuickExitTab::settingsUrl())
+                    ),
+                    'new_lines' => '',
+                    'esc_html' => 0,
+                ],
                 [
                     'key' => 'field_quick_exit_display',
                     'label' => __('Display', 'pitea-customisation'),

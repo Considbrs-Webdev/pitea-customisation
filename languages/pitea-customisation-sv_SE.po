@@ -927,11 +927,23 @@ msgstr "Skärmläsare meddelar hur många tryckningar som återstår. Förklarin
 
 #: source/php/Admin/Tabs/QuickExitTab.php:307
 msgid "About the quick exit button"
-msgstr "Om lämna-knappen"
+msgstr "Om knappen"
 
 #: source/php/Admin/Tabs/QuickExitTab.php:312
-msgid "Click the button if you need to leave the page quickly. You will end up on {site} instead."
-msgstr "Klicka på knappen om du behöver lämna sidan snabbt. Då hamnar du på {site} i stället."
+msgid "Click the button if you need to leave the page quickly. You will end up on {site} instead. The back button does not return to this page, but the visit can still remain in the browser history."
+msgstr "Klicka på knappen om du behöver lämna sidan snabbt. Då hamnar du på {site} i stället. Bakåtknappen tar dig inte tillbaka till den här sidan, men besöket kan fortfarande finnas kvar i webbläsarens historik."
+
+msgid "Button text and destination"
+msgstr "Knapptext och destination"
+
+msgid "Button text, destination and the explanation apply to the whole site. Edit them on the <a href=\"%s\">Quick exit settings page</a>. This module only chooses where the button is shown."
+msgstr "Knapptext, destination och förklaring gäller hela webbplatsen. Redigera dem på <a href=\"%s\">sidan för snabbutgång</a>. Modulen väljer bara var knappen visas."
+
+msgid "Button text, destination and the explanation apply to the whole site. This module only chooses where the button is shown."
+msgstr "Knapptext, destination och förklaring gäller hela webbplatsen. Modulen väljer bara var knappen visas."
+
+msgid "Edit button text and destination"
+msgstr "Redigera knapptext och destination"
 
 #: source/php/Admin/Tabs/QuickExitTab.php:317
 msgid "Read more about the quick exit button"

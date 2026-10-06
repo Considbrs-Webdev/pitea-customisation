@@ -48,6 +48,14 @@ class QuickExitTab implements SettingsTabInterface
         return self::OPTION_GROUP;
     }
 
+    /**
+     * Settings screen where button text, destination and explanation are edited.
+     */
+    public static function settingsUrl(): string
+    {
+        return admin_url('options-general.php?page=pitea-customisation&tab=quick-exit');
+    }
+
     public function register(): void
     {
         $string = static fn (string $default = ''): array => [
@@ -309,7 +317,7 @@ class QuickExitTab implements SettingsTabInterface
 
     private static function defaultText(): string
     {
-        return __('Click the button if you need to leave the page quickly. You will end up on {site} instead.', 'pitea-customisation');
+        return __('Click the button if you need to leave the page quickly. You will end up on {site} instead. The back button does not return to this page, but the visit can still remain in the browser history.', 'pitea-customisation');
     }
 
     private static function defaultReadMoreText(): string

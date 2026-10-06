@@ -1,6 +1,5 @@
 const SHORTCUT_WINDOW_MS = 5000;
 const HEADER_GAP_PX = 16;
-const DESKTOP_QUERY = '(min-width: 78em)';
 
 let overlay = null;
 
@@ -42,19 +41,14 @@ function moveStickyToBody() {
 
 /**
  * Keeps the sticky panel just below the header, which itself sticks once the page scrolls.
- * The value is written to --quick-exit-top; the stylesheet only uses it on desktop.
+ * The value is written to --quick-exit-top on every viewport.
  */
 function anchorUnderHeader(panel) {
     const headers = [...document.querySelectorAll('.c-header--sticky, .site-header')];
-    const media = window.matchMedia(DESKTOP_QUERY);
     let frame = 0;
 
     const update = () => {
         frame = 0;
-        if (!media.matches) {
-            panel.style.removeProperty('--quick-exit-top');
-            return;
-        }
 
         const bottoms = headers
             .map((header) => header.getBoundingClientRect())
@@ -72,7 +66,6 @@ function anchorUnderHeader(panel) {
 
     window.addEventListener('scroll', schedule, { passive: true });
     window.addEventListener('resize', schedule);
-    media.addEventListener('change', schedule);
     update();
     panel.setAttribute('data-quick-exit-ready', '');
 }

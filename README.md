@@ -43,8 +43,10 @@ The **Quick exit** Modularity module (`mod-quick-exit`) renders a panel with a r
 
 - **Site-wide content:** Settings → Piteå kommun → Quick exit holds the destination (empty falls back to `https://www.aftonbladet.se`), button label, accordion heading and text (`{site}` is replaced by the destination host), the read-more link URL and text, and the Shift×3 shortcut toggle.
 - **Per module:** only the display mode (`sticky`, `inline`, or both) and whether to show the read-more link.
-- **Sticky panel:** on desktop (≥78em) it sits fixed on the right edge just below the header and follows it when the header sticks. Below that it is a compact corner button; the `?` toggle opens the explanation.
-- **Click:** the button is a normal link. With JavaScript it blanks the page with a white overlay and uses `location.replace()`, so the browser Back button does not return to the page.
+- **Sticky panel:** fixed just under the header on every screen size, so it does not cover the bottom of the page. On desktop it is a card on the right edge. On smaller screens it is a compact control: the exit button, then a smaller “Om knappen”.
+- **Order:** the exit link comes first in the markup, then the explanation. The explanation says where the button goes and that the visit can still remain in the browser history.
+- **Click:** the button is a normal link (`rel="nofollow noreferrer"`). With JavaScript it blanks the page with a white overlay and uses `location.replace()`, so the browser Back button does not return to this page. That does not erase the rest of the browser history.
+- **Editors:** button text and destination are not on the module. The block sidebar and the module fields link to Settings → Piteå kommun → Quick exit.
 - **Keyboard:** pressing Shift three times within 5 seconds leaves the page, with progress dots and screen-reader announcements. A visually hidden “leave” link is also added early in the tab order.
 - **Enable it** under Modularity → Modules, then place it on the page.
 
