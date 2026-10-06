@@ -25,16 +25,7 @@ Root blocks use `max-width: var(--container-width, 1280px)`, the same token as t
 
 ## When to enqueue styles
 
-Enqueue the module’s built CSS on `enqueue_block_assets`, and only when `is_admin()` is true, so the front end is not double-loaded and wp-admin chrome is not restyled.
-
-Also register the same URL on `Pitea/Editor/ModuleStyles` (`PiteaCustomisation\Customisations\EditorModuleStyles`) so one place owns the iframe policy:
-
-```php
-add_filter('Pitea/Editor/ModuleStyles', function (array $styles) use ($url): array {
-    $styles['my-module'] = $url;
-    return $styles;
-});
-```
+Enqueue the module’s built CSS on `enqueue_block_assets`, and only when `is_admin()` is true, so the front end is not double-loaded and wp-admin chrome is not restyled. Each plugin does this itself. There is no shared registration filter.
 
 Do not enqueue front-end JS bundles in the editor. Skip rules that assume the public page: `100vh` heroes, sticky header, quick-exit fixed positioning, autoplaying carousels, maps.
 
