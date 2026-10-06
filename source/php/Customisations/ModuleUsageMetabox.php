@@ -5,10 +5,13 @@ namespace PiteaCustomisation\Customisations;
 /**
  * Skips Modularity's module-usage scan on screens that are not modules.
  *
- * ModuleManager::whereUsedMetaBox() searches every post_content for a
- * shortcode before it limits the metabox to module post types. Module
- * screens keep that callback. Remove this class when the theme stops
- * running the scan for other post types.
+ * @upstream-shim id=modularity-where-used-metabox
+ * @upstream-repo municipio (Modularity in theme, ModuleManager)
+ * @upstream-broken whereUsedMetaBox() calls getModuleUsage() on every add_meta_boxes before limiting to module post types (full post_content LIKE scan).
+ * @upstream-fix-needed Early return unless current post type is in ModuleManager::$enabled.
+ * @upstream-fixed-in municipio@7.55.8
+ * @remove-when Deployed Municipio theme version is >= 7.55.8; delete this class and App.php registration.
+ * @verify-removal Edit a page: no SQL containing `[modularity id=`. Edit a mod-* module: usage metabox still appears.
  */
 class ModuleUsageMetabox
 {
