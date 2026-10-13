@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PiteaCustomisation\Customisations;
 
+use ScheduledPageReviews\Groups\GroupProvider;
+
 /**
  * Site-specific behaviour for the Scheduled Page Reviews plugin.
  */
@@ -13,6 +15,24 @@ class ScheduledPageReviews
     {
         add_filter('scheduled_page_reviews/can_view_site_overview', [$this, 'limitOverviewToAdministrators'], 10, 2);
         add_filter('scheduled_page_reviews/can_manage_settings', [$this, 'limitOverviewToAdministrators'], 10, 2);
+        add_filter('scheduled_page_reviews/group_providers', [$this, 'addUserGroupProvider']);
+    }
+
+    /**
+     * Offer every user_group term in the recipient group picker.
+     *
+     * @param list<GroupProvider> $providers
+     * @return list<GroupProvider>
+     */
+    public function addUserGroupProvider(array $providers): array
+    {
+        if (!interface_exists(GroupProvider::class)) {
+            return $providers;
+        }
+
+        $providers[] = new PageReviewsGroups();
+
+        return $providers;
     }
 
     /**
@@ -40,3 +60,5 @@ class ScheduledPageReviews
         return in_array('administrator', (array) $user->roles, true);
     }
 }
+
+
