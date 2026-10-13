@@ -134,6 +134,11 @@
     hyphens: none;
   }
 
+  // Styleguide hardcodes font-weight 700. Site bold and heading weights are 600.
+  .c-card__explicit-link {
+    font-weight: var(--font-weight-bold, 600);
+  }
+
   // ---------------------------------------------------------------------------
   // Manual input cards
   // ---------------------------------------------------------------------------
@@ -210,25 +215,30 @@
         --c-card--color--surface-border: transparent;
       }
 
-      // v3 .c-card__heading forces --inherit-font-size: font-size-200 (18px).
-      // Manual input uses variant h3 (~22px / --font-size-500).
+      // v3 .c-card > * sets compressed --c-typography--h3-font-size
+      // (step 0.5, ~19.7px), which wins over --inherit-font-size. Pin the
+      // size token to font-size-500 (22px) and keep the multiplier at 1.
       .c-card__heading.c-typography__variant--h3 {
         --inherit-font-size: var(
           --font-size-500,
           var(--font-size-heading-3, 22px)
         );
+        --c-typography--h3-font-size: var(
+          --font-size-500,
+          var(--font-size-heading-3, 22px)
+        );
+        --c-typography--h3-font-size-multiplier: 1;
       }
     }
 
     // Highlighted overlay puff (c-block, variant h2) shares this grid with
     // image cards (c-card, variant h3). The block sets --inherit-font-size to
-    // font-size-400, so the h2 alias resolves smaller than the card heading,
-    // which uses the card's compressed h3 step (0.5). Pin every heading alias
-    // to that step so a different variant on the overlay still matches.
+    // font-size-400, so the h2 alias resolves smaller than the card heading.
+    // Pin every heading alias to the same 22px step.
     .c-block__heading {
-      --pitea-manualinput-puff-heading-size: calc(
-        var(--font-size-base, var(--base-font-size, 1rem)) *
-          pow(var(--font-size-scale-ratio, 1.2), 0.5)
+      --pitea-manualinput-puff-heading-size: var(
+        --font-size-500,
+        var(--font-size-heading-3, 22px)
       );
       --inherit-font-size: var(--pitea-manualinput-puff-heading-size);
       --c-typography--h1-font-size: var(--pitea-manualinput-puff-heading-size);
