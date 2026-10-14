@@ -50,8 +50,12 @@ ol.wp-block-list li::marker {
     );
   }
 
-  figure.c-image:not(.is-resized) .c-image__image,
-  figure.c-image:not(.is-resized) [class*="wp-image-"],
+  // Cover/card images are position:absolute and must fill their wrapper.
+  // height:auto lets the LQIP background show above and below the photo.
+  figure.c-image:not(.is-resized):not(.c-image--cover):not(.c-card__image)
+    .c-image__image,
+  figure.c-image:not(.is-resized):not(.c-image--cover):not(.c-card__image)
+    [class*="wp-image-"],
   .wp-block-image:not(.is-resized) img,
   .wp-block-image:not(.is-resized) [class*="wp-image-"] {
     border-radius: inherit;
@@ -84,10 +88,20 @@ ol.wp-block-list li::marker {
     height: 100%;
   }
 
-  figure.c-image:not(.is-resized) .c-image__image,
-  figure.c-image:not(.is-resized) [class*="wp-image-"],
-  .wp-block-image:not(.is-resized) img,
-  .wp-block-image:not(.is-resized) [class*="wp-image-"] {
+  // Same cover/card exclusion as the article rule above. This block is the
+  // picture column of a split, so ordinary content images still fill the row.
+  // #article beats an un-prefixed selector, so include it here.
+  :is(#article.c-article, :root) & figure.c-image:not(.is-resized):not(
+      .c-image--cover
+    ):not(.c-card__image)
+    .c-image__image,
+  :is(#article.c-article, :root) & figure.c-image:not(.is-resized):not(
+      .c-image--cover
+    ):not(.c-card__image)
+    [class*="wp-image-"],
+  :is(#article.c-article, :root) & .wp-block-image:not(.is-resized) img,
+  :is(#article.c-article, :root) & .wp-block-image:not(.is-resized)
+    [class*="wp-image-"] {
     height: 100%;
     object-position: 50% 50%;
   }
