@@ -63,6 +63,12 @@
     margin-top: calc(var(--base, 8px) * 1.5);
   }
 
+  // Cover images fill a frame (cards, sliders, heroes). The body margin
+  // shifts the photo and leaves the placeholder background visible.
+  .c-article .c-image--cover .c-image__image {
+    margin-top: 0;
+  }
+
   article.c-article.s-article {
     ul li + li,
     ol li + li {
