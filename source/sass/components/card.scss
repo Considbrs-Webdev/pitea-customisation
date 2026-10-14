@@ -161,6 +161,42 @@
       }
     }
 
+    // Styleguide sets --c-card--content-alignment: start. There is no
+    // Customizer/design-tool control for it. Centre only while the card is
+    // wide enough to sit image-beside-text. Stacked cards and accordions
+    // stay start.
+    // Article copy gives every img a 12px top margin. On a cover card that
+    // shifts the photo down inside the frame, so the wrapper background
+    // shows along the top. The attribute lives on .c-element (Manual Input
+    // passes attributeList to @element).
+    .c-card__image.c-image--cover .c-image__image {
+      margin-top: 0;
+    }
+
+    .c-element:not([data-disable-layout-shift="true"])
+      > .c-card.c-card--has-image:not([data-disable-layout-shift="true"])
+      .c-card__paint-container {
+      @container (min-width: 500px) {
+        --c-card--content-alignment: center;
+      }
+    }
+
+    // Custom colour off stays transparent (unlayered rule at the bottom of
+    // this file). Horizontal image cards still need the coloured-card side
+    // inset, or the text sits flush against the photo.
+    .c-element:not([data-disable-layout-shift="true"])
+      > .c-card.c-card--has-image:not([data-disable-layout-shift="true"]):not(
+        .c-card--has-custom-background
+      )
+      .c-card__paint-container {
+      @container (min-width: 500px) {
+        .c-card__body,
+        .c-card__footer {
+          padding-inline: 28px;
+        }
+      }
+    }
+
     .c-card {
       // Theme ManualInput blade still emits --c-card-color-background (legacy).
       // Bridge it onto the v3 surface token when present.
