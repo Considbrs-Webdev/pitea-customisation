@@ -67,13 +67,23 @@ ol.wp-block-list li::marker {
 }
 
 // Picture column of a split (text/image left–right). The column's only child
-// is the figure, so it can fill the row and crop. A body image in a content
-// column (article beside a sidebar) must keep its intrinsic ratio.
+// is the figure, so it can fill the row and crop. From md, when the columns
+// sit side by side, the picture column stretches to the row (overriding
+// vertical center) and the photo covers that height. A minimum height keeps
+// a short text column from flattening the crop. Below md the columns stack
+// and the picture keeps its own height. A body image in a content column
+// (article beside a sidebar) must keep its intrinsic ratio.
 // .c-article img adds margin-top for body copy; on the picture that gap
 // shows as a strip above the photo while the sides stay flush.
 .o-grid-column-block:has(> figure.c-image, > .wp-block-image):not(
     :has(> :not(figure, .wp-block-image))
   ) {
+  // Matches columns.scss: custom widths only apply from the md breakpoint.
+  @media screen and (min-width: 56em) {
+    align-self: stretch;
+    min-height: 240px;
+  }
+
   figure.c-image,
   .wp-block-image,
   figure.c-image .c-image__image,
