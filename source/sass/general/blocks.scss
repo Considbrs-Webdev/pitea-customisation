@@ -98,10 +98,20 @@ ol.wp-block-list li::marker {
     height: 100%;
   }
 
-  figure.c-image:not(.is-resized) .c-image__image,
-  figure.c-image:not(.is-resized) [class*="wp-image-"],
-  .wp-block-image:not(.is-resized) img,
-  .wp-block-image:not(.is-resized) [class*="wp-image-"] {
+  // #article.c-article sets height:auto at ID specificity, so an unprefixed
+  // height:100% loses on Innehållssida and the stretched column stays empty.
+  // :is() takes the ID's specificity for both branches, including :root.
+  :is(#article.c-article, :root) & figure.c-image:not(.is-resized):not(
+      .c-image--cover
+    ):not(.c-card__image)
+    .c-image__image,
+  :is(#article.c-article, :root) & figure.c-image:not(.is-resized):not(
+      .c-image--cover
+    ):not(.c-card__image)
+    [class*="wp-image-"],
+  :is(#article.c-article, :root) & .wp-block-image:not(.is-resized) img,
+  :is(#article.c-article, :root) & .wp-block-image:not(.is-resized)
+    [class*="wp-image-"] {
     height: 100%;
     object-position: 50% 50%;
   }
