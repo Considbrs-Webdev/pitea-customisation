@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace PiteaCustomisation\Customisations;
 
-use ScheduledPageReviews\Groups\Group;
-use ScheduledPageReviews\Groups\GroupProvider;
+use Renewpage\Groups\Group;
+use Renewpage\Groups\GroupProvider;
 use WP_Term;
 
 /**
