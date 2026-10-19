@@ -40,9 +40,7 @@
     }
   }
 
-  // Search modal: fused field + submit share one :focus-within ring
-  $t-search-modal-row-breakpoint: 601px;
-
+  // Search modal: field and submit form one pill, with a focus ring on that shape.
   dialog.t-search-modal {
     form.t-search-modal__form {
       padding: 0;
@@ -50,12 +48,10 @@
         "label"
         "composed";
       grid-template-columns: 1fr;
+    }
 
-      @media (min-width: $t-search-modal-row-breakpoint) {
-        grid-template-areas:
-          "label label"
-          "composed composed";
-      }
+    .t-search-modal__label {
+      margin-bottom: calc(var(--base, 0.5rem) * 2);
     }
 
     .c-modal__content,
@@ -65,35 +61,49 @@
     }
 
     .t-search-modal__composed-search {
+      --t-search-bar-radius: calc(var(--base, 0.5rem) * 4);
       display: flex;
       flex-direction: column;
-      gap: calc(var(--base, 8px) * 1.5);
+      gap: calc(var(--base, 0.5rem) * 1.5);
       grid-area: composed;
       width: 100%;
 
-      @media (min-width: $t-search-modal-row-breakpoint) {
+      .t-search-modal__field {
+        --c-field--border-radius: 4;
+        flex: 1;
+        min-width: 0;
+        min-height: calc(var(--base, 0.5rem) * 8);
+
+        .c-field__inner {
+          min-height: inherit;
+        }
+      }
+
+      .t-search-modal__submit {
+        --c-button--color--primary: var(--color--primary);
+        --c-button--color--primary-border: var(--color--primary);
+        --c-button--color--primary-contrast: var(--color--primary-contrast, #fff);
+        --c-button--border-radius: 4;
+      }
+
+      @container search-modal (max-width: 399px) {
+        .t-search-modal__submit {
+          border-radius: var(--t-search-bar-radius) !important;
+        }
+      }
+
+      @container search-modal (min-width: 400px) {
         flex-direction: row;
         align-items: stretch;
         gap: 0;
-        position: relative;
-        border-radius: var(--radius-sm, calc(var(--base, 8px) / 2));
-
-        .t-search-modal__field {
-          flex: 1;
-          min-width: 0;
-        }
+        border-radius: var(--t-search-bar-radius);
 
         &:focus-within {
-          outline: thick solid var(--color--focus, var(--color-focus-outline, #4d90fe));
-          outline-offset: calc(var(--base, 8px) * 0.25);
-          box-shadow: 0 0 0 6px var(--color--white, var(--color-white, #fff));
+          outline: 3px solid var(--color--focus, #4d90fe);
+          outline-offset: 3px;
         }
 
-        &:focus-within .t-search-modal__field .c-field__inner {
-          outline: none;
-          box-shadow: none;
-        }
-
+        &:focus-within .t-search-modal__field .c-field__inner,
         &:focus-within .t-search-modal__submit:focus,
         &:focus-within .t-search-modal__submit:focus-visible {
           outline: none;
