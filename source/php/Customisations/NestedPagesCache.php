@@ -19,12 +19,22 @@ class NestedPagesCache
      */
     private array $preSort = [];
 
-    private bool $flushed = false;
+    private bool $flushPending = false;
 
     public function __construct()
     {
         add_action('wp_ajax_npsort', [$this, 'capturePreSortState'], 1);
         add_action('nestedpages_post_order_updated', [$this, 'onPostOrderUpdated'], 10, 2);
+    }
+
+    /**
+     * Flush once the request is done. Flushing inside the per-row hook empties the cache while
+     * later rows are still unwritten, so anything read in between (Typesense sync, ancestors,
+     * nav menus) re-caches the old tree and keeps it until the TTL expires.
+     */
+    public function flushAfterSort(): void
+    {
+        wp_cache_flush();
     }
 
     public function capturePreSortState(): void
@@ -44,7 +54,7 @@ class NestedPagesCache
 
     public function onPostOrderUpdated(int|string $postId, int $newParent): void
     {
-        if ($this->flushed) {
+        if ($this->flushPending) {
             return;
         }
 
@@ -56,8 +66,8 @@ class NestedPagesCache
             return;
         }
 
-        wp_cache_flush();
-        $this->flushed = true;
+        $this->flushPending = true;
+        add_action('shutdown', [$this, 'flushAfterSort']);
     }
 
     /**

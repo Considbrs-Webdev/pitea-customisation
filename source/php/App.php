@@ -51,6 +51,7 @@ class App
             Customisations\Matomo::class,
             Customisations\Navigation::class,
             Customisations\ModuleUsageMetabox::class,
+            Customisations\NavMenuCachePurge::class,
             Customisations\NestedPagesCache::class,
             Customisations\NestedPagesTitle::class,
             Customisations\News::class,
