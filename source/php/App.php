@@ -46,6 +46,7 @@ class App
             Customisations\ExternalContent::class,
             Customisations\EditorModuleStyles::class,
             Customisations\FocusPointEditor::class,
+            Customisations\PostsTaxonomyFilterModal::class,
             Customisations\FontAwesome::class,
             Customisations\Headers::class,
             Customisations\Matomo::class,
