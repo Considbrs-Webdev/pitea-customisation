@@ -2,13 +2,15 @@
 
 namespace PiteaCustomisation\Customisations;
 
+use PiteaCustomisation\Helpers\CacheBust;
+
 /**
  * Fills Posts module taxonomy selects in the ACF expanded editor.
  *
  * @upstream-shim id=posts-taxonomy-filter-expanded-editor
  * @upstream-repo municipio (Modularity Posts blockFilteringSetup.ts)
  * @upstream-broken BlockFilteringSetup fills taxonomy selects once in the block sidebar. ACF block v3 expanded editor remounts the form from HTML whose choices are empty, and the script does not run again.
- * @upstream-fix-needed Populate posts_taxonomy_type and posts_taxonomy_value when the block form is rendered.
+ * @upstream-fix-needed Populate posts_taxonomy_type and posts_taxonomy_value when the block form is rendered, and refresh them inside the expanded editor when the post type or taxonomy changes.
  * @remove-when Municipio Posts block form includes those choices in the expanded editor. Installed 7.38.6 and 7.70.3 do not (blockFilteringSetup.ts is unchanged).
  * @verify-removal Edit Böle skola (post 8738), open the Inlägg block expanded editor: Taxonomi lists Nyhetskategorier and Term lists Böle skola without this class.
  */
@@ -21,7 +23,7 @@ class PostsTaxonomyFilterModal
     private const POST_TYPE_KEY = 'field_571dfc40f8114';
 
     /**
-     * Register the block-form filters.
+     * Register the block-form filters and the editor script.
      */
     public function __construct()
     {
@@ -33,6 +35,7 @@ class PostsTaxonomyFilterModal
             'acf/prepare_field/key=' . self::TAXONOMY_VALUE_KEY,
             [$this, 'prepareTaxonomyValue']
         );
+        add_action('enqueue_block_editor_assets', [$this, 'enqueueEditorScript']);
     }
 
     /**
@@ -79,6 +82,33 @@ class PostsTaxonomyFilterModal
         }
 
         return $field;
+    }
+
+    /**
+     * Load the modal refresh script in the parent block editor.
+     *
+     * The expanded editor lives in the parent document, not the canvas iframe.
+     *
+     * @return void
+     */
+    public function enqueueEditorScript(): void
+    {
+        if (!is_admin()) {
+            return;
+        }
+
+        $script = CacheBust::getFile('source/js/editor-plugins/posts-taxonomy-filter-modal.js');
+        if ($script === '') {
+            return;
+        }
+
+        wp_enqueue_script(
+            'pitea-posts-taxonomy-filter-modal',
+            $script,
+            ['wp-data'],
+            null,
+            true
+        );
     }
 
     /**
