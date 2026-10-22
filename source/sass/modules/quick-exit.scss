@@ -189,14 +189,6 @@ $quick-exit-desktop: 78em;
     }
   }
 
-  &--preview {
-    .mod-quick-exit__button,
-    .mod-quick-exit__details,
-    .mod-quick-exit__dots {
-      pointer-events: none;
-    }
-  }
-
   &__editor-note {
     margin: 0 0 0.75rem;
     font-size: 0.875rem;

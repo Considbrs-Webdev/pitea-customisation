@@ -1,7 +1,7 @@
 <div
-    class="mod-quick-exit mod-quick-exit--{{ $variant }} u-print-display--none{{ $isPreview ? ' mod-quick-exit--preview' : '' }}"
+    class="mod-quick-exit mod-quick-exit--{{ $variant }} u-print-display--none"
     @if ($variant === 'sticky') data-quick-exit-sticky @endif
-    @if ($shortcut && !$isPreview) data-quick-exit-shortcut data-quick-exit-messages="{{ json_encode($messages) }}" @endif
+    @if ($shortcut) data-quick-exit-shortcut data-quick-exit-messages="{{ json_encode($messages) }}" @endif
 >
     @if ($isPreview && !empty($settingsUrl))
         <p class="mod-quick-exit__editor-note">
@@ -14,18 +14,18 @@
         'text' => $label,
         'style' => 'filled',
         'color' => 'primary',
-        'href' => $isPreview ? false : $url,
+        'href' => $url,
         'size' => 'md',
         'classList' => ['mod-quick-exit__button'],
         'attributeList' => array_filter([
-            'data-quick-exit' => $isPreview ? null : '',
+            'data-quick-exit' => '',
             'rel' => 'nofollow noreferrer',
             'aria-label' => $label,
         ], static fn ($value) => $value !== null),
     ])
     @endbutton
 
-    @if ($shortcut && !$isPreview)
+    @if ($shortcut)
         <span class="mod-quick-exit__dots" aria-hidden="true"><i></i><i></i><i></i></span>
     @endif
 

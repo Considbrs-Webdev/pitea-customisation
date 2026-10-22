@@ -42,7 +42,7 @@ class QuickExit extends Module
             $display = 'sticky';
         }
 
-        $isPreview   = is_admin();
+        $isPreview   = self::isBlockEditorPreview();
         $url         = QuickExitTab::getDefaultUrl();
         $readMoreUrl = QuickExitTab::getReadMoreUrl();
         $wantsLink   = array_key_exists('quick_exit_show_read_more', $fields)
@@ -81,5 +81,25 @@ class QuickExit extends Module
     public function template(): string
     {
         return 'quick-exit.blade.php';
+    }
+
+    /**
+     * True while this block is rendered for the block editor canvas.
+     *
+     * The canvas is the block editor screen, or ACF's fetch-block ajax preview.
+     * acf_doing_block_preview is not a safe signal: block version 3 sets it on
+     * the public page, and block version 1 leaves it unset during fetch-block.
+     */
+    private static function isBlockEditorPreview(): bool
+    {
+        if (function_exists('acf_is_block_editor') && acf_is_block_editor()) {
+            return true;
+        }
+
+        if (!wp_doing_ajax() || !isset($_REQUEST['action']) || !is_string($_REQUEST['action'])) {
+            return false;
+        }
+
+        return wp_unslash($_REQUEST['action']) === 'acf/ajax/fetch-block';
     }
 }
