@@ -72,7 +72,30 @@ function isSamePageHash(url) {
 }
 
 /**
- * Scrolls to a same-page hash target after the URL was updated without a new history entry.
+ * True when the element can take focus without adding tabindex.
+ *
+ * @param {HTMLElement} element
+ * @returns {boolean}
+ */
+function canFocusWithoutTabIndex(element) {
+    if (element.hasAttribute('tabindex')) {
+        return true;
+    }
+
+    const tag = element.tagName;
+    if (tag === 'A') {
+        return element.hasAttribute('href');
+    }
+
+    if (tag === 'BUTTON' || tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA' || tag === 'SUMMARY') {
+        return !element.disabled;
+    }
+
+    return element.isContentEditable;
+}
+
+/**
+ * Scrolls to a same-page hash target and moves focus there.
  *
  * @param {string} hash
  */
@@ -85,9 +108,16 @@ function scrollToHash(hash) {
     }
 
     const target = document.getElementById(id);
-    if (target) {
-        target.scrollIntoView();
+    if (!target) {
+        return;
     }
+
+    if (!canFocusWithoutTabIndex(target)) {
+        target.setAttribute('tabindex', '-1');
+    }
+
+    target.scrollIntoView();
+    target.focus({ preventScroll: true });
 }
 
 /**
