@@ -29,6 +29,7 @@ class FontAwesome
 
         // Gutenberg FontAwesome icon picker
         add_action('enqueue_block_editor_assets', [$this, 'enqueueGutenbergAssets']);
+        add_action('enqueue_block_assets', [$this, 'enqueueEditorCanvasIcons']);
     }
 
     /**
@@ -240,6 +241,34 @@ class FontAwesome
             ['quicktags'],
             PITEA_CUSTOMISATION_VERSION,
             true
+        );
+    }
+
+    /**
+     * Load Font Awesome in the iframed block editor canvas.
+     *
+     * WordPress copies styles enqueued on enqueue_block_assets into the editor
+     * iframe. The same hook runs on the public site, where Font Awesome is
+     * already part of the frontend stylesheet.
+     *
+     * @return void
+     */
+    public function enqueueEditorCanvasIcons(): void
+    {
+        if (!is_admin()) {
+            return;
+        }
+
+        $file = CacheBust::getFile('source/sass/font-awesome.scss');
+        if ($file === '') {
+            return;
+        }
+
+        wp_enqueue_style(
+            'font-awesome-icons-style',
+            $file,
+            [],
+            PITEA_CUSTOMISATION_VERSION
         );
     }
 
