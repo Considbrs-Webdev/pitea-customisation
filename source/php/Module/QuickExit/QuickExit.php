@@ -57,6 +57,7 @@ class QuickExit extends Module
 
         return [
             'url'            => $url,
+            'neutralUrl'     => QuickExitTab::getNeutralUrl(),
             'label'          => QuickExitTab::getLabel(),
             'heading'        => QuickExitTab::getHeading(),
             'text'           => $text,

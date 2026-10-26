@@ -563,6 +563,12 @@ msgstr ""
 msgid "Destination"
 msgstr ""
 
+msgid "Neutral page"
+msgstr ""
+
+msgid "Where this tab goes after the destination opens in a new tab. Leave empty to use the same address as the destination."
+msgstr ""
+
 #: source/php/Admin/Tabs/QuickExitTab.php:93
 msgid "Button text"
 msgstr ""
@@ -632,7 +638,7 @@ msgid "About the quick exit button"
 msgstr ""
 
 #: source/php/Admin/Tabs/QuickExitTab.php:312
-msgid "Click the button if you need to leave the page quickly. You will end up on {site} instead."
+msgid "Click the button if you need to leave the page quickly. You will end up on {site} instead. The back button does not return to this page, but the browser history may still contain the page."
 msgstr ""
 
 #: source/php/Admin/Tabs/QuickExitTab.php:317

@@ -4,9 +4,17 @@ const HEADER_GAP_PX = 16;
 let overlay = null;
 
 /**
- * Blanks the screen straight away, then replaces the current page so Back does not return to it.
+ * Blanks the screen, opens the destination in a new tab, and replaces this tab with the neutral page.
+ * A blocked popup replaces this tab with the destination instead.
+ *
+ * opener is cleared on the new tab. The noopener window feature is not used: Chrome returns
+ * null from that call both when the tab opens and when a popup blocker stops it.
+ *
+ * @param {string} dest
+ * @param {string} neutralUrl
+ * @param {string} leavingMessage
  */
-function leave(url, leavingMessage) {
+function leave(dest, neutralUrl, leavingMessage) {
     if (!overlay) {
         overlay = document.createElement('div');
         overlay.className = 'quick-exit-overlay';
@@ -15,7 +23,118 @@ function leave(url, leavingMessage) {
         document.body.appendChild(overlay);
     }
 
-    window.location.replace(url);
+    const popup = window.open(dest, '_blank');
+    if (!popup) {
+        window.location.replace(dest);
+        return;
+    }
+
+    try {
+        popup.opener = null;
+    } catch (error) {
+        // Cross-origin tabs can refuse the assignment after navigation starts.
+    }
+
+    window.location.replace(neutralUrl || dest);
+}
+
+/**
+ * @param {HTMLAnchorElement} element
+ * @returns {string}
+ */
+function neutralUrlFor(element) {
+    const neutral = element.getAttribute('data-quick-exit-neutral');
+    return neutral && neutral.trim() !== '' ? neutral : element.href;
+}
+
+/**
+ * True when url only changes the hash on the current page.
+ *
+ * @param {string|URL|null|undefined} url
+ * @returns {boolean}
+ */
+function isSamePageHash(url) {
+    if (url == null || url === '') {
+        return false;
+    }
+
+    let next;
+    try {
+        next = new URL(String(url), window.location.href);
+    } catch (error) {
+        return false;
+    }
+
+    return next.origin === window.location.origin
+        && next.pathname === window.location.pathname
+        && next.search === window.location.search
+        && next.hash.length > 1;
+}
+
+/**
+ * Scrolls to a same-page hash target after the URL was updated without a new history entry.
+ *
+ * @param {string} hash
+ */
+function scrollToHash(hash) {
+    let id = hash.slice(1);
+    try {
+        id = decodeURIComponent(id);
+    } catch (error) {
+        return;
+    }
+
+    const target = document.getElementById(id);
+    if (target) {
+        target.scrollIntoView();
+    }
+}
+
+/**
+ * Keeps same-page hash navigation off the history stack while a quick-exit module is on the page.
+ * Other history updates are left alone.
+ */
+function keepSamePageHashesOffTheStack() {
+    const pushState = History.prototype.pushState;
+    History.prototype.pushState = function pushStateWithoutSamePageHash(state, title, url) {
+        if (isSamePageHash(url)) {
+            return History.prototype.replaceState.call(this, state, title, url);
+        }
+
+        return pushState.call(this, state, title, url);
+    };
+
+    document.addEventListener('click', (event) => {
+        if (event.defaultPrevented || event.button !== 0) {
+            return;
+        }
+
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+            return;
+        }
+
+        const anchor = event.target instanceof Element ? event.target.closest('a[href]') : null;
+        if (!(anchor instanceof HTMLAnchorElement) || anchor.hasAttribute('download')) {
+            return;
+        }
+
+        if (anchor.target && anchor.target !== '_self' && anchor.target !== '_top') {
+            return;
+        }
+
+        if (!isSamePageHash(anchor.href)) {
+            return;
+        }
+
+        const url = new URL(anchor.href);
+        event.preventDefault();
+        const next = `${url.pathname}${url.search}${url.hash}`;
+        const current = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+        if (next !== current) {
+            history.replaceState(history.state, '', next);
+        }
+        scrollToHash(url.hash);
+    });
 }
 
 function readMessages(panel) {
@@ -140,7 +259,7 @@ function initShiftShortcut(link, messages) {
 
         if (presses >= 3) {
             announce(messages.leaving || '');
-            leave(link.href, messages.leaving);
+            leave(link.href, neutralUrlFor(link), messages.leaving);
             return;
         }
 
@@ -160,6 +279,10 @@ function addSkipLink(link, label) {
     skip.className = 'mod-quick-exit__skip visually-hidden-focusable';
     skip.textContent = label;
     skip.setAttribute('data-quick-exit', '');
+    const neutral = link.getAttribute('data-quick-exit-neutral');
+    if (neutral) {
+        skip.setAttribute('data-quick-exit-neutral', neutral);
+    }
 
     const existingSkipLink = document.querySelector('body > a[href^="#"]');
     if (existingSkipLink) {
@@ -184,6 +307,7 @@ export function initQuickExit() {
     }
 
     addSkipLink(firstLink, firstLink.textContent.trim());
+    keepSamePageHashesOffTheStack();
 
     document.querySelectorAll('[data-quick-exit]').forEach((element) => {
         if (!(element instanceof HTMLAnchorElement)) {
@@ -192,7 +316,7 @@ export function initQuickExit() {
 
         element.addEventListener('click', (event) => {
             event.preventDefault();
-            leave(element.href, messages.leaving);
+            leave(element.href, neutralUrlFor(element), messages.leaving);
         });
     });
 

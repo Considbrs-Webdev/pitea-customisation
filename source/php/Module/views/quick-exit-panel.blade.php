@@ -19,6 +19,7 @@
         'classList' => ['mod-quick-exit__button'],
         'attributeList' => array_filter([
             'data-quick-exit' => '',
+            'data-quick-exit-neutral' => $neutralUrl,
             'rel' => 'nofollow noreferrer',
             'aria-label' => $label,
         ], static fn ($value) => $value !== null),
