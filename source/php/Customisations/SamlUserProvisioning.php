@@ -151,10 +151,13 @@ class SamlUserProvisioning
 
     private function updateUserProfile(int $userId, array $attrs, string $email): void
     {
-        $userData = [
-            'ID' => $userId,
-            'user_email' => $email,
-        ];
+        $userData = ['ID' => $userId];
+
+        // wp_update_user compares emails case-sensitively and sends a "changed email" notice on a casing-only diff.
+        $currentEmail = get_userdata($userId)->user_email ?? '';
+        if (strcasecmp($currentEmail, $email) !== 0) {
+            $userData['user_email'] = $email;
+        }
 
         $firstName = $this->getFirstAttributeValue($attrs, self::CLAIM_GIVEN_NAME);
         $lastName = $this->getFirstAttributeValue($attrs, self::CLAIM_SURNAME);
