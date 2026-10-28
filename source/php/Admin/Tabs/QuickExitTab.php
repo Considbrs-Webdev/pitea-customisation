@@ -7,13 +7,15 @@ namespace PiteaCustomisation\Admin\Tabs;
 use PiteaCustomisation\Admin\SettingsTabInterface;
 
 /**
- * Site-wide settings for the quick-exit module: destination, texts, read-more page and keyboard shortcut.
+ * Site-wide settings for the quick-exit module: destination, neutral page, texts, read-more page and keyboard shortcut.
  */
 class QuickExitTab implements SettingsTabInterface
 {
     private const OPTION_GROUP = 'pitea_customisation_quick_exit';
 
     public const OPTION_URL = 'pitea_customisation_quick_exit_url';
+
+    public const OPTION_NEUTRAL_URL = 'pitea_customisation_quick_exit_neutral_url';
 
     public const OPTION_LABEL = 'pitea_customisation_quick_exit_label';
 
@@ -68,6 +70,9 @@ class QuickExitTab implements SettingsTabInterface
         register_setting(self::OPTION_GROUP, self::OPTION_URL, array_merge($string(), [
             'sanitize_callback' => static fn ($value): string => self::sanitizeUrl(is_string($value) ? $value : ''),
         ]));
+        register_setting(self::OPTION_GROUP, self::OPTION_NEUTRAL_URL, array_merge($string(), [
+            'sanitize_callback' => static fn ($value): string => self::sanitizeUrl(is_string($value) ? $value : ''),
+        ]));
         register_setting(self::OPTION_GROUP, self::OPTION_READ_MORE_URL, array_merge($string(), [
             'sanitize_callback' => static fn ($value): string => self::sanitizeUrl(is_string($value) ? $value : ''),
         ]));
@@ -98,6 +103,7 @@ class QuickExitTab implements SettingsTabInterface
 
         $fields = [
             self::OPTION_URL => [__('Destination', 'pitea-customisation'), 'renderUrlField'],
+            self::OPTION_NEUTRAL_URL => [__('Neutral page', 'pitea-customisation'), 'renderNeutralUrlField'],
             self::OPTION_LABEL => [__('Button text', 'pitea-customisation'), 'renderLabelField'],
             self::OPTION_HEADING => [__('Accordion heading', 'pitea-customisation'), 'renderHeadingField'],
             self::OPTION_TEXT => [__('Explanation', 'pitea-customisation'), 'renderTextField'],
@@ -132,6 +138,16 @@ class QuickExitTab implements SettingsTabInterface
             'url',
             self::FALLBACK_URL,
             __('Where the button sends visitors. Choose a plain, neutral site that does not show personalised or recently visited content.', 'pitea-customisation')
+        );
+    }
+
+    public function renderNeutralUrlField(): void
+    {
+        $this->renderInput(
+            self::OPTION_NEUTRAL_URL,
+            'url',
+            '',
+            __('Where this tab goes after the destination opens in a new tab. Leave empty to use the same address as the destination.', 'pitea-customisation')
         );
     }
 
@@ -219,7 +235,7 @@ class QuickExitTab implements SettingsTabInterface
      */
     public function save(array $data): true|\WP_Error
     {
-        foreach ([self::OPTION_URL, self::OPTION_READ_MORE_URL] as $option) {
+        foreach ([self::OPTION_URL, self::OPTION_NEUTRAL_URL, self::OPTION_READ_MORE_URL] as $option) {
             $raw = isset($data[$option]) ? trim((string) wp_unslash($data[$option])) : '';
             if ($raw !== '' && !self::isHttpUrl($raw)) {
                 return new \WP_Error(
@@ -234,6 +250,7 @@ class QuickExitTab implements SettingsTabInterface
             : '';
 
         update_option(self::OPTION_URL, self::sanitizeUrl((string) wp_unslash($data[self::OPTION_URL] ?? '')));
+        update_option(self::OPTION_NEUTRAL_URL, self::sanitizeUrl((string) wp_unslash($data[self::OPTION_NEUTRAL_URL] ?? '')));
         update_option(self::OPTION_READ_MORE_URL, self::sanitizeUrl((string) wp_unslash($data[self::OPTION_READ_MORE_URL] ?? '')));
         update_option(self::OPTION_LABEL, $text(self::OPTION_LABEL));
         update_option(self::OPTION_HEADING, $text(self::OPTION_HEADING));
@@ -265,6 +282,16 @@ class QuickExitTab implements SettingsTabInterface
         $url = self::sanitizeUrl((string) get_option(self::OPTION_URL, ''));
 
         return $url !== '' ? $url : self::FALLBACK_URL;
+    }
+
+    /**
+     * Page the current tab is replaced with. Empty setting means the destination.
+     */
+    public static function getNeutralUrl(): string
+    {
+        $url = self::sanitizeUrl((string) get_option(self::OPTION_NEUTRAL_URL, ''));
+
+        return $url !== '' ? $url : self::getDefaultUrl();
     }
 
     public static function getLabel(): string
@@ -317,7 +344,7 @@ class QuickExitTab implements SettingsTabInterface
 
     private static function defaultText(): string
     {
-        return __('Click the button if you need to leave the page quickly. You will end up on {site} instead. The back button does not return to this page, but the visit can still remain in the browser history.', 'pitea-customisation');
+        return __('Click the button if you need to leave the page quickly. You will end up on {site} instead. The back button does not return to this page, but the browser history may still contain the page.', 'pitea-customisation');
     }
 
     private static function defaultReadMoreText(): string

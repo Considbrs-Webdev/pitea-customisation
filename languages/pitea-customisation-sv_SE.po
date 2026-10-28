@@ -841,6 +841,12 @@ msgstr "Knapptext"
 msgid "Destination"
 msgstr "Destination"
 
+msgid "Neutral page"
+msgstr "Neutral sida"
+
+msgid "Where this tab goes after the destination opens in a new tab. Leave empty to use the same address as the destination."
+msgstr "Dit den här fliken går efter att destinationen öppnats i en ny flik. Lämna tomt för att använda samma adress som destinationen."
+
 #: source/php/Admin/Tabs/QuickExitTab.php:43
 #: source/php/Admin/Tabs/QuickExitTab.php:81
 #: source/php/Admin/Tabs/QuickExitTab.php:111
@@ -930,8 +936,8 @@ msgid "About the quick exit button"
 msgstr "Om knappen"
 
 #: source/php/Admin/Tabs/QuickExitTab.php:312
-msgid "Click the button if you need to leave the page quickly. You will end up on {site} instead. The back button does not return to this page, but the visit can still remain in the browser history."
-msgstr "Klicka på knappen om du behöver lämna sidan snabbt. Då hamnar du på {site} i stället. Bakåtknappen tar dig inte tillbaka till den här sidan, men besöket kan fortfarande finnas kvar i webbläsarens historik."
+msgid "Click the button if you need to leave the page quickly. You will end up on {site} instead. The back button does not return to this page, but the browser history may still contain the page."
+msgstr "Klicka på knappen om du behöver lämna sidan snabbt. Då hamnar du på {site} i stället. Bakåtknappen tar dig inte tillbaka till den här sidan, men webbläsarens historik kan fortfarande innehålla sidan."
 
 msgid "Button text and destination"
 msgstr "Knapptext och destination"
