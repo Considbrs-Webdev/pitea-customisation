@@ -13,12 +13,15 @@ namespace PiteaCustomisation\Content;
  *
  * Only these sequences are removed:
  * - a heading, then a spacer, then Manual Input "Modul: Puffar/inkastare undersida"
+ * - a heading, then a spacer, then Manual Input inside "Modul: Puffar/Inkastare"
  * - a heading, then a spacer, then link cards inside "Modul: Puffar/inkastare med ikon"
  */
 class PuffarHeadingSpacer
 {
     private const UNDER_PATTERN = 'core/block/1858"';
     private const UNDER_NAME = 'Modul: Puffar/inkastare undersida"';
+    private const INKASTARE_PATTERN = 'core/block/1793"';
+    private const INKASTARE_NAME = 'Modul: Puffar/Inkastare"';
     private const ICON_PATTERN = 'core/block/1872"';
     private const ICON_NAME = 'Modul: Puffar/inkastare med ikon"';
 
@@ -109,7 +112,9 @@ class PuffarHeadingSpacer
     {
         if ($next['name'] === 'acf/manualinput') {
             return str_contains($next['attrs'], self::UNDER_PATTERN)
-                || str_contains($next['attrs'], self::UNDER_NAME);
+                || str_contains($next['attrs'], self::UNDER_NAME)
+                || str_contains($parentAttrs, self::INKASTARE_PATTERN)
+                || str_contains($parentAttrs, self::INKASTARE_NAME);
         }
 
         if ($next['name'] === 'acf/link-cards') {

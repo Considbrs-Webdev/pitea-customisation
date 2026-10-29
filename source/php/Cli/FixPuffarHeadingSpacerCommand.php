@@ -10,8 +10,8 @@ use PiteaCustomisation\Content\PuffarHeadingSpacer;
  * Remove heading spacers that double the gap above puff cards.
  *
  * Manual Input card grids have a 32px top margin since Municipio 7.32.6, and
- * link cards have a 16px grid margin. Pages created from the old Temasida
- * starter still store a spacer between the heading and those modules.
+ * link cards have a 16px grid margin. The same extra spacer sits in the
+ * "Modul: Puffar/Inkastare" pattern and in pages that imported it.
  *
  * The command leaves every other spacer in place. It does not write unless
  * --apply is passed.
@@ -98,6 +98,8 @@ class FixPuffarHeadingSpacerCommand
         $likeSpacer = '%' . $wpdb->esc_like('acf/spacer') . '%';
         $likeUnderPattern = '%' . $wpdb->esc_like('core/block/1858') . '%';
         $likeUnderName = '%' . $wpdb->esc_like('Puffar/inkastare undersida') . '%';
+        $likeInkastarePattern = '%' . $wpdb->esc_like('core/block/1793') . '%';
+        $likeInkastareName = '%' . $wpdb->esc_like('Puffar/Inkastare') . '%';
         $likeIconPattern = '%' . $wpdb->esc_like('core/block/1872') . '%';
         $likeIconName = '%' . $wpdb->esc_like('Puffar/inkastare med ikon') . '%';
 
@@ -112,10 +114,14 @@ class FixPuffarHeadingSpacerCommand
                 OR post_content LIKE %s
                 OR post_content LIKE %s
                 OR post_content LIKE %s
+                OR post_content LIKE %s
+                OR post_content LIKE %s
             )",
             $likeSpacer,
             $likeUnderPattern,
             $likeUnderName,
+            $likeInkastarePattern,
+            $likeInkastareName,
             $likeIconPattern,
             $likeIconName
         );
