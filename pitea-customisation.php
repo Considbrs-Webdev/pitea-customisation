@@ -29,6 +29,13 @@ if (file_exists(PITEA_CUSTOMISATION_PATH . 'vendor/autoload.php')) {
 // Initialize the plugin
 new App();
 
+if (defined('WP_CLI') && WP_CLI) {
+    \WP_CLI::add_command(
+        'pitea fix-puffar-heading-spacer',
+        \PiteaCustomisation\Cli\FixPuffarHeadingSpacerCommand::class
+    );
+}
+
 // Each module class lives in its own directory. Modularity indexes modules by that
 // path, so two classes registered from the same folder overwrite each other.
 add_action(
