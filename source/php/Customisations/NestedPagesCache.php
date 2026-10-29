@@ -21,6 +21,8 @@ class NestedPagesCache
 {
     private const REDIRECT_OPTION = 'wpseo-premium-redirects-export-plain';
 
+    private const REDIRECT_BASE_OPTION = 'wpseo-premium-redirects-base';
+
     /**
      * @var array<int, int>
      */
@@ -123,6 +125,8 @@ class NestedPagesCache
 
     /**
      * Point Yoast at the permalink WordPress now serves, and drop the redirect that sends that URL back to the old path.
+     *
+     * The redirect screen edits wpseo-premium-redirects-base and rebuilds the plain export from it.
      */
     public function repairPermalinks(): void
     {
@@ -130,9 +134,13 @@ class NestedPagesCache
             define('LITESPEED_PURGE_SILENT', true);
         }
 
-        $redirects = get_option(self::REDIRECT_OPTION, []);
-        $redirects = is_array($redirects) ? $redirects : [];
-        $changed   = false;
+        $redirects   = get_option(self::REDIRECT_OPTION, []);
+        $redirects   = is_array($redirects) ? $redirects : [];
+        $baseOption  = get_option(self::REDIRECT_BASE_OPTION, null);
+        $hasBase     = is_array($baseOption);
+        $baseRedirects = $hasBase ? $baseOption : [];
+        $changed     = false;
+        $baseChanged = false;
 
         foreach ($this->oldPermalinks as $id => $oldUrl) {
             clean_post_cache($id);
@@ -141,7 +149,16 @@ class NestedPagesCache
                 continue;
             }
 
-            $changed = $this->retargetRedirect($redirects, $oldUrl, $newUrl) || $changed;
+            $oldPath = $this->pathFromUrl($oldUrl);
+            $newPath = $this->pathFromUrl($newUrl);
+            if ($oldPath === '' || $newPath === '' || $oldPath === $newPath) {
+                continue;
+            }
+
+            $changed = $this->retargetRedirect($redirects, $oldPath, $newPath) || $changed;
+            if ($hasBase) {
+                $baseChanged = $this->retargetBaseRedirect($baseRedirects, $oldPath, $newPath) || $baseChanged;
+            }
             $this->updateIndexable($id, $newUrl);
 
             do_action('litespeed_purge_url', $oldUrl);
@@ -152,19 +169,17 @@ class NestedPagesCache
         if ($changed) {
             update_option(self::REDIRECT_OPTION, $redirects);
         }
+
+        if ($baseChanged) {
+            update_option(self::REDIRECT_BASE_OPTION, $baseRedirects);
+        }
     }
 
     /**
      * @param array<string, array{url?: string, type?: int}|string> $redirects
      */
-    private function retargetRedirect(array &$redirects, string $oldUrl, string $newUrl): bool
+    private function retargetRedirect(array &$redirects, string $oldPath, string $newPath): bool
     {
-        $oldPath = $this->pathFromUrl($oldUrl);
-        $newPath = $this->pathFromUrl($newUrl);
-        if ($oldPath === '' || $newPath === '' || $oldPath === $newPath) {
-            return false;
-        }
-
         unset($redirects[$newPath]);
         $redirects[$oldPath] = [
             'url'  => $newPath,
@@ -172,6 +187,68 @@ class NestedPagesCache
         ];
 
         return true;
+    }
+
+    /**
+     * Keep the redirect screen's list in step with the plain export.
+     *
+     * @param array<int, array{origin?: string, url?: string, type?: int, format?: string}|mixed> $redirects
+     */
+    private function retargetBaseRedirect(array &$redirects, string $oldPath, string $newPath): bool
+    {
+        $changed  = false;
+        $foundOld = false;
+        $kept     = [];
+
+        foreach ($redirects as $redirect) {
+            if (!is_array($redirect)) {
+                $kept[] = $redirect;
+                continue;
+            }
+
+            $format = (string) ($redirect['format'] ?? 'plain');
+            $origin = trim((string) ($redirect['origin'] ?? ''), '/');
+            if ($format !== 'plain' || $origin === '') {
+                $kept[] = $redirect;
+                continue;
+            }
+
+            if ($origin === $newPath) {
+                $changed = true;
+                continue;
+            }
+
+            if ($origin === $oldPath) {
+                if ($foundOld) {
+                    $changed = true;
+                    continue;
+                }
+
+                $foundOld = true;
+                if (($redirect['url'] ?? '') !== $newPath || (int) ($redirect['type'] ?? 0) !== 301) {
+                    $redirect['url']    = $newPath;
+                    $redirect['type']   = 301;
+                    $redirect['format'] = 'plain';
+                    $changed            = true;
+                }
+            }
+
+            $kept[] = $redirect;
+        }
+
+        if (!$foundOld) {
+            $kept[] = [
+                'origin' => $oldPath,
+                'url'    => $newPath,
+                'type'   => 301,
+                'format' => 'plain',
+            ];
+            $changed = true;
+        }
+
+        $redirects = $kept;
+
+        return $changed;
     }
 
     private function updateIndexable(int $postId, string $newUrl): void
