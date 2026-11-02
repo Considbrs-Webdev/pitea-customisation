@@ -399,29 +399,79 @@ class PageTreeOwnership
     }
 
     /**
-     * Recursively collect all descendant page IDs for a given parent.
-     * Uses suppress_filters so private/hidden pages are included.
+     * Return descendant page IDs for a parent.
+     *
+     * Publish and private pages are loaded once per request, including pages
+     * hidden from public queries.
      *
      * @return int[]
      */
     private function getDescendantIds(int $parentId): array
     {
-        $children = get_posts([
-            'post_type'        => 'page',
-            'post_status'      => ['publish', 'private'],
-            'post_parent'      => $parentId,
-            'numberposts'      => -1,
-            'fields'           => 'ids',
-            'suppress_filters' => true,
-        ]);
-
-        $ids = [];
-        foreach ($children as $childId) {
-            $childId = (int) $childId;
-            $ids[]   = $childId;
-            $ids     = array_merge($ids, $this->getDescendantIds($childId));
+        static $cache = [];
+        if (array_key_exists($parentId, $cache)) {
+            return $cache[$parentId];
         }
 
+        $childrenByParent = $this->pageChildrenByParent();
+        $ids              = [];
+        $stack            = $childrenByParent[$parentId] ?? [];
+        $seen             = [$parentId => true];
+
+        while ($stack !== []) {
+            $childId = array_pop($stack);
+            if (isset($seen[$childId])) {
+                continue;
+            }
+
+            $seen[$childId] = true;
+            $ids[]          = $childId;
+
+            foreach ($childrenByParent[$childId] ?? [] as $grandchildId) {
+                if (!isset($seen[$grandchildId])) {
+                    $stack[] = $grandchildId;
+                }
+            }
+        }
+
+        $cache[$parentId] = $ids;
+
         return $ids;
+    }
+
+    /**
+     * Map each parent page ID to its direct child page IDs.
+     *
+     * @return array<int, int[]>
+     */
+    private function pageChildrenByParent(): array
+    {
+        static $childrenByParent = null;
+        if ($childrenByParent !== null) {
+            return $childrenByParent;
+        }
+
+        global $wpdb;
+
+        $rows = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_parent FROM {$wpdb->posts} WHERE post_type = %s AND post_status IN (%s, %s)",
+                'page',
+                'publish',
+                'private'
+            ),
+            ARRAY_A
+        );
+
+        $childrenByParent = [];
+        if (!is_array($rows)) {
+            return $childrenByParent;
+        }
+
+        foreach ($rows as $row) {
+            $childrenByParent[(int) $row['post_parent']][] = (int) $row['ID'];
+        }
+
+        return $childrenByParent;
     }
 }
