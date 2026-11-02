@@ -31,6 +31,9 @@ class MountedArchiveRewrite
     /**
      * Remove original archive, pagination and feed rules for a mounted post type.
      *
+     * Rules under the mounted path are kept, including when that path starts
+     * with the original slug.
+     *
      * @param string        $postType Post type name.
      * @param \WP_Post_Type $args     Post type object after the mount plugin mutates it.
      */
@@ -73,10 +76,15 @@ class MountedArchiveRewrite
         }
 
         $needle = $prefix . $original . '/';
+        $mountedNeedle = $prefix . $mounted . '/';
         $queryPrefix = 'index.php?post_type=' . $postType;
 
         foreach ($wp_rewrite->extra_rules_top as $rule => $query) {
             if (!is_string($rule) || !is_string($query)) {
+                continue;
+            }
+
+            if (str_starts_with($rule, $mountedNeedle)) {
                 continue;
             }
 
