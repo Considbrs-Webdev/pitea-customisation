@@ -34,6 +34,7 @@ class App
             Customisations\Accessibility::class,
             Customisations\BrandTokens::class,
             Customisations\Archive::class,
+            Customisations\MountedArchiveRewrite::class,
             Customisations\Breadcrumbs::class,
             Customisations\BlockPatternCompatibility::class,
             Customisations\ColorPicker::class,
