@@ -112,6 +112,7 @@ class Dashboard
             'mediabiblioteket-och-bilder.pdf' => __('Media library & images guide', 'pitea-customisation'),
             'modulnamn-kontra-utseende.pdf' => __('Module names vs appearance', 'pitea-customisation'),
             'globala-notiser.pdf' => __('Add a global notice / VMA', 'pitea-customisation'),
+            'mappbladdrare.pdf' => __('Folder browser guide (Bokhyllan)', 'pitea-customisation'),
         ];
 
         $labelOrder = array_flip(array_keys($labels));

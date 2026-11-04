@@ -863,6 +863,10 @@ msgstr ""
 msgid "Add a global notice / VMA"
 msgstr ""
 
+#: source/php/Customisations/Dashboard.php:115
+msgid "Folder browser guide (Bokhyllan)"
+msgstr ""
+
 #: source/php/Customisations/Dashboard.php:123
 msgid "Guides and checklists to help you add and manage content."
 msgstr ""
