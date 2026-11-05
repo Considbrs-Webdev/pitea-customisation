@@ -26,6 +26,7 @@ class Archive
     public function __construct()
     {
         add_action('pre_get_posts', [$this, 'restoreEmptyMountedArchivePostType'], 31);
+        add_action('pre_get_posts', [$this, 'resolveMountedArchiveChildPage'], 32);
         add_action('wp', [$this, 'ensureArchiveHasPostForModules'], 9);
         add_filter('Municipio/Helper/CurrentPostId', [$this, 'resolveArchivePageId'], 10, 1);
     }
@@ -52,6 +53,129 @@ class Archive
 
         $query->set('post_type', $originalPostType);
         $query->set('child_of', null);
+    }
+
+    /**
+     * Serve a child of the mount page when a CPT single under that path does not exist.
+     *
+     * Municipio rewrites the miss to post_type=page plus child_of set to the mount
+     * page. WP_Query ignores child_of, so every page with that slug matches and the
+     * newest one is shown.
+     *
+     * @upstream-shim id=municipio-mounted-archive-child-page
+     * @upstream-repo municipio (library/Theme/Archive.php enablePageForPostTypeChildren)
+     * @upstream-broken A missed {mounted_archive}/{slug} query becomes an unconstrained page slug lookup.
+     * @upstream-fix-needed Apply child_of (descendants of page_for_{postType}) or leave the CPT query as a 404.
+     * @remove-when enablePageForPostTypeChildren limits the page query to descendants of the mount page.
+     * @verify-removal Pretty URL of a child under a mounted archive returns that child; a same-slug page elsewhere is not served. A real CPT single still resolves.
+     *
+     * @param \WP_Query $query The main query.
+     */
+    public function resolveMountedArchiveChildPage(\WP_Query $query): void
+    {
+        if (is_admin() || !$query->is_main_query()) {
+            return;
+        }
+
+        if ($query->get('post_type') !== 'page' || $query->is_post_type_archive()) {
+            return;
+        }
+
+        $originalPostType = $this->getOriginalArchivePostType($query);
+        if ($originalPostType === null) {
+            return;
+        }
+
+        $slug = $query->get('name');
+        if (!is_string($slug) || $slug === '') {
+            return;
+        }
+
+        $mountPageId = (int) get_option('page_for_' . $originalPostType);
+        if ($mountPageId <= 0) {
+            return;
+        }
+
+        $pageId = $this->findDescendantPageId($mountPageId, $slug);
+        if ($pageId === null) {
+            $query->set('post_type', $originalPostType);
+            $query->set('child_of', null);
+            return;
+        }
+
+        $query->set('post_type', 'page');
+        $query->set('page_id', $pageId);
+        $query->set('p', $pageId);
+        $query->set('name', '');
+        $query->set('pagename', '');
+        $query->set('child_of', null);
+        $query->set($originalPostType, '');
+        $query->is_single = false;
+        $query->is_page = true;
+        $query->is_singular = true;
+        $query->is_attachment = false;
+        $query->is_archive = false;
+        $query->is_post_type_archive = false;
+        $query->is_404 = false;
+    }
+
+    /**
+     * Find the closest viewable descendant of a mount page with this slug.
+     *
+     * @param int    $mountPageId Page the post type archive is mounted on.
+     * @param string $slug        Requested page slug.
+     * @return int|null
+     */
+    private function findDescendantPageId(int $mountPageId, string $slug): ?int
+    {
+        $ids = get_posts([
+            'name' => $slug,
+            'post_type' => 'page',
+            'post_status' => ['publish', 'private'],
+            'posts_per_page' => -1,
+            'fields' => 'ids',
+            'suppress_filters' => true,
+            'no_found_rows' => true,
+            'orderby' => 'ID',
+            'order' => 'ASC',
+        ]);
+
+        $bestId = null;
+        $bestDepth = PHP_INT_MAX;
+
+        foreach ($ids as $id) {
+            $pageId = (int) $id;
+            if (!$this->isViewablePage($pageId)) {
+                continue;
+            }
+
+            $ancestors = array_map('intval', get_post_ancestors($pageId));
+            $depth = array_search($mountPageId, $ancestors, true);
+            if ($depth === false || $depth >= $bestDepth) {
+                continue;
+            }
+
+            $bestDepth = $depth;
+            $bestId = $pageId;
+        }
+
+        return $bestId;
+    }
+
+    /**
+     * Whether the current visitor may see this page.
+     *
+     * @param int $pageId Page ID.
+     * @return bool
+     */
+    private function isViewablePage(int $pageId): bool
+    {
+        $status = get_post_status($pageId);
+        if ($status === 'publish') {
+            return true;
+        }
+
+        return $status === 'private' && current_user_can('read_post', $pageId);
     }
 
     /**
