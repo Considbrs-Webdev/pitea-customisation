@@ -134,11 +134,11 @@
         background-color: var(--archive-simpleview-card-background);
       }
 
-      // Empty-result notice defaults to info blue. Use the lightest Pären.
+      // Empty-result notice defaults to info blue. Use the lightest Dårjnålen green.
       .c-notice--info {
-        --c-notice--color--info: var(--color-paren-light-4);
-        --c-notice--color--info-border: var(--color-paren-light-3);
-        --c-notice--color--info-contrast: var(--color-paren-dark-3);
+        --c-notice--color--info: var(--color-darjnalen-light-4);
+        --c-notice--color--info-border: var(--color-darjnalen-light-3);
+        --c-notice--color--info-contrast: var(--color-darjnalen-dark-3);
       }
     }
   }
