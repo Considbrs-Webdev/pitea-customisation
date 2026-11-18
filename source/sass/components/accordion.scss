@@ -71,7 +71,6 @@
       --mi-accordion-button-bg,
       var(--color--surface-alt)
     );
-    --icon-size: 24px;
 
     summary {
       background-color: var(--mi-accordion-button-bg, transparent);
@@ -88,61 +87,6 @@
         --color--surface-contrast,
         var(--color--black, #1a1a1a)
       );
-    }
-
-    .c-accordion__item__icon {
-      font-family: var(--font-family-font-awesome);
-      font-size: var(--icon-size);
-      width: var(--icon-size);
-      height: var(--icon-size);
-      transform: translateY(-50%);
-
-      &::before,
-      &::after {
-        font-family: var(--font-family-font-awesome);
-        font-size: var(--icon-size);
-        font-weight: inherit;
-        font-style: normal;
-        width: var(--icon-size);
-        height: var(--icon-size);
-        position: absolute;
-        top: 0;
-        left: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        line-height: 1;
-        color: inherit;
-        transition: opacity var(--transition-duration-fast, 0.2s);
-      }
-
-      &::before {
-        content: "+";
-        opacity: 1;
-      }
-
-      &::after {
-        content: "\f068";
-        opacity: 0;
-      }
-    }
-
-    &[open] .c-accordion__item__icon {
-      transform: translateY(-50%);
-
-      &::before,
-      &::after {
-        transition: opacity var(--transition-duration-fast, 0.2s)
-          calc(var(--transition-duration-fast, 0.2s) / 3);
-      }
-
-      &::before {
-        opacity: 0;
-      }
-
-      &::after {
-        opacity: 1;
-      }
     }
 
     // v3 underlines all headings inside item content; not tokenized.
